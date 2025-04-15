@@ -1,4 +1,4 @@
-package classes.project;
+package model;
 
 public class Hackathon {
 }
