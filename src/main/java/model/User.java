@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class User {
+public class User extends Person {
     private final String fName;
     private final String lName;
     private String username;
@@ -13,9 +13,7 @@ public class User {
 
     //BUILDER
     public User(String fName, String lName, LocalDate birthDate){
-        this.fName = fName;
-        this.lName = lName;
-        this.birthDate = birthDate;
+        super(fName, lName, birthDate);
         this.username = null;
         this.password = null;
         this.hackathonReg = null;
@@ -23,9 +21,7 @@ public class User {
 
     //METHODS
     public void setUsername(){
-        Scanner input = new Scanner(System.in);
-        System.out.printf("Inserisci il tuo username: ");
-        this.username = input.nextLine();
+        //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
     }
 
     public void setPassword(){
