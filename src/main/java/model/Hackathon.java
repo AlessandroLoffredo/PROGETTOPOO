@@ -16,20 +16,22 @@ public class Hackathon {
     private LocalDate startRegDate;
     private LocalDate endRegDate;
     private int regCounter;
+    private Organizer hackOrganaizer;
 
     //BUILDER
-    public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant) {
+    public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganaizer) {
         this.title = title;
         this.venue = venue;
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxRegistration = maxRegistration;
         this.maxTeamParticipant = maxTeamParticipant;
-        this.ranking = new ArrayList<>();
+        this.ranking = new ArrayList<Team>();
         this.problemDescription = "Problema da definire";
         this.startRegDate = null;
         this.endRegDate = null;
         this.regCounter = 0;
+        this.hackOrganaizer = hackOrganaizer;
     }
 
     //METHODS
@@ -58,4 +60,9 @@ public class Hackathon {
         this.startRegDate = date;
         this.endRegDate = endDate.minusDays(2);
     }
+
+    public void setProblemDescription (String problem){
+            this.problemDescription = problem;
+    }
+
 }
