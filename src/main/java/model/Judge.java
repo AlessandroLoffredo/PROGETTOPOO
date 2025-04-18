@@ -1,4 +1,5 @@
 package model;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -13,25 +14,25 @@ public class Judge extends User{
     public void describeProblem(){
         System.out.println("Inserire la descrizione del problema dell'hackatho (non utilizzare enter/a capo fino alla terminazione della descrizione)> ");
         String problem = in.nextLine();
-        this.judged.setProblemDescription(problem);
+        this.judgedHack.setProblemDescription(problem);
     }
 
-    public void assignMark(Team t){
-        System.out.printf("Inserire il voto da assegnare al team "+t.nickname+"> ");
-        int mark = in.nextInt();
-        t.setMark(mark);
+    public void assignMark(){
+        for(Team team : this.judgedHack.getTeam()){
+            System.out.printf("Inserire il voto da assegnare al team "+team.nickname+"> ");
+            int mark = in.nextInt();
+            team.setMark(mark);
+        }
     }
 
-    public void examineDoc(Team t){
-        System.out.println("Il team "+t.nickname+" ha pubblicato il seguente documento:");
-        System.out.println((t.listDoc.get((t.listDoc.size)-1).description);
-        System.out.println("Ora, aggiungi un commento al documento (non utilizzare enter/a capo fino alla fine del commento> ");
-        String comment = in.nextLine();
-        t.listDoc.get((t.listDoc.size)-1).setComment(comment);
+    public void examineDoc(){
+        for(Team team : this.judgedHack.getTeam()){
+            System.out.println("Il team "+team.nickname+" ha pubblicato il seguente documento:");
+            System.out.println((team.listDoc.get((team.listDoc.size)-1).description);
+            System.out.println("Ora, aggiungi un commento al documento (non utilizzare enter/a capo fino alla fine del commento> ");
+            String comment = in.nextLine();
+            team.listDoc.get((team.listDoc.size)-1).setComment(comment);
+        }
+
     }
-
-
-
-
-
 }
