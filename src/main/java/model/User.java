@@ -4,11 +4,11 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class User extends Person {
-    private final String fName;
-    private final String lName;
+    private String fName;
+    private String lName;
     private String username;
     private String password;
-    private final LocalDate birthDate;
+    private LocalDate birthDate;
     private String hackathonReg;
 
     //BUILDER

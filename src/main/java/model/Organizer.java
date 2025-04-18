@@ -5,20 +5,22 @@ import java.util.*;
 
 public class Organizer extends User{
     private Scanner in = new Scanner(System.in);
-
-    public Organizer(String fName, String lName, LocalDate birthDate){
-        super(fName, lName, birthDate);
+    private ArrayList<Hackathon> organizedHackathon;
+    public Organizer(String fName, String lName, LocalDate birthDate, String username, String password, Hackathon mngHackathon){
+        super(fName, lName, birthDate, username, password);
+        organizedHackathon = new ArrayList<>();
+        organizedHackathon.add(mngHackathon);
     }
 
     public void inviteJudge(){
-        String fiName;
-        String laName;
-        System.out.printf("Inserire il nome del giudice da invitare> ");
-        fiName = in.nextLine();
-        System.out.printf("Inserire il cognome del giudice da invitare> ");
-        laName = in.nextLine();
+        String username;
+        System.out.printf("Inserisci l'username dell'utente da invitare come giudice> ");
+        username = in.nextLine();
         /*
         In questa zona verranno inseriti i controlli utili a determinare l'esistenza di un utente che potrà essere invitato come giudice
+        */
+        /*
+
         */
     }
 
@@ -36,7 +38,7 @@ public class Organizer extends User{
         int maxReg = in.nextInt();
         System.out.printf("Inserire il numero massimo di partecipanti per team");
         int maxTeam = in.nextInt();
-        Hackathon newestHackaton = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeam);
+        Hackathon newestHackaton = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeam, this);
         return newestHackaton;
     }
 
@@ -52,5 +54,9 @@ public class Organizer extends User{
         String regDate = in.nextLine();
         LocalDate startRegDate = LocalDate.parse(regDate, formatter);
         hack.setStartEndRegDate(startRegDate);
+    }
+
+    public void setNewHackaton(Hackathon h){
+        this.organizedHackathon.add(h);
     }
 }
