@@ -24,7 +24,7 @@ public class Organizer extends User{
         */
     }
 
-    public Hackathon setHackaton(){
+    public Hackathon setHackathon(){
         System.out.printf("Inserire il nome del nuovo hackaton da creare");
         String title = in.nextLine();
         System.out.printf("Inserire la sede di svolgimento");
@@ -56,7 +56,7 @@ public class Organizer extends User{
         hack.setStartEndRegDate(startRegDate);
     }
 
-    public void setNewHackaton(Hackathon h){
+    public void setNewHackathon(Hackathon h){
         this.organizedHackathon.add(h);
     }
 }
