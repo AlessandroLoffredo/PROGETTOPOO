@@ -67,10 +67,15 @@ public class User extends Person {
         String s = input.nextLine();
         if (s.equals("si")){
             Judge newJudge = new Judge(fName, lName, birthDate, username, password, hack);
+            this.isBusy = true;
         }
         else{
             this.orgInviting = null;
         }
     }
+
+    public boolean getIsBusy(){ return isBusy; }
+
+    public void setIsBusy(boolean state){ this.isBusy = state; }
 
 }
