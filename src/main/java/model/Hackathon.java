@@ -17,6 +17,7 @@ public class Hackathon {
     private LocalDate endRegDate;
     private int regCounter;
     private Organizer hackOrganaizer;
+    private ArrayList<Judge> judesList;
 
     //BUILDER
     public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganaizer) {
@@ -26,16 +27,19 @@ public class Hackathon {
         this.endDate = endDate;
         this.maxRegistration = maxRegistration;
         this.maxTeamParticipant = maxTeamParticipant;
-        this.ranking = new ArrayList<Team>();
+        this.ranking = new ArrayList<>();
         this.problemDescription = "Problema da definire";
         this.startRegDate = null;
         this.endRegDate = null;
         this.regCounter = 0;
         this.hackOrganaizer = hackOrganaizer;
+        this.judesList = new ArrayList<>();
     }
 
     //METHODS
-    public void addTeam(Team name){ ranking.add(name); }
+    public void addTeam(Team t){ ranking.add(t); }
+
+    public ArrayList<Team> getTeam(){ return ranking; }
 
     public void publishRanking() {
         ranking.sort(Comparator.comparing(Team::mark));
@@ -65,4 +69,17 @@ public class Hackathon {
             this.problemDescription = problem;
     }
 
+    public void addJudge(Judge j){ judesList.add(j); }
+
+    public void endHackathon(){
+        for(Team team : ranking){
+            for(Participant participant : teamList){
+                participant.setIsBusy(false);
+            }
+        }
+        hackOrganaizer.setIsBusy(false);
+        for(Judge judge : judesList){
+            judge.setIsBusy(false);
+        }
+    }
 }
