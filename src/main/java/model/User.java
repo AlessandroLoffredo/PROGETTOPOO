@@ -49,6 +49,7 @@ public class User extends Person {
         if(hack.getRegCounter() < hack.getMaxRegistration()){
             hack.addRegistration();
             this.hackathonReg = hack;
+            this.isBusy = true;
         }
         else{
             System.out.println("Numero massimo di iscritti raggiunto");
@@ -68,6 +69,7 @@ public class User extends Person {
         if (s.equals("si")){
             Judge newJudge = new Judge(fName, lName, birthDate, username, password, hack);
             this.isBusy = true;
+            hack.addJudge(newJudge);
         }
         else{
             this.orgInviting = null;

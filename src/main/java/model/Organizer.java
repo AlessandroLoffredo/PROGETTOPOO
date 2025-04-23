@@ -4,8 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Organizer extends User{
-    private Scanner in = new Scanner(System.in);
     private Hackathon organizedHackathon;
+
     public Organizer(String fName, String lName, LocalDate birthDate, String username, String password, Hackathon mngHackathon){
         super(fName, lName, birthDate, username, password);
         organizedHackathon = mngHackathon;
@@ -20,17 +20,18 @@ public class Organizer extends User{
 
 
     public void setRegDate(Hackathon hack){
+        Scanner in = new Scanner(System.in);
         /*
             Qui andranno inseriti controlli sull'esistenza dell'Hackaton con db con opportuna gestione delle eccezioni
          */
         /*
             Qui andrà aggiornata la data di inizio e fine registrazione nell'db con gestione eccezioni
          */
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("Inserire la data di inizio registrazione (dd/mm/yyyy)");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        System.out.println("Inserire la data di inizio registrazione (yyyy/mm/dd)> ");
         String regDate = in.nextLine();
         LocalDate startRegDate = LocalDate.parse(regDate, formatter);
-        hack.setStartEndRegDate(startRegDate);
+        hack.setStartRegDate(startRegDate);
     }
 
 

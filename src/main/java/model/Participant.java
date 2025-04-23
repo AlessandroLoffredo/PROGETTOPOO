@@ -108,6 +108,11 @@ public class Participant extends User {
                         Team newestTeam = new Team(nome, this.parHackathon);
                         this.parTeam = newestTeam;
                         this.parTeam.addParticipant(/*Partecipante*/);
+                        /*
+                        in questa sezione verrano effettuati diversi controlli sulla validità del nome del team, tra cui team esistenti
+                        e nomi di altri partecipanti
+                        */
+                        this.parHackathon.addTeam(newestTeam);
                     }
                     this.invRecived.remove(0);
                 }
@@ -116,6 +121,13 @@ public class Participant extends User {
                 }
                 input.close();
             }
+        }
+    }
+
+    public void createTeam(){
+        if(this.parHackathon.getEndRegDate().equals(LocalDate.now()) && this.parTeam == null){
+            this.parTeam = new Team(this.getUsername(), this.parHackathon);
+            this.parHackathon.addTeam(this.parTeam);
         }
     }
 }

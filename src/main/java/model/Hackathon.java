@@ -30,7 +30,7 @@ public class Hackathon {
         this.ranking = new ArrayList<>();
         this.problemDescription = "Problema da definire";
         this.startRegDate = null;
-        this.endRegDate = null;
+        this.endRegDate = startDate.minusDays(2);
         this.regCounter = 0;
         this.hackOrganaizer = hackOrganaizer;
         this.judesList = new ArrayList<>();
@@ -60,9 +60,8 @@ public class Hackathon {
 
     public String getTitle(){ return title; }
 
-    public void setStartEndRegDate(LocalDate date){
+    public void setStartRegDate(LocalDate date){
         this.startRegDate = date;
-        this.endRegDate = endDate.minusDays(2);
     }
 
     public void setProblemDescription (String problem){
@@ -73,7 +72,7 @@ public class Hackathon {
 
     public void endHackathon(){
         for(Team team : ranking){
-            for(Participant participant : team.getParticipant()){
+            for(Participant participant : team.getParList()){
                 participant.setIsBusy(false);
             }
         }
@@ -81,5 +80,9 @@ public class Hackathon {
         for(Judge judge : judesList){
             judge.setIsBusy(false);
         }
+    }
+
+    public LocalDate getEndRegDate(){
+        return this.endRegDate;
     }
 }
