@@ -2,13 +2,12 @@ package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlatformAdmin {
     private String username;
     private String password;
-    private  Scanner in = new Scanner(System.in);
+    
 
 
     public PlatformAdmin(String username, String password){
@@ -18,16 +17,27 @@ public class PlatformAdmin {
 
     public void resetUsername(){
         //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
+        Scanner in = new Scanner(System.in);
+        System.out.println("Inserisci l'username (min 3 caratteri, max 15: ");
+        username = in.nextLine();
+        while (username.length()<3 || username.length()>15) {
+            System.out.println("L'username non rispetta i requisiti (min 3 caratteri, max 15), riprova");
+        }
+        this.username = username;
+        //AGGIORNAMENTO DATI NEL DB
+        in.close();
     }
 
     public void resetPassword(){
-        System.out.printf("Inserisci una password di almeno 8 caratteri e non superiore a 16: ");
+        Scanner in = new Scanner(System.in);
+        System.out.println("Inserisci una password di almeno 8 caratteri e non superiore a 16: ");
         String s = in.nextLine();
         while (s.length() < 8 || s.length() > 16){
-            System.out.println("La password non rispetta i requisiti, riprova");
+            System.out.println("La password non rispetta i requisiti (min 8 caratteri, max 16), riprova");
             s = in.nextLine();
         }
         this.password = s;
+        in.close();
     }
 
     public String getUsername(){
@@ -39,21 +49,31 @@ public class PlatformAdmin {
     }
 
     public void setHackathon(){
-        System.out.printf("Inserire il nome del nuovo hackaton da creare");
+        Scanner in = new Scanner(System.in);
+        System.out.println("Inserire il nome del nuovo hackaton da creare");
         String title = in.nextLine();
-        System.out.printf("Inserire la sede di svolgimento");
+        System.out.println("Inserire la sede di svolgimento");
         String venue = in.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        System.out.printf("Inserire la data di inizio della competizione (dd/mm/yyyy)");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        System.out.println("Inserire la data di inizio della competizione (yyyy/mm/dd)");
         String firstDate = in.nextLine();
         LocalDate startDate = LocalDate.parse(firstDate, formatter);
-        LocalDate endDate = startDate.plusDays(2);
-        System.out.printf("Inserire il numero massimo di partecipanti");
+        System.out.println("Inserire la data di fine della competizione (yyyy/mm/dd)");
+        String lastDate = in.nextLine();
+        LocalDate endDate = LocalDate.parse(lastDate, formatter);
+        System.out.println("Inserire il numero massimo di partecipanti");
         int maxReg = in.nextInt();
-        System.out.printf("Inserire il numero massimo di partecipanti per team");
+        System.out.println("Inserire il numero massimo di partecipanti per team");
         int maxTeam = in.nextInt();
-        // gestione organizzatore con db
+        /*  gestione organizzatore con db
+            l'admin avrà una visione di tutti gli utenti tra i quali sceglierà l'organizzatore, che verrà recuperato con una query
+            e i cui attributi verrano modificati opportunamente
+        */
         //Hackathon newestHackaton = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeam, this);
-        //return newestHackaton;
+        /*
+            tutti gli attirbuti serviranno per effettura una query e aggiungere un nuovo hackathon al db
+        */
+        //L'INTERO METODO POTREBBE ESSERE SVOLTO CON LA GUI E QUINDI LE ISTRUZIONI FATTE IN MAIN CHE PASSERà I VALORI COME PARAMETRI DEL METODO
+        in.close();
     }
 }

@@ -16,11 +16,11 @@ public class Hackathon {
     private LocalDate startRegDate;
     private LocalDate endRegDate;
     private int regCounter;
-    private Organizer hackOrganaizer;
+    private Organizer hackOrganizer;
     private ArrayList<Judge> judesList;
 
     //BUILDER
-    public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganaizer) {
+    public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer) {
         this.title = title;
         this.venue = venue;
         this.startDate = startDate;
@@ -32,7 +32,7 @@ public class Hackathon {
         this.startRegDate = null;
         this.endRegDate = startDate.minusDays(2);
         this.regCounter = 0;
-        this.hackOrganaizer = hackOrganaizer;
+        this.hackOrganizer = hackOrganizer;
         this.judesList = new ArrayList<>();
     }
 
@@ -76,10 +76,14 @@ public class Hackathon {
                 participant.setIsBusy(false);
             }
         }
-        hackOrganaizer.setIsBusy(false);
+        hackOrganizer.setIsBusy(false);
         for(Judge judge : judesList){
             judge.setIsBusy(false);
         }
+    }
+
+    public Organizer getHackOrganizer(){
+        return this.hackOrganizer;
     }
 
     public LocalDate getEndRegDate(){
