@@ -19,19 +19,19 @@ public class Judge extends User{
 
     public void assignMark(){
         for(Team team : this.judgedHack.getTeam()){
-            System.out.printf("Inserire il voto da assegnare al team "+team.nickname+"> ");
-            int mark = in.nextInt();
+            System.out.printf("Inserire il voto da assegnare al team "+team.getNickname()+"> ");
+            short mark = in.nextShort();
             team.setMark(mark);
         }
     }
 
     public void examineDoc(){
         for(Team team : this.judgedHack.getTeam()){
-            System.out.println("Il team "+team.nickname+" ha pubblicato il seguente documento:");
-            System.out.println((team.listDoc.get((team.listDoc.size)-1).description);
+            System.out.println("Il team "+team.getNickname()+" ha pubblicato il seguente documento il :" + team.getDocList().get((team.getDocList().size()-1)).getDate());
+            System.out.println((team.getDocList().get((team.getDocList().size()-1)).getDescription()));
             System.out.println("Ora, aggiungi un commento al documento (non utilizzare enter/a capo fino alla fine del commento> ");
             String comment = in.nextLine();
-            team.listDoc.get((team.listDoc.size)-1).setComment(comment);
+            team.getDocList().get((team.getDocList().size()-1)).setComment(comment);
         }
 
     }

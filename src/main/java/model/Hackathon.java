@@ -42,9 +42,9 @@ public class Hackathon {
     public ArrayList<Team> getTeam(){ return ranking; }
 
     public void publishRanking() {
-        ranking.sort(Comparator.comparing(Team::mark));
+        ranking.sort(Comparator.comparing(Team::getMark));
         for (Team team : ranking) {
-            System.out.println(team.getNickName);
+            System.out.println(team.getNickname());
         }
     }
 
@@ -73,7 +73,7 @@ public class Hackathon {
 
     public void endHackathon(){
         for(Team team : ranking){
-            for(Participant participant : teamList){
+            for(Participant participant : team.getParticipant()){
                 participant.setIsBusy(false);
             }
         }
