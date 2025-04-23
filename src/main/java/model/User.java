@@ -43,6 +43,7 @@ public class User extends Person {
                 System.out.println("La password non rispetta i requisiti, riprova");
             }
         }
+        input.close();
     }
 
     public void regHackaton(Hackathon hack){
@@ -74,6 +75,7 @@ public class User extends Person {
         else{
             this.orgInviting = null;
         }
+        input.close();
     }
 
     public boolean getIsBusy(){ return isBusy; }

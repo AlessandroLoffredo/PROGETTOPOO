@@ -69,5 +69,6 @@ public class Person {
             }
         }
         User newUser = new User(fName, lName, birthDate, username, password);
+        input.close();
     }
 }
