@@ -25,7 +25,7 @@ public class Judge extends User{
         for(Team team : this.judgedHack.getTeam()){
             System.out.printf("Inserire il voto da assegnare al team "+team.getNickname()+"> ");
             short mark = in.nextShort();
-            team.setMark(mark);
+            team.addMark(mark);
         }
         in.close();
     }

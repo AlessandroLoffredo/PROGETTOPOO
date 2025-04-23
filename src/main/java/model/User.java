@@ -10,7 +10,6 @@ public class User extends Person {
     private final LocalDate birthDate;
     private String username;
     private String password;
-    private Hackathon hackathonReg;
     private boolean isBusy;
     private Hackathon orgInviting;
 
@@ -21,7 +20,6 @@ public class User extends Person {
         this.birthDate = birthDate;
         this.username = username;
         this.password = password;
-        this.hackathonReg = null;
         this.isBusy = false;
         this.orgInviting = null;
     }
@@ -55,7 +53,10 @@ public class User extends Person {
     public void regHackaton(Hackathon hack){
         if(hack.getRegCounter() < hack.getMaxRegistration()){
             hack.addRegistration();
-            this.hackathonReg = hack;
+            //probabilemtne il parametro hack andrà sostituito con l'utilizzo in coppia di una gui e del db
+            /*
+             qui andrà creato un nuovo partecipante nel database con una query
+             */
             this.isBusy = true;
         }
         else{

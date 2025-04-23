@@ -42,7 +42,10 @@ public class Hackathon {
     public ArrayList<Team> getTeam(){ return ranking; }
 
     public void publishRanking() {
-        ranking.sort(Comparator.comparing(Team::getMark));
+        for (Team team : ranking) {
+            team.avgMark();
+        }
+        ranking.sort(Comparator.comparing(Team::getFinalMark));
         for (Team team : ranking) {
             System.out.println(team.getNickname());
         }

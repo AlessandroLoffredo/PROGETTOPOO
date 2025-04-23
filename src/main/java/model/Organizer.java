@@ -23,7 +23,7 @@ public class Organizer extends User{
     }
 
 
-    public void setRegDate(Hackathon hack){
+    public void openRegDate(Hackathon hack){
         Scanner in = new Scanner(System.in);
         /*
             Qui andranno inseriti controlli sull'esistenza dell'Hackaton con db con opportuna gestione delle eccezioni
