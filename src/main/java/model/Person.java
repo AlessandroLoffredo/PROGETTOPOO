@@ -59,4 +59,17 @@ public class Person {
         */
         input.close();
     }
+
+    /*public int logIn(String username, char[] password){
+        //Inserimento query al database, in modo da poter controllare la poteziale esistenza di un utente
+        String convertedPass = new String(password);
+        if(username.isEmpty() || password.isEmpty())
+            return -1;
+
+        if(potenziale risultato della query di logIn == 1){
+            return 0;
+        }else if(username o password errati){
+            return -2;
+        }
+    }*/
 }

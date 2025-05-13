@@ -2,6 +2,9 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import Controller.*;
 
 public class Login {
     private JPanel panel;
@@ -14,7 +17,7 @@ public class Login {
     private JPanel passwordPanel;
     private JPanel buttonPanel;
     public JFrame frame;
-
+    private Controller controller;
 
     public Login(JFrame frameChiamante){
         frame = new JFrame("Login");
@@ -53,6 +56,21 @@ public class Login {
         gbc.fill = GridBagConstraints.HORIZONTAL; // 🔹 Espande il campo orizzontalmente
         gbc.weightx = 1.0; // 🔹 Occupa tutto lo spazio disponibile
 
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller = new Controller();
+
+                int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
+                if(code == -1){
+                   JOptionPane.showMessageDialog(panel, "Username o password non inseriti");
+                }else if(code == -2){
+                    JOptionPane.showMessageDialog(panel, "Username o password errati");
+                }else{
+                    JOptionPane.showMessageDialog(panel, "Accesso riuscito");
+                }
+            }
+        });
     }
 
 }
