@@ -61,14 +61,22 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 controller = new Controller();
 
-                int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
-                if(code == -1){
-                   JOptionPane.showMessageDialog(panel, "Username o password non inseriti");
-                }else if(code == -2){
-                    JOptionPane.showMessageDialog(panel, "Username o password errati");
-                }else{
-                    JOptionPane.showMessageDialog(panel, "Accesso riuscito");
+                /*
+                try {
+                    int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
+                    if (code == -1) {
+                        JOptionPane.showMessageDialog(panel, "Username o password non inseriti");
+                    } else if (code == -2) {
+                        JOptionPane.showMessageDialog(panel, "Username o password errati");
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "Accesso riuscito");
+                    }
                 }
+                catch (IllegalArgumentException ex){  //Creiamo classe Exeption nuova?
+                    System.out.println("Dati non validi");
+                }
+
+                 */
             }
         });
     }
