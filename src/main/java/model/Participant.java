@@ -99,7 +99,7 @@ public class Participant extends User {
                 }
                 if(risposta.equals("si")){
                     if(this.parTeam != null){
-                        this.parTeam.addParticipant(/*Partecipante*/);
+                        //this.parTeam.addParticipant(/*Partecipante*/);
                         //Non possiamo aggiungere l'oggetto participant perchè manca il db.
                     }
                     else{ /*Verifica del nickname giàà esistente del team tramite db*/
@@ -107,7 +107,7 @@ public class Participant extends User {
                         String nome = input.nextLine().trim();
                         Team newestTeam = new Team(nome, this.parHackathon);
                         this.parTeam = newestTeam;
-                        this.parTeam.addParticipant(/*Partecipante*/);
+                       // this.parTeam.addParticipant(/*Partecipante*/);
                         /*
                         in questa sezione verrano effettuati diversi controlli sulla validità del nome del team, tra cui team esistenti
                         e nomi di altri partecipanti
