@@ -16,6 +16,8 @@ public class SignIn {
     private JLabel lNameLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
+    private JRadioButton ageRadioButton;
+    private JTextField ageArea;
     public JFrame frame;
 
     public SignIn(JFrame frameChiamante){
@@ -26,8 +28,8 @@ public class SignIn {
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(500,500));
         frame.setMaximumSize(new Dimension(500,500));
-        panel.setLayout(new GridBagLayout()); // 🔹 Imposta un layout flessibile
-        usernameArea.setPreferredSize(new Dimension(150, 25)); // 🔹 Imposta larghezza e altezza
+        panel.setLayout(new GridBagLayout());
+        usernameArea.setPreferredSize(new Dimension(150, 25));
         passwordArea.setPreferredSize(new Dimension(150, 25));
         fNameArea.setPreferredSize(new Dimension(150, 25));
         lNameArea.setPreferredSize(new Dimension(150, 25));
