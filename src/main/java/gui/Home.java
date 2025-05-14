@@ -37,6 +37,12 @@ public class Home {
                 SignIn signIn = new SignIn(frame);
                 frame.setVisible(false);
                 signIn.frame.setVisible(true);
+
+
+                JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
+                panel1.add(newLabel);
+                panel1.revalidate(); // Aggiorna il layout
+                panel1.repaint(); // Ridisegna la GUI
             }
         });
     }

@@ -33,6 +33,7 @@ public class SignIn {
         passwordArea.setPreferredSize(new Dimension(150, 25));
         fNameArea.setPreferredSize(new Dimension(150, 25));
         lNameArea.setPreferredSize(new Dimension(150, 25));
+        JLabel cityLabel = new JLabel();
 
         frame.setLocationRelativeTo(null);
 
