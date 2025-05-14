@@ -20,14 +20,14 @@ public class SignIn {
     private JTextField ageArea;
     public JFrame frame;
 
-    public SignIn(JFrame frameChiamante){
+    public SignIn(JFrame frameChiamante) {
         frame = new JFrame("SignIn");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        frame.setMinimumSize(new Dimension(500,500));
-        frame.setMaximumSize(new Dimension(500,500));
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setMaximumSize(new Dimension(500, 500));
         panel.setLayout(new GridBagLayout());
         usernameArea.setPreferredSize(new Dimension(150, 25));
         passwordArea.setPreferredSize(new Dimension(150, 25));
@@ -42,4 +42,5 @@ public class SignIn {
         gbc.gridy = 2;
         panel.add(signInButton, gbc);
     }
+
 }

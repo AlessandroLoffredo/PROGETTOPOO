@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,13 +12,13 @@ public class Home {
     private JPanel loginPanel;
     private static JFrame frame;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         frame = new JFrame("Home");
         frame.setContentPane(new Home().panel1);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(700,700);
+        frame.setSize(700, 700);
         frame.setLocationRelativeTo(null);
     }
 
@@ -45,10 +46,19 @@ public class Home {
                 panel1.repaint(); // Ridisegna la GUI
 
                 */
+                /*
                 AreaPersonale areaPersonale = new AreaPersonale(frame);
                 frame.setVisible(false);
                 areaPersonale.frame.setVisible(true);
+                */
+
+                 AdminGui areaPersonale = new AdminGui(frame);
+                frame.setVisible(false);
+                areaPersonale.frame.setVisible(true);
+
+
             }
         });
     }
+
 }

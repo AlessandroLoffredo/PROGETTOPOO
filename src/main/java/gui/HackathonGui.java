@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class HackathonGui {
     private JPanel panel;
@@ -18,4 +19,5 @@ public class HackathonGui {
     private JTextArea descProbArea;
     private JButton accessButton;
     private JButton signInHackButton;
+
 }
