@@ -34,7 +34,7 @@ public class Home {
         signInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignIn signIn = new SignIn(frame);
+               /* SignIn signIn = new SignIn(frame);
                 frame.setVisible(false);
                 signIn.frame.setVisible(true);
 
@@ -43,6 +43,11 @@ public class Home {
                 panel1.add(newLabel);
                 panel1.revalidate(); // Aggiorna il layout
                 panel1.repaint(); // Ridisegna la GUI
+
+                */
+                AreaPersonale areaPersonale = new AreaPersonale(frame);
+                frame.setVisible(false);
+                areaPersonale.frame.setVisible(true);
             }
         });
     }
