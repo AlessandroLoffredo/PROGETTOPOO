@@ -13,9 +13,10 @@ public class Login {
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JButton loginButton;
+    private JPanel buttonPanel;
+    private JPanel dataPanel;
     private JPanel usernamePanel;
     private JPanel passwordPanel;
-    private JPanel buttonPanel;
     public JFrame frame;
     private Controller controller;
 
@@ -28,33 +29,8 @@ public class Login {
         frame.setMinimumSize(new Dimension(500,500));
         frame.setMaximumSize(new Dimension(500,500));
         frame.setLocationRelativeTo(null);
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
 
-        gbc.gridx = 0; // Posizione X (colonna)
-        gbc.gridy = 0; // Posizione Y (riga)
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.anchor = GridBagConstraints.CENTER;
 
-        panel.add(usernameLabel, gbc);
-
-        gbc.gridy = 1;
-        panel.add(usernameArea, gbc);
-
-        gbc.gridy = 2;
-        panel.add(passwordLabel, gbc);
-
-        gbc.gridy = 3;
-        panel.add(passwordArea, gbc);
-
-        gbc.gridy = 4;
-        panel.add(loginButton, gbc);
-
-        usernameArea.setPreferredSize(new Dimension(150, 25)); // 🔹 Imposta larghezza e altezza
-        passwordArea.setPreferredSize(new Dimension(150, 25));
-
-        gbc.fill = GridBagConstraints.HORIZONTAL; // 🔹 Espande il campo orizzontalmente
-        gbc.weightx = 1.0; // 🔹 Occupa tutto lo spazio disponibile
 
         loginButton.addActionListener(new ActionListener() {
             @Override

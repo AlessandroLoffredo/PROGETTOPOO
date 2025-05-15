@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 public class Home {
     private JPanel panel1;
     private JButton loginButton;
-    private JButton signInButton;
+    private JButton signUpButton;
     private JPanel loginPanel;
+    private JLabel titleLabel;
+    private JPanel hackListPanel;
     private static JFrame frame;
 
     public static void main(String[] args){
@@ -31,10 +33,10 @@ public class Home {
                 login.frame.setVisible(true);
             }
         });
-        signInButton.addActionListener(new ActionListener() {
+        signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               /* SignIn signIn = new SignIn(frame);
+               /* SignUp signIn = new SignIn(frame);
                 frame.setVisible(false);
                 signIn.frame.setVisible(true);
 
@@ -44,10 +46,22 @@ public class Home {
                 panel1.revalidate(); // Aggiorna il layout
                 panel1.repaint(); // Ridisegna la GUI
 
-                */
+
                 AreaPersonale areaPersonale = new AreaPersonale(frame);
                 frame.setVisible(false);
                 areaPersonale.frame.setVisible(true);
+
+                HackathonGui hack = new HackathonGui(frame);
+                frame.setVisible(false);
+                hack.frame.setVisible(true);
+
+                CambiaUsername cambia = new CambiaUsername(frame);
+                frame.setVisible(false);
+                cambia.frame.setVisible(true); */
+
+                CreaHackathon crea = new CreaHackathon(frame);
+                frame.setVisible(false);
+                crea.frame.setVisible(true);
             }
         });
     }

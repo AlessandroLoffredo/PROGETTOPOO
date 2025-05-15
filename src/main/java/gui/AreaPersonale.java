@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class AreaPersonale {
     private JPanel panel;
-    private JPanel modifyPanel;
+    private JPanel dataPanel;
     private JTextArea fNameArea;
     private JTextArea lNameArea;
     private JTextArea userArea;
@@ -20,8 +20,10 @@ public class AreaPersonale {
     private JSplitPane pulsanti;
     private JButton accettaButton;
     private JButton rifiutaButton;
-    private JPanel infoPanel;
-    private JList list1;
+    private JPanel messagePanel;
+    private JList requestList;
+    private JButton homeButton;
+    private JTextArea messageArea;
     public JFrame frame;
 
     public AreaPersonale(JFrame frameChiamante){

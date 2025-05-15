@@ -3,15 +3,15 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class SignIn {
-    private JButton signInButton;
+public class SignUp {
+    private JButton signUpButton;
     private JTextField fNameArea;
     private JTextField lNameArea;
     private JTextField usernameArea;
     private JTextField passwordArea;
     private JPanel panel;
     private JPanel NamePanel;
-    private JPanel signInPanel;
+    private JPanel signUpPanel;
     private JLabel fNameLabel;
     private JLabel lNameLabel;
     private JLabel usernameLabel;
@@ -20,7 +20,7 @@ public class SignIn {
     private JTextField ageArea;
     public JFrame frame;
 
-    public SignIn(JFrame frameChiamante){
+    public SignUp(JFrame frameChiamante){
         frame = new JFrame("SignIn");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -33,13 +33,12 @@ public class SignIn {
         passwordArea.setPreferredSize(new Dimension(150, 25));
         fNameArea.setPreferredSize(new Dimension(150, 25));
         lNameArea.setPreferredSize(new Dimension(150, 25));
-        JLabel cityLabel = new JLabel();
 
         frame.setLocationRelativeTo(null);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridy = 2;
-        panel.add(signInButton, gbc);
+        panel.add(signUpButton, gbc);
     }
 }
