@@ -20,14 +20,14 @@ public class Login {
     public JFrame frame;
     private Controller controller;
 
-    public Login(JFrame frameChiamante){
+    public Login(JFrame frameChiamante) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        frame.setMinimumSize(new Dimension(500,500));
-        frame.setMaximumSize(new Dimension(500,500));
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setMaximumSize(new Dimension(500, 500));
         frame.setLocationRelativeTo(null);
 
 

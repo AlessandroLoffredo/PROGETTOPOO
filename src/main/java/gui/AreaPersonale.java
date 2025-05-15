@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 
 public class AreaPersonale {
     private JPanel panel;
@@ -26,7 +28,7 @@ public class AreaPersonale {
     private JTextArea messageArea;
     public JFrame frame;
 
-    public AreaPersonale(JFrame frameChiamante){
+    public AreaPersonale(JFrame frameChiamante) {
         frame = new JFrame("SignIn");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -35,4 +37,5 @@ public class AreaPersonale {
         frame.setSize(800, 800);
 
     }
+
 }
