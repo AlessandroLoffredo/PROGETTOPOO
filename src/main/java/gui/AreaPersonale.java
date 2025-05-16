@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AreaPersonale {
     private JPanel panel;
@@ -26,7 +28,7 @@ public class AreaPersonale {
     private JList requestList;
     private JButton homeButton;
     private JTextArea messageArea;
-    public JFrame frame;
+    private JFrame frame;
 
     public AreaPersonale(JFrame frameChiamante) {
         frame = new JFrame("SignIn");
@@ -36,6 +38,15 @@ public class AreaPersonale {
         frame.setVisible(true);
         frame.setSize(800, 800);
 
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
 }

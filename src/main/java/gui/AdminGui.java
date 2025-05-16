@@ -87,6 +87,14 @@ public class AdminGui {
         questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
         degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
         */
+        createButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CreaHackathon crea = new CreaHackathon(frame);
+                frame.setVisible(false);
+                crea.frame.setVisible(true);
+            }
+        });
     }
 
 }

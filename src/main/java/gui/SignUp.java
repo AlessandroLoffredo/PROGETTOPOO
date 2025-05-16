@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SignUp {
     private JButton signUpButton;
@@ -40,5 +42,13 @@ public class SignUp {
 
         gbc.gridy = 2;
         panel.add(signUpButton, gbc);
+
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
     }
 }

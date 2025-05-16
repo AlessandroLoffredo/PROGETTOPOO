@@ -35,8 +35,7 @@ public class Login {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller = new Controller();
-
+                //MANIPOLARE ACCESSI DIVERSI PER UTENTI E ADMIN, CHE ENTRERANNO CON LO STESSO BUTTON
                 /*
                 try {
                     int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
@@ -48,11 +47,20 @@ public class Login {
                         JOptionPane.showMessageDialog(panel, "Accesso riuscito");
                     }
                 }
-                catch (IllegalArgumentException ex){  //Creiamo classe Exeption nuova?
+                catch (IllegalArgumentException ex){  //Creiamo classe Exception nuova?
                     System.out.println("Dati non validi");
                 }
 
                  */
+            }
+        });
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                //JButton bottone = (JButton) frameChiamante.getContentPane().getComponentAt(0, 0);
+                //bottone.setText("MAMMT");
+                frame.dispose();
             }
         });
     }

@@ -1,6 +1,12 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -17,7 +23,7 @@ public class CreaHackathon {
     private JPanel createPanel;
     private JButton createButton;
     private JPanel panel;
-    private JSpinner startSpinner;
+    public JSpinner startSpinner;
     private JSpinner endSpinner;
     private JComboBox comboBox1;
     private JLabel maxTeamPartLabel;
@@ -35,6 +41,29 @@ public class CreaHackathon {
         frame.setMinimumSize(new Dimension(500, 500));
         frame.setMaximumSize(new Dimension(500, 500));
         panel.setLayout(new GridBagLayout());
+
+
+
+        SpinnerDateModel model = new SpinnerDateModel(new Date(), new Date(), null , Calendar.DAY_OF_MONTH);
+        startSpinner.setModel(model);
+
+        // Formattazione della visualizzazione della data
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(startSpinner, "dd/MM/yyyy");
+        startSpinner.setEditor(editor);
+
+
+        SpinnerDateModel model2 = new SpinnerDateModel(new Date(), null, null , Calendar.DAY_OF_MONTH);
+        endSpinner.setModel(model2);
+
+        JSpinner.DateEditor editor2 = new JSpinner.DateEditor(endSpinner, "dd/MM/yyyy");
+        endSpinner.setEditor(editor2);
+
+        startSpinner.addChangeListener(e->{
+            Date startDate = (Date) startSpinner.getValue();
+            Date endDate = (Date) endSpinner.getValue();
+            if(endDate.before(startDate))
+                endSpinner.setValue(startDate);
+        });
 
         titleArea.setPreferredSize(new Dimension(150, 25));
         venueArea.setPreferredSize(new Dimension(150, 25));
@@ -71,6 +100,13 @@ public class CreaHackathon {
 
             // Impostiamo il limite minimo senza forzare il valore
             endModel.setStart(startDate);
+        });
+
+        endSpinner.addChangeListener(e->{
+            Date startDate = (Date) endSpinner.getValue();
+            if (startDate.before(new Date())){
+                endSpinner.setValue(new Date());
+            }
         });
     }
 }

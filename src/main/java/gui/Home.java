@@ -31,17 +31,18 @@ public class Home {
                 Login login = new Login(frame);
                 frame.setVisible(false);
                 login.frame.setVisible(true);
+                //JOptionPane.showMessageDialog(panel1, String.valueOf(loginButton.getX()) + loginButton.getY() );
             }
         });
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               /* SignUp signIn = new SignIn(frame);
+                SignUp signUp = new SignUp(frame);
                 frame.setVisible(false);
-                signIn.frame.setVisible(true);
+                signUp.frame.setVisible(true);
 
 
-                JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
+                /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
                 panel1.add(newLabel);
                 panel1.revalidate(); // Aggiorna il layout
                 panel1.repaint(); // Ridisegna la GUI
@@ -57,12 +58,14 @@ public class Home {
 
                 CambiaUsername cambia = new CambiaUsername(frame);
                 frame.setVisible(false);
-                cambia.frame.setVisible(true); */
+                cambia.frame.setVisible(true);
 
                 CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
-                crea.frame.setVisible(true);
+                crea.frame.setVisible(true);*/
             }
+
         });
+
     }
 }
