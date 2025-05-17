@@ -36,9 +36,9 @@ public class HackathonGui {
             public void actionPerformed(ActionEvent e) {
                 //UTILIZZO MOMENTANEO DI QUESTO ACTION LISTENER
                 //BISOGNA TENERE CONTO DI CHI CLICCA IL PULSANTE EPR APRIRE UN AREA PERSONALE SPECIFICA
-                AreaPersonale areaPersonale = new AreaPersonale(frame);
-                frame.setVisible(false);
-                areaPersonale.getFrame().setVisible(true);
+                //AreaPersonale areaPersonale = new AreaPersonale(frame, contoller);
+                //frame.setVisible(false);
+                //areaPersonale.getFrame().setVisible(true);
             }
         });
 

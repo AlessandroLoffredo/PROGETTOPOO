@@ -25,29 +25,59 @@ public class User extends Person {
     }
 
     //METHODS
-    public void resetUsername(){
-        //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
-        Scanner in = new Scanner(System.in);
-        System.out.println("Inserisci l'username (min 3 caratteri, max 15: ");
-        username = in.nextLine();
-        while (username.length()<3 || username.length()>15) {
-            System.out.println("L'username non rispetta i requisiti (min 3 caratteri, max 15), riprova");
+    public int resetUsername(String newUsername, char[] password, String oldUsername){
+        String convertedPass = new String(password);
+        if(newUsername.isEmpty() || convertedPass.isEmpty()){
+            return -3;
         }
-        this.username = username;
+        if(newUsername.length()<3 || newUsername.length()>15) {
+            return -1;
+        }
+        //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
+        /*
+            if(controllo col db){
+                return -2;
+            }
+        */
+        //DOPO QUESTA GESTIONE...
+
+        //ULTERIORE CONTROLLO DA INSERIRE PER LA PASSOWRD PER RENDERE IL SISTEMA PIù SICURO
+        /*
+               if(controllo pass){
+                    return -4;
+                }
+         */
+        //SE IL NUOVO USERNAME RISPETTA LE REGOLE...
         //AGGIORNAMENTO DATI NEL DB
-        in.close();
+        this.username = newUsername;
+        return 0;
     }
 
-    public void resetPassword(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Inserisci una password di almeno 8 caratteri e non superiore a 16: ");
-        String s = in.nextLine();
-        while (s.length() < 8 || s.length() > 16){
-            System.out.println("La password non rispetta i requisiti (min 8 caratteri, max 16), riprova");
-            s = in.nextLine();
+    public int resetPassword(char[] oldPassword, char[] newPassword, char[] confiermedPass,String username) {
+        String convertedNewPass = new String(newPassword);
+        String convertedOldPass = new String(oldPassword);
+        String conConfPass = new String(confiermedPass);
+        if(convertedOldPass.isEmpty() || convertedNewPass.isEmpty() || conConfPass.isEmpty()){
+            return -3;
         }
-        this.password = s;
-        in.close();
+        if(!convertedNewPass.equals(conConfPass)){
+            return -4;
+        }
+        if (convertedNewPass.length() < 8 || convertedNewPass.length() > 16){
+            return -1;
+        }
+        //CONTROLLO UGUAGLIANZA VECCHIA PASSWORD CON oldPassword e username
+        //CHIEDERE A TRAMONTANA SE è POSSIBILE ESEGUIRE QUESTO CONTROLLO AL DI FUORI DEL DB
+        /*
+          if(errore di db){
+             return -2
+          }
+        */
+
+        //SE LA NUOVA PASSWORD SUPERA I CONTROLLI...
+        //VIENE AGGIORNATO IL DB GRAZIE ALLA STRINGA USERNAME
+        this.password = convertedNewPass;
+        return 0;
     }
 
     public void regHackaton(Hackathon hack){

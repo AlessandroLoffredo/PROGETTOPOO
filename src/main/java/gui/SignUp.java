@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ public class SignUp {
     private JTextField fNameArea;
     private JTextField lNameArea;
     private JTextField usernameArea;
-    private JTextField passwordArea;
+    private JPasswordField passwordArea;
     private JPanel panel;
     private JPanel NamePanel;
     private JPanel signUpPanel;
@@ -22,7 +24,7 @@ public class SignUp {
     private JTextField ageArea;
     public JFrame frame;
 
-    public SignUp(JFrame frameChiamante){
+    public SignUp(JFrame frameChiamante, Controller controller){
         frame = new JFrame("SignIn");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -46,8 +48,25 @@ public class SignUp {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
-                frame.dispose();
+                try {
+                    int code = controller.handleSignUp(usernameArea.getText(), passwordArea.getPassword(), fNameArea.getText(), lNameArea.getText());
+                    if (code == -1) {
+                        JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
+                    } else if (code == -2) {
+                        JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 15 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
+                    }else if(code == -3){
+                        JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "Registrazione completata!");
+                        frameChiamante.setVisible(true);
+                        frame.dispose();
+                    }
+                }
+                catch (IllegalArgumentException ex){  //Creiamo classe Exception nuova?
+                    System.out.println("Qualcosa è andato storto durante la registrazione");
+                }
+
+
             }
         });
     }

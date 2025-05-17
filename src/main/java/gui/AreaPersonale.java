@@ -1,8 +1,8 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,8 +30,8 @@ public class AreaPersonale {
     private JTextArea messageArea;
     private JFrame frame;
 
-    public AreaPersonale(JFrame frameChiamante) {
-        frame = new JFrame("SignIn");
+    public AreaPersonale(JFrame frameChiamante, Controller controller) {
+        frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -41,7 +41,25 @@ public class AreaPersonale {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
 
+        cambiaUsernameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
+                frame.setVisible(false);
+                cambiaUsername.frame.setVisible(true);
+            }
+        });
+        cambiaPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CambiaPassword cambiaPassword = new CambiaPassword(frame, controller);
+                frame.setVisible(false);
+                cambiaPassword.frame.setVisible(true);
             }
         });
     }

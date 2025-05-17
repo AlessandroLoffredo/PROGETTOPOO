@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Controller.*;
+import controller.*;
 
 public class Login {
     private JPanel panel;
@@ -18,9 +18,8 @@ public class Login {
     private JPanel usernamePanel;
     private JPanel passwordPanel;
     public JFrame frame;
-    private Controller controller;
 
-    public Login(JFrame frameChiamante) {
+    public Login(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,33 +35,25 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //MANIPOLARE ACCESSI DIVERSI PER UTENTI E ADMIN, CHE ENTRERANNO CON LO STESSO BUTTON
-                /*
+
                 try {
                     int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
                     if (code == -1) {
-                        JOptionPane.showMessageDialog(panel, "Username o password non inseriti");
+                        JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
                     } else if (code == -2) {
                         JOptionPane.showMessageDialog(panel, "Username o password errati");
                     } else {
-                        JOptionPane.showMessageDialog(panel, "Accesso riuscito");
+                        JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
+                        frameChiamante.setVisible(true);
+                        frame.dispose();
                     }
                 }
                 catch (IllegalArgumentException ex){  //Creiamo classe Exception nuova?
-                    System.out.println("Dati non validi");
+                    System.out.println("Qualcosa è andato storto durante l'accesso");
                 }
 
-                 */
-            }
-        });
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
-                //JButton bottone = (JButton) frameChiamante.getContentPane().getComponentAt(0, 0);
-                //bottone.setText("MAMMT");
-                frame.dispose();
+
             }
         });
     }
-
 }
