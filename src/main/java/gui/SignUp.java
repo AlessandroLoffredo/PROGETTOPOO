@@ -22,7 +22,11 @@ public class SignUp {
     private JLabel passwordLabel;
     private JRadioButton ageRadioButton;
     private JTextField ageArea;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public SignUp(JFrame frameChiamante, Controller controller){
         frame = new JFrame("SignIn");
@@ -37,12 +41,15 @@ public class SignUp {
         passwordArea.setPreferredSize(new Dimension(150, 25));
         fNameArea.setPreferredSize(new Dimension(150, 25));
         lNameArea.setPreferredSize(new Dimension(150, 25));
+        frame.setLocationRelativeTo(null);
 
         frame.setLocationRelativeTo(null);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridy = 2;
+        panel.add(ageRadioButton, gbc);
+        gbc.gridy = 3;
         panel.add(signUpButton, gbc);
 
         signUpButton.addActionListener(new ActionListener() {
@@ -56,7 +63,9 @@ public class SignUp {
                         JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 15 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
                     }else if(code == -3){
                         JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                    } else {
+                    } else if(!ageRadioButton.isSelected()){
+                        JOptionPane.showMessageDialog(panel,"Devi confermare di avere più di 16 anni");
+                    }else {
                         JOptionPane.showMessageDialog(panel, "Registrazione completata!");
                         frameChiamante.setVisible(true);
                         frame.dispose();

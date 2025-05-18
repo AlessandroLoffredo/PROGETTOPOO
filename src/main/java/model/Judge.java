@@ -7,8 +7,8 @@ public class Judge extends User{
     private Hackathon judgedHack;
 
 
-    public Judge(String fName, String lName, LocalDate birthDate, String username, String password, Hackathon jdgHackathon){
-        super(fName, lName, birthDate, username, password);
+    public Judge(String fName, String lName, String username, String password, Hackathon jdgHackathon){
+        super(fName, lName, username, password);
         this.judgedHack = jdgHackathon;
     }
 

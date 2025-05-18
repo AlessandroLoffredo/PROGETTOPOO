@@ -20,14 +20,18 @@ public class AreaPersonale {
     private JButton cambiaPasswordButton;
     private JPanel participantPanel;
     private JButton inviaRichiestaButton;
-    private JComboBox comboBox1;
+    private JComboBox participantComboBox;
     private JSplitPane pulsanti;
     private JButton accettaButton;
     private JButton rifiutaButton;
     private JPanel messagePanel;
     private JList requestList;
     private JButton homeButton;
-    private JTextArea messageArea;
+    private JTextField messageArea;
+    private JPanel teamPanel;
+    private JLabel teamLabel;
+    private JTextArea textArea1;
+    private JButton teamButton;
     private JFrame frame;
 
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
@@ -37,6 +41,7 @@ public class AreaPersonale {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
 
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -51,7 +56,7 @@ public class AreaPersonale {
             public void actionPerformed(ActionEvent e) {
                 CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
                 frame.setVisible(false);
-                cambiaUsername.frame.setVisible(true);
+                cambiaUsername.getFrame().setVisible(true);
             }
         });
         cambiaPasswordButton.addActionListener(new ActionListener() {
@@ -59,9 +64,29 @@ public class AreaPersonale {
             public void actionPerformed(ActionEvent e) {
                 CambiaPassword cambiaPassword = new CambiaPassword(frame, controller);
                 frame.setVisible(false);
-                cambiaPassword.frame.setVisible(true);
+                cambiaPassword.getFrame().setVisible(true);
             }
         });
+        teamButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TeamArea teamArea;
+                if(frameChiamante.getClass().equals("HackathonGui")) {
+                    teamArea = new TeamArea(frameChiamante, controller);
+                    frame.setVisible(false);
+                    teamArea.getFrame().setVisible(true);
+                }
+                else {
+                    teamArea = new TeamArea(new HackathonGui(frameChiamante, controller).getFrame(), controller);
+                    teamArea.getFrame().setVisible(true);
+                    frame.dispose();
+                }
+            }
+        });
+        /*
+        INSERIRE CONTROLLO PER VEDERE SE IL PARTECIPANTE FA PARTE DI UN TEAM...
+        OSCURARE L'AREA TEAM QUALORA NON NE FACCIA ANCORA PARTE
+         */
     }
 
     public JFrame getFrame() {

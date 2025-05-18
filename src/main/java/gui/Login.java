@@ -17,7 +17,11 @@ public class Login {
     private JPanel dataPanel;
     private JPanel usernamePanel;
     private JPanel passwordPanel;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public Login(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Login");

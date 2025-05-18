@@ -21,7 +21,11 @@ public class CambiaPassword {
     private JPasswordField newPasswordArea;
     private JLabel newPasswordLabel;
     private JPanel panel;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public CambiaPassword(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Cambia password");
@@ -30,6 +34,7 @@ public class CambiaPassword {
         frame.setPreferredSize(new Dimension(500, 500));
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         changeButton.addActionListener(new ActionListener()
         {

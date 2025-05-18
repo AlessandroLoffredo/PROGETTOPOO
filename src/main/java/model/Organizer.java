@@ -6,8 +6,8 @@ import java.util.*;
 public class Organizer extends User{
     private Hackathon organizedHackathon;
 
-    public Organizer(String fName, String lName, LocalDate birthDate, String username, String password, Hackathon mngHackathon){
-        super(fName, lName, birthDate, username, password);
+    public Organizer(String fName, String lName, String username, String password, Hackathon mngHackathon){
+        super(fName, lName, username, password);
         organizedHackathon = mngHackathon;
     }
 

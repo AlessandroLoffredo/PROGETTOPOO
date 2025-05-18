@@ -14,7 +14,11 @@ public class AdminGui {
     private JTextPane infoText;
     private JButton goToButton;
     private JPanel operationPanel;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public AdminGui(JFrame frameChiamante) {
         frame = new JFrame("SignIn");
@@ -23,6 +27,7 @@ public class AdminGui {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         // Pannello operazioni
         operationPanel = new JPanel();
@@ -92,7 +97,7 @@ public class AdminGui {
             public void actionPerformed(ActionEvent e) {
                 CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
-                crea.frame.setVisible(true);
+                crea.getFrame().setVisible(true);
             }
         });
     }

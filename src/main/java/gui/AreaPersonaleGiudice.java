@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 
 public class AreaPersonaleGiudice {
@@ -32,4 +34,19 @@ public class AreaPersonaleGiudice {
     private JPanel problemPanel;
     private JTextArea problemArea;
     private JButton sendProbButton;
+    private JFrame frame;
+
+    public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
+        frame = new JFrame("Area Personale");
+        frame.setContentPane(panel);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
 }

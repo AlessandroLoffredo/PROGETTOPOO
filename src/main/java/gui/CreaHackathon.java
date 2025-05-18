@@ -30,7 +30,11 @@ public class CreaHackathon {
     private JLabel maxParticipantLabel;
     private JTextField textField1;
     private JPanel prova;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public CreaHackathon(JFrame frameChiamante) {
         frame = new JFrame("Crea Hackathon");
@@ -41,6 +45,7 @@ public class CreaHackathon {
         frame.setMinimumSize(new Dimension(500, 500));
         frame.setMaximumSize(new Dimension(500, 500));
         panel.setLayout(new GridBagLayout());
+        frame.setLocationRelativeTo(null);
 
 
 

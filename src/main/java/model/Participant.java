@@ -13,8 +13,8 @@ public class Participant extends User {
     private Hackathon parHackathon;
 
     //Costruttore
-    public Participant (String fName, String lName, LocalDate birthDate, String username, String password, Hackathon parHackathon) {
-        super (fName,lName, birthDate, username, password);
+    public Participant (String fName, String lName, String username, String password, Hackathon parHackathon) {
+        super (fName,lName, username, password);
         this.parTeam = null;
         this.invRecived = new ArrayList<>();
         this.invSent = null;

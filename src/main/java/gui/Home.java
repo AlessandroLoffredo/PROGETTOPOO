@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Home {
-    private JPanel panel1;
+    private JPanel panel;
     private JButton loginButton;
     private JButton signUpButton;
     private JPanel loginPanel;
@@ -21,13 +21,12 @@ public class Home {
 
     public static void main(String[] args){
         frame = new JFrame("Home");
-        frame.setContentPane(new Home().panel1);
+        frame.setContentPane(new Home().panel);
         frame.pack();
         frame.setMinimumSize(frame.getSize());
         frame.setSize(new Dimension(700, 700));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        //frame.setSize(700,700);
         frame.setLocationRelativeTo(null);
     }
 
@@ -38,7 +37,7 @@ public class Home {
             public void actionPerformed(ActionEvent e) {
                 Login login = new Login(frame, controller);
                 frame.setVisible(false);
-                login.frame.setVisible(true);
+                login.getFrame().setVisible(true);
             }
         });
         signUpButton.addActionListener(new ActionListener() {
@@ -46,7 +45,7 @@ public class Home {
             public void actionPerformed(ActionEvent e) {
                 SignUp signUp = new SignUp(frame, controller);
                 frame.setVisible(false);
-                signUp.frame.setVisible(true);
+                signUp.getFrame().setVisible(true);
 
 
                 /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
@@ -57,19 +56,19 @@ public class Home {
 
                 AreaPersonale areaPersonale = new AreaPersonale(frame);
                 frame.setVisible(false);
-                areaPersonale.frame.setVisible(true);
+                areaPersonale.getFrame().setVisible(true);
 
                 HackathonGui hack = new HackathonGui(frame);
                 frame.setVisible(false);
-                hack.frame.setVisible(true);
+                hack.getFrame().setVisible(true);
 
                 CambiaUsername cambia = new CambiaUsername(frame);
                 frame.setVisible(false);
-                cambia.frame.setVisible(true);
+                cambia.getFrame().setVisible(true);
 
                 CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
-                crea.frame.setVisible(true);*/
+                crea.getFrame().setVisible(true);*/
             }
 
         });
@@ -83,7 +82,7 @@ public class Home {
                     frame.setVisible(false);
                     areaPersonale.getFrame().setVisible(true);
                 }else{
-                    JOptionPane.showMessageDialog(panel1, "Per accedere all'area personale devi eseguire l'accesso");
+                    JOptionPane.showMessageDialog(panel, "Per accedere all'area personale devi eseguire l'accesso");
                 }
             }
         });

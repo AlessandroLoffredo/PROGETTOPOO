@@ -16,7 +16,11 @@ public class CambiaUsername {
     private JLabel passwordLabel;
     private JPanel buttonPanel;
     private JButton changeButton;
-    public JFrame frame;
+    private JFrame frame;
+
+    public JFrame getFrame() {
+        return frame;
+    }
 
     public CambiaUsername(JFrame frameChiamante, Controller controller){
         frame = new JFrame("Cambia username");
@@ -25,6 +29,7 @@ public class CambiaUsername {
         frame.setPreferredSize(new Dimension(500, 500));
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         changeButton.addActionListener(new ActionListener() {
             @Override

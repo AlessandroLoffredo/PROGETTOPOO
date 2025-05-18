@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,18 +19,24 @@ public class HackathonGui {
     private JButton accessButton;
     private JButton subscribeHackButton;
     private JPanel imagePanel;
-    public JFrame frame;
+    private JFrame frame;
 
-    public HackathonGui(JFrame frameChiamante){
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public HackathonGui(JFrame frameChiamante, Controller controller){
         frame = new JFrame("hack");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
-
+        /*
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(null);
+         */
 
 
         accessButton.addActionListener(new ActionListener() {

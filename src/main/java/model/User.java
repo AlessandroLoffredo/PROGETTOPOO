@@ -7,17 +7,15 @@ import java.util.Scanner;
 public class User extends Person {
     private final String fName;
     private final String lName;
-    private final LocalDate birthDate;
     private String username;
     private String password;
     private boolean isBusy;
     private Hackathon orgInviting;
 
     //BUILDER
-    public User(String fName, String lName, LocalDate birthDate, String username, String password){
+    public User(String fName, String lName, String username, String password){
         this.fName = fName;
         this.lName = lName;
-        this.birthDate = birthDate;
         this.username = username;
         this.password = password;
         this.isBusy = false;
@@ -113,7 +111,7 @@ public class User extends Person {
             s = input.nextLine().trim().toLowerCase(Locale.ITALIAN);
         }
         if (s.equals("si")){
-            Judge newJudge = new Judge(fName, lName, birthDate, username, password, hack);
+            Judge newJudge = new Judge(fName, lName, username, password, hack);
             //anche qui verrà fatta una query per aggiungere un nuovo giudice
             this.isBusy = true;
             hack.addJudge(newJudge);
