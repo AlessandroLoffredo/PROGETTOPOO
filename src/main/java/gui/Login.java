@@ -23,7 +23,7 @@ public class Login {
         return frame;
     }
 
-    public Login(JFrame frameChiamante, Controller controller) {
+    public Login(JFrame frameChiamante, Controller controller, Home home) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,6 +48,7 @@ public class Login {
                         JOptionPane.showMessageDialog(panel, "Username o password errati");
                     } else {
                         JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
+                        home.getAreaPersonaleButton().setEnabled(true);
                         frameChiamante.setVisible(true);
                         frame.dispose();
                     }

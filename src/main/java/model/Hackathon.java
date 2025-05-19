@@ -73,7 +73,7 @@ public class Hackathon {
 
     public void addJudge(Judge j){ judesList.add(j); }
 
-    public void endHackathon(){
+    /*public void endHackathon(){
         for(Team team : ranking){
             for(Participant participant : team.getParList()){
                 participant.setIsBusy(false);
@@ -83,7 +83,7 @@ public class Hackathon {
         for(Judge judge : judesList){
             judge.setIsBusy(false);
         }
-    }
+    }*/
 
     public Organizer getHackOrganizer(){
         return this.hackOrganizer;

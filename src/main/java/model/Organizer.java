@@ -11,16 +11,16 @@ public class Organizer extends User{
         organizedHackathon = mngHackathon;
     }
 
-    public void inviteJudge(User u){
+    /*public void inviteJudge(User u){
         /*
         In questa zona verranno inseriti i controlli utili a determinare l'esistenza di un utente che potrà essere invitato come giudice
         */
         /*questo serve a controllare se un utente non è gia occupato con un'altra attività, qualsiasi essa sia. inoltre si controlla se non ha gia ricevuto un altro invito
         se non lo è, e non ha ricevuto altri inviti, può ricevere uno nuovo
          */
-        if(!u.getIsBusy() && u.getOrgInviting() == null)
-            u.setOrgInviting(this.organizedHackathon);
-    }
+      //  if(!u.getIsBusy() && u.getOrgInviting() == null)
+        //    u.setOrgInviting(this.organizedHackathon);
+    //}*/
 
 
     public void openRegDate(Hackathon hack){

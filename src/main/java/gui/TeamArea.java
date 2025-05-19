@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import model.Hackathon;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ public class TeamArea {
     private JTextArea hackathonArea;
     private JTextArea dateArea;
     private JLabel dateLabel;
+    private JButton homeButton;
     private JFrame frame;
 
     public JFrame getFrame() {
@@ -34,17 +36,34 @@ public class TeamArea {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(800, 800);
+        frame.setSize(950, 800);
         frame.setLocationRelativeTo(null);
 
         hackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
+                HackathonGui hackathonGui = new HackathonGui(frame, controller);
+                hackathonGui.getFrame().setVisible(true);
                 frame.dispose();
 
                 //BISOGNA FARE VERIFICA SU HACKATHON A CUI SI E' REGISTRATO IL TEAM
             }
         });
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.getHome().setVisible(true);
+                frame.dispose();
+            }
+        });
+        loadDocButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(null);
+            }
+        });
+
     }
 }

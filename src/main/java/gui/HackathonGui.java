@@ -19,6 +19,7 @@ public class HackathonGui {
     private JButton accessButton;
     private JButton subscribeHackButton;
     private JPanel imagePanel;
+    private JButton homeButton;
     private JFrame frame;
 
     public JFrame getFrame() {
@@ -32,12 +33,6 @@ public class HackathonGui {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-
-        /*
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(null);
-         */
-
 
         accessButton.addActionListener(new ActionListener() {
             @Override
@@ -56,6 +51,15 @@ public class HackathonGui {
                 aggiornamento nel DB, in cui l'utente diventa Partecipante se Loggato
             }
         });*/
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.getHome().setVisible(true);
+                frame.dispose();
+            }
+        });
+
     }
 
 }

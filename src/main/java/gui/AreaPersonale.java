@@ -67,20 +67,14 @@ public class AreaPersonale {
                 cambiaPassword.getFrame().setVisible(true);
             }
         });
+
         teamButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TeamArea teamArea;
-                if(frameChiamante.getClass().equals("HackathonGui")) {
-                    teamArea = new TeamArea(frameChiamante, controller);
-                    frame.setVisible(false);
-                    teamArea.getFrame().setVisible(true);
-                }
-                else {
-                    teamArea = new TeamArea(new HackathonGui(frameChiamante, controller).getFrame(), controller);
-                    teamArea.getFrame().setVisible(true);
-                    frame.dispose();
-                }
+                teamArea = new TeamArea(frameChiamante, controller);
+                teamArea.getFrame().setVisible(true);
+                frame.dispose();
             }
         });
         /*

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Participant extends User {
     private Team parTeam;
-    private ArrayList<String> invRecived;
+    private ArrayList<Request> invRecived;
     private String invSent;
     private Hackathon parHackathon;
 
@@ -43,9 +43,8 @@ public class Participant extends User {
        this.parTeam = t;
     }
 
-    public void addInvRecived(String user, String inv){
-        String s = user + " " + inv;
-        invRecived.add(s);
+    public void addInvRecived(Request request){
+        this.invRecived.add(request);
     }
 
     public void manageDoc(){
@@ -59,32 +58,25 @@ public class Participant extends User {
     }
 
 
-    public void sendRequest (Participant p) {
-        Scanner input = new Scanner(System.in);
-        String message = null;
+    public int sendRequest (Participant sender, String message, Participant receiver) {
         //IF --> Il primo if serve a controllare se i partecipanti partecipano allo stesso hackathon,
-        if(p.getParHackathon().equals(this.parHackathon)){
-            if(p.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
-                System.out.println("Il Team è al completo.");
+        if(sender.getParHackathon().equals(receiver.getParHackathon())){
+            if(sender.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
+                return -1;
             }
             else{
-                System.out.println("Inserisci il messaggio motivazionale per la partecipazione.");
-                message = input.nextLine();
-                p.addInvRecived(this.getUsername(), message); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
-                this.invSent = p.getUsername() + " " + message;
-
+                receiver.addInvRecived(new Request(message, sender)); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
+                return 0;
             }
         }
         else {
-            System.out.println("Non partecipa al tuo stesso Hackathon.");
+            return -2;
         }
-        input.close();
     }
 
-    public void answerInvRecived () {
-        for(String s : invRecived){
+    public int answerInvRecived () {
+        for(Request r : invRecived){
             if(this.parTeam.getParList().size() == this.parHackathon.getMaxTeamParticipant()){
-                System.out.println("Il Team è al completo!");
                 this.invRecived.remove(0);
             }
             else{

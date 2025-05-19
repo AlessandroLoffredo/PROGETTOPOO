@@ -1,16 +1,18 @@
 package model;
 
-import java.time.LocalDate;
-import java.util.Locale;
-import java.util.Scanner;
+
+import java.util.ArrayList;
 
 public class User extends Person {
     private final String fName;
     private final String lName;
     private String username;
     private String password;
-    private boolean isBusy;
-    private Hackathon orgInviting;
+    private int userType; //QUANDO IL DB SARà CONNESSO, POTREMO SAPERE DI CHE TIPO DI UTENTE SI PARLA
+    private ArrayList<Request> requestsJudge;
+
+
+
 
     //BUILDER
     public User(String fName, String lName, String username, String password){
@@ -18,8 +20,7 @@ public class User extends Person {
         this.lName = lName;
         this.username = username;
         this.password = password;
-        this.isBusy = false;
-        this.orgInviting = null;
+        this.requestsJudge = null;
     }
 
     //METHODS
@@ -78,57 +79,19 @@ public class User extends Person {
         return 0;
     }
 
-    public void regHackaton(Hackathon hack){
-        if(hack.getRegCounter() < hack.getMaxRegistration()){
-            hack.addRegistration();
-            //probabilemtne il parametro hack andrà sostituito con l'utilizzo in coppia di una gui e del db
-            /*
-             qui andrà creato un nuovo partecipante nel database con una query
-             */
-            this.isBusy = true;
-        }
-        else{
-            System.out.println("Numero massimo di iscritti raggiunto");
-        }
+    public String getUsername(){
+        return this.username;
     }
 
-    public String getUsername(){ return username; }
-
-    public void setOrgInviting(Hackathon orgInviting) {
-        /*
-        questo metodo viene invocato quando un organizzatore invita un utente della piattaforma ad essere giudice di un hackathon.
-        tale hackathon viene passato come parametro
-        */
-        this.orgInviting = orgInviting;
+    public int getUserType() {
+        return this.userType;
     }
 
-    public void answerInvitation(Hackathon hack){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Accetti l'invito come giudice per l'Hackathon " + hack.getTitle() + " da parte di " +hack.getHackOrganizer().getUsername()+ " (si/no)?");
-        String s = input.nextLine().trim().toLowerCase(Locale.ITALIAN);
-        while(!s.equals("si") && !s.equals("no")){
-            System.out.println("Puoi inserire solo si/no!");
-            s = input.nextLine().trim().toLowerCase(Locale.ITALIAN);
-        }
-        if (s.equals("si")){
-            Judge newJudge = new Judge(fName, lName, username, password, hack);
-            //anche qui verrà fatta una query per aggiungere un nuovo giudice
-            this.isBusy = true;
-            hack.addJudge(newJudge);
-        }
-        else{
-            //quest'istruzione serve a liberare lo spazio per un nuovo invito, visto che un utente può riceverne uno solo
-            this.orgInviting = null;
-        }
-        input.close();
+    public ArrayList<Request> getRequestsJudge() {
+        return this.requestsJudge;
     }
 
-    public boolean getIsBusy(){ return isBusy; }
-
-    public void setIsBusy(boolean state){ this.isBusy = state; }
-
-    public Hackathon getOrgInviting(){
-        return this.orgInviting;
+    public void addRequest(Request request){
+        this.requestsJudge.add(request);
     }
-
 }

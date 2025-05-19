@@ -3,6 +3,8 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,11 +33,13 @@ public class Home {
     }
 
     public Home() {
-        controller = new Controller();
+        controller = new Controller(frame);
+        //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login(frame, controller);
+                Login login = new Login(frame, controller, Home.this);
                 frame.setVisible(false);
                 login.getFrame().setVisible(true);
             }
@@ -72,18 +76,16 @@ public class Home {
             }
 
         });
-        //TESTO SEGNAPOSTO CHE ROMPE LA PAGINA
 
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(controller.getUser() == null){
-                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                    frame.setVisible(false);
-                    areaPersonale.getFrame().setVisible(true);
-                }else{
-                    JOptionPane.showMessageDialog(panel, "Per accedere all'area personale devi eseguire l'accesso");
-                }
+                AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
+                areaPersonale.getFrame().setVisible(true);
+                frame.setVisible(false);
+                /*if(controller.getUser().getUserType() == 0){
+
+                }*/
             }
         });
 
@@ -105,7 +107,14 @@ public class Home {
         textArea1.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
         textArea1.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         textArea1.append("\n\n\n\n\n\n\n\n");
-        textArea1.append("merda ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        textArea1.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
+
+
+
+    }
+
+    public JButton getAreaPersonaleButton() {
+        return areaPersonaleButton;
     }
 }
