@@ -14,14 +14,13 @@ public class SignUp {
     private JTextField usernameArea;
     private JPasswordField passwordArea;
     private JPanel panel;
-    private JPanel NamePanel;
+    private JPanel namePanel;
     private JPanel signUpPanel;
     private JLabel fNameLabel;
     private JLabel lNameLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JRadioButton ageRadioButton;
-    private JTextField ageArea;
     private JFrame frame;
 
     public JFrame getFrame() {
@@ -29,7 +28,7 @@ public class SignUp {
     }
 
     public SignUp(JFrame frameChiamante, Controller controller){
-        frame = new JFrame("SignIn");
+        frame = new JFrame("SignUp");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -51,6 +50,18 @@ public class SignUp {
         panel.add(ageRadioButton, gbc);
         gbc.gridy = 3;
         panel.add(signUpButton, gbc);
+
+
+        panel.setBackground(new Color(10, 10, 30));
+        namePanel.setBackground(new Color(15, 15, 50));
+        signUpPanel.setBackground(new Color(15, 15, 50));
+
+        fNameLabel.setForeground(new Color(0, 255, 0));
+        lNameLabel.setForeground(new Color(0, 255, 0));
+        usernameLabel.setForeground(new Color(0, 255, 0));
+        passwordLabel.setForeground(new Color(0, 255, 0));
+        signUpButton.setForeground(new Color(255, 0, 150));
+        ageRadioButton.setForeground(new Color(0, 255, 0));
 
         signUpButton.addActionListener(new ActionListener() {
             @Override

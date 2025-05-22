@@ -3,11 +3,13 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class Home {
     private JPanel panel;
@@ -18,30 +20,78 @@ public class Home {
     private JPanel hackListPanel;
     private JButton areaPersonaleButton;
     private JTextArea textArea1;
+    private JPanel imagePanel;
+    private JLabel imageLabel;
+    private JScrollPane scrollPane;
     private static JFrame frame;
     private Controller controller;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Home");
         frame.setContentPane(new Home().panel);
         frame.pack();
-        frame.setMinimumSize(frame.getSize());
-        frame.setSize(new Dimension(700, 700));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        Dimension size = frame.getSize();
+        frame.setMinimumSize(new Dimension(size.width, 400));
+        frame.setSize(new Dimension(700, 700));
         frame.setLocationRelativeTo(null);
     }
 
-    public Home() {
+    public Home() throws MalformedURLException {
+
+        //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
+        ImageIcon imageIcon = new ImageIcon(new URL("https://static.vecteezy.com/system/resources/previews/014/487/777/original/hacker-logo-simple-minimal-illustration-vector.jpg"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+
+        // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        imageLabel.setIcon(resizedIcon);
+
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        hackListPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
+        textArea1.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        loginPanel.setBackground(new Color(20, 20, 60)); // Profondo e cyber
+
+        titleLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        loginButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
+        signUpButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+        textArea1.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+
+        UIManager.put("OptionPane.background", new Color(10, 10, 30)); // Blu intenso come nell'immagine
+        UIManager.put("Panel.background", new Color(15, 15, 50)); // Sfondo della finestra di dialogo
+        UIManager.put("OptionPane.messageForeground", new Color(0, 255, 0)); // Testo neon verde hacker
+        UIManager.put("OptionPane.messageFont", new Font("PT Mono", Font.PLAIN, 14));
+
+
+        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                thumbColor = new Color(255, 0, 150); // Verde neon
+                trackColor = new Color(10, 10, 30); // Blu notte
+            }
+        });
+
+
+
+
+
         controller = new Controller(frame);
         //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
 
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Login login = new Login(frame, controller, Home.this);
-                frame.setVisible(false);
-                login.getFrame().setVisible(true);
+                if(loginButton.getText().equalsIgnoreCase("LOGIN")){
+                    Login login = new Login(frame, controller, Home.this);
+                    frame.setVisible(false);
+                    login.getFrame().setVisible(true);
+                }if(loginButton.getText().equalsIgnoreCase("LOGOUT")){
+                    controller.logout();
+                    JOptionPane.showMessageDialog(panel, "Logout eseguito");
+                    areaPersonaleButton.setEnabled(false);
+                    loginButton.setText("LogIn");
+                }
             }
         });
         signUpButton.addActionListener(new ActionListener() {
@@ -80,12 +130,19 @@ public class Home {
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                areaPersonale.getFrame().setVisible(true);
-                frame.setVisible(false);
-                /*if(controller.getUser().getUserType() == 0){
-
-                }*/
+                if(controller.getUser().getUserType() == 0){
+                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
+                    areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
+                }else if(controller.getUser().getUserType() == 1){
+                    AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
+                    areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
+                } else if (controller.getUser().getUserType() == 2) {
+                    AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
+                    areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
+                }
             }
         });
 
@@ -116,5 +173,9 @@ public class Home {
 
     public JButton getAreaPersonaleButton() {
         return areaPersonaleButton;
+    }
+
+    public JButton getLoginButton() {
+        return loginButton;
     }
 }

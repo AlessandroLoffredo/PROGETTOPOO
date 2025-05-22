@@ -29,11 +29,13 @@ public class AreaPersonaleOrganizzatore {
     private JFrame frame;
 
     public AreaPersonaleOrganizzatore(JFrame frameChiamante, Controller controller){
+        frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(700, 700);
         frame.pack();
         frame.setVisible(true);
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null);
 
         SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
         spinner1.setModel(startModel);

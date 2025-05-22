@@ -15,7 +15,19 @@ public class User extends Person {
 
 
     //BUILDER
-    public User(String fName, String lName, String username, String password){
+    public User(String fName, String lName, String username, String password, int userType) throws Exception {
+        this.fName = fName;
+        this.lName = lName;
+        this.username = username;
+        this.password = password;
+        this.requestsJudge = null;
+        if(userType != 0)
+            throw new Exception();
+        else
+            this.userType = userType;
+    }
+
+    public User(String fName, String lName, String username, String password) {
         this.fName = fName;
         this.lName = lName;
         this.username = username;
@@ -94,4 +106,10 @@ public class User extends Person {
     public void addRequest(Request request){
         this.requestsJudge.add(request);
     }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+
 }

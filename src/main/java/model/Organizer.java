@@ -11,6 +11,14 @@ public class Organizer extends User{
         organizedHackathon = mngHackathon;
     }
 
+    public Organizer(String fName, String lName, String username, String password, int userType) throws Exception{
+        super(fName, lName, username, password);
+        if(userType != 2)
+            throw new Exception();
+        else
+            this.setUserType(userType);
+    }
+
     /*public void inviteJudge(User u){
         /*
         In questa zona verranno inseriti i controlli utili a determinare l'esistenza di un utente che potrà essere invitato come giudice

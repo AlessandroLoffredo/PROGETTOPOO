@@ -12,6 +12,14 @@ public class Judge extends User{
         this.judgedHack = jdgHackathon;
     }
 
+    public Judge(String fName, String lName, String username, String password, int userType) throws Exception{
+        super(fName, lName, username, password);
+        if(userType != 1)
+            throw new Exception();
+        else
+            this.setUserType(userType);
+    }
+
     public void describeProblem(){
         Scanner in = new Scanner(System.in);
         System.out.println("Inserire la descrizione del problema dell'hackathon (non utilizzare enter/a capo fino alla terminazione della descrizione)> ");

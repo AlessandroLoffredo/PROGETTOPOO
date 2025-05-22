@@ -35,6 +35,23 @@ public class Login {
 
 
 
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        dataPanel.setBackground(new Color(15, 15, 50));
+        usernamePanel.setBackground(new Color(15, 15, 50));
+        buttonPanel.setBackground(new Color(15, 15, 50));
+        passwordPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
+        usernameLabel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
+        passwordLabel.setBackground(new Color(15, 15, 50));
+
+        usernameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        loginButton.setForeground(new Color(0, 200, 255)); // Azzurro cyber
+        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+
+
+
+
+
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,12 +66,13 @@ public class Login {
                     } else {
                         JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
                         home.getAreaPersonaleButton().setEnabled(true);
+                        home.getLoginButton().setText("Logout");
                         frameChiamante.setVisible(true);
                         frame.dispose();
                     }
                 }
-                catch (IllegalArgumentException ex){  //Creiamo classe Exception nuova?
-                    System.out.println("Qualcosa è andato storto durante l'accesso");
+                catch (Exception ex){  //Creiamo classe Exception nuova?
+                    JOptionPane.showMessageDialog(panel, ex.getMessage());
                 }
 
 

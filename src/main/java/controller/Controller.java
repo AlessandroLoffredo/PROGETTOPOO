@@ -23,22 +23,31 @@ public class Controller {
     }
 
     //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
-    public int handleLogin(String username, char[] password){
+    public int handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
         //int risultato = person.logIn(username, password);
         /*if(risultato == 0){
             user = new User(null, null, username, new String(password));
+
         }*/
-        user = new User(null, null, "username", "password");
-        return 0;
+        int risultato = 2;
+        if(risultato>=0){
+            if (risultato == 0) {
+                user = new User(null, null, username, new String(password), risultato);
+            } else if (risultato == 1) {
+                user = new Judge(null, null, username, new String(password), risultato);
+            } else if (risultato == 2) {
+                user = new Organizer(null, null, username, new String(password), risultato);
+            } else {
+                throw new Exception("Errore durante l'accesso");
+            }
+        }
+        return risultato;
     }
 
     public int handleSignUp(String username, char[] password, String fName, String lName){
         Person person = new Person();
         //int risultato person.signUp(username,password,fName, lName);
-        /*if(risultato == 0){
-            user = new User(fName, lName, username, new String(password));
-        }*/
         return 0;
     }
 
@@ -50,5 +59,9 @@ public class Controller {
     public int changeUsername(String newUsername, char[] password){
         //return this.user.resetUsername(newUsername, password, this.user.getUsername());
         return 0;
+    }
+
+    public void logout(){
+        this.user = null;
     }
 }

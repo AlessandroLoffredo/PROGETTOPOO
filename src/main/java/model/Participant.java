@@ -74,7 +74,7 @@ public class Participant extends User {
         }
     }
 
-    public int answerInvRecived () {
+    public int answerInvRecived (String s) {
         for(Request r : invRecived){
             if(this.parTeam.getParList().size() == this.parHackathon.getMaxTeamParticipant()){
                 this.invRecived.remove(0);
@@ -114,7 +114,9 @@ public class Participant extends User {
                 input.close();
             }
         }
+        return 0;
     }
+
 
     public void createTeam(){
         if(this.parHackathon.getEndRegDate().equals(LocalDate.now()) && this.parTeam == null){
