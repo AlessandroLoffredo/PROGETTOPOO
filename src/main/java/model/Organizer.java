@@ -6,17 +6,13 @@ import java.util.*;
 public class Organizer extends User{
     private Hackathon organizedHackathon;
 
-    public Organizer(String fName, String lName, String username, String password, Hackathon mngHackathon){
-        super(fName, lName, username, password);
-        organizedHackathon = mngHackathon;
-    }
-
     public Organizer(String fName, String lName, String username, String password, int userType) throws Exception{
         super(fName, lName, username, password);
         if(userType != 2)
             throw new Exception();
         else
             this.setUserType(userType);
+        /*this.organizedHackathon = risultato della query di cercamento dell'hackathon*/
     }
 
     /*public void inviteJudge(User u){

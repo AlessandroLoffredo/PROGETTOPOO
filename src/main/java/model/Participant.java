@@ -13,13 +13,15 @@ public class Participant extends User {
     private Hackathon parHackathon;
 
     //Costruttore
-    public Participant (String fName, String lName, String username, String password, Hackathon parHackathon) {
-        super (fName,lName, username, password);
-        this.parTeam = null;
-        this.invRecived = new ArrayList<>();
-        this.invSent = null;
-        this.parHackathon = parHackathon;
+    public Participant(String fName, String lName, String username, String password, int userType) throws Exception{
+        super(fName, lName, username, password);
+        if(userType != 3)
+            throw new Exception();
+        else
+            this.setUserType(userType);
+        /*this.parHackathon = risultato della query di cercamento dell'hackathon*/
     }
+
     //Metodi
     public Hackathon getParHackathon() {
         return parHackathon;
@@ -58,23 +60,22 @@ public class Participant extends User {
     }
 
 
-    public int sendRequest (Participant sender, String message, Participant receiver) {
-        //IF --> Il primo if serve a controllare se i partecipanti partecipano allo stesso hackathon,
-        if(sender.getParHackathon().equals(receiver.getParHackathon())){
-            if(sender.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
-                return -1;
-            }
-            else{
-                receiver.addInvRecived(new Request(message, sender)); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
-                return 0;
-            }
-        }
-        else {
-            return -2;
-        }
-    }
+    /*public int sendRequest (String message, String receiver) {
+        //QUERY PER CONTROLLARE L'ESISTENZA DEL RICEVENTE
 
-    public int answerInvRecived (String s) {
+        Participant parReceiver = new Participant(null, null, "pippo", "pluto", 3);
+        if(parReceiver.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
+            return -1;
+        }
+        else{
+            parReceiver.addInvRecived(new Request(message, this)); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
+            return 0;
+        }
+    }*/
+
+
+
+    /*public int answerInvRecived () {
         for(Request r : invRecived){
             if(this.parTeam.getParList().size() == this.parHackathon.getMaxTeamParticipant()){
                 this.invRecived.remove(0);
@@ -91,20 +92,20 @@ public class Participant extends User {
                 }
                 if(risposta.equals("si")){
                     if(this.parTeam != null){
-                        //this.parTeam.addParticipant(/*Partecipante*/);
+                        //this.parTeam.addParticipant(/*Partecipante*///);
                         //Non possiamo aggiungere l'oggetto participant perchè manca il db.
-                    }
-                    else{ /*Verifica del nickname giàà esistente del team tramite db*/
-                        System.out.println("Non fai ancora parte di un Team! Inserisci il nome: ");
+                    //}*/
+                    //else{ /*Verifica del nickname giàà esistente del team tramite db*/
+                        /*System.out.println("Non fai ancora parte di un Team! Inserisci il nome: ");
                         String nome = input.nextLine().trim();
                         Team newestTeam = new Team(nome, this.parHackathon);
-                        this.parTeam = newestTeam;
+                        this.parTeam = newestTeam;*/
                        // this.parTeam.addParticipant(/*Partecipante*/);
                         /*
                         in questa sezione verrano effettuati diversi controlli sulla validità del nome del team, tra cui team esistenti
                         e nomi di altri partecipanti
                         */
-                        this.parHackathon.addTeam(newestTeam);
+                        /*this.parHackathon.addTeam(newestTeam);
                     }
                     this.invRecived.remove(0);
                 }
@@ -114,9 +115,7 @@ public class Participant extends User {
                 input.close();
             }
         }
-        return 0;
-    }
-
+    }*/
 
     public void createTeam(){
         if(this.parHackathon.getEndRegDate().equals(LocalDate.now()) && this.parTeam == null){

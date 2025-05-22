@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import model.Participant;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -81,9 +82,27 @@ public class AreaPersonale {
         INSERIRE CONTROLLO PER VEDERE SE IL PARTECIPANTE FA PARTE DI UN TEAM...
         OSCURARE L'AREA TEAM QUALORA NON NE FACCIA ANCORA PARTE
          */
+        /*inviaRichiestaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
+            }
+        });*/
     }
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public JPanel getTeamPanel() {
+        return teamPanel;
+    }
+
+    public JPanel getMessagePanel() {
+        return messagePanel;
+    }
+
+    public JPanel getParticipantPanel() {
+        return participantPanel;
     }
 }

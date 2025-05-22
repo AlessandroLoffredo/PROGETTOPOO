@@ -64,7 +64,7 @@ public class User extends Person {
         return 0;
     }
 
-    public int resetPassword(char[] oldPassword, char[] newPassword, char[] confiermedPass,String username) {
+    public int resetPassword(char[] oldPassword, char[] newPassword, char[] confiermedPass, String username) {
         String convertedNewPass = new String(newPassword);
         String convertedOldPass = new String(oldPassword);
         String conConfPass = new String(confiermedPass);

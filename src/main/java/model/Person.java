@@ -33,17 +33,19 @@ public class Person {
         */
     }
 
-    /*public int logIn(String username, char[] password){
-        //Inserimento query al database, in modo da poter controllare la poteziale esistenza di un utente
+    public int logIn(String username, char[] password){
+        /*//Inserimento query al database, in modo da poter controllare la poteziale esistenza di un utente
         String convertedPass = new String(password);
         if(username.isEmpty() || password.isEmpty())
             return -1;
 
         //IL CONTROLLO è SUL NUMERO DI TUPLE RESTITUITO DALLA QUERY
-        if(potenziale risultato della query di logIn == 1){
-            return 0;
-        }else if(username o password errati){
+        if(username o password errati ){
             return -2;
-        }
-    }*/
+        }else if(potenziale risultato della query di logIn == 1){
+            return 0;
+        }*/
+        //IL RETURN 0 SERVE SOLO A SCOPO FUNZIONALE E DI TESTING
+        return 0;
+    }
 }

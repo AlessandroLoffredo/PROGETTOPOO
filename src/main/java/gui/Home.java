@@ -97,9 +97,9 @@ public class Home {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignUp signUp = new SignUp(frame, controller);
+                /*SignUp signUp = new SignUp(frame, controller);
                 frame.setVisible(false);
-                signUp.getFrame().setVisible(true);
+                signUp.getFrame().setVisible(true);*/
 
 
                 /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
@@ -119,10 +119,10 @@ public class Home {
                 CambiaUsername cambia = new CambiaUsername(frame);
                 frame.setVisible(false);
                 cambia.getFrame().setVisible(true);
-
-                CreaHackathon crea = new CreaHackathon(frame);
+                */
+                CreaHackathontry crea = new CreaHackathontry(frame);
                 frame.setVisible(false);
-                crea.getFrame().setVisible(true);*/
+                crea.getFrame().setVisible(true);
             }
 
         });
@@ -130,18 +130,25 @@ public class Home {
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(controller.getUser().getUserType() == 0){
+                if(controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Participant")){
                     AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
                     areaPersonale.getFrame().setVisible(true);
                     frame.setVisible(false);
-                }else if(controller.getUser().getUserType() == 1){
+                }else if(controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Judge")){
                     AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
                     areaPersonale.getFrame().setVisible(true);
                     frame.setVisible(false);
-                } else if (controller.getUser().getUserType() == 2) {
+                } else if (controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Organizer")) {
                     AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
                     areaPersonale.getFrame().setVisible(true);
                     frame.setVisible(false);
+                } else if (controller.getUser().getClass().getSimpleName().equalsIgnoreCase("User")) {
+                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
+                    areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
+                    areaPersonale.getMessagePanel().setVisible(false);
+                    areaPersonale.getParticipantPanel().setVisible(false);
+                    areaPersonale.getTeamPanel().setVisible(false);
                 }
             }
         });

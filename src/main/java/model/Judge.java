@@ -1,16 +1,10 @@
 package model;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class Judge extends User{
     private Hackathon judgedHack;
 
-
-    public Judge(String fName, String lName, String username, String password, Hackathon jdgHackathon){
-        super(fName, lName, username, password);
-        this.judgedHack = jdgHackathon;
-    }
 
     public Judge(String fName, String lName, String username, String password, int userType) throws Exception{
         super(fName, lName, username, password);
@@ -18,6 +12,7 @@ public class Judge extends User{
             throw new Exception();
         else
             this.setUserType(userType);
+        /*this.judgedHack = risultato della query di cercamento dell'hackathon*/
     }
 
     public void describeProblem(){

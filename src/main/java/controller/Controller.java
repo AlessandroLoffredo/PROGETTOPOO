@@ -26,11 +26,7 @@ public class Controller {
     public int handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
         //int risultato = person.logIn(username, password);
-        /*if(risultato == 0){
-            user = new User(null, null, username, new String(password));
-
-        }*/
-        int risultato = 2;
+        int risultato = 0;
         if(risultato>=0){
             if (risultato == 0) {
                 user = new User(null, null, username, new String(password), risultato);
@@ -38,8 +34,10 @@ public class Controller {
                 user = new Judge(null, null, username, new String(password), risultato);
             } else if (risultato == 2) {
                 user = new Organizer(null, null, username, new String(password), risultato);
-            } else {
-                throw new Exception("Errore durante l'accesso");
+            } else if (risultato == 3) {
+                user = new Participant(null, null, username, new String(password), risultato);
+            }else{
+                    throw new Exception("Errore durante l'accesso");
             }
         }
         return risultato;
@@ -64,4 +62,11 @@ public class Controller {
     public void logout(){
         this.user = null;
     }
+
+    /*public void sendRequest(String message, String username){
+        if(this.user instanceof Participant){
+            Participant participant = (Participant) user;
+            participant.sendRequest(message, username);
+        }
+    }*/
 }
