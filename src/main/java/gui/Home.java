@@ -120,9 +120,12 @@ public class Home {
                 frame.setVisible(false);
                 cambia.getFrame().setVisible(true);
                 */
-                CreaHackathontry crea = new CreaHackathontry(frame);
+
+                CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
                 crea.getFrame().setVisible(true);
+
+
             }
 
         });

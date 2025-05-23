@@ -1,46 +1,32 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.awt.*;
 
 public class CreaHackathon {
-    private JPanel dataPanel;
-    private JLabel titleLabel;
-    private JTextField titleArea;
-    private JLabel startLabel;
-    private JLabel endLabel;
-    private JLabel venueLable;
-    private JTextField venueArea;
-    private JPanel createPanel;
-    private JButton createButton;
     private JPanel panel;
-    public JSpinner startSpinner;
-    private JSpinner endSpinner;
-    private JComboBox comboBox1;
-    private JLabel maxTeamPartLabel;
-    private JLabel maxParticipantLabel;
+    private JButton creaHackathonButton;
     private JTextField textField1;
-    private JPanel prova;
+    private JTextField textField2;
+    private JSpinner startSpinner;
+    private JSpinner endSpinner;
+    private JTextField textField3;
+    private JComboBox comboBox1;
+    private JPanel buttonPanel;
+    private JPanel dataPanel;
+    private JPanel labelPanel;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
     public CreaHackathon(JFrame frameChiamante) {
-        frame = new JFrame("Crea Hackathon");
+        frame = new JFrame("CreaHackathontry");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setMinimumSize(new Dimension(500,500));
         frame.setVisible(true);
-        frame.setMinimumSize(new Dimension(500, 500));
-        frame.setMaximumSize(new Dimension(500, 500));
-        panel.setLayout(new GridBagLayout());
         frame.setLocationRelativeTo(null);
-
-
 
         SpinnerDateModel model = new SpinnerDateModel(new Date(), new Date(), null , Calendar.DAY_OF_MONTH);
         startSpinner.setModel(model);
@@ -62,15 +48,6 @@ public class CreaHackathon {
             if(endDate.before(startDate))
                 endSpinner.setValue(startDate);
         });
-
-        titleArea.setPreferredSize(new Dimension(150, 25));
-        venueArea.setPreferredSize(new Dimension(150, 25));
-
-
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridy = 2;
-        panel.add(createButton, gbc);
 
         // Creazione modello per la data di inizio
         SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
@@ -107,4 +84,10 @@ public class CreaHackathon {
             }
         });
     }
+
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
 }

@@ -43,6 +43,7 @@ public class AreaPersonaleOrganizzatore {
         JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
         spinner1.setEditor(startEditor);
 
+
         spinner1.addChangeListener(e -> {
             Date data = (Date) spinner1.getValue();
             if (data.before(new Date())) {

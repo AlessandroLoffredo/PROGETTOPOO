@@ -8,33 +8,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SignUp {
-    private JButton signUpButton;
+    private JPanel panel;
+    private JPanel namePanel;
+    private JPanel agePanel;
+    private JPanel buttonPanel;
+    private JPanel labelPanel;
+    private JPanel dataPanel;
     private JTextField fNameArea;
     private JTextField lNameArea;
     private JTextField usernameArea;
     private JPasswordField passwordArea;
-    private JPanel panel;
-    private JPanel namePanel;
-    private JPanel signUpPanel;
+    private JRadioButton ageRadioButton;
+    private JButton signUpButton;
     private JLabel fNameLabel;
     private JLabel lNameLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
-    private JRadioButton ageRadioButton;
     private JFrame frame;
 
     public JFrame getFrame() {
         return frame;
     }
 
-    public SignUp(JFrame frameChiamante, Controller controller){
-        frame = new JFrame("SignUp");
+    public SignUp(JFrame frameChiamante, Controller controller) {
+        frame = new JFrame("SignUpTry");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        frame.setMinimumSize(new Dimension(500,500));
-        frame.setMaximumSize(new Dimension(500,500));
+        frame.setMinimumSize(new Dimension(500, 500));
+        frame.setMaximumSize(new Dimension(500, 500));
         panel.setLayout(new GridBagLayout());
         usernameArea.setPreferredSize(new Dimension(150, 25));
         passwordArea.setPreferredSize(new Dimension(150, 25));
@@ -54,7 +57,7 @@ public class SignUp {
 
         panel.setBackground(new Color(10, 10, 30));
         namePanel.setBackground(new Color(15, 15, 50));
-        signUpPanel.setBackground(new Color(15, 15, 50));
+        buttonPanel.setBackground(new Color(15, 15, 50));
 
         fNameLabel.setForeground(new Color(0, 255, 0));
         lNameLabel.setForeground(new Color(0, 255, 0));
@@ -72,17 +75,16 @@ public class SignUp {
                         JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
                     } else if (code == -2) {
                         JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 15 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
-                    }else if(code == -3){
+                    } else if (code == -3) {
                         JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                    } else if(!ageRadioButton.isSelected()){
-                        JOptionPane.showMessageDialog(panel,"Devi confermare di avere più di 16 anni");
-                    }else {
+                    } else if (!ageRadioButton.isSelected()) {
+                        JOptionPane.showMessageDialog(panel, "Devi confermare di avere più di 16 anni");
+                    } else {
                         JOptionPane.showMessageDialog(panel, "Registrazione completata!");
                         frameChiamante.setVisible(true);
                         frame.dispose();
                     }
-                }
-                catch (IllegalArgumentException ex){  //Creiamo classe Exception nuova?
+                } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
                     System.out.println("Qualcosa è andato storto durante la registrazione");
                 }
 
