@@ -6,12 +6,8 @@ import java.util.*;
 public class Organizer extends User{
     private Hackathon organizedHackathon;
 
-    public Organizer(String fName, String lName, String username, String password, int userType) throws Exception{
+    public Organizer(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
-        if(userType != 2)
-            throw new Exception();
-        else
-            this.setUserType(userType);
         /*this.organizedHackathon = risultato della query di cercamento dell'hackathon*/
     }
 

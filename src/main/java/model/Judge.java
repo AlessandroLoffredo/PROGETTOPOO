@@ -6,12 +6,8 @@ public class Judge extends User{
     private Hackathon judgedHack;
 
 
-    public Judge(String fName, String lName, String username, String password, int userType) throws Exception{
+    public Judge(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
-        if(userType != 1)
-            throw new Exception();
-        else
-            this.setUserType(userType);
         /*this.judgedHack = risultato della query di cercamento dell'hackathon*/
     }
 

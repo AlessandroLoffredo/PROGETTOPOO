@@ -73,9 +73,6 @@ public class Home {
         });
 
 
-
-
-
         controller = new Controller(frame);
         //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
 
@@ -130,7 +127,7 @@ public class Home {
 
         });
 
-        areaPersonaleButton.addActionListener(new ActionListener() {
+        /*areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Participant")){
@@ -153,6 +150,14 @@ public class Home {
                     areaPersonale.getParticipantPanel().setVisible(false);
                     areaPersonale.getTeamPanel().setVisible(false);
                 }
+            }
+        });*/
+        areaPersonaleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
+                    areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
             }
         });
 

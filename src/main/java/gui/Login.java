@@ -56,7 +56,6 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //MANIPOLARE ACCESSI DIVERSI PER UTENTI E ADMIN, CHE ENTRERANNO CON LO STESSO BUTTON
-
                 try {
                     int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
                     if (code == -1) {
@@ -70,8 +69,7 @@ public class Login {
                         frameChiamante.setVisible(true);
                         frame.dispose();
                     }
-                }
-                catch (Exception ex){  //Creiamo classe Exception nuova?
+                } catch (Exception ex){  //Creiamo classe Exception nuova?
                     JOptionPane.showMessageDialog(panel, ex.getMessage());
                 }
 

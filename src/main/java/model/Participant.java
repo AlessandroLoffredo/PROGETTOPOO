@@ -13,12 +13,8 @@ public class Participant extends User {
     private Hackathon parHackathon;
 
     //Costruttore
-    public Participant(String fName, String lName, String username, String password, int userType) throws Exception{
+    public Participant(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
-        if(userType != 3)
-            throw new Exception();
-        else
-            this.setUserType(userType);
         /*this.parHackathon = risultato della query di cercamento dell'hackathon*/
     }
 
@@ -47,6 +43,7 @@ public class Participant extends User {
 
     public void addInvRecived(Request request){
         this.invRecived.add(request);
+        //QUI CI SARà LA QUERY DI INSERIMENTO DELLA RICHIESTA NEL DB
     }
 
     public void manageDoc(){
@@ -60,18 +57,18 @@ public class Participant extends User {
     }
 
 
-    /*public int sendRequest (String message, String receiver) {
+    public int sendRequest (String message, String receiver) {
         //QUERY PER CONTROLLARE L'ESISTENZA DEL RICEVENTE
+        //PARTECIPANTE DI TEST, IL VERO RICEVENTE VERRà INIZIALIZZATO CON UNA QUERY
+        Participant parReceiver = new Participant(null, null, "pippo", "pluto");
 
-        Participant parReceiver = new Participant(null, null, "pippo", "pluto", 3);
         if(parReceiver.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
             return -1;
-        }
-        else{
+        }else{
             parReceiver.addInvRecived(new Request(message, this)); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
             return 0;
         }
-    }*/
+    }
 
 
 
@@ -122,5 +119,9 @@ public class Participant extends User {
             this.parTeam = new Team(this.getUsername(), this.parHackathon);
             this.parHackathon.addTeam(this.parTeam);
         }
+    }
+
+    public ArrayList<Request> getInvRecived() {
+        return invRecived;
     }
 }

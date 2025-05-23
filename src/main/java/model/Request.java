@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Request {
     private String message;
     private User sender;
@@ -29,5 +27,10 @@ public class Request {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return this.sender.getUsername() + ": " +this.message;
     }
 }

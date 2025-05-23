@@ -1,11 +1,15 @@
 package gui;
 
 import controller.Controller;
-import model.Participant;
+import model.Request;
+import model.User;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AreaPersonale {
     private JPanel panel;
@@ -26,7 +30,7 @@ public class AreaPersonale {
     private JButton accettaButton;
     private JButton rifiutaButton;
     private JPanel messagePanel;
-    private JList requestList;
+    private JList<Request> requestList;
     private JButton homeButton;
     private JTextField messageArea;
     private JPanel teamPanel;
@@ -52,6 +56,59 @@ public class AreaPersonale {
             }
         });
 
+        participantComboBox.addItem("-");
+        participantComboBox.addItem("MAMMT");
+
+
+        DefaultListModel<Request> model = new DefaultListModel<>();
+
+        ArrayList<Request> richieste = new ArrayList<>();
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
+        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        //for(Request r : controller.getRequests())
+          //  model.addElement(r);
+
+        for(Request r : richieste)
+            model.addElement(r);
+
+        requestList.setModel(model);
+//        frame.add(new JScrollPane(requestList));
+
+        requestList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
+                if (scelta == JOptionPane.YES_OPTION) {
+                    System.out.println("L'utente ha scelto Sì.");
+                    // Split della stringa
+                    String[] parti = requestList.getSelectedValue().toString().split(":", 2); // Il '2' limita il numero di suddivisioni
+
+                    int t = controller.handleAccRequest(parti[0], frame);
+                } else {
+                    System.out.println("L'utente ha scelto No.");
+                }
+
+            }
+        });
         cambiaUsernameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,6 +117,7 @@ public class AreaPersonale {
                 cambiaUsername.getFrame().setVisible(true);
             }
         });
+
         cambiaPasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,17 +136,40 @@ public class AreaPersonale {
                 frame.dispose();
             }
         });
+
         /*
         INSERIRE CONTROLLO PER VEDERE SE IL PARTECIPANTE FA PARTE DI UN TEAM...
         OSCURARE L'AREA TEAM QUALORA NON NE FACCIA ANCORA PARTE
          */
+
         /*inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
             }
         });*/
+        inviaRichiestaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase("-") || messageArea.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(panel, "Inserire il messaggio e/o scegliere l'utente", "WARNING", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    int code = controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
+                    if (code == -2) {
+                        JOptionPane.showMessageDialog(panel, "Non sei autorizzato a mandare richieste", "WARNING", JOptionPane.WARNING_MESSAGE);
+                    } else if (code == -1) {
+                        JOptionPane.showMessageDialog(panel, "Il team dell'utente a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        messageArea.setText("");
+                        participantComboBox.setSelectedIndex(0);
+                    }
+                }
+            }
+        });
+
     }
+
 
     public JFrame getFrame() {
         return frame;

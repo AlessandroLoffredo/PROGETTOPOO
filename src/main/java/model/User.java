@@ -11,23 +11,8 @@ public class User extends Person {
     private int userType; //QUANDO IL DB SARà CONNESSO, POTREMO SAPERE DI CHE TIPO DI UTENTE SI PARLA
     private ArrayList<Request> requestsJudge;
 
-
-
-
     //BUILDER
-    public User(String fName, String lName, String username, String password, int userType) throws Exception {
-        this.fName = fName;
-        this.lName = lName;
-        this.username = username;
-        this.password = password;
-        this.requestsJudge = null;
-        if(userType != 0)
-            throw new Exception();
-        else
-            this.userType = userType;
-    }
-
-    public User(String fName, String lName, String username, String password) {
+    public User(String fName, String lName, String username, String password){
         this.fName = fName;
         this.lName = lName;
         this.username = username;
@@ -111,5 +96,9 @@ public class User extends Person {
         this.userType = userType;
     }
 
-
+    public static User findUser(String username){
+        //QUERY CHE TROVA L'UTENTE ASSOCIATO ALLA STRINGA
+        User user = new Participant(null, null, "Cacca", "pluto");
+        return user;
+    }
 }

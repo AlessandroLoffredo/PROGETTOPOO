@@ -1,8 +1,9 @@
 package controller;
 
+import gui.CreaTeam;
 import model.*;
-
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Controller {
     //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
@@ -23,19 +24,19 @@ public class Controller {
     }
 
     //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
-    public int handleLogin(String username, char[] password) throws Exception{
+    public Integer handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
         //int risultato = person.logIn(username, password);
-        int risultato = 0;
+        int risultato = 3;
         if(risultato>=0){
             if (risultato == 0) {
-                user = new User(null, null, username, new String(password), risultato);
+                user = new User(null, null, username, new String(password));
             } else if (risultato == 1) {
-                user = new Judge(null, null, username, new String(password), risultato);
+                user = new Judge(null, null, username, new String(password));
             } else if (risultato == 2) {
-                user = new Organizer(null, null, username, new String(password), risultato);
+                user = new Organizer(null, null, username, new String(password));
             } else if (risultato == 3) {
-                user = new Participant(null, null, username, new String(password), risultato);
+                user = new Participant(null, null, username, new String(password));
             }else{
                     throw new Exception("Errore durante l'accesso");
             }
@@ -63,10 +64,39 @@ public class Controller {
         this.user = null;
     }
 
-    /*public void sendRequest(String message, String username){
+    public int sendRequest(String message, String username){
         if(this.user instanceof Participant){
             Participant participant = (Participant) user;
-            participant.sendRequest(message, username);
+            int risultato = participant.sendRequest(message, username);
+            return risultato;
+        }else{
+            return -2;
         }
-    }*/
+    }
+
+    public ArrayList<Request> getRequests(){
+        if(this.user instanceof Participant){
+            return ((Participant) user).getInvRecived();
+        }else{
+            return null;
+        }
+    }
+
+    //GESTIONE RICHIESTE ACCETTATE DALL'UTENTE
+    //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
+    public int handleAccRequest(String username, JFrame frameChiamante){
+        User sender = User.findUser(username);
+        Participant p = (Participant) sender;
+        p.setParTeam(null);
+        Participant p2 = new Participant(null, null, "pippo", "pluto");
+        p2.setParTeam(null);
+        if(p.getParTeam() == null){
+            if(p2.getParTeam() == null){
+                CreaTeam creaTeam = new CreaTeam(frameChiamante, this);
+                creaTeam.getFrame().setVisible(true);
+                frameChiamante.setEnabled(false);
+            }
+        }
+        return 0;
+    }
 }
