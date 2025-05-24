@@ -3,7 +3,6 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -118,9 +117,9 @@ public class Home {
                 cambia.getFrame().setVisible(true);
                 */
 
-                CreaHackathon crea = new CreaHackathon(frame);
+                /*CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
-                crea.getFrame().setVisible(true);
+                crea.getFrame().setVisible(true);*/
 
 
             }
@@ -156,8 +155,8 @@ public class Home {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                //AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
-                AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
+                AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
+                //AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
                 //AdminGui areaPersonale = new AdminGui(frame, controller);
                 areaPersonale.getFrame().setVisible(true);
                 frame.setVisible(false);

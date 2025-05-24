@@ -31,7 +31,7 @@ public class Hackathon {
         this.maxRegistration = maxRegistration;
         this.maxTeamParticipant = maxTeamParticipant;
         this.ranking = new ArrayList<>();
-        this.problemDescription = "Problema da definire";
+        this.problemDescription = "";
         this.startRegDate = null;
         Calendar giorno = Calendar.getInstance();
         giorno.setTime(startDate);

@@ -33,19 +33,19 @@ public class Person {
         */
     }
 
-    public int logIn(String username, char[] password){
+    public User logIn(String username, char[] password){
         /*//Inserimento query al database, in modo da poter controllare la poteziale esistenza di un utente
         String convertedPass = new String(password);
-        if(username.isEmpty() || password.isEmpty())
-            return -1;
 
         //IL CONTROLLO è SUL NUMERO DI TUPLE RESTITUITO DALLA QUERY
         if(username o password errati ){
-            return -2;
+           return null  ;
         }else if(potenziale risultato della query di logIn == 1){
-            return 0;
+            QUERY PER CONTROLLARE IL TIPO DI UTENTE
+            Codice per la gestione dei vari casi
+            User user = new User/Participant/Judge/Organizer (risultato query); //SULLA BASE DEI VALORI RESTITUITI DALLA QUERY
         }*/
-        //IL RETURN 0 SERVE SOLO A SCOPO FUNZIONALE E DI TESTING
-        return 0;
+        Judge judge = new Judge(null, null, "plutissimo", "forzanapoli");
+        return judge;
     }
 }
