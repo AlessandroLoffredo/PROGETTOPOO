@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 public class Document {
+    private String name;
     private String description;
     private LocalDateTime date;
     private String comment;

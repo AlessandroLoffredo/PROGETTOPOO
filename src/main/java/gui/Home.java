@@ -94,9 +94,9 @@ public class Home {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignUp signUp = new SignUp(frame, controller);
+                /*SignUp signUp = new SignUp(frame, controller);
                 frame.setVisible(false);
-                signUp.getFrame().setVisible(true);
+                signUp.getFrame().setVisible(true);*/
 
 
                 /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
@@ -118,10 +118,13 @@ public class Home {
                 cambia.getFrame().setVisible(true);
                 */
 
-                CreaHackathon crea = new CreaHackathon(frame);
+                /*CreaHackathon crea = new CreaHackathon(frame);
                 frame.setVisible(false);
-                crea.getFrame().setVisible(true);
+                crea.getFrame().setVisible(true);*/
 
+                TeamArea team = new TeamArea(frame, controller);
+                frame.setVisible(false);
+                team.getFrame().setVisible(true);
 
             }
 
@@ -156,8 +159,8 @@ public class Home {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                //AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
-                AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
+                AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
+                //AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
                 //AdminGui areaPersonale = new AdminGui(frame, controller);
                 areaPersonale.getFrame().setVisible(true);
                 frame.setVisible(false);
