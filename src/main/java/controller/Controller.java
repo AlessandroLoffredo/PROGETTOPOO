@@ -6,25 +6,52 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
+ */
+
 public class Controller {
     //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
     //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
     private User user;
     private JFrame home;
 
+    /**
+     *  Instanzia un nuovo controller.
+     *
+     * @param frame il frame principale della classe Home.java.
+     */
     public Controller(JFrame frame) {
         user = null;
         home = frame;
     }
 
+    /**
+     * Restituisce l'attributo home.
+     *
+     * @return frame: Il frame della classe Home.java.
+     */
     public JFrame getHome() {
         return home;
     }
 
+    /**
+     * Restituisce l'attributo utente.
+     *
+     * @return L'utente che naviga nella pagina.
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Gestisce l'azione di login di un utente già registrato.
+     *
+     * @param username L'username dell'utente che intende accedere.
+     * @param password La password dell'utente che intende accedere.
+     * @return int: Codice che indentifica le diverse situazioni di un accesso.
+     * @throws Exception Se accade che nessuna delle situazioni previste accade.
+     */
     //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
     public int handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
@@ -42,25 +69,60 @@ public class Controller {
         return 0;
     }
 
+    /**
+     * Gestisce l'azione di registrazione di un nuovo utente.
+     *
+     * @param username L'username del nuovo utente.
+     * @param password La password del nuovo utente.
+     * @param fName    Il nome del nuovo utente.
+     * @param lName    Il cognome del nuovo utente.
+     * @return int: Codice che identifica le diverse situazioni di una registrazione.
+     */
     public int handleSignUp(String username, char[] password, String fName, String lName){
         Person person = new Person();
         //int risultato person.signUp(username,password,fName, lName);
         return 0;
     }
 
+    /**
+     * Permette di modificare la password di un utente esistente
+     *
+     * @param oldPassword   La vecchia password dell'utente, utilizzata per una questione di sicurezza.
+     * @param newPassword   La nuova password dell'utente
+     * @param confirmedPass La conferma della nuova password dell'utente
+     * @return int: Codice che identifica le diverse situazioni di un cambio password.
+     */
     public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
         //return this.user.resetPassword(oldPassword, newPassword, confirmedPass, this.user.getUsername());
         return 0;
     }
 
+    /**
+     * Permette di cambiare l'username di un utente esistente.
+     *
+     * @param newUsername Il nuovo username dell'utente.
+     * @param password    La password dell'utente, utilizzata per una questione di sicurezza.
+     * @return int: Codice che identifica le varie situazioni di un cambio username.
+     */
     public int changeUsername(String newUsername, char[] password){
         //return this.user.resetUsername(newUsername, password, this.user.getUsername());
         return 0;
     }
 
+    /**
+     * Metodo che disconnette l'utente dalla piattaforma.
+     */
     public void logout(){
         this.user = null;
     }
+
+    /**
+     * Permette ad un partecipante di chiedere ad un altro partecipante dello stesso hackathon di unirsi al suo team.
+     *
+     * @param message  Messaggio motivazione che l'utente invia insieme alla richiesta.
+     * @param username L'username dell'utente che invia la richiesta.
+     * @return int: Codice che identifica le diverse situazioni che possono accadere.
+     */
 
     public int sendRequest(String message, String username){
         if(this.user instanceof Participant){
@@ -72,7 +134,13 @@ public class Controller {
         }
     }
 
-    public int sendRequest(User username){
+    /**
+     * Permette ad un organizzatore di inviare ad utente la richiesta di diventare giudice di un hackathon.
+     *
+     * @param username Username dell'utente da invitare.
+     * @return int: Un codice che identifica le varie situazioni che possono accadere.
+     */
+    public int sendRequestOrganizer(User username){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA USER A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
         //SI DOVRA' CERCARE NEL DB L'USER CORRISPONDENTE ALL'USERNAME
         /*ArrayList<Request> richieste = username.getRequestsJudge();
@@ -87,6 +155,11 @@ public class Controller {
         return 0;
     }
 
+    /**
+     * Restituisce gli inviti di unione al team che un partecipante riceve.
+     *
+     * @return ArrayList: Lista di invita della classe Participant.
+     */
     public ArrayList<Request> getRequests(){
         if(this.user instanceof Participant){
             return ((Participant) user).getInvRecived();
@@ -95,7 +168,14 @@ public class Controller {
         }
     }
 
-    //GESTIONE RICHIESTE ACCETTATE DALL'UTENTE
+    /**
+     * Gestisce ciò che avviene quando un partecipante permette ad un altro di unirsi al suo team tramite richiesta.
+     *
+     * @param username       L'utente che invia la richiesta.
+     * @param frameChiamante Il frame da dove viene chiamato il metodo, da questa dipende l'azione successiva.
+     * @return int: Codice che identifica le varie situazioni che possono accadere.
+     */
+
     //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
     public int handleAccRequest(String username, JFrame frameChiamante){
         User sender = User.findUser(username);
@@ -113,10 +193,21 @@ public class Controller {
         return 0;
     }
 
+    /**
+     * Gestisce l'aggiunta della descrizione del problema di un Hackathon da parte di un giudice.
+     *
+     * @param description La descrizione del problema.
+     */
     public void handleProblemDescription(String description){
         ((Judge)user).describeProblem(description);
     }
 
+    /**
+     * Gestisce la lista dei documenti di un team, che unn giudice osserva e commenta.
+     *
+     * @param team Il team di cui il giudice vuole vedere la lista.
+     * @return ArrayList: La lista dei documenti di un team.
+     */
     public ArrayList<Document> handleLoadFile(Team team){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
         //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
@@ -129,16 +220,32 @@ public class Controller {
         CI SARANNO COMMENTI DA PIU' GIUDICI?
     }*/
 
+    /**
+     * Gestisce l'assegnazione di un voto da parte di un giudice ad un team per il lavoro svolto.
+     *
+     * @param team Il team da giudicare.
+     * @param mark Il voto assegnato.
+     */
     public void handleAssignMark(Team team, int mark){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
         //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
         team.addMark((short) mark);
     }
 
+    /**
+     * Gestisce l'inserimento da parte dell'organizzatore della data di inizio delle registrazioni all'Hackathon.
+     *
+     * @param date La data di inizio registrazioni.
+     */
     public void handleStartSignUp(Date date){
         System.out.println(date);
     }
 
+    /**
+     *  Controlla se, per l'Hackathon gestito da un organizzatore, è già stata gestita la data di apertura delle registrazioni.
+     *
+     * @return boolean: per sapere se sono state aperte.
+     */
     public boolean verifyingStartRegDate(){
         /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
             return false;
@@ -151,6 +258,11 @@ public class Controller {
         return true;
     }
 
+    /**
+     * Verifica se l'Hackathon gestito da un organizzatore è già cominciato.
+     *
+     * @return boolean: per sapere se è cominciato.
+     */
     public boolean verifyingStartHack(){
         /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
             return true;

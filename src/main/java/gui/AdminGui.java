@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ *  Classe che gestisce tutte le azioni che un Admin della piattaforma è in grado di eseguire.
+ */
 public class AdminGui {
     private JPanel panel;
     private JPanel listPanel;
@@ -18,10 +21,17 @@ public class AdminGui {
     private JPanel operationPanel;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+    /**
+     * Instanzia una nuova AdminGui.
+     * <p>
+     * La classe AdminGui permette ad un Admin di creare un Hackathon e di tornare alla home.
+     * <br>La creazione di un Hackathon richiede ad un Admin di inserire i dati della gara, e l'organizzatore che la gestirà.
+     * </p>
+     *
+     * @param frameChiamante Il frame che istanzia la nuova AdminGui.
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public AdminGui(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("SignIn");
         panel = new JPanel(new BorderLayout()); // Usa BorderLayout per separare le sezioni
@@ -91,8 +101,8 @@ public class AdminGui {
         }
 
         /*
-        questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
-        degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
+        * questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
+        * degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
         */
         createButton.addActionListener(new ActionListener() {
             @Override
@@ -102,6 +112,15 @@ public class AdminGui {
                 crea.getFrame().setVisible(true);
             }
         });
+    }
+
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
     }
 
 }

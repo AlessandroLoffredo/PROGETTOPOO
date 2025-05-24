@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Classe che contiene tutte le azioni e le informazioni di un utente o di un partecipante.
+ */
 public class AreaPersonale {
     private JPanel panel;
     private JPanel dataPanel;
@@ -38,6 +41,19 @@ public class AreaPersonale {
     private JLabel descLabel;
     private JFrame frame;
 
+    /**
+     * Instanzia una nuova AreaPersonale.
+     * <p>
+     * La classe AreaPersonale varia in base all'utente che vi accede.
+     * <br>Se vi accede un semplice utente, allora potrà soltanto vedere i suoi dati e modificarli, e rispondere alle richieste ricevute da un organizzatore
+     * che lo invita a diventare giudice di un Hackthon.
+     * <br>Se vi accede un partecipante ad un Hackathon in corso, potrà, oltre a vedere e modificare i suoi dati, vedere le informazioni
+     * sul team di cui fa parte, creare un team se non fa parte di nessun team esiste, inviare richieste per unirsi ad un partecipante dello stesso hackathon
+     * e rispondere alle richieste ricevute dagli altri utenti.
+     * </p>
+     * @param frameChiamante Il frame che istanzia la nuova AreaPersonale.
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
@@ -164,7 +180,7 @@ public class AreaPersonale {
         /*inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
+                controller.sendRequestOrganizer(messageArea.getText(), (String) participantComboBox.getSelectedItem());
             }
         });*/
         inviaRichiestaButton.addActionListener(new ActionListener() {
@@ -190,18 +206,38 @@ public class AreaPersonale {
     }
 
 
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * Restituisce il panel del team.
+     *
+     * @return JPanel: Il panel che contiene le informazioni sul team.
+     */
     public JPanel getTeamPanel() {
         return teamPanel;
     }
 
+    /**
+     * Restituisce il panel di inserimento del messaggio.
+     *
+     * @return JPanel: il panel che contiene gli elementi per inviare un messaggio.
+     */
     public JPanel getMessagePanel() {
         return messagePanel;
     }
 
+    /**
+     * Restituisce il panel che contiene la lista delle richieste ricevute.
+     *
+     * @return JPanel: panel che contiene gli elementi di gestione della lista di richieste.
+     */
     public JPanel getParticipantPanel() {
         return participantPanel;
     }

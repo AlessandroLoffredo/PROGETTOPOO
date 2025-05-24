@@ -1,16 +1,13 @@
 package gui;
 
 import controller.Controller;
-import model.Organizer;
 import model.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -142,7 +139,7 @@ public class AreaPersonaleOrganizzatore {
                     JOptionPane.showMessageDialog(panel, "Devi scegliere un utente", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    int code = controller.sendRequest((User)comboBox1.getSelectedItem());
+                    int code = controller.sendRequestOrganizer((User)comboBox1.getSelectedItem());
                     if(code == 1){
                         JOptionPane.showMessageDialog(panel, "Hai già inviato una richiesta a questo utente", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     }
