@@ -205,7 +205,7 @@
             </constraints>
             <properties>
               <font name="PT Mono"/>
-              <text value="Carica descrizione problema "/>
+              <text value="Carica descrizione problema"/>
             </properties>
           </component>
         </children>

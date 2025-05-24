@@ -3,7 +3,6 @@ package controller;
 import gui.CreaTeam;
 import model.*;
 import javax.swing.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -27,24 +26,20 @@ public class Controller {
     }
 
     //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
-    public Integer handleLogin(String username, char[] password) throws Exception{
+    public int handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
-        //int risultato = person.logIn(username, password);
-        int risultato = 3;
-        if(risultato>=0){
-            if (risultato == 0) {
-                user = new User(null, null, username, new String(password));
-            } else if (risultato == 1) {
-                user = new Judge(null, null, username, new String(password));
-            } else if (risultato == 2) {
-                user = new Organizer(null, null, username, new String(password));
-            } else if (risultato == 3) {
-                user = new Participant(null, null, username, new String(password));
+        this.user = person.logIn(username, password);
+        /*if(username.isEmpty() || (new String(password)).isEmpty()){
+            return -1;
+        }else{
+            this.user = person.logIn(username, password);
+            if(user == null){
+                return -2;
             }else{
-                    throw new Exception("Errore durante l'accesso");
+                return 0;
             }
-        }
-        return risultato;
+        }*/
+        return 0;
     }
 
     public int handleSignUp(String username, char[] password, String fName, String lName){

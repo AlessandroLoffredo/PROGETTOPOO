@@ -1,17 +1,28 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Judge extends User{
     private Hackathon judgedHack;
 
-
     public Judge(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
-        /*this.judgedHack = risultato della query di cercamento dell'hackathon*/
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = null;
+        Date fdata = null;
+        try {
+            data = dateFormat.parse("23/05/2025"); // Converte la stringa in Data
+            fdata = dateFormat.parse("24/05/2025");
+        } catch (ParseException e) {
+            System.out.println("Errore: Formato della data non valido!");
+        }
+        this.judgedHack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
     }
 
     public void describeProblem(String description){
+        //CARICARE LA DESCRIZIONE NEL DB
         this.judgedHack.setProblemDescription(description);
     }
 

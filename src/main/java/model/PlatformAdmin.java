@@ -49,36 +49,8 @@ public class PlatformAdmin {
         return this.password;
     }
 
-    public void setHackathon(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Inserire il nome del nuovo hackaton da creare");
-        String title = in.nextLine();
-        System.out.println("Inserire la sede di svolgimento");
-        String venue = in.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        System.out.println("Inserire la data di inizio della competizione (yyyy/mm/dd)");
-        String firstDate = in.nextLine();
-        LocalDate startDate = LocalDate.parse(firstDate, formatter);
-        System.out.println("Inserire la data di fine della competizione (yyyy/mm/dd)");
-        String lastDate = in.nextLine();
-        LocalDate endDate = LocalDate.parse(lastDate, formatter);
-        System.out.println("Inserire il numero massimo di partecipanti");
-        int maxReg = in.nextInt();
-        System.out.println("Inserire il numero massimo di partecipanti per team");
-        int maxTeam = in.nextInt();
-        /*  gestione organizzatore con db
-            l'admin avrà una visione di tutti gli utenti tra i quali sceglierà l'organizzatore, che verrà recuperato con una query
-            e i cui attributi verrano modificati opportunamente
-        */
-        //Hackathon newestHackaton = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeam, this);
-        /*
-            tutti gli attirbuti serviranno per effettura una query e aggiungere un nuovo hackathon al db
-        */
-        //L'INTERO METODO POTREBBE ESSERE SVOLTO CON LA GUI E QUINDI LE ISTRUZIONI FATTE IN MAIN CHE PASSERà I VALORI COME PARAMETRI DEL METODO
-        in.close();
-    }
-
     public void createHackathon(String title, String venue, Date stratDate, Date endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer){
-        Hackathon hack = new Hackathon(title, venue, stratDate, endDate, maxRegistration, maxTeamParticipant, hackOrganizer);
+        //Hackathon hack = new Hackathon(title, venue, stratDate, endDate, maxRegistration, maxTeamParticipant, hackOrganizer);
+        //ANDRà FATTA UNA QUERY PER AGGIUNGERE UN NUOVO HACKATHON AL DB
     }
 }

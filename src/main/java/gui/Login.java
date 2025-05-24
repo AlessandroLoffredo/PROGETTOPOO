@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.*;
 
+
 public class Login {
     private JPanel panel;
     private JTextField usernameArea;
@@ -56,7 +57,7 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //MANIPOLARE ACCESSI DIVERSI PER UTENTI E ADMIN, CHE ENTRERANNO CON LO STESSO BUTTON
-                try {
+                /*try {
                     int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
                     if (code == -1) {
                         JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
@@ -71,9 +72,17 @@ public class Login {
                     }
                 } catch (Exception ex){  //Creiamo classe Exception nuova?
                     JOptionPane.showMessageDialog(panel, ex.getMessage());
+                }*/
+                try {
+                    int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
+                    JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
+                    home.getAreaPersonaleButton().setEnabled(true);
+                    home.getLoginButton().setText("Logout");
+                    frameChiamante.setVisible(true);
+                    frame.dispose();
+                } catch (Exception ex){  //Creiamo classe Exception nuova?
+                    JOptionPane.showMessageDialog(panel, ex.getMessage());
                 }
-
-
             }
         });
     }
