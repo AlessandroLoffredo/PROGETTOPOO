@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +22,7 @@ public class AdminGui {
         return frame;
     }
 
-    public AdminGui(JFrame frameChiamante) {
+    public AdminGui(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("SignIn");
         panel = new JPanel(new BorderLayout()); // Usa BorderLayout per separare le sezioni
         frame.setContentPane(panel);

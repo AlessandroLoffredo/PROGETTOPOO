@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 
 public class PlatformAdmin {
@@ -75,5 +76,9 @@ public class PlatformAdmin {
         */
         //L'INTERO METODO POTREBBE ESSERE SVOLTO CON LA GUI E QUINDI LE ISTRUZIONI FATTE IN MAIN CHE PASSERà I VALORI COME PARAMETRI DEL METODO
         in.close();
+    }
+
+    public void createHackathon(String title, String venue, Date stratDate, Date endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer){
+        Hackathon hack = new Hackathon(title, venue, stratDate, endDate, maxRegistration, maxTeamParticipant, hackOrganizer);
     }
 }

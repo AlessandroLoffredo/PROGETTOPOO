@@ -11,12 +11,12 @@ public class Judge extends User{
         /*this.judgedHack = risultato della query di cercamento dell'hackathon*/
     }
 
-    public void describeProblem(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Inserire la descrizione del problema dell'hackathon (non utilizzare enter/a capo fino alla terminazione della descrizione)> ");
-        String problem = in.nextLine();
-        this.judgedHack.setProblemDescription(problem);
-        in.close();
+    public void describeProblem(String description){
+        this.judgedHack.setProblemDescription(description);
+    }
+
+    public Hackathon getJudgedHack() {
+        return judgedHack;
     }
 
     public void assignMark(){

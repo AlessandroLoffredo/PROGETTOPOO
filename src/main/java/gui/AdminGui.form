@@ -22,13 +22,17 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <editable value="false"/>
+              <font name="PT Mono"/>
+            </properties>
           </component>
           <component id="95128" class="javax.swing.JButton" binding="createButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value="Crea un nuovo Hackathon"/>
             </properties>
           </component>
@@ -38,13 +42,17 @@
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <editable value="false"/>
+              <font name="PT Mono"/>
+            </properties>
           </component>
           <component id="9c509" class="javax.swing.JButton" binding="goToButton">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value="Home"/>
             </properties>
           </component>
@@ -55,7 +63,9 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font name="PT Mono"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>

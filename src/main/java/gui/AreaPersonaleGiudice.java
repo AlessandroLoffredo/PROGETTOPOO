@@ -1,8 +1,17 @@
 package gui;
 
 import controller.Controller;
+import model.Document;
+import model.Judge;
+import model.Request;
+import model.Team;
 
+import javax.print.Doc;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AreaPersonaleGiudice {
     private JPanel panel;
@@ -18,22 +27,23 @@ public class AreaPersonaleGiudice {
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
     private JPanel judjePanel;
-    private JTextArea commentArea;
-    private JButton loadButton;
     private JList docList;
-    private JPanel examinePanel;
+    private JPanel markPanel;
+    private JTextArea problemArea;
+    private JPanel problemPanel;
+    private JButton sendProbButton;
+    private JPanel selectExaminePanel;
     private JPanel selectPanel;
     private JComboBox teamComboBox;
     private JButton selectButton;
+    private JPanel examinePanel;
     private JPanel listPanel;
     private JPanel commentPanel;
-    private JPanel markPanel;
-    private JComboBox teamComboBoxMark;
+    private JTextArea commentArea;
+    private JButton loadButton;
     private JButton assigneButton;
+    private JComboBox teamComboBoxMark;
     private JSlider markSlider;
-    private JPanel problemPanel;
-    private JTextArea problemArea;
-    private JButton sendProbButton;
     private JFrame frame;
 
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
@@ -44,7 +54,144 @@ public class AreaPersonaleGiudice {
         frame.setVisible(true);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
+
+
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        problemArea.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        fNameArea.setBackground(new Color(15, 15, 50));
+        lNameArea.setBackground(new Color(15, 15, 50));
+        userArea.setBackground(new Color(15, 15, 50));
+        docList.setBackground(new Color(15, 15, 50));
+
+        fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        userLabel.setForeground(new Color(0, 255, 0));
+        markSlider.setForeground(Color.GREEN);
+
+        cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
+        cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+        docList.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        problemArea.setForeground(new Color(0, 255, 0));
+
+        markSlider.setMaximum(10);
+        markSlider.setMinimum(0);
+        markSlider.setValue(5);
+
+        markSlider.setMinorTickSpacing(1); // Ogni step è di 1
+        markSlider.setMajorTickSpacing(1); // Mostra i tick ogni 10 unità
+        markSlider.setSnapToTicks(true); // Il cursore si muove esattamente sui tick
+        markSlider.setPaintTicks(true); // Mostra i tick
+        markSlider.setPaintLabels(true); // Mostra i numeri
+
+
+        homeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
+
+        cambiaUsernameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
+                frame.setVisible(false);
+                cambiaUsername.getFrame().setVisible(true);
+            }
+        });
+
+        cambiaPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CambiaPassword cambiaPassword = new CambiaPassword(frame, controller);
+                frame.setVisible(false);
+                cambiaPassword.getFrame().setVisible(true);
+            }
+        });
+
+        sendProbButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(problemArea.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    controller.handleProblemDescription(problemArea.getText());
+                    problemArea.setText("");
+                    if(sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")){
+                        JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(panel, "Descrizione modificata","Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        /*sendProbButton.addChangeListener(e -> {
+            if(!((Judge)controller.getUser()).getJudgedHack().getProblemDescription().isEmpty()){
+                sendProbButton.setText("Modifica descrizione problema");
+            }
+        });*/
+
+        //BISOGNERA' CARICARE NELLA TEAMCOMBOBOX E NELLA TEAMCOMBOBOXMARK I NOMI DI TUTTI I TEAM NELL'HACKATHON TRAMITE DB
+
+        teamComboBox.addItem("-");
+        teamComboBoxMark.addItem("-");
+
+
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(teamComboBox.getSelectedItem().equals("-")){
+                    JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    if(controller.handleLoadFile((Team) teamComboBox.getSelectedItem()).isEmpty()){
+                        JOptionPane.showMessageDialog(panel, "Il Team selezionato non ha ancora caricato documenti", "INFO", JOptionPane.INFORMATION_MESSAGE );
+                    }
+
+                    else{
+                        ArrayList<Document> list = controller.handleLoadFile((Team) teamComboBox.getSelectedItem());
+                        DefaultListModel<Document> model = new DefaultListModel<>();
+                        for (Document d : list) {
+                            model.addElement(d);
+                        }
+                    }
+                }
+            }
+        });
+
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(commentArea.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(panel, "Scrivi un commento", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                }
+               /* else {
+                    controller.handleComment(commentArea.getText(), frame);
+                    DUBBIO NEL CONTROLLER
+                }*/
+            }
+        });
+
+        assigneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(teamComboBoxMark.getSelectedItem().equals("-")){
+                    JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler assegnare: " + markSlider.getValue() + " al team: " + teamComboBoxMark.getSelectedItem(),"Assegna voto", JOptionPane.YES_NO_OPTION);
+                    if(scelta == JOptionPane.YES_OPTION){
+                        controller.handleAssignMark((Team) teamComboBoxMark.getSelectedItem(), markSlider.getValue());
+                    }
+                }
+            }
+        });
     }
+
 
     public JFrame getFrame() {
         return frame;

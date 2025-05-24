@@ -3,13 +3,16 @@ package controller;
 import gui.CreaTeam;
 import model.*;
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Controller {
     //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
     //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
     private User user;
     private JFrame home;
+
     public Controller(JFrame frame) {
         user = null;
         home = frame;
@@ -74,6 +77,21 @@ public class Controller {
         }
     }
 
+    public int sendRequest(User username){
+        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA USER A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
+        //SI DOVRA' CERCARE NEL DB L'USER CORRISPONDENTE ALL'USERNAME
+        /*ArrayList<Request> richieste = username.getRequestsJudge();
+        for(Request r : richieste){
+            if(r.getSender().equals(username)){
+                return 1;
+            }
+        }
+        username.addRequest(new Request("Invito per giudicare l'Hackathon: " + ((Organizer)user).getOrganizedHackathon().getTitle(), user));
+
+         */
+        return 0;
+    }
+
     public ArrayList<Request> getRequests(){
         if(this.user instanceof Participant){
             return ((Participant) user).getInvRecived();
@@ -99,4 +117,63 @@ public class Controller {
         }
         return 0;
     }
+
+    public void handleProblemDescription(String description){
+        ((Judge)user).describeProblem(description);
+    }
+
+    public ArrayList<Document> handleLoadFile(Team team){
+        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
+        //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
+        return team.getDocList();
+    }
+
+    /*public void handleComment(String comment, JFrame frame){
+        if(COMMENTO GIA' PRESENTE PER IL DOC)
+        COME ARRIVIAMO AL DOC?
+        CI SARANNO COMMENTI DA PIU' GIUDICI?
+    }*/
+
+    public void handleAssignMark(Team team, int mark){
+        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
+        //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
+        team.addMark((short) mark);
+    }
+
+    public void handleStartSignUp(Date date){
+        System.out.println(date);
+    }
+
+    public boolean verifyingStartRegDate(){
+        /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
+            return false;
+        }
+        else {
+            return true;
+        }
+        */
+        //INSERITO PER COMODITA' PER TEST
+        return true;
+    }
+
+    public boolean verifyingStartHack(){
+        /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
+            return true;
+        }
+        else {
+            return false;
+        }
+         */
+        //INSERITO PER COMODITA' PER TEST
+        return false;
+    }
+
+    /*public int handleCreateHackathon(String title, String venue, Date startHack, Date endHack, int maxPar, int maxParTeam){
+        //CONTROLLI CON IL DB PER VERIFICARE CHE NON CI SIANO ALTRI HACKATHON UGUALI...
+        //VALUTARE E DETERMINARE QUALI ELEMENTI POSSONO ESSERE UGUALI...
+        //E NEL CASO RETSITUIRE 1
+        //DOBBIAMO CREARE ATTRIBUTO ADMIN??
+        // (admin.createHackathon(title, venue, startHack, endHack, maxPar, maxParTeam);
+    }
+     */
 }

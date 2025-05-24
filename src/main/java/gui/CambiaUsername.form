@@ -23,6 +23,7 @@
               </grid>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value=""/>
             </properties>
           </component>
@@ -31,6 +32,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value="Nuovo username"/>
             </properties>
           </component>
@@ -50,13 +52,16 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <font name="PT Mono"/>
+            </properties>
           </component>
           <component id="d60a5" class="javax.swing.JLabel" binding="passwordLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value="Password"/>
             </properties>
           </component>
@@ -75,6 +80,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="PT Mono"/>
               <text value="Cambia username"/>
             </properties>
           </component>

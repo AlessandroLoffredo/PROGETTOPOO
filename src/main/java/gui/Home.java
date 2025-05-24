@@ -64,13 +64,13 @@ public class Home {
         UIManager.put("OptionPane.messageFont", new Font("PT Mono", Font.PLAIN, 14));
 
 
-        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+        /*scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
-                thumbColor = new Color(255, 0, 150); // Verde neon
+                thumbColor = new Color(0, 200, 255); // Verde neon
                 trackColor = new Color(10, 10, 30); // Blu notte
             }
-        });
+        });*/
 
 
         controller = new Controller(frame);
@@ -94,9 +94,9 @@ public class Home {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*SignUp signUp = new SignUp(frame, controller);
+                SignUp signUp = new SignUp(frame, controller);
                 frame.setVisible(false);
-                signUp.getFrame().setVisible(true);*/
+                signUp.getFrame().setVisible(true);
 
 
                 /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
@@ -155,9 +155,13 @@ public class Home {
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                    areaPersonale.getFrame().setVisible(true);
-                    frame.setVisible(false);
+                //AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
+                //AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
+                AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
+                //AdminGui areaPersonale = new AdminGui(frame, controller);
+                areaPersonale.getFrame().setVisible(true);
+                frame.setVisible(false);
+
             }
         });
 

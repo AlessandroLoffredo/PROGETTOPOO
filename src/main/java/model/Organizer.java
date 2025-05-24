@@ -31,12 +31,22 @@ public class Organizer extends User{
         /*
             Qui andrà aggiornata la data di inizio e fine registrazione nell'db con gestione eccezioni
          */
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         System.out.println("Inserire la data di inizio registrazione (yyyy/mm/dd)> ");
         String regDate = in.nextLine();
         LocalDate startRegDate = LocalDate.parse(regDate, formatter);
         hack.setStartRegDate(startRegDate);
+
+         */
     }
 
+    /*public void openRegDate(Date date) {
+        organizedHackathon.setStartRegDate(date);
+    }
+        OSCURATA PER FARE PROVE
+     */
 
+    public Hackathon getOrganizedHackathon() {
+        return organizedHackathon;
+    }
 }

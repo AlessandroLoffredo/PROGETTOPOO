@@ -28,4 +28,8 @@ public class Document {
     public LocalDateTime getDate() {
         return date;
     }
+
+    public String toString(){
+        return date.toString() + ": " + description;
+    }
 }

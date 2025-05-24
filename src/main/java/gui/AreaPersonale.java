@@ -7,6 +7,7 @@ import model.User;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -26,9 +27,6 @@ public class AreaPersonale {
     private JPanel participantPanel;
     private JButton inviaRichiestaButton;
     private JComboBox participantComboBox;
-    private JSplitPane pulsanti;
-    private JButton accettaButton;
-    private JButton rifiutaButton;
     private JPanel messagePanel;
     private JList<Request> requestList;
     private JButton homeButton;
@@ -37,6 +35,7 @@ public class AreaPersonale {
     private JLabel teamLabel;
     private JTextArea textArea1;
     private JButton teamButton;
+    private JLabel descLabel;
     private JFrame frame;
 
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
@@ -47,6 +46,26 @@ public class AreaPersonale {
         frame.setVisible(true);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
+
+
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        textArea1.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        fNameArea.setBackground(new Color(15, 15, 50));
+        lNameArea.setBackground(new Color(15, 15, 50));
+        userArea.setBackground(new Color(15, 15, 50));
+        requestList.setBackground(new Color(15, 15, 50));
+
+        fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        userLabel.setForeground(new Color(0, 255, 0));
+        teamLabel.setForeground(new Color(0, 255, 0));
+        descLabel.setForeground(new Color(0, 255, 0));
+
+        cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
+        cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+        textArea1.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        requestList.setForeground(new Color(0, 255, 0));
+
 
         homeButton.addActionListener(new ActionListener() {
             @Override

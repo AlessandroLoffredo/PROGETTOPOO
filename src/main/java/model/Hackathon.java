@@ -2,25 +2,28 @@ package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 
 public class Hackathon {
     private final String title;
     private String venue;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private final int maxRegistration;
     private final int maxTeamParticipant;
     private ArrayList<Team> ranking;
     private String problemDescription;
-    private LocalDate startRegDate;
-    private LocalDate endRegDate;
+    private Date startRegDate;
+    private Date endRegDate;
     private int regCounter;
     private Organizer hackOrganizer;
     private ArrayList<Judge> judesList;
 
+
     //BUILDER
-    public Hackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer) {
+    public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer) {
         this.title = title;
         this.venue = venue;
         this.startDate = startDate;
@@ -30,7 +33,10 @@ public class Hackathon {
         this.ranking = new ArrayList<>();
         this.problemDescription = "Problema da definire";
         this.startRegDate = null;
-        this.endRegDate = startDate.minusDays(2);
+        Calendar giorno = Calendar.getInstance();
+        giorno.setTime(startDate);
+        giorno.add(Calendar.DAY_OF_MONTH, -2);
+        this.endRegDate = giorno.getTime();
         this.regCounter = 0;
         this.hackOrganizer = hackOrganizer;
         this.judesList = new ArrayList<>();
@@ -63,7 +69,7 @@ public class Hackathon {
 
     public String getTitle(){ return title; }
 
-    public void setStartRegDate(LocalDate date){
+    public void setStartRegDate(Date date){
         this.startRegDate = date;
     }
 
@@ -89,7 +95,15 @@ public class Hackathon {
         return this.hackOrganizer;
     }
 
-    public LocalDate getEndRegDate(){
+    public Date getEndRegDate(){
         return this.endRegDate;
+    }
+
+    public Date getStartRegDate() {
+        return startRegDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
     }
 }

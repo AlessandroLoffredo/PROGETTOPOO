@@ -36,6 +36,19 @@ public class CambiaPassword {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
+
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        oldPasswordPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
+        passwordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        newPasswordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+
+
+        oldPasswordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        newPasswordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        changeButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+
+
         changeButton.addActionListener(new ActionListener()
         {
             @Override

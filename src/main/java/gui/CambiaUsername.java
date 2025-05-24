@@ -31,6 +31,17 @@ public class CambiaUsername {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
+
+        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
+        usernamePanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
+        passwordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+
+        usernameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        changeButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
+        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+
+
+
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
