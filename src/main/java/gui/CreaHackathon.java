@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Classe che permette la creazione di un nuovo Hackathon.
+ */
 public class CreaHackathon {
     private JPanel panel;
     private JButton creaHackathonButton;
@@ -29,6 +32,13 @@ public class CreaHackathon {
     private JLabel organizerLabel;
     private JFrame frame;
 
+    /**
+     * Instanzia una nuova CreaHackathon.
+     * <p>
+     * La classe CreaHackathon permette agli admin di inserire le informazioni necessarie alla creazione dell'Hackathon.
+     * </p>
+     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     */
     public CreaHackathon(JFrame frameChiamante) {
         frame = new JFrame("CreaHackathon");
         frame.setContentPane(panel);
@@ -139,6 +149,11 @@ public class CreaHackathon {
     }
 
 
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
     public JFrame getFrame() {
         return frame;
     }

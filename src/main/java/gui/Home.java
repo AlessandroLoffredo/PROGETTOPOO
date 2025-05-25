@@ -10,6 +10,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
+/**
+ * Classe principale che mostra la lista di tutti gli Hackathon e permette di svolgere varie azioni per accedere e registrarsi
+ */
 public class Home {
     private JPanel panel;
     private JButton loginButton;
@@ -25,6 +28,12 @@ public class Home {
     private static JFrame frame;
     private Controller controller;
 
+    /**
+     * Punto in cui si entra effettivamente nel programma.
+     *
+     * @param args gli argomenti in input
+     * @throws MalformedURLException Eccezzione per gestire URL scritti male
+     */
     public static void main(String[] args) throws MalformedURLException {
         frame = new JFrame("Home");
         frame.setContentPane(new Home().panel);
@@ -37,6 +46,13 @@ public class Home {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Instanzia una nuova Home.
+     * <p>
+     * La classe Home permette ai visitatori di vedere la lista di tutti gli Hackaton, poter entrare all'interno della pagina specifica di ogni Hackathon,
+     * effettuare il login o il signup.
+     * </p>
+     */
     public Home() throws MalformedURLException {
 
         //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
@@ -192,10 +208,20 @@ public class Home {
 
     }
 
+    /**
+     * Restituisci il bottone per accedere all'area personale.
+     *
+     * @return JButton: bottone per accedere all'area personale.
+     */
     public JButton getAreaPersonaleButton() {
         return areaPersonaleButton;
     }
 
+    /**
+     * Restituisci il bottone per effettuare il login.
+     *
+     * @return JButton: bottone per effettuare il login.
+     */
     public JButton getLoginButton() {
         return loginButton;
     }

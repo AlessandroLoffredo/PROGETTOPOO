@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import controller.*;
 
 
+/**
+ * Classe che permette di effettuare il login.
+ */
 public class Login {
     private JPanel panel;
     private JTextField usernameArea;
@@ -20,10 +23,17 @@ public class Login {
     private JPanel passwordPanel;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+
+    /**
+     * Instanzia una nuova Login.
+     * <p>
+     * La classe Login permette ai visitatori di accedere come utenti, partecipanti, organizzatori, giudici o admin in base alle loro credenziali.
+     * </p>
+     * @param frameChiamante Il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     * @param controller     Il controller istanziato dalla classe Home.java
+     * @param home           L'oggetto Home istanziato all'inizio dell'avvio del programma
+     */
     public Login(JFrame frameChiamante, Controller controller, Home home) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
@@ -85,5 +95,14 @@ public class Login {
                 }
             }
         });
+    }
+
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
     }
 }

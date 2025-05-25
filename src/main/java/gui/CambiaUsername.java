@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.*;
 
+/**
+ * Classe che permette ad un utente qualsiasi di modificare la propria password.
+ */
 public class CambiaUsername {
     private JPanel panel;
     private JPanel usernamePanel;
@@ -18,10 +21,16 @@ public class CambiaUsername {
     private JButton changeButton;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+
+    /**
+     * Instanzia una nuova CambiaUsername.
+     * <p>
+     * La classe CambiaUsername permette agli utenti di modificare il proprio username.
+     * </p>
+     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public CambiaUsername(JFrame frameChiamante, Controller controller){
         frame = new JFrame("Cambia username");
         frame.setContentPane(panel);
@@ -63,5 +72,13 @@ public class CambiaUsername {
         });
     }
 
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
+    }
 
 }

@@ -1,7 +1,20 @@
 package model;
 
+/**
+ * Classe che contiene gli attributi principali di una Person, visitatore generale esterno.
+ * Superclasse di User.
+ */
 public class Person {
-    //METHODS
+    /**
+     * Permette ad una Person di iscriversi alla piattaforma.
+     *
+     * @param username Username
+     * @param password Password
+     * @param fName    Nome della persona
+     * @param lName    Cognome della persona
+     * @return int: codice per verificare stato registrazione.
+     */
+//METHODS
     public int signUp(String username, char[] password, String fName, String lName){
 
         String convertedPass = new String(password);
@@ -33,6 +46,13 @@ public class Person {
         */
     }
 
+    /**
+     * Permette ad una Person di effettuare il login.
+     *
+     * @param username Username
+     * @param password Password
+     * @return User: utente associato all'username inserito
+     */
     public User logIn(String username, char[] password){
         /*//Inserimento query al database, in modo da poter controllare la poteziale esistenza di un utente
         String convertedPass = new String(password);

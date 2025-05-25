@@ -17,9 +17,9 @@ public class Controller {
     private JFrame home;
 
     /**
-     *  Instanzia un nuovo controller.
+     *  Istanzia un nuovo controller.
      *
-     * @param frame il frame principale della classe Home.java.
+     * @param frame il frame principale della classe Home
      */
     public Controller(JFrame frame) {
         user = null;
@@ -29,7 +29,7 @@ public class Controller {
     /**
      * Restituisce l'attributo home.
      *
-     * @return frame: Il frame della classe Home.java.
+     * @return JFrame: Il frame della classe Home.
      */
     public JFrame getHome() {
         return home;
@@ -38,7 +38,7 @@ public class Controller {
     /**
      * Restituisce l'attributo utente.
      *
-     * @return L'utente che naviga nella pagina.
+     * @return User: utente che naviga nella pagina.
      */
     public User getUser() {
         return user;
@@ -47,10 +47,10 @@ public class Controller {
     /**
      * Gestisce l'azione di login di un utente già registrato.
      *
-     * @param username L'username dell'utente che intende accedere.
-     * @param password La password dell'utente che intende accedere.
+     * @param username L'username dell'utente che intende accedere
+     * @param password La password dell'utente che intende accedere
      * @return int: Codice che indentifica le diverse situazioni di un accesso.
-     * @throws Exception Se accade che nessuna delle situazioni previste accade.
+     * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
      */
     //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
     public int handleLogin(String username, char[] password) throws Exception{
@@ -72,11 +72,11 @@ public class Controller {
     /**
      * Gestisce l'azione di registrazione di un nuovo utente.
      *
-     * @param username L'username del nuovo utente.
-     * @param password La password del nuovo utente.
-     * @param fName    Il nome del nuovo utente.
-     * @param lName    Il cognome del nuovo utente.
-     * @return int: Codice che identifica le diverse situazioni di una registrazione.
+     * @param username L'username del nuovo utente
+     * @param password La password del nuovo utente
+     * @param fName    Il nome del nuovo utente
+     * @param lName    Il cognome del nuovo utente
+     * @return int: codice che identifica le diverse situazioni di una registrazione.
      */
     public int handleSignUp(String username, char[] password, String fName, String lName){
         Person person = new Person();
@@ -85,9 +85,9 @@ public class Controller {
     }
 
     /**
-     * Permette di modificare la password di un utente esistente
+     * Permette di modificare la password di un utente esistente.
      *
-     * @param oldPassword   La vecchia password dell'utente, utilizzata per una questione di sicurezza.
+     * @param oldPassword   La vecchia password dell'utente, utilizzata per una questione di sicurezza
      * @param newPassword   La nuova password dell'utente
      * @param confirmedPass La conferma della nuova password dell'utente
      * @return int: Codice che identifica le diverse situazioni di un cambio password.

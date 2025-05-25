@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe che permette di registrarsi.
+ */
 public class SignUp {
     private JPanel panel;
     private JPanel namePanel;
@@ -26,12 +29,17 @@ public class SignUp {
     private JLabel passwordLabel;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+    /**
+     * Instanzia una nuova SignUp.
+     * <p>
+     * La classe SignUp permette ai visitatori di registrarsi come utenti, inserendo tutte le informazioni necessarie.
+     * </p>
+     * @param frameChiamante Il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public SignUp(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("SignUpTry");
+        frame = new JFrame("SignUp");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
@@ -91,5 +99,14 @@ public class SignUp {
 
             }
         });
+    }
+
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
     }
 }

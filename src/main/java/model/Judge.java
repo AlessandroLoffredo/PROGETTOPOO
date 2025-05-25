@@ -4,9 +4,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Classe che contiene gli attributi principali di un Judge, colui che imposta la descrizione del problema e valuta i documenti prodotti dai team assegnandogli dei voti.
+ * Estende la classe User.
+ */
 public class Judge extends User{
     private Hackathon judgedHack;
 
+    /**
+     * Istanzia un nuovo Judge.
+     *
+     * @param fName    Nome del giudice
+     * @param lName    Cognome del giudice
+     * @param username Username
+     * @param password Password
+     */
     public Judge(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -21,15 +33,28 @@ public class Judge extends User{
         this.judgedHack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
     }
 
+    /**
+     * Permette di impostare la descrizione del problema di un Hackathon.
+     *
+     * @param description descrizione del problema di un Hackathon.
+     */
     public void describeProblem(String description){
         //CARICARE LA DESCRIZIONE NEL DB
         this.judgedHack.setProblemDescription(description);
     }
 
+    /**
+     * Restituisce l'Hackathon che sta giudicando un giudice.
+     *
+     * @return Hackathon: Hackathon che sta giudicando un giudice.
+     */
     public Hackathon getJudgedHack() {
         return judgedHack;
     }
 
+    /**
+     * Permette di assegnare un voto ad un team che partecipa all'Hackathon che il giudice sta giudicando.
+     */
     public void assignMark(){
         Scanner in = new Scanner(System.in);
         for(Team team : this.judgedHack.getTeam()){
@@ -40,6 +65,9 @@ public class Judge extends User{
         in.close();
     }
 
+    /**
+     * Permette di visionare e commentare un documento.
+     */
     public void examineDoc(){
         Scanner in = new Scanner(System.in);
         for(Team team : this.judgedHack.getTeam()){

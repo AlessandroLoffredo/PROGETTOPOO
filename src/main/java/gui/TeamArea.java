@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * Classe che contiene tutte le informazioni e le azioni relative ad un team.
+ */
 public class TeamArea {
     private JPanel panel;
     private JList participantsList;
@@ -29,10 +32,17 @@ public class TeamArea {
     private JFrame frame;
     private File file;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+
+    /**
+     * Instanzia una nuova TeamArea.
+     * <p>
+     * La classe TeamArea presenta informazioni generali sul team e sull'Hackathon a cui partecipa, una lista dei partecipanti che fanno parte di quel team e la lista di documenti caricati.
+     * Permette inoltre di poter caricare un documento e inviarlo nella lista documenti del team.
+     * </p>
+     * @param frameChiamante Il frame che istanzia la nuova AreaPersonale.
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public TeamArea(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Area Team");
         frame.setContentPane(panel);
@@ -110,5 +120,14 @@ public class TeamArea {
                 //GESTIONE CON DB PER VERIFICA DOC CON STESSO NOME GIA' INVIATO
             }
         });
+    }
+
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
     }
 }

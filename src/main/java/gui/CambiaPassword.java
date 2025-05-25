@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.*;
 
+/**
+ * Classe che permette ad un utente qualsiasi di modificare la propria password.
+ */
 public class CambiaPassword {
     private JPanel oldPasswordPanel;
     private JPasswordField oldPasswordArea;
@@ -23,10 +26,16 @@ public class CambiaPassword {
     private JPanel panel;
     private JFrame frame;
 
-    public JFrame getFrame() {
-        return frame;
-    }
 
+
+    /**
+     * Instanzia una nuova CambiaPassword.
+     * <p>
+     * La classe CambiaPassword permette agli utenti di modificare la propria password.
+     * </p>
+     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public CambiaPassword(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Cambia password");
         frame.setContentPane(panel);
@@ -70,5 +79,14 @@ public class CambiaPassword {
 
             }
         });
+    }
+
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
+    public JFrame getFrame() {
+        return frame;
     }
 }

@@ -3,16 +3,18 @@ package gui;
 import controller.Controller;
 import model.Document;
 import model.Judge;
-import model.Request;
 import model.Team;
 
-import javax.print.Doc;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Classe che contiente tutte le azioni e le informazioni generali di un giudice.
+ */
 public class AreaPersonaleGiudice {
     private JPanel panel;
     private JPanel dataPanel;
@@ -46,6 +48,15 @@ public class AreaPersonaleGiudice {
     private JSlider markSlider;
     private JFrame frame;
 
+    /**
+     * Instanzia una nuova AreaPersonaleGiudice.
+     * <p>
+     * La classe AreaPersonaleGiudice permette al giudice di vedere e modificare i suoi dati, caricare o modificare la descrizione del problema dell'Hackathon
+     * che giudica, cercare e commentare i documenti caricati dai vari team e poter assegnare a questi ultimi un voto.
+     * </p>
+     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
+     * @param controller     Il controller istanziato dalla classe Home.java
+     */
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
@@ -195,6 +206,11 @@ public class AreaPersonaleGiudice {
     }
 
 
+    /**
+     * Restituisce il frame principale della gui.
+     *
+     * @return JFrame: Il frame principale.
+     */
     public JFrame getFrame() {
         return frame;
     }

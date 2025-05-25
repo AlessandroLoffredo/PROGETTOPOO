@@ -3,9 +3,22 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Classe che contiene gli attributi principali di un Organizer, colui che gestisce quando possono partire le iscrizioni all'Hackathon.
+ * Estende la classe User.
+ */
+
 public class Organizer extends User{
     private Hackathon organizedHackathon;
 
+    /**
+     * Istanzia un nuovo Organizer.
+     *
+     * @param fName    Nome dell'organizzatore
+     * @param lName    Cognome dell'organizzatore
+     * @param username Username
+     * @param password Password
+     */
     public Organizer(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
         /*this.organizedHackathon = risultato della query di cercamento dell'hackathon*/
@@ -23,6 +36,11 @@ public class Organizer extends User{
     //}*/
 
 
+    /**
+     * Permette di impostare la data di inizio delle registrazioni all'Hackathon di cui è Organizzatore.
+     *
+     * @param hack Hackathon di cui è Organizzatore.
+     */
     public void openRegDate(Hackathon hack){
         Scanner in = new Scanner(System.in);
         /*
@@ -46,6 +64,11 @@ public class Organizer extends User{
         OSCURATA PER FARE PROVE
      */
 
+    /**
+     * Restituisce l'Hackathon di cui è Organizzatore.
+     *
+     * @return Hackathon: hackathon di cui è Organizzatore.
+     */
     public Hackathon getOrganizedHackathon() {
         return organizedHackathon;
     }
