@@ -46,6 +46,8 @@ public class AreaPersonaleGiudice {
     private JButton assigneButton;
     private JComboBox teamComboBoxMark;
     private JSlider markSlider;
+    private JLabel commentLabel;
+    private JLabel markLabel;
     private JFrame frame;
 
     /**
@@ -77,6 +79,8 @@ public class AreaPersonaleGiudice {
         fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
         lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
         userLabel.setForeground(new Color(0, 255, 0));
+        markLabel.setForeground(new Color(0, 255, 0));
+        commentLabel.setForeground(new Color(0, 255, 0));
         markSlider.setForeground(Color.GREEN);
 
         cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR

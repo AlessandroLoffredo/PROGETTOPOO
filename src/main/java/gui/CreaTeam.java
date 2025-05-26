@@ -18,7 +18,6 @@ public class CreaTeam {
     private JFrame frame;
 
 
-
     /**
      * Instanzia una nuova CreaTeam.
      * <p>
@@ -35,7 +34,17 @@ public class CreaTeam {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+
+
+        panel.setBackground(new Color(10, 10, 30));
+        dataPanel.setBackground(new Color(15, 15, 50));
+        createPanel.setBackground(new Color(15, 15, 50));
+
+        nickLabel.setForeground(new Color(0, 255, 0));
+        signUpButton.setForeground(new Color(255, 0, 150));
+
     }
+
 
     /**
      * Restituisce il frame principale della gui.

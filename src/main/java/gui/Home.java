@@ -63,19 +63,19 @@ public class Home {
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        hackListPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
-        textArea1.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        loginPanel.setBackground(new Color(20, 20, 60)); // Profondo e cyber
+        panel.setBackground(new Color(10, 10, 30));
+        hackListPanel.setBackground(new Color(15, 15, 50));
+        textArea1.setBackground(new Color(15, 15, 50));
+        loginPanel.setBackground(new Color(20, 20, 60));
 
-        titleLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        loginButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
-        signUpButton.setForeground(new Color(255, 0, 150)); // Magenta neon
-        textArea1.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        titleLabel.setForeground(new Color(0, 255, 0));
+        loginButton.setForeground(new Color(0, 200, 255));
+        signUpButton.setForeground(new Color(255, 0, 150));
+        textArea1.setForeground(new Color(0, 255, 0));
 
-        UIManager.put("OptionPane.background", new Color(10, 10, 30)); // Blu intenso come nell'immagine
-        UIManager.put("Panel.background", new Color(15, 15, 50)); // Sfondo della finestra di dialogo
-        UIManager.put("OptionPane.messageForeground", new Color(0, 255, 0)); // Testo neon verde hacker
+        UIManager.put("OptionPane.background", new Color(10, 10, 30));
+        UIManager.put("Panel.background", new Color(15, 15, 50));
+        UIManager.put("OptionPane.messageForeground", new Color(0, 255, 0));
         UIManager.put("OptionPane.messageFont", new Font("PT Mono", Font.PLAIN, 14));
 
 
@@ -137,9 +137,17 @@ public class Home {
                 frame.setVisible(false);
                 crea.getFrame().setVisible(true);*/
 
-                TeamArea team = new TeamArea(frame, controller);
+                /*TeamArea team = new TeamArea(frame, controller);
                 frame.setVisible(false);
-                team.getFrame().setVisible(true);
+                team.getFrame().setVisible(true);*/
+
+                /*CreaTeam creaTeam = new CreaTeam(frame, controller);
+                frame.setVisible(false);
+                creaTeam.getFrame().setVisible(true);*/
+
+                HackathonGui hack = new HackathonGui(frame, controller);
+                frame.setVisible(false);
+                hack.getFrame().setVisible(true);
 
             }
 

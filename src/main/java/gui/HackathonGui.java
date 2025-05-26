@@ -3,6 +3,7 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,12 +18,14 @@ public class HackathonGui {
     private JPanel headerPanel;
     private JList judjeList;
     private JTextArea infoArea;
-    private JPanel infoPanel;
+    private JPanel hackPanel;
     private JTextArea descProbArea;
     private JButton accessButton;
     private JButton subscribeHackButton;
     private JPanel imagePanel;
     private JButton homeButton;
+    private JPanel infoPanel;
+    private JPanel descPanel;
     private JFrame frame;
 
 
@@ -38,12 +41,33 @@ public class HackathonGui {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public HackathonGui(JFrame frameChiamante, Controller controller){
-        frame = new JFrame("hack");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(new Dimension(900, 700));
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+
+        panel.setBackground(new Color(10, 10, 30));
+        headerPanel.setBackground(new Color(15, 15, 50));
+        hackPanel.setBackground(new Color(10, 10, 30));
+        imagePanel.setBackground(new Color(15, 15, 50));
+
+        titleArea.setBackground(new Color(15, 15, 50));
+        organizerArea.setBackground(new Color(15, 15, 50));
+        judjeList.setBackground(new Color(15, 15, 50));
+        infoArea.setBackground(new Color(15, 15, 50));
+        descProbArea.setBackground(new Color(15, 15, 50));
+
+        titleArea.setForeground(new Color(0, 255, 0));
+        organizerArea.setForeground(new Color(0, 255, 0));
+        judjeList.setForeground(new Color(0, 255, 0));
+        infoArea.setForeground(new Color(0, 255, 0));
+        descProbArea.setForeground(new Color(0, 255, 0));
+        subscribeHackButton.setForeground(new Color(255, 0, 150));
+
+
 
         accessButton.addActionListener(new ActionListener() {
             @Override

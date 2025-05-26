@@ -39,6 +39,7 @@ public class AreaPersonale {
     private JTextArea textArea1;
     private JButton teamButton;
     private JLabel descLabel;
+    private JLabel messageLabel;
     private JFrame frame;
 
     /**
@@ -76,6 +77,7 @@ public class AreaPersonale {
         userLabel.setForeground(new Color(0, 255, 0));
         teamLabel.setForeground(new Color(0, 255, 0));
         descLabel.setForeground(new Color(0, 255, 0));
+        messageLabel.setForeground(new Color(0, 255, 0));
 
         cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
         cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
