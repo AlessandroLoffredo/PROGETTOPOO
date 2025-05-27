@@ -48,6 +48,7 @@ public class Participant extends User {
      */
     public void setParHackathon(Hackathon parHackathon) {
         this.parHackathon = parHackathon;
+        //SCRIVERE NEL DB
     }
 
     /**

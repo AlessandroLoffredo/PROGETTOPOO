@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Classe che permette di registrarsi.
@@ -41,7 +43,13 @@ public class SignUp {
     public SignUp(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("SignUp");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
         frame.pack();
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(500, 500));

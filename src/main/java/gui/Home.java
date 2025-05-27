@@ -38,7 +38,7 @@ public class Home {
         frame = new JFrame("Home");
         frame.setContentPane(new Home().panel);
         frame.pack();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         Dimension size = frame.getSize();
         frame.setMinimumSize(new Dimension(size.width, 400));
@@ -56,7 +56,8 @@ public class Home {
     public Home() throws MalformedURLException {
 
         //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
-        ImageIcon imageIcon = new ImageIcon(new URL("https://static.vecteezy.com/system/resources/previews/014/487/777/original/hacker-logo-simple-minimal-illustration-vector.jpg"));
+        //ImageIcon imageIcon = new ImageIcon(new URL("https://static.vecteezy.com/system/resources/previews/014/487/777/original/hacker-logo-simple-minimal-illustration-vector.jpg"));
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
         // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
@@ -88,7 +89,7 @@ public class Home {
         });*/
 
 
-        controller = new Controller(frame);
+        controller = new Controller(this);
         //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
 
         loginButton.addActionListener(new ActionListener() {
@@ -106,6 +107,7 @@ public class Home {
                 }
             }
         });
+
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,35 +158,15 @@ public class Home {
         /*areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Participant")){
-                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                    areaPersonale.getFrame().setVisible(true);
-                    frame.setVisible(false);
-                }else if(controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Judge")){
-                    AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
-                    areaPersonale.getFrame().setVisible(true);
-                    frame.setVisible(false);
-                } else if (controller.getUser().getClass().getSimpleName().equalsIgnoreCase("Organizer")) {
-                    AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
-                    areaPersonale.getFrame().setVisible(true);
-                    frame.setVisible(false);
-                } else if (controller.getUser().getClass().getSimpleName().equalsIgnoreCase("User")) {
-                    AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                    areaPersonale.getFrame().setVisible(true);
-                    frame.setVisible(false);
-                    areaPersonale.getMessagePanel().setVisible(false);
-                    areaPersonale.getParticipantPanel().setVisible(false);
-                    areaPersonale.getTeamPanel().setVisible(false);
-                }
-            }
+                controller.areaPersonale(frame)
         });*/
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
+                //AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
                 //AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
-                //AdminGui areaPersonale = new AdminGui(frame, controller);
+                AdminGui areaPersonale = new AdminGui(frame, controller);
                 areaPersonale.getFrame().setVisible(true);
                 frame.setVisible(false);
 
@@ -232,5 +214,9 @@ public class Home {
      */
     public JButton getLoginButton() {
         return loginButton;
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 }

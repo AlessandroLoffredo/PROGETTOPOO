@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /**
@@ -43,7 +45,13 @@ public class HackathonGui {
     public HackathonGui(JFrame frameChiamante, Controller controller){
         frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
         frame.pack();
         frame.setSize(new Dimension(900, 700));
         frame.setVisible(true);
@@ -72,11 +80,7 @@ public class HackathonGui {
         accessButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //UTILIZZO MOMENTANEO DI QUESTO ACTION LISTENER
-                //BISOGNA TENERE CONTO DI CHI CLICCA IL PULSANTE EPR APRIRE UN AREA PERSONALE SPECIFICA
-                //AreaPersonale areaPersonale = new AreaPersonale(frame, contoller);
-                //frame.setVisible(false);
-                //areaPersonale.getFrame().setVisible(true);
+                controller.areaPersonale(frame);
             }
         });
 
@@ -90,11 +94,26 @@ public class HackathonGui {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.getHome().setVisible(true);
+                controller.getHome().getFrame().setVisible(true);
                 frame.dispose();
             }
         });
 
+        subscribeHackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int code = controller.subscribe(frame, titleArea.getText());
+                if(code == -1){
+                    JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                } else if (code == -2) {
+                    JOptionPane.showMessageDialog(panel, "Non puoi iscriverti ad una Hackathon se ricopri un ruolo in un altro Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                } else if (code == -3) {
+                    JOptionPane.showMessageDialog(panel, "Il termine massimo per le iscrizioni è scaduto", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                } else if (code == 0) {
+                    JOptionPane.showMessageDialog(panel, "Iscrizione effettuata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
     }
 
     /**

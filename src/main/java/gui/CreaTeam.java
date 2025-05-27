@@ -4,13 +4,17 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Classe che permette di creare un Team.
  */
 public class CreaTeam {
     private JPanel createPanel;
-    private JButton signUpButton;
+    private JButton createButton;
     private JPanel panel;
     private JTextField nickArea;
     private JPanel dataPanel;
@@ -29,7 +33,13 @@ public class CreaTeam {
     public CreaTeam(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Crea Team");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
         frame.setPreferredSize(new Dimension(500, 500));
         frame.pack();
         frame.setVisible(true);
@@ -41,8 +51,14 @@ public class CreaTeam {
         createPanel.setBackground(new Color(15, 15, 50));
 
         nickLabel.setForeground(new Color(0, 255, 0));
-        signUpButton.setForeground(new Color(255, 0, 150));
+        createButton.setForeground(new Color(255, 0, 150));
 
+        createButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.createTeam(nickArea.getText());
+            }
+        });
     }
 
 

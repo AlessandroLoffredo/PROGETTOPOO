@@ -1,6 +1,6 @@
 package controller;
 
-import gui.CreaTeam;
+import gui.*;
 import model.*;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -9,36 +9,35 @@ import java.util.Date;
 /**
  * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
  */
-
 public class Controller {
     //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
     //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
     private User user;
-    private JFrame home;
+    private Home home;
 
     /**
-     *  Istanzia un nuovo controller.
+     * Istanzia un nuovo controller.
      *
-     * @param frame il frame principale della classe Home
+     * @param home il frame principale della classe Home
      */
-    public Controller(JFrame frame) {
-        user = null;
-        home = frame;
+    public Controller(Home home) {
+        this.user = new User(null, null, "pippo", "pureio");
+        this.home = home;
     }
 
     /**
      * Restituisce l'attributo home.
      *
-     * @return JFrame: Il frame della classe Home.
+     * @return Home : Il frame della classe Home.
      */
-    public JFrame getHome() {
+    public Home getHome() {
         return home;
     }
 
     /**
      * Restituisce l'attributo utente.
      *
-     * @return User: utente che naviga nella pagina.
+     * @return User : utente che naviga nella pagina.
      */
     public User getUser() {
         return user;
@@ -49,10 +48,10 @@ public class Controller {
      *
      * @param username L'username dell'utente che intende accedere
      * @param password La password dell'utente che intende accedere
-     * @return int: Codice che indentifica le diverse situazioni di un accesso.
+     * @return int : Codice che indentifica le diverse situazioni di un accesso.
      * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
      */
-    //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
+//SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
     public int handleLogin(String username, char[] password) throws Exception{
         Person person = new Person();
         this.user = person.logIn(username, password);
@@ -76,7 +75,7 @@ public class Controller {
      * @param password La password del nuovo utente
      * @param fName    Il nome del nuovo utente
      * @param lName    Il cognome del nuovo utente
-     * @return int: codice che identifica le diverse situazioni di una registrazione.
+     * @return int : codice che identifica le diverse situazioni di una registrazione.
      */
     public int handleSignUp(String username, char[] password, String fName, String lName){
         Person person = new Person();
@@ -90,7 +89,7 @@ public class Controller {
      * @param oldPassword   La vecchia password dell'utente, utilizzata per una questione di sicurezza
      * @param newPassword   La nuova password dell'utente
      * @param confirmedPass La conferma della nuova password dell'utente
-     * @return int: Codice che identifica le diverse situazioni di un cambio password.
+     * @return int : Codice che identifica le diverse situazioni di un cambio password.
      */
     public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
         //return this.user.resetPassword(oldPassword, newPassword, confirmedPass, this.user.getUsername());
@@ -102,7 +101,7 @@ public class Controller {
      *
      * @param newUsername Il nuovo username dell'utente.
      * @param password    La password dell'utente, utilizzata per una questione di sicurezza.
-     * @return int: Codice che identifica le varie situazioni di un cambio username.
+     * @return int : Codice che identifica le varie situazioni di un cambio username.
      */
     public int changeUsername(String newUsername, char[] password){
         //return this.user.resetUsername(newUsername, password, this.user.getUsername());
@@ -121,9 +120,8 @@ public class Controller {
      *
      * @param message  Messaggio motivazione che l'utente invia insieme alla richiesta.
      * @param username L'username dell'utente che invia la richiesta.
-     * @return int: Codice che identifica le diverse situazioni che possono accadere.
+     * @return int : Codice che identifica le diverse situazioni che possono accadere.
      */
-
     public int sendRequest(String message, String username){
         if(this.user instanceof Participant){
             Participant participant = (Participant) user;
@@ -138,7 +136,7 @@ public class Controller {
      * Permette ad un organizzatore di inviare ad utente la richiesta di diventare giudice di un hackathon.
      *
      * @param username Username dell'utente da invitare.
-     * @return int: Un codice che identifica le varie situazioni che possono accadere.
+     * @return int : Un codice che identifica le varie situazioni che possono accadere.
      */
     public int sendRequestOrganizer(User username){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA USER A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
@@ -158,7 +156,7 @@ public class Controller {
     /**
      * Restituisce gli inviti di unione al team che un partecipante riceve.
      *
-     * @return ArrayList: Lista di invita della classe Participant.
+     * @return ArrayList : Lista di invita della classe Participant.
      */
     public ArrayList<Request> getRequests(){
         if(this.user instanceof Participant){
@@ -173,10 +171,9 @@ public class Controller {
      *
      * @param username       L'utente che invia la richiesta.
      * @param frameChiamante Il frame da dove viene chiamato il metodo, da questa dipende l'azione successiva.
-     * @return int: Codice che identifica le varie situazioni che possono accadere.
+     * @return int : Codice che identifica le varie situazioni che possono accadere.
      */
-
-    //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
+//MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
     public int handleAccRequest(String username, JFrame frameChiamante){
         User sender = User.findUser(username);
         Participant p = (Participant) sender;
@@ -206,7 +203,7 @@ public class Controller {
      * Gestisce la lista dei documenti di un team, che unn giudice osserva e commenta.
      *
      * @param team Il team di cui il giudice vuole vedere la lista.
-     * @return ArrayList: La lista dei documenti di un team.
+     * @return ArrayList : La lista dei documenti di un team.
      */
     public ArrayList<Document> handleLoadFile(Team team){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
@@ -242,9 +239,9 @@ public class Controller {
     }
 
     /**
-     *  Controlla se, per l'Hackathon gestito da un organizzatore, è già stata gestita la data di apertura delle registrazioni.
+     * Controlla se, per l'Hackathon gestito da un organizzatore, è già stata gestita la data di apertura delle registrazioni.
      *
-     * @return boolean: per sapere se sono state aperte.
+     * @return boolean : per sapere se sono state aperte.
      */
     public boolean verifyingStartRegDate(){
         /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
@@ -261,7 +258,7 @@ public class Controller {
     /**
      * Verifica se l'Hackathon gestito da un organizzatore è già cominciato.
      *
-     * @return boolean: per sapere se è cominciato.
+     * @return boolean : per sapere se è cominciato.
      */
     public boolean verifyingStartHack(){
         /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
@@ -284,4 +281,78 @@ public class Controller {
     }
      */
 
+    /**
+     * Create team int.
+     *
+     * @param nickname the nickname
+     * @return the int
+     */
+    public int createTeam(String nickname){
+        return Team.create(nickname, ((Participant) this.user));
+    }
+
+    public int subscribe(JFrame frame, String nameHack){
+        if(this.user != null && (!(this.user instanceof User))){
+            return -2;
+        }else{
+            if(this.user == null){
+                // Pulsanti personalizzati
+                Object[] options = {"Accedi", "Registrati"};
+                int scelta = JOptionPane.showOptionDialog(
+                        frame,
+                        "Non hai eseguito l'accesso",
+                        "AUTHENTICATION",
+                        JOptionPane.YES_NO_OPTION, // Tipo di opzioni (può essere ignorato)
+                        JOptionPane.QUESTION_MESSAGE,
+                        null, // Nessuna icona personalizzata
+                        options, // Pulsanti personalizzati
+                        options[0] // Pulsante di default (Se l'utente preme invio senza selezionare nulla)
+                );
+                if(scelta == 0){
+                    Login login = new Login(frame, this, this.home);
+                } else if (scelta == 1) {
+                    SignUp signUp = new SignUp(frame, this);
+                }
+            }
+            if(this.user != null){
+                int result = this.user.subscribe(nameHack);
+                if (result == 0) {
+                    this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
+                    ((Participant) this.user).setParHackathon(Hackathon.findHackathon(nameHack));
+                }
+                return result;
+            }
+        }
+        return -4;
+    }
+
+    public void areaPersonale(JFrame frame){
+        switch (this.user.getClass().getSimpleName()) {
+            case "Participant":
+                AreaPersonale areaPersonale = new AreaPersonale(frame, this);
+                areaPersonale.getFrame().setVisible(true);
+                break;
+            case "Organizer":
+                AreaPersonaleOrganizzatore areaPersonaleO = new AreaPersonaleOrganizzatore(frame, this);
+                areaPersonaleO.getFrame().setVisible(true);
+                break;
+            case "Judge":
+                AreaPersonaleGiudice areaPersonaleG = new AreaPersonaleGiudice(frame, this);
+                areaPersonaleG.getFrame().setVisible(true);
+                break;
+            case "User":
+                AreaPersonale areaPersonaleU = new AreaPersonale(frame, this);
+                areaPersonaleU.getFrame().setVisible(true);
+                areaPersonaleU.getMessagePanel().setVisible(false);
+                areaPersonaleU.getParticipantPanel().setVisible(false);
+                areaPersonaleU.getTeamPanel().setVisible(false);
+                break;
+        }
+        if(frame.equals(this.home.getFrame())){
+            frame.setVisible(false);
+        }else{
+            frame.dispose();
+        }
+    }
 }
+

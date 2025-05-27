@@ -1,6 +1,7 @@
 package model;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -195,5 +196,21 @@ public class Hackathon {
      */
     public Date getStartDate() {
         return startDate;
+    }
+
+    public static Hackathon findHackathon(String name){
+        //QUERY PER TROVARE L'HACKATHON
+        //return fine a se stessa inserita per testing
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = null;
+        Date fdata = null;
+        try {
+            data = dateFormat.parse("23/05/2025"); // Converte la stringa in Data
+            fdata = dateFormat.parse("24/05/2025");
+        } catch (ParseException e) {
+            System.out.println("Errore: Formato della data non valido!");
+        }
+        Hackathon hack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
+        return hack;
     }
 }

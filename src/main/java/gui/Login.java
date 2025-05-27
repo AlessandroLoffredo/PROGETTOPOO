@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import controller.*;
 
 
@@ -37,7 +40,6 @@ public class Login {
     public Login(JFrame frameChiamante, Controller controller, Home home) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(500, 500));
@@ -95,6 +97,14 @@ public class Login {
                 }
             }
         });
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
     }
 
     /**
@@ -104,5 +114,7 @@ public class Login {
      */
     public JFrame getFrame() {
         return frame;
+
+
     }
 }

@@ -1,12 +1,15 @@
 package gui;
 
-import controller.Controller;
+// TODO SISTEMARE LA GUI, RIMUOVERE LE PARTI IN ECCESSO
 
+import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.URL;
 
 /**
  *  Classe che gestisce tutte le azioni che un Admin della piattaforma è in grado di eseguire.
@@ -19,6 +22,7 @@ public class AdminGui {
     private JTextPane infoText;
     private JButton goToButton;
     private JPanel operationPanel;
+    private JLabel iconLabel;
     private JFrame frame;
 
 
@@ -36,7 +40,13 @@ public class AdminGui {
         frame = new JFrame("SignIn");
         panel = new JPanel(new BorderLayout()); // Usa BorderLayout per separare le sezioni
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
         frame.setSize(800, 800);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
@@ -44,6 +54,13 @@ public class AdminGui {
         // Pannello operazioni
         operationPanel = new JPanel();
         operationPanel.setLayout(new GridLayout(0, 1)); // Disposizione verticale
+
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/AdminGuiIcon.jpg"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(315, 640, Image.SCALE_SMOOTH);
+
+        // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        iconLabel.setIcon(resizedIcon);
 
         welcomeText = new JTextPane();
         createButton = new JButton("Crea un nuovo Hackathon");
@@ -58,7 +75,7 @@ public class AdminGui {
         // Aggiungi il pannello operazioni nel pannello generale a destra
         panel.add(operationPanel, BorderLayout.EAST);
 
-        // Pannello lista
+        /*// Pannello lista
         listPanel = new JPanel();
         listPanel.setLayout(new GridLayout(0, 2)); // Disposizione a 2 colonne: elemento + pulsante
 
@@ -99,7 +116,7 @@ public class AdminGui {
                 }
             });
         }
-
+*/
         /*
         * questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
         * degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
@@ -112,8 +129,14 @@ public class AdminGui {
                 crea.getFrame().setVisible(true);
             }
         });
+        goToButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.getHome().getFrame().setVisible(true);
+                frame.dispose();
+            }
+        });
     }
-
     /**
      * Restituisce il frame principale della gui.
      *

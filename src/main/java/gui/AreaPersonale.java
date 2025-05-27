@@ -10,6 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +60,13 @@ public class AreaPersonale {
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
         frame.pack();
         frame.setVisible(true);
         frame.setSize(800, 800);
@@ -88,7 +96,7 @@ public class AreaPersonale {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
+                controller.getHome().getFrame().setVisible(true);
                 frame.dispose();
             }
         });

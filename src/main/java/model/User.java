@@ -162,4 +162,26 @@ public class User extends Person {
         User user = new Participant(null, null, "Cacca", "pluto");
         return user;
     }
+
+    public int subscribe(String nameHack){
+        Hackathon hack = Hackathon.findHackathon(nameHack);
+        if(hack.getRegCounter() < hack.getMaxRegistration()){
+            hack.addRegistration();
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+
+    public String getfName() {
+        return fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

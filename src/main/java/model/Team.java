@@ -65,6 +65,7 @@ public class Team {
      */
     public void addParticipant(Participant participant){
         this.parList.add(participant);
+        //AGGIUNTA PARTECIPANTE AL DB
     }
 
     /**
@@ -106,6 +107,18 @@ public class Team {
             this.finalMark = (short) Math.round(this.finalMark);
         } else {
             System.out.println("La lista dei punteggi è vuota. Impossibile calcolare il finalMark.");
+        }
+    }
+
+    public static int create(String nickname, Participant creator){
+        //QUERY PER CONTROLLARE L'ESISTENZA DELLA COPPIA NICKNAME-HACKATHON (creator ha un metodo per sapere a quale hackathon partecipa)
+        int result = 0;
+        if(result == 0){
+            Team team = new Team(nickname, creator.getParHackathon());
+            team.addParticipant(creator);
+            return 0;
+        }else{
+            return -1;
         }
     }
 }
