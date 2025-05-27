@@ -50,6 +50,8 @@ public class AdminGui {
         frame.setSize(800, 800);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        panel.setBackground(new Color(5, 0, 54));
+
 
         // Pannello operazioni
         operationPanel = new JPanel();
@@ -61,6 +63,7 @@ public class AdminGui {
         // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         iconLabel.setIcon(resizedIcon);
+        panel.add(iconLabel);
 
         welcomeText = new JTextPane();
         createButton = new JButton("Crea un nuovo Hackathon");
