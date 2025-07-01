@@ -1,8 +1,10 @@
 package controller;
 
 import gui.*;
+import implementazioniPostgresDAO.*;
 import model.*;
 import javax.swing.*;
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,7 +35,6 @@ public class Controller {
     public Home getHome() {
         return home;
     }
-
     /**
      * Restituisce l'attributo utente.
      *
@@ -51,21 +52,23 @@ public class Controller {
      * @return int : Codice che indentifica le diverse situazioni di un accesso.
      * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
      */
-//SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
+    //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
     public int handleLogin(String username, char[] password) throws Exception{
+
         Person person = new Person();
-        this.user = person.logIn(username, password);
-        /*if(username.isEmpty() || (new String(password)).isEmpty()){
+        //this.user = person.logIn(username, password);
+        if(username.isEmpty() || (new String(password)).isEmpty()){
             return -1;
         }else{
-            this.user = person.logIn(username, password);
-            if(user == null){
-                return -2;
-            }else{
+            AuthImplementation authI = new AuthImplementation();
+            int log = authI.logIn(username, new String(password));
+            if(log == 0){
+                this.user = new User(username, new String(password), null, null);
                 return 0;
+            }else{
+                return -2;
             }
-        }*/
-        return 0;
+        }
     }
 
     /**

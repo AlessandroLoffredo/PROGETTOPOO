@@ -63,7 +63,6 @@ public class Home {
         // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
-
         panel.setBackground(new Color(10, 10, 30));
         hackListPanel.setBackground(new Color(15, 15, 50));
         textArea1.setBackground(new Color(15, 15, 50));
