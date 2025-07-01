@@ -16,7 +16,7 @@ public class Controller {
     //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
     private User user;
     private Home home;
-
+    private PlatformAdmin plAdmin;
     /**
      * Istanzia un nuovo controller.
      *
@@ -62,12 +62,20 @@ public class Controller {
         }else{
             AuthImplementation authI = new AuthImplementation();
             int log = authI.logIn(username, new String(password));
-            if(log == 0){
-                this.user = new User(username, new String(password), null, null);
-                return 0;
+            if(log == 1){
+                this.plAdmin = new PlatformAdmin(username, new String(password));
+            }else if(log == 2){
+                this.user = new Organizer(null, null, username, new String(password));
+            } else if(log == 3) {
+                this.user = new Judge(null, null, username, new String(password));
+            } else if (log == 4) {
+                this.user = new Participant(null, null, username, new String(password));
+            } else if (log == 5) {
+                this.user = new User(null, null, username, new String(password));
             }else{
                 return -2;
             }
+            return log;
         }
     }
 
@@ -116,6 +124,7 @@ public class Controller {
      */
     public void logout(){
         this.user = null;
+        this.plAdmin = null;
     }
 
     /**
@@ -330,32 +339,41 @@ public class Controller {
     }
 
     public void areaPersonale(JFrame frame){
-        switch (this.user.getClass().getSimpleName()) {
-            case "Participant":
-                AreaPersonale areaPersonale = new AreaPersonale(frame, this);
-                areaPersonale.getFrame().setVisible(true);
-                break;
-            case "Organizer":
-                AreaPersonaleOrganizzatore areaPersonaleO = new AreaPersonaleOrganizzatore(frame, this);
-                areaPersonaleO.getFrame().setVisible(true);
-                break;
-            case "Judge":
-                AreaPersonaleGiudice areaPersonaleG = new AreaPersonaleGiudice(frame, this);
-                areaPersonaleG.getFrame().setVisible(true);
-                break;
-            case "User":
-                AreaPersonale areaPersonaleU = new AreaPersonale(frame, this);
-                areaPersonaleU.getFrame().setVisible(true);
-                areaPersonaleU.getMessagePanel().setVisible(false);
-                areaPersonaleU.getParticipantPanel().setVisible(false);
-                areaPersonaleU.getTeamPanel().setVisible(false);
-                break;
+        if(this.plAdmin != null){
+            AdminGui areaPersonalePA = new AdminGui(frame, this);
+            areaPersonalePA.getFrame().setVisible(true);
+        }else {
+            switch (this.user.getClass().getSimpleName()) {
+                case "Participant":
+                    AreaPersonale areaPersonale = new AreaPersonale(frame, this);
+                    areaPersonale.getFrame().setVisible(true);
+                    break;
+                case "Organizer":
+                    AreaPersonaleOrganizzatore areaPersonaleO = new AreaPersonaleOrganizzatore(frame, this);
+                    areaPersonaleO.getFrame().setVisible(true);
+                    break;
+                case "Judge":
+                    AreaPersonaleGiudice areaPersonaleG = new AreaPersonaleGiudice(frame, this);
+                    areaPersonaleG.getFrame().setVisible(true);
+                    break;
+                case "User":
+                    AreaPersonale areaPersonaleU = new AreaPersonale(frame, this);
+                    areaPersonaleU.getFrame().setVisible(true);
+                    areaPersonaleU.getMessagePanel().setVisible(false);
+                    areaPersonaleU.getParticipantPanel().setVisible(false);
+                    areaPersonaleU.getTeamPanel().setVisible(false);
+                    break;
+            }
         }
         if(frame.equals(this.home.getFrame())){
             frame.setVisible(false);
         }else{
             frame.dispose();
         }
+    }
+
+    public PlatformAdmin getPlAdmin() {
+        return plAdmin;
     }
 }
 
