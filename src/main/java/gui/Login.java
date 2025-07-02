@@ -25,7 +25,7 @@ public class Login {
     private JPanel usernamePanel;
     private JPanel passwordPanel;
     private JFrame frame;
-
+    private JLabel titleLabel;
 
 
     /**
