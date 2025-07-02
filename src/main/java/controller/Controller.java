@@ -88,10 +88,19 @@ public class Controller {
      * @param lName    Il cognome del nuovo utente
      * @return int : codice che identifica le diverse situazioni di una registrazione.
      */
-    public int handleSignUp(String username, char[] password, String fName, String lName){
-        Person person = new Person();
-        //int risultato person.signUp(username,password,fName, lName);
-        return 0;
+    public int handleSignUp(String username, String password, String fName, String lName){
+       int signUp = 0;
+        if(username.isEmpty() || password.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
+            return -3;
+        } else if(fName.length() > 20 || lName.length() > 20) {
+           return -1;
+       }else if(username.length() > 16 || username.length() < 3 || password.length() > 16 || password.length() < 8) {
+           return -2;
+       }else{
+           AuthImplementation authI = new AuthImplementation();
+           signUp = authI.signUp(username, password, fName, lName);
+           return signUp;
+       }
     }
 
     /**

@@ -63,15 +63,15 @@ public class Home {
         // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
-        panel.setBackground(new Color(10, 10, 30));
-        hackListPanel.setBackground(new Color(15, 15, 50));
-        textArea1.setBackground(new Color(15, 15, 50));
-        loginPanel.setBackground(new Color(20, 20, 60));
+        panel.setBackground(new Color(30, 30, 47));
+        hackListPanel.setBackground(new Color(30, 30, 47));
+        textArea1.setBackground(new Color(30, 30, 47));
+        loginPanel.setBackground(new Color(30, 30, 47));
 
-        titleLabel.setForeground(new Color(0, 255, 0));
-        loginButton.setForeground(new Color(0, 200, 255));
-        signUpButton.setForeground(new Color(255, 0, 150));
-        textArea1.setForeground(new Color(0, 255, 0));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        loginButton.setForeground(new Color(37, 99, 235));
+        signUpButton.setForeground(new Color(37, 99, 235));
+        textArea1.setForeground(new Color(236, 240, 241));
 
         UIManager.put("OptionPane.background", new Color(10, 10, 30));
         UIManager.put("Panel.background", new Color(15, 15, 50));
@@ -112,9 +112,9 @@ public class Home {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*SignUp signUp = new SignUp(frame, controller);
+                SignUp signUp = new SignUp(frame, controller);
                 frame.setVisible(false);
-                signUp.getFrame().setVisible(true);*/
+                signUp.getFrame().setVisible(true);
 
 
                 /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
@@ -148,9 +148,9 @@ public class Home {
                 frame.setVisible(false);
                 creaTeam.getFrame().setVisible(true);*/
 
-                HackathonGui hack = new HackathonGui(frame, controller);
+                /*HackathonGui hack = new HackathonGui(frame, controller);
                 frame.setVisible(false);
-                hack.getFrame().setVisible(true);
+                hack.getFrame().setVisible(true);*/
 
             }
 

@@ -80,6 +80,23 @@ public class AuthImplementation implements AuthInterface {
         return results;
     }
 
-
+    public int signUp(String username, String password, String fName, String lName){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "INSERT INTO plUser VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, fName);
+            stmt.setString(2, lName);
+            stmt.setString(3, username);
+            stmt.setString(4, password);
+            results = stmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            if(e.getMessage().contains("passcheck")){
+                results = -4;
+            }
+        }
+        return results;
+    }
 }
 
