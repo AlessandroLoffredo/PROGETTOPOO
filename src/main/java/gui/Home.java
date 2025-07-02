@@ -99,7 +99,9 @@ public class Home {
                     frame.setVisible(false);
                     login.getFrame().setVisible(true);
                 }if(loginButton.getText().equalsIgnoreCase("LOGOUT")){
+                    System.out.println(controller.getPlAdmin());
                     controller.logout();
+                    System.out.println(controller.getPlAdmin());
                     JOptionPane.showMessageDialog(panel, "Logout eseguito");
                     areaPersonaleButton.setEnabled(false);
                     loginButton.setText("LogIn");
@@ -154,21 +156,10 @@ public class Home {
 
         });
 
-        /*areaPersonaleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.areaPersonale(frame)
-        });*/
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //AreaPersonale areaPersonale = new AreaPersonale(frame, controller);
-                //AreaPersonaleGiudice areaPersonale = new AreaPersonaleGiudice(frame, controller);
-                //AreaPersonaleOrganizzatore areaPersonale = new AreaPersonaleOrganizzatore(frame, controller);
-                AdminGui areaPersonale = new AdminGui(frame, controller);
-                areaPersonale.getFrame().setVisible(true);
-                frame.setVisible(false);
-
+                controller.areaPersonale(frame);
             }
         });
 

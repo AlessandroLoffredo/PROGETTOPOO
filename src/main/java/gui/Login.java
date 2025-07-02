@@ -85,16 +85,6 @@ public class Login {
                 } catch (Exception ex){  //Creiamo classe Exception nuova?
                     JOptionPane.showMessageDialog(panel, ex.getMessage());
                 }
-                /*try {
-                    int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
-                    JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
-                    home.getAreaPersonaleButton().setEnabled(true);
-                    home.getLoginButton().setText("Logout");
-                    frameChiamante.setVisible(true);
-                    frame.dispose();
-                } catch (Exception ex){  //Creiamo classe Exception nuova?
-                    JOptionPane.showMessageDialog(panel, ex.getMessage());
-                }*/
             }
         });
 
