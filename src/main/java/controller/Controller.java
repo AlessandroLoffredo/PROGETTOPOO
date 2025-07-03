@@ -23,7 +23,8 @@ public class Controller {
      * @param home il frame principale della classe Home
      */
     public Controller(Home home) {
-        this.user = new User(null, null, "pippo", "pureio");
+        this.user = null;
+        this.plAdmin = null;
         this.home = home;
     }
 
@@ -89,16 +90,15 @@ public class Controller {
      * @return int : codice che identifica le diverse situazioni di una registrazione.
      */
     public int handleSignUp(String username, String password, String fName, String lName){
-       int signUp = 0;
-        if(username.isEmpty() || password.isEmpty() || fName.isEmpty() || lName.isEmpty()) {
-            return -3;
-        } else if(fName.length() > 20 || lName.length() > 20) {
+       if(fName.length() > 20 || lName.length() > 20) {
            return -1;
        }else if(username.length() > 16 || username.length() < 3 || password.length() > 16 || password.length() < 8) {
            return -2;
        }else{
            AuthImplementation authI = new AuthImplementation();
-           signUp = authI.signUp(username, password, fName, lName);
+           int signUp = authI.signUp(username, password, fName, lName);
+           if(signUp == 1)
+               this.user = new User(fName, lName, username, password);
            return signUp;
        }
     }
@@ -112,19 +112,17 @@ public class Controller {
      * @return int : Codice che identifica le diverse situazioni di un cambio password.
      */
     public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
-        //return this.user.resetPassword(oldPassword, newPassword, confirmedPass, this.user.getUsername());
-        int changePass = 0;
-        if(new String(oldPassword).isEmpty() || new String(newPassword).isEmpty() || new String(confirmedPass).isEmpty()){
-            return -3;
-        } else if (!user.getPassword().equals(new String(oldPassword))) {
-            return -2;
-        } else if(new String(newPassword).length() < 8 || new String(newPassword).length() > 16){
+        if (!this.user.getPassword().equals(new String(oldPassword))) {
             return -1;
+        } else if(new String(newPassword).length() < 8 || new String(newPassword).length() > 16){
+            return -2;
         } else if (!(new String(newPassword).equals(new String(confirmedPass)))) {
-            return -4;
+            return -3;
         } else {
             AuthImplementation authI = new AuthImplementation();
-            changePass = authI.changePassword(user.getUsername(), new String(newPassword));
+            int changePass = authI.changePassword(this.user.getUsername(), new String(newPassword));
+            if(changePass == 1)
+                this.user.setPassword(new String(newPassword));
             return changePass;
         }
     }
@@ -137,8 +135,19 @@ public class Controller {
      * @return int : Codice che identifica le varie situazioni di un cambio username.
      */
     public int changeUsername(String newUsername, char[] password){
-        //return this.user.resetUsername(newUsername, password, this.user.getUsername());
-        return 0;
+        if(newUsername.length() < 3 || newUsername.length() > 16){
+            return -1;
+        } else if (!this.user.getPassword().equals(new String(password))) {
+            return -2;
+        } else if(newUsername.equals(this.user.getUsername())){
+            return -3;
+        } else {
+            AuthImplementation authI = new AuthImplementation();
+            int changeUser = authI.changeUsername(newUsername, this.user.getUsername());
+            if(changeUser == 1)
+                this.user.setUsername(newUsername);
+            return changeUser;
+        }
     }
 
     /**
@@ -343,7 +352,7 @@ public class Controller {
                         options[0] // Pulsante di default (Se l'utente preme invio senza selezionare nulla)
                 );
                 if(scelta == 0){
-                    Login login = new Login(frame, this, this.home);
+                    Login login = new Login(frame, this);
                 } else if (scelta == 1) {
                     SignUp signUp = new SignUp(frame, this);
                 }

@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dao.*;
-import Database.*;
+import database.*;
 
 public class AuthImplementation implements AuthInterface {
     public int logIn(String username, String password){
@@ -93,7 +93,11 @@ public class AuthImplementation implements AuthInterface {
         }catch(SQLException e){
             e.printStackTrace();
             if(e.getMessage().contains("passcheck")){
+                results = -3;
+            } else if (e.getMessage().contains("noadminusernamefunct()") || e.getMessage().contains("pkpluser")) {
                 results = -4;
+            } else{
+                results = 0;
             }
         }
         return results;
@@ -110,7 +114,24 @@ public class AuthImplementation implements AuthInterface {
         }catch(SQLException e){
             e.printStackTrace();
             if(e.getMessage().contains("passcheck")){
-                results = -5;
+                results = -4;
+            }
+        }
+        return results;
+    }
+
+    public int changeUsername(String newUsername, String oldUsername) {
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "UPDATE plUser SET username = ? WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, newUsername);
+            stmt.setString(2, oldUsername);
+            results = stmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            if(e.getMessage().contains("noadminusernamefunct()") || e.getMessage().contains("pkpluser")){
+                results = -4;
             }
         }
         return results;

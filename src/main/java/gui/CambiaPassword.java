@@ -79,36 +79,43 @@ public class CambiaPassword {
                 else {
                     try {
                         int code = controller.changePassword(oldPasswordArea.getPassword(), passwordArea.getPassword(), newPasswordArea.getPassword());
-                       switch (code){
-                           case -2:
+                        switch (code){
+                            case -1:
                                JOptionPane.showMessageDialog(panel, "Vecchia password errata");
                                oldPasswordArea.setText("");
-                               newPasswordArea.setText("");
-                               passwordArea.setText("");
-                                break;
-                           case -1:
+                               break;
+                            case -2:
                                JOptionPane.showMessageDialog(panel, "La password deve essere lunga tra gli 8 ed i 16 caratteri");
                                newPasswordArea.setText("");
                                passwordArea.setText("");
                                break;
-                           case -4:
+                            case -3:
                                JOptionPane.showMessageDialog(panel, "Le password non coincidono");
                                newPasswordArea.setText("");
                                passwordArea.setText("");
                                break;
-                           case -5:
+                            case -4:
                                JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
                                newPasswordArea.setText("");
                                passwordArea.setText("");
                                break;
-                           case 1:
+                            case 1:
                                JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
                                frameChiamante.setVisible(true);
                                frame.dispose();
                                break;
+                            default:
+                               JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                               passwordArea.setText("");
+                               oldPasswordArea.setText("");
+                               newPasswordArea.setText("");
+                               break;
                         }
-                    } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
-                        System.out.println("Qualcosa è andato storto durante il cambio della password");
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                        passwordArea.setText("");
+                        oldPasswordArea.setText("");
+                        newPasswordArea.setText("");
                     }
                 }
             }

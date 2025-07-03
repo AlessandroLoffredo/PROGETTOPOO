@@ -36,9 +36,9 @@ public class Login {
      * </p>
      * @param frameChiamante Il frame che istanzia la nuova AreaPersonaleOrganizzatore
      * @param controller     Il controller istanziato dalla classe Home.java
-     * @param home           L'oggetto Home istanziato all'inizio dell'avvio del programma
+
      */
-    public Login(JFrame frameChiamante, Controller controller, Home home) {
+    public Login(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Login");
         frame.setContentPane(panel);
         frame.pack();
@@ -79,8 +79,8 @@ public class Login {
                         JOptionPane.showMessageDialog(panel, "Username o password errati");
                     } else {
                         JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
-                        home.getAreaPersonaleButton().setEnabled(true);
-                        home.getLoginButton().setText("Logout");
+                        controller.getHome().getAreaPersonaleButton().setEnabled(true);
+                        controller.getHome().getLoginButton().setText("Logout");
                         frameChiamante.setEnabled(true);
                         frame.dispose();
                     }

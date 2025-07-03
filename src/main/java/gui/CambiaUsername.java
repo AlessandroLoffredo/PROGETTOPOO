@@ -65,19 +65,41 @@ public class CambiaUsername {
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int code = controller.changeUsername(usernameArea.getText(), passwordArea.getPassword());
-                if(code == -4){
-                    JOptionPane.showMessageDialog(panel, "Password errata");
-                }else if(code == -2){
-                    JOptionPane.showMessageDialog(panel, "Username esistente");
-                }else if(code == -1){
-                   JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 15 caratteri");
-                } else if (code == -3) {
-                    JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                }else{
-                    JOptionPane.showMessageDialog(panel, "Username modificato con successo");
-                    frameChiamante.setVisible(true);
-                    frame.dispose();
+                if(usernameArea.getText().isEmpty() || new String(passwordArea.getPassword()).isEmpty()){
+                    JOptionPane.showMessageDialog(panel, "Inserire i dati mancanti");
+                } else {
+                    try{
+                        int code = controller.changeUsername(usernameArea.getText(), passwordArea.getPassword());
+                        switch (code) {
+                            case -1:
+                                JOptionPane.showMessageDialog(panel, "L'username deve essere lungo tra gli 8 ed i 16 caratteri");
+                                usernameArea.setText("");
+                                break;
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "Password errata");
+                                break;
+                            case -3:
+                                JOptionPane.showMessageDialog(panel, "L'username deve essere diverso da quello attuale");
+                                break;
+                            case -4:
+                                JOptionPane.showMessageDialog(panel, "Username già utilizzato");
+                                break;
+                            case 1:
+                                JOptionPane.showMessageDialog(panel, "Username cambiato con successo");
+                                frameChiamante.setVisible(true);
+                                frame.dispose();
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                                passwordArea.setText("");
+                                usernameArea.setText("");
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                        passwordArea.setText("");
+                        usernameArea.setText("");
+                    }
                 }
             }
         });

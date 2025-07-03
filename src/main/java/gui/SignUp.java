@@ -75,7 +75,7 @@ public class SignUp {
         titleLabel.setForeground(new Color(236, 240, 241));
 
 
-        signUpButton.addActionListener(new ActionListener() { //SE FACESSIMO VERIFICA TUTTI I CAMPI VUOTI E PALLINO ETà SELEZIONATO E POI NELLO SWITCH CASE IL RESTO?
+        signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (usernameArea.getText().isEmpty() || passwordArea.getPassword().toString().isEmpty() || fNameArea.getText().isEmpty() || lNameArea.getText().isEmpty()){
@@ -91,20 +91,36 @@ public class SignUp {
                                 break;
                             case -2:
                                 JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
+                                usernameArea.setText("");
                                 break;
-                            /*case -3:
-                                JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                                break;*/
-                            case -4:
+                            case -3:
                                 JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
+                                passwordArea.setText("");
+                                break;
+                            case -4:
+                                JOptionPane.showMessageDialog(panel, "Username già utilizzato");
                                 break;
                             case 1:
                                 JOptionPane.showMessageDialog(panel, "Registrazione completata!");
-                                frameChiamante.setVisible(true);
+                                controller.getHome().getAreaPersonaleButton().setEnabled(true);
+                                controller.getHome().getLoginButton().setText("Logout");
+                                frameChiamante.setEnabled(true);
                                 frame.dispose();
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
+                                usernameArea.setText("");
+                                passwordArea.setText("");
+                                lNameArea.setText("");
+                                fNameArea.setText("");
+                                break;
                         }
                     } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
-                        System.out.println("Qualcosa è andato storto durante la registrazione");
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");                        usernameArea.setText("");
+                        passwordArea.setText("");
+                        lNameArea.setText("");
+                        fNameArea.setText("");
                     }
                 }
             }

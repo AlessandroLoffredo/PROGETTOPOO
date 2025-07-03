@@ -86,7 +86,7 @@ public class Home {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(loginButton.getText().equalsIgnoreCase("LOGIN")){
-                    Login login = new Login(frame, controller, Home.this);
+                    Login login = new Login(frame, controller);
                     frame.setEnabled(false);
                     login.getFrame().setAlwaysOnTop(true);
                     login.getFrame().requestFocus();

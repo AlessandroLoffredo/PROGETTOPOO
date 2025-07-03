@@ -33,77 +33,15 @@ public class User extends Person {
         this.requestsJudge = null;
     }
 
-    /**
-     * Permette di impostare nuovo username.
-     *
-     * @param newUsername Nuovo username
-     * @param password    Password
-     * @param oldUsername Vechhio username
-     * @return int: codice per verificare stato cambio username.
-     */
-//METHODS
-    public int resetUsername(String newUsername, char[] password, String oldUsername){
-        String convertedPass = new String(password);
-        if(newUsername.isEmpty() || convertedPass.isEmpty()){
-            return -3;
-        }
-        if(newUsername.length()<3 || newUsername.length()>15) {
-            return -1;
-        }
-        //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
-        /*
-            if(controllo col db){
-                return -2;
-            }
-        */
-        //DOPO QUESTA GESTIONE...
+    //METHODS
 
-        //ULTERIORE CONTROLLO DA INSERIRE PER LA PASSOWRD PER RENDERE IL SISTEMA PIù SICURO
-        /*
-               if(controllo pass){
-                    return -4;
-                }
-         */
-        //SE IL NUOVO USERNAME RISPETTA LE REGOLE...
-        //AGGIORNAMENTO DATI NEL DB
-        this.username = newUsername;
-        return 0;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /**
-     * Permette di impostare una nuova password
-     *
-     * @param oldPassword    Vecchia password
-     * @param newPassword    Nuova password
-     * @param confiermedPass Password confermata
-     * @param username       Username
-     * @return int: codice per verificare stato cambio password.
-     */
-    public int resetPassword(char[] oldPassword, char[] newPassword, char[] confiermedPass, String username) {
-        String convertedNewPass = new String(newPassword);
-        String convertedOldPass = new String(oldPassword);
-        String conConfPass = new String(confiermedPass);
-        if(convertedOldPass.isEmpty() || convertedNewPass.isEmpty() || conConfPass.isEmpty()){
-            return -3;
-        }
-        if(!convertedNewPass.equals(conConfPass)){
-            return -4;
-        }
-        if (convertedNewPass.length() < 8 || convertedNewPass.length() > 16){
-            return -1;
-        }
-        //CONTROLLO UGUAGLIANZA VECCHIA PASSWORD CON oldPassword e username
-        //CHIEDERE A TRAMONTANA SE è POSSIBILE ESEGUIRE QUESTO CONTROLLO AL DI FUORI DEL DB
-        /*
-          if(errore di db){
-             return -2
-          }
-        */
-
-        //SE LA NUOVA PASSWORD SUPERA I CONTROLLI...
-        //VIENE AGGIORNATO IL DB GRAZIE ALLA STRINGA USERNAME
-        this.password = convertedNewPass;
-        return 0;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**
