@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -16,7 +18,6 @@ import java.net.URL;
 public class Home {
     private JPanel panel;
     private JButton loginButton;
-    private JButton signUpButton;
     private JPanel loginPanel;
     private JLabel titleLabel;
     private JPanel hackListPanel;
@@ -34,7 +35,7 @@ public class Home {
      * @param args gli argomenti in input
      * @throws MalformedURLException Eccezzione per gestire URL scritti male
      */
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) {
         frame = new JFrame("Home");
         frame.setContentPane(new Home().panel);
         frame.pack();
@@ -53,10 +54,9 @@ public class Home {
      * effettuare il login o il signup.
      * </p>
      */
-    public Home() throws MalformedURLException {
+    public Home(){
 
         //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
-        //ImageIcon imageIcon = new ImageIcon(new URL("https://static.vecteezy.com/system/resources/previews/014/487/777/original/hacker-logo-simple-minimal-illustration-vector.jpg"));
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
@@ -70,22 +70,13 @@ public class Home {
 
         titleLabel.setForeground(new Color(236, 240, 241));
         loginButton.setForeground(new Color(37, 99, 235));
-        signUpButton.setForeground(new Color(37, 99, 235));
         textArea1.setForeground(new Color(236, 240, 241));
 
-        UIManager.put("OptionPane.background", new Color(10, 10, 30));
-        UIManager.put("Panel.background", new Color(15, 15, 50));
-        UIManager.put("OptionPane.messageForeground", new Color(0, 255, 0));
-        UIManager.put("OptionPane.messageFont", new Font("PT Mono", Font.PLAIN, 14));
+        UIManager.put("OptionPane.background", new Color(30, 30, 47));
+        UIManager.put("Panel.background", new Color(30, 30, 47));
+        UIManager.put("OptionPane.messageForeground", new Color(236, 240, 241));
+        UIManager.put("OptionPane.messageFont", new Font("JetBrains Mono", Font.PLAIN, 14));
 
-
-        /*scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                thumbColor = new Color(0, 200, 255); // Verde neon
-                trackColor = new Color(10, 10, 30); // Blu notte
-            }
-        });*/
 
 
         controller = new Controller(this);
@@ -96,8 +87,18 @@ public class Home {
             public void actionPerformed(ActionEvent e) {
                 if(loginButton.getText().equalsIgnoreCase("LOGIN")){
                     Login login = new Login(frame, controller, Home.this);
-                    frame.setVisible(false);
+                    frame.setEnabled(false);
+                    login.getFrame().setAlwaysOnTop(true);
+                    login.getFrame().requestFocus();
                     login.getFrame().setVisible(true);
+                    login.getFrame().addWindowFocusListener(new WindowAdapter() {
+                        @Override
+                        public void windowLostFocus(WindowEvent e) {
+                            login.getFrame().toFront();
+                            login.getFrame().requestFocus();
+                        }
+                    });
+
                 }if(loginButton.getText().equalsIgnoreCase("LOGOUT")){
                     System.out.println(controller.getPlAdmin());
                     controller.logout();
@@ -109,7 +110,7 @@ public class Home {
             }
         });
 
-        signUpButton.addActionListener(new ActionListener() {
+        /*signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SignUp signUp = new SignUp(frame, controller);
@@ -152,9 +153,9 @@ public class Home {
                 frame.setVisible(false);
                 hack.getFrame().setVisible(true);*/
 
-            }
+            //}
 
-        });
+        //});
 
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override

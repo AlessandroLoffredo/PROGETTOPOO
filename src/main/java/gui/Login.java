@@ -26,6 +26,7 @@ public class Login {
     private JPanel passwordPanel;
     private JFrame frame;
     private JLabel titleLabel;
+    private JButton signUpButton;
 
 
     /**
@@ -48,18 +49,19 @@ public class Login {
 
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        dataPanel.setBackground(new Color(15, 15, 50));
-        usernamePanel.setBackground(new Color(15, 15, 50));
-        buttonPanel.setBackground(new Color(15, 15, 50));
-        passwordPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
-        usernameLabel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
-        passwordLabel.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        dataPanel.setBackground(new Color(30, 30, 47));
+        usernamePanel.setBackground(new Color(30, 30, 47));
+        buttonPanel.setBackground(new Color(30, 30, 47));
+        passwordPanel.setBackground(new Color(30, 30, 47));
+        usernameLabel.setBackground(new Color(30, 30, 47));
+        passwordLabel.setBackground(new Color(30, 30, 47));
 
-        usernameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        loginButton.setForeground(new Color(0, 200, 255)); // Azzurro cyber
-        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-
+        usernameLabel.setForeground(new Color(236, 240, 241));
+        loginButton.setForeground(new Color(37, 99, 235));
+        passwordLabel.setForeground(new Color(236, 240, 241));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        signUpButton.setForeground(new Color(37, 99, 235));
 
 
 
@@ -79,7 +81,7 @@ public class Login {
                         JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
                         home.getAreaPersonaleButton().setEnabled(true);
                         home.getLoginButton().setText("Logout");
-                        frameChiamante.setVisible(true);
+                        frameChiamante.setEnabled(true);
                         frame.dispose();
                     }
                 } catch (Exception ex){  //Creiamo classe Exception nuova?
@@ -91,8 +93,27 @@ public class Login {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                frameChiamante.setVisible(true);
+                frameChiamante.setEnabled(true);
                 frame.dispose();
+            }
+        });
+
+        signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SignUp signUp = new SignUp(frameChiamante, controller);
+                signUp.getFrame().setVisible(true);
+                frame.dispose();
+                signUp.getFrame().setAlwaysOnTop(true);
+                signUp.getFrame().requestFocus();
+                signUp.getFrame().setVisible(true);
+                signUp.getFrame().addWindowFocusListener(new WindowAdapter() {
+                    @Override
+                    public void windowLostFocus(WindowEvent e) {
+                        signUp.getFrame().toFront();
+                        signUp.getFrame().requestFocus();
+                    }
+                });
             }
         });
     }

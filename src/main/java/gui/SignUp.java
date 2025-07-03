@@ -17,7 +17,6 @@ public class SignUp {
     private JPanel namePanel;
     private JPanel agePanel;
     private JPanel buttonPanel;
-    private JPanel labelPanel;
     private JPanel dataPanel;
     private JTextField fNameArea;
     private JTextField lNameArea;
@@ -29,6 +28,7 @@ public class SignUp {
     private JLabel lNameLabel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
+    private JLabel titleLabel;
     private JTextField formatoPassLabel;
     private JFrame frame;
 
@@ -47,7 +47,7 @@ public class SignUp {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                frameChiamante.setVisible(true);
+                frameChiamante.setEnabled(true);
                 frame.dispose();
             }
         });
@@ -62,41 +62,50 @@ public class SignUp {
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30));
-        namePanel.setBackground(new Color(15, 15, 50));
-        buttonPanel.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        namePanel.setBackground(new Color(30, 30, 47));
+        buttonPanel.setBackground(new Color(30, 30, 47));
 
-        fNameLabel.setForeground(new Color(0, 255, 0));
-        lNameLabel.setForeground(new Color(0, 255, 0));
-        usernameLabel.setForeground(new Color(0, 255, 0));
-        passwordLabel.setForeground(new Color(0, 255, 0));
-        signUpButton.setForeground(new Color(255, 0, 150));
-        ageRadioButton.setForeground(new Color(0, 255, 0));
+        fNameLabel.setForeground(new Color(236, 240, 241));
+        lNameLabel.setForeground(new Color(236, 240, 241));
+        usernameLabel.setForeground(new Color(236, 240, 241));
+        passwordLabel.setForeground(new Color(236, 240, 241));
+        signUpButton.setForeground(new Color(37, 99, 235));
+        ageRadioButton.setForeground(new Color(37, 99, 235));
+        titleLabel.setForeground(new Color(236, 240, 241));
 
-        signUpButton.addActionListener(new ActionListener() {
+
+        signUpButton.addActionListener(new ActionListener() { //SE FACESSIMO VERIFICA TUTTI I CAMPI VUOTI E PALLINO ETà SELEZIONATO E POI NELLO SWITCH CASE IL RESTO?
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    int code = controller.handleSignUp(usernameArea.getText(), new String(passwordArea.getPassword()), fNameArea.getText(), lNameArea.getText());
-                    if (code == -1) {
-                        JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
-                    } else if (code == -2) {
-                        JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
-                    } else if (code == -3) {
-                        JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                    } else if (!ageRadioButton.isSelected()) {
-                        JOptionPane.showMessageDialog(panel, "Devi confermare di avere più di 16 anni");
-                    } else if (code == -4) {
-                        JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
-                    } else if (code == 1){
-                        JOptionPane.showMessageDialog(panel, "Registrazione completata!");
-                        frameChiamante.setVisible(true);
-                        frame.dispose();
-                    } else {
-                        System.out.println("mammt");
+                if (usernameArea.getText().isEmpty() || passwordArea.getPassword().toString().isEmpty() || fNameArea.getText().isEmpty() || lNameArea.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
+                } else if(!ageRadioButton.isSelected()) {
+                    JOptionPane.showMessageDialog(panel, "Devi confermare di avere più di 16 anni");
+                } else {
+                    try {
+                        int code = controller.handleSignUp(usernameArea.getText(), new String(passwordArea.getPassword()), fNameArea.getText(), lNameArea.getText());
+                        switch (code) {
+                            case -1:
+                                JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
+                                break;
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
+                                break;
+                            /*case -3:
+                                JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
+                                break;*/
+                            case -4:
+                                JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
+                                break;
+                            case 1:
+                                JOptionPane.showMessageDialog(panel, "Registrazione completata!");
+                                frameChiamante.setVisible(true);
+                                frame.dispose();
+                        }
+                    } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
+                        System.out.println("Qualcosa è andato storto durante la registrazione");
                     }
-                } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
-                    System.out.println("Qualcosa è andato storto durante la registrazione");
                 }
             }
         });

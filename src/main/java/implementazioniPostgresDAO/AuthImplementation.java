@@ -98,5 +98,22 @@ public class AuthImplementation implements AuthInterface {
         }
         return results;
     }
+
+    public int changePassword(String username, String password){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "UPDATE plUser SET passkey = ? WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, password);
+            stmt.setString(2, username);
+            results = stmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+            if(e.getMessage().contains("passcheck")){
+                results = -5;
+            }
+        }
+        return results;
+    }
 }
 

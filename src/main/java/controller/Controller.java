@@ -113,7 +113,20 @@ public class Controller {
      */
     public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
         //return this.user.resetPassword(oldPassword, newPassword, confirmedPass, this.user.getUsername());
-        return 0;
+        int changePass = 0;
+        if(new String(oldPassword).isEmpty() || new String(newPassword).isEmpty() || new String(confirmedPass).isEmpty()){
+            return -3;
+        } else if (!user.getPassword().equals(new String(oldPassword))) {
+            return -2;
+        } else if(new String(newPassword).length() < 8 || new String(newPassword).length() > 16){
+            return -1;
+        } else if (!(new String(newPassword).equals(new String(confirmedPass)))) {
+            return -4;
+        } else {
+            AuthImplementation authI = new AuthImplementation();
+            changePass = authI.changePassword(user.getUsername(), new String(newPassword));
+            return changePass;
+        }
     }
 
     /**

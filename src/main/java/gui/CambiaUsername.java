@@ -22,6 +22,7 @@ public class CambiaUsername {
     private JLabel passwordLabel;
     private JPanel buttonPanel;
     private JButton changeButton;
+    private JLabel titleLabel;
     private JFrame frame;
 
 
@@ -44,19 +45,20 @@ public class CambiaUsername {
                 frame.dispose();
             }
         });
-        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setPreferredSize(new Dimension(400, 550));
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        usernamePanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
-        passwordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        panel.setBackground(new Color(30, 30, 47));
+        usernamePanel.setBackground(new Color(30, 30, 47));
+        passwordPanel.setBackground(new Color(30, 30, 47));
 
-        usernameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        changeButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
-        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
+        titleLabel.setForeground(new Color(236, 240, 241));
+        usernameLabel.setForeground(new Color(236, 240, 241));
+        changeButton.setForeground(new Color(37, 99, 235));
+        passwordLabel.setForeground(new Color(236, 240, 241));
 
 
 

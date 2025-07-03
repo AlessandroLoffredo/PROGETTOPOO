@@ -27,6 +27,7 @@ public class CambiaPassword {
     private JPasswordField newPasswordArea;
     private JLabel newPasswordLabel;
     private JPanel panel;
+    private JLabel titleLabel;
     private JFrame frame;
 
 
@@ -49,43 +50,67 @@ public class CambiaPassword {
                 frame.dispose();
             }
         });
-        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setPreferredSize(new Dimension(400, 550));
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        oldPasswordPanel.setBackground(new Color(15, 15, 50));// Leggermente più chiaro
-        passwordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        newPasswordPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
+        panel.setBackground(new Color(30, 30, 47));
+        oldPasswordPanel.setBackground(new Color(30, 30, 47));
+        passwordPanel.setBackground(new Color(30, 30, 47));
+        newPasswordPanel.setBackground(new Color(30, 30, 47));
 
 
-        oldPasswordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        passwordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        newPasswordLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        changeButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+        titleLabel.setForeground(new Color(236, 240, 241));
+        oldPasswordLabel.setForeground(new Color(236, 240, 241));
+        passwordLabel.setForeground(new Color(236, 240, 241));
+        newPasswordLabel.setForeground(new Color(236, 240, 241));
+        changeButton.setForeground(new Color(37, 99, 235));
 
 
         changeButton.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int code = controller.changePassword(oldPasswordArea.getPassword(), passwordArea.getPassword(), newPasswordArea.getPassword());
-                if(code == -2){
-                    JOptionPane.showMessageDialog(panel, "Vecchia password errata");
-                }else if(code == -1){
-                    JOptionPane.showMessageDialog(panel, "La password deve essere lunga tra gli 8 ed i 16 caratteri");
-                }else if(code == -4){
-                    JOptionPane.showMessageDialog(panel, "Le password non coincidono");
-                }else if(code == -3){
+                if(new String(oldPasswordArea.getPassword()).isEmpty() || new String(passwordArea.getPassword()).isEmpty() || new String(newPasswordArea.getPassword()).isEmpty()){
                     JOptionPane.showMessageDialog(panel, "Inserire i dati mancanti");
-                }else{
-                    JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
-                    frameChiamante.setVisible(true);
-                    frame.dispose();
                 }
-
+                else {
+                    try {
+                        int code = controller.changePassword(oldPasswordArea.getPassword(), passwordArea.getPassword(), newPasswordArea.getPassword());
+                       switch (code){
+                           case -2:
+                               JOptionPane.showMessageDialog(panel, "Vecchia password errata");
+                               oldPasswordArea.setText("");
+                               newPasswordArea.setText("");
+                               passwordArea.setText("");
+                                break;
+                           case -1:
+                               JOptionPane.showMessageDialog(panel, "La password deve essere lunga tra gli 8 ed i 16 caratteri");
+                               newPasswordArea.setText("");
+                               passwordArea.setText("");
+                               break;
+                           case -4:
+                               JOptionPane.showMessageDialog(panel, "Le password non coincidono");
+                               newPasswordArea.setText("");
+                               passwordArea.setText("");
+                               break;
+                           case -5:
+                               JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
+                               newPasswordArea.setText("");
+                               passwordArea.setText("");
+                               break;
+                           case 1:
+                               JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
+                               frameChiamante.setVisible(true);
+                               frame.dispose();
+                               break;
+                        }
+                    } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
+                        System.out.println("Qualcosa è andato storto durante il cambio della password");
+                    }
+                }
             }
         });
     }
