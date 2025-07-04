@@ -5,13 +5,11 @@ import model.Request;
 import model.User;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +40,11 @@ public class AreaPersonale {
     private JButton teamButton;
     private JLabel descLabel;
     private JLabel messageLabel;
+    private JLabel imageLabel;
+    private JLabel titleLabel;
+    private JLabel profileLabel;
+    private JPanel lastsHackPanel;
+    private JButton logoutButton;
     private JFrame frame;
 
     /**
@@ -73,30 +76,41 @@ public class AreaPersonale {
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        textArea1.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        fNameArea.setBackground(new Color(15, 15, 50));
-        lNameArea.setBackground(new Color(15, 15, 50));
-        userArea.setBackground(new Color(15, 15, 50));
-        requestList.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        textArea1.setBackground(new Color(30, 30, 47));
+        fNameArea.setBackground(new Color(30, 30, 47));
+        lNameArea.setBackground(new Color(30, 30, 47));
+        userArea.setBackground(new Color(30, 30, 47));
+        requestList.setBackground(new Color(30, 30, 47));
 
-        fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        userLabel.setForeground(new Color(0, 255, 0));
-        teamLabel.setForeground(new Color(0, 255, 0));
-        descLabel.setForeground(new Color(0, 255, 0));
-        messageLabel.setForeground(new Color(0, 255, 0));
+        fNameLabel.setForeground(new Color(236, 240, 241));
+        lNameLabel.setForeground(new Color(236, 240, 241));
+        userLabel.setForeground(new Color(236, 240, 241));
+        teamLabel.setForeground(new Color(236, 240, 241));
+        descLabel.setForeground(new Color(236, 240, 241));
+        messageLabel.setForeground(new Color(236, 240, 241));
+        profileLabel.setForeground(new Color(236, 240, 241));
+        titleLabel.setForeground(new Color(236, 240, 241));
 
-        cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
-        cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
-        textArea1.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        requestList.setForeground(new Color(0, 255, 0));
+        cambiaUsernameButton.setForeground(new Color(37, 99, 235));
+        cambiaPasswordButton.setForeground(new Color(37, 99, 235));
+        logoutButton.setForeground(new Color(37, 99, 235));
+        homeButton.setForeground(new Color(37, 99, 235));
+        textArea1.setForeground(new Color(236, 240, 241));
+        requestList.setForeground(new Color(236, 240, 241));
 
+        dataPanel.setBorder(new LineBorder(new Color(236, 240, 241)));
+
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        imageLabel.setIcon(resizedIcon);
 
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
+                controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 frame.dispose();
             }
         });
@@ -213,6 +227,17 @@ public class AreaPersonale {
             }
         });
 
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                controller.getHome().getFrame().setVisible(true);
+                controller.logout();
+                JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
+                controller.getHome().getAreaPersonaleButton().setEnabled(false);
+                controller.getHome().getLoginButton().setText("Login");
+            }
+        });
     }
 
 

@@ -70,6 +70,7 @@ public class Home {
 
         titleLabel.setForeground(new Color(236, 240, 241));
         loginButton.setForeground(new Color(37, 99, 235));
+        areaPersonaleButton.setForeground(new Color(37, 99, 235));
         textArea1.setForeground(new Color(236, 240, 241));
 
         UIManager.put("OptionPane.background", new Color(30, 30, 47));

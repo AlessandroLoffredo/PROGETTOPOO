@@ -19,6 +19,7 @@ public class CreaTeam {
     private JTextField nickArea;
     private JPanel dataPanel;
     private JLabel nickLabel;
+    private JLabel titlaLabel;
     private JFrame frame;
 
 
@@ -46,12 +47,12 @@ public class CreaTeam {
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30));
-        dataPanel.setBackground(new Color(15, 15, 50));
-        createPanel.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        dataPanel.setBackground(new Color(30, 30, 47));
+        createPanel.setBackground(new Color(30, 30, 47));
 
-        nickLabel.setForeground(new Color(0, 255, 0));
-        createButton.setForeground(new Color(255, 0, 150));
+        nickLabel.setForeground(new Color(236, 240, 241));
+        createButton.setForeground(new Color(37, 99, 235));
 
         createButton.addActionListener(new ActionListener() {
             @Override

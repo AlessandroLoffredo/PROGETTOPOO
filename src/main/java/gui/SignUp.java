@@ -29,6 +29,7 @@ public class SignUp {
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JLabel titleLabel;
+    private JButton lockButton;
     private JTextField formatoPassLabel;
     private JFrame frame;
 
@@ -73,6 +74,11 @@ public class SignUp {
         signUpButton.setForeground(new Color(37, 99, 235));
         ageRadioButton.setForeground(new Color(37, 99, 235));
         titleLabel.setForeground(new Color(236, 240, 241));
+
+        lockButton.setText("\uD83D\uDD12");
+        lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton.setBackground(new Color(30, 30, 47));
+        lockButton.setForeground(new Color(30, 30, 47));
 
 
         signUpButton.addActionListener(new ActionListener() {
@@ -122,6 +128,20 @@ public class SignUp {
                         lNameArea.setText("");
                         fNameArea.setText("");
                     }
+                }
+            }
+        });
+
+        lockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(lockButton.getText().equals("\uD83D\uDD12")){
+                    lockButton.setText("\uD83D\uDD13");
+                    passwordArea.setEchoChar((char) 0);
+                }
+                else {
+                    lockButton.setText("\uD83D\uDD12");
+                    passwordArea.setEchoChar('•');
                 }
             }
         });

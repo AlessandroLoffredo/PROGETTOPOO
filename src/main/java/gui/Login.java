@@ -27,6 +27,7 @@ public class Login {
     private JFrame frame;
     private JLabel titleLabel;
     private JButton signUpButton;
+    private JButton lockButton;
 
 
     /**
@@ -62,6 +63,11 @@ public class Login {
         passwordLabel.setForeground(new Color(236, 240, 241));
         titleLabel.setForeground(new Color(236, 240, 241));
         signUpButton.setForeground(new Color(37, 99, 235));
+
+        lockButton.setText("\uD83D\uDD12");
+        lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton.setBackground(new Color(30, 30, 47));
+        lockButton.setForeground(new Color(30, 30, 47));
 
 
 
@@ -114,6 +120,20 @@ public class Login {
                         signUp.getFrame().requestFocus();
                     }
                 });
+            }
+        });
+
+        lockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(lockButton.getText().equals("\uD83D\uDD12")){
+                    lockButton.setText("\uD83D\uDD13");
+                    passwordArea.setEchoChar((char) 0);
+                }
+                else {
+                    lockButton.setText("\uD83D\uDD12");
+                    passwordArea.setEchoChar('•');
+                }
             }
         });
     }
