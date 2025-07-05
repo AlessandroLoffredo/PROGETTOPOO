@@ -18,13 +18,12 @@ import java.util.ArrayList;
 public class AreaPersonale {
     private JPanel panel;
     private JPanel dataPanel;
-    private JTextArea fNameArea;
-    private JTextArea lNameArea;
-    private JTextArea userArea;
+    private JLabel fNameArea;
+    private JLabel lNameArea;
+    private JLabel userArea;
     private JLabel fNameLabel;
     private JLabel lNameLabel;
     private JLabel userLabel;
-    private JPanel operationPanel;
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
     private JPanel participantPanel;
@@ -36,7 +35,7 @@ public class AreaPersonale {
     private JTextField messageArea;
     private JPanel teamPanel;
     private JLabel teamLabel;
-    private JTextArea textArea1;
+    private JLabel textArea1;
     private JButton teamButton;
     private JLabel descLabel;
     private JLabel messageLabel;
@@ -45,6 +44,9 @@ public class AreaPersonale {
     private JLabel profileLabel;
     private JPanel lastsHackPanel;
     private JButton logoutButton;
+    private JPanel profilePanel;
+    private JPanel elementsPanel;
+    private JTextArea textArea2;
     private JFrame frame;
 
     /**
@@ -75,31 +77,53 @@ public class AreaPersonale {
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
 
+        textArea2.setLineWrap(true);
+        textArea2.setWrapStyleWord(true);
+        textArea2.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        textArea2.append("\n\n\n\n\n\n\n\n");
+        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        textArea2.append("\n\n\n\n\n\n\n\n");
 
-        panel.setBackground(new Color(30, 30, 47));
+        panel.setBackground(new Color(236, 240, 241));
+        profilePanel.setBackground(new Color(30, 30, 47));
         textArea1.setBackground(new Color(30, 30, 47));
         fNameArea.setBackground(new Color(30, 30, 47));
         lNameArea.setBackground(new Color(30, 30, 47));
         userArea.setBackground(new Color(30, 30, 47));
-        requestList.setBackground(new Color(30, 30, 47));
+        requestList.setBackground(new Color(236, 240, 241));
+        requestList.setForeground(new Color(30, 30, 47));
+        elementsPanel.setBackground(new Color(236, 240, 241));
+        lastsHackPanel.setBackground(new Color(236, 240, 241));
+        messagePanel.setBackground(new Color(236, 240, 241));
+        participantPanel.setBackground(new Color(236, 240, 241));
 
         fNameLabel.setForeground(new Color(236, 240, 241));
         lNameLabel.setForeground(new Color(236, 240, 241));
         userLabel.setForeground(new Color(236, 240, 241));
+        fNameArea.setForeground(new Color(236, 240, 241));
+        lNameArea.setForeground(new Color(236, 240, 241));
+        userArea.setForeground(new Color(236, 240, 241));
         teamLabel.setForeground(new Color(236, 240, 241));
-        descLabel.setForeground(new Color(236, 240, 241));
-        messageLabel.setForeground(new Color(236, 240, 241));
+        teamLabel.setForeground(new Color(236, 240, 241));
+        descLabel.setForeground(new Color(30, 30, 47));
+        messageLabel.setForeground(new Color(30, 30, 47));
         profileLabel.setForeground(new Color(236, 240, 241));
-        titleLabel.setForeground(new Color(236, 240, 241));
+        titleLabel.setForeground(new Color(30, 30, 47));
 
         cambiaUsernameButton.setForeground(new Color(37, 99, 235));
         cambiaPasswordButton.setForeground(new Color(37, 99, 235));
         logoutButton.setForeground(new Color(37, 99, 235));
         homeButton.setForeground(new Color(37, 99, 235));
         textArea1.setForeground(new Color(236, 240, 241));
-        requestList.setForeground(new Color(236, 240, 241));
+        inviaRichiestaButton.setForeground(new Color(37, 99, 235));
 
-        dataPanel.setBorder(new LineBorder(new Color(236, 240, 241)));
+        fNameArea.setText(controller.getUser().getfName());
+        lNameArea.setText(controller.getUser().getlName());
+        userArea.setText(controller.getUser().getUsername());
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
