@@ -1,66 +1,63 @@
-package controller;
+    package controller;
 
-import gui.*;
-import implementazioniPostgresDAO.*;
-import model.*;
-import javax.swing.*;
-import java.net.PasswordAuthentication;
-import java.util.ArrayList;
-import java.util.Date;
-
-/**
- * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
- */
-public class Controller {
-    //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
-    //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
-    private User user;
-    private Home home;
-    private PlatformAdmin plAdmin;
-    /**
-     * Istanzia un nuovo controller.
-     *
-     * @param home il frame principale della classe Home
-     */
-    public Controller(Home home) {
-        this.user = null;
-        this.plAdmin = null;
-        this.home = home;
-    }
+    import gui.*;
+    import implementazioniPostgresDAO.*;
+    import model.*;
+    import javax.swing.*;
+    import java.net.PasswordAuthentication;
+    import java.sql.SQLException;
+    import java.time.LocalDate;
+    import java.util.ArrayList;
+    import java.util.Date;
+    import java.util.Locale;
 
     /**
-     * Restituisce l'attributo home.
-     *
-     * @return Home : Il frame della classe Home.
+     * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
      */
-    public Home getHome() {
-        return home;
-    }
-    /**
-     * Restituisce l'attributo utente.
-     *
-     * @return User : utente che naviga nella pagina.
-     */
-    public User getUser() {
-        return user;
-    }
+    public class Controller {
+        //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
+        //SETTATO A NULL OGNI VOLTA CHE L'UTENTE DI DISCONNETTE O ACCEDE PER LA PRIMA VOLTA
+        private User user;
+        private Home home;
+        private PlatformAdmin plAdmin;
+        /**
+         * Istanzia un nuovo controller.
+         *
+         * @param home il frame principale della classe Home
+         */
+        public Controller(Home home) {
+            this.user = null;
+            this.plAdmin = null;
+            this.home = home;
+        }
 
-    /**
-     * Gestisce l'azione di login di un utente già registrato.
-     *
-     * @param username L'username dell'utente che intende accedere
-     * @param password La password dell'utente che intende accedere
-     * @return int : Codice che indentifica le diverse situazioni di un accesso.
-     * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
-     */
-    //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
-    public int handleLogin(String username, char[] password) throws Exception{
+        /**
+         * Restituisce l'attributo home.
+         *
+         * @return Home : Il frame della classe Home.
+         */
+        public Home getHome() {
+            return home;
+        }
+        /**
+         * Restituisce l'attributo utente.
+         *
+         * @return User : utente che naviga nella pagina.
+         */
+        public User getUser() {
+            return user;
+        }
 
-        Person person = new Person();
-        //this.user = person.logIn(username, password);
-        if(username.isEmpty() || (new String(password)).isEmpty()){
-            return -1;
-        }else{
+        /**
+         * Gestisce l'azione di login di un utente già registrato.
+         *
+         * @param username L'username dell'utente che intende accedere
+         * @param password La password dell'utente che intende accedere
+         * @return int : Codice che indentifica le diverse situazioni di un accesso.
+         * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
+         */
+        //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
+        public int handleLogin(String username, char[] password) throws Exception{
             AuthImplementation authI = new AuthImplementation();
             int log = authI.logIn(username, new String(password));
             if(log == 1){
@@ -74,11 +71,11 @@ public class Controller {
             } else if (log == 5) {
                 this.user = new User(null, null, username, new String(password));
             }else{
-                return -2;
+                return -1;
             }
             return log;
         }
-    }
+
 
     /**
      * Gestisce l'azione di registrazione di un nuovo utente.
@@ -90,17 +87,17 @@ public class Controller {
      * @return int : codice che identifica le diverse situazioni di una registrazione.
      */
     public int handleSignUp(String username, String password, String fName, String lName){
-       if(fName.length() > 20 || lName.length() > 20) {
-           return -1;
-       }else if(username.length() > 16 || username.length() < 3 || password.length() > 16 || password.length() < 8) {
-           return -2;
-       }else{
-           AuthImplementation authI = new AuthImplementation();
-           int signUp = authI.signUp(username, password, fName, lName);
-           if(signUp == 1)
-               this.user = new User(fName, lName, username, password);
-           return signUp;
-       }
+        if(fName.length() > 20 || lName.length() > 20) {
+            return -1;
+        }else if(username.length() > 16 || username.length() < 3 || password.length() > 16 || password.length() < 8) {
+            return -2;
+        }else{
+            AuthImplementation authI = new AuthImplementation();
+            int signUp = authI.signUp(username, password, fName, lName);
+            if(signUp == 1)
+                this.user = new User(fName, lName, username, password);
+            return signUp;
+        }
     }
 
     /**
@@ -184,15 +181,15 @@ public class Controller {
     public int sendRequestOrganizer(User username){
         //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA USER A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
         //SI DOVRA' CERCARE NEL DB L'USER CORRISPONDENTE ALL'USERNAME
-        /*ArrayList<Request> richieste = username.getRequestsJudge();
-        for(Request r : richieste){
-            if(r.getSender().equals(username)){
-                return 1;
+            /*ArrayList<Request> richieste = username.getRequestsJudge();
+            for(Request r : richieste){
+                if(r.getSender().equals(username)){
+                    return 1;
+                }
             }
-        }
-        username.addRequest(new Request("Invito per giudicare l'Hackathon: " + ((Organizer)user).getOrganizedHackathon().getTitle(), user));
+            username.addRequest(new Request("Invito per giudicare l'Hackathon: " + ((Organizer)user).getOrganizedHackathon().getTitle(), user));
 
-         */
+             */
         return 0;
     }
 
@@ -216,7 +213,7 @@ public class Controller {
      * @param frameChiamante Il frame da dove viene chiamato il metodo, da questa dipende l'azione successiva.
      * @return int : Codice che identifica le varie situazioni che possono accadere.
      */
-//MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
+    //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
     public int handleAccRequest(String username, JFrame frameChiamante){
         User sender = User.findUser(username);
         Participant p = (Participant) sender;
@@ -254,11 +251,11 @@ public class Controller {
         return team.getDocList();
     }
 
-    /*public void handleComment(String comment, JFrame frame){
-        if(COMMENTO GIA' PRESENTE PER IL DOC)
-        COME ARRIVIAMO AL DOC?
-        CI SARANNO COMMENTI DA PIU' GIUDICI?
-    }*/
+        /*public void handleComment(String comment, JFrame frame){
+            if(COMMENTO GIA' PRESENTE PER IL DOC)
+            COME ARRIVIAMO AL DOC?
+            CI SARANNO COMMENTI DA PIU' GIUDICI?
+        }*/
 
     /**
      * Gestisce l'assegnazione di un voto da parte di un giudice ad un team per il lavoro svolto.
@@ -287,13 +284,13 @@ public class Controller {
      * @return boolean : per sapere se sono state aperte.
      */
     public boolean verifyingStartRegDate(){
-        /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
-            return false;
-        }
-        else {
-            return true;
-        }
-        */
+            /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
+                return false;
+            }
+            else {
+                return true;
+            }
+            */
         //INSERITO PER COMODITA' PER TEST
         return true;
     }
@@ -304,25 +301,25 @@ public class Controller {
      * @return boolean : per sapere se è cominciato.
      */
     public boolean verifyingStartHack(){
-        /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
-            return true;
-        }
-        else {
-            return false;
-        }
-         */
+            /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
+                return true;
+            }
+            else {
+                return false;
+            }
+             */
         //INSERITO PER COMODITA' PER TEST
         return false;
     }
 
-    /*public int handleCreateHackathon(String title, String venue, Date startHack, Date endHack, int maxPar, int maxParTeam){
-        //CONTROLLI CON IL DB PER VERIFICARE CHE NON CI SIANO ALTRI HACKATHON UGUALI...
-        //VALUTARE E DETERMINARE QUALI ELEMENTI POSSONO ESSERE UGUALI...
-        //E NEL CASO RETSITUIRE 1
-        //DOBBIAMO CREARE ATTRIBUTO ADMIN??
-        // (admin.createHackathon(title, venue, startHack, endHack, maxPar, maxParTeam);
-    }
-     */
+        /*public int handleCreateHackathon(String title, String venue, Date startHack, Date endHack, int maxPar, int maxParTeam){
+            //CONTROLLI CON IL DB PER VERIFICARE CHE NON CI SIANO ALTRI HACKATHON UGUALI...
+            //VALUTARE E DETERMINARE QUALI ELEMENTI POSSONO ESSERE UGUALI...
+            //E NEL CASO RETSITUIRE 1
+            //DOBBIAMO CREARE ATTRIBUTO ADMIN??
+            // (admin.createHackathon(title, venue, startHack, endHack, maxPar, maxParTeam);
+        }
+         */
 
     /**
      * Create team int.
@@ -406,5 +403,21 @@ public class Controller {
     public PlatformAdmin getPlAdmin() {
         return plAdmin;
     }
-}
 
+    public void getOrganizers(ArrayList<String> organizers) throws SQLException {
+        UsersImplementation usersI = new UsersImplementation();
+        usersI.getOrganizers(organizers);
+    }
+
+    public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
+        if(title.length() > 50 || venue.length() > 25){
+            return -2;
+        } else if (startDate.isBefore((LocalDate.now().plusDays(7)))) {
+            return -3;
+        } else {
+            UsersImplementation usersI = new UsersImplementation();
+            int insert = usersI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username);
+            return insert;
+        }
+    }
+}

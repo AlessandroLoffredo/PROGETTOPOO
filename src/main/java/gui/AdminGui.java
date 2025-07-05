@@ -127,7 +127,7 @@ public class AdminGui {
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreaHackathon crea = new CreaHackathon(frame);
+                CreaHackathon crea = new CreaHackathon(frame, controller);
                 frame.setVisible(false);
                 crea.getFrame().setVisible(true);
             }

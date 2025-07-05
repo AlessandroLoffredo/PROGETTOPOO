@@ -1,11 +1,17 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,7 +47,7 @@ public class CreaHackathon {
      * </p>
      * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
      */
-    public CreaHackathon(JFrame frameChiamante) {
+    public CreaHackathon(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("CreaHackathon");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
@@ -77,6 +83,15 @@ public class CreaHackathon {
             comboBox.addItem(i);
         }
 
+        ArrayList<String> organizers = new ArrayList<>();
+        try{
+            controller.getOrganizers(organizers);
+            for(String organizer : organizers){
+                organizerComboBox.addItem(organizer);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
+        }
         //POPOLARE L'ORGANIZERCOMBOBOX CON SOLI UTENTI LIBERI...
         //VALUTARE NUOVAMENTE QUESTIONE ISBUSY
 
@@ -138,19 +153,61 @@ public class CreaHackathon {
         creaHackathonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Date date = (Date) startSpinner.getValue();
+                LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                date = (Date) endSpinner.getValue();
+                LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 if(titleArea.getText().isEmpty() || venueArea.getText().isEmpty() || maxParArea.getText().isEmpty()|| comboBox.getSelectedItem().equals("-")){
                     JOptionPane.showMessageDialog(panel, "Inserire i valori in tutti i campi", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
+                }else {
+                    int n = 0;
                     try {
-                        int n = Integer.parseInt(maxParArea.getText());
+                        n = Integer.parseInt(maxParArea.getText());
                     }
                     catch (Exception ex){
                         JOptionPane.showMessageDialog(panel, "Inserire il numero di partecipanti in cifre", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     }
-                    //controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(),startDate con cast , endDate con cast, n, comboBox.getSelectedItem(), organizerComboBox.getSelectedItem());
-                    frameChiamante.setVisible(true);
-                    frame.dispose();
+                    try{
+                        int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString());
+                        switch (code) {
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
+                                titleArea.setText("");
+                                venueArea.setText("");
+                                break;
+                            case -3:
+                                JOptionPane.showMessageDialog(panel, "L'Hackathon deve distare almeno una settimana dal giorno corrente");
+                                startSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                                endSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                                break;
+                            case 0:
+                                JOptionPane.showMessageDialog(panel, "Creazione del nuovo evento avvenuta con successo");
+                                frameChiamante.setVisible(true);
+                                frame.dispose();
+                                break;
+                            case -1:
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Errore durante la creazione del nuovo hackathon");
+                                titleArea.setText("");
+                                maxParArea.setText("");
+                                venueArea.setText("");
+                                startSpinner.setEditor(startEditor);
+                                endSpinner.setEditor(endEditor);
+                                comboBox.setSelectedIndex(0);
+                                organizerComboBox.setSelectedIndex(0);
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la creazione dell'evento");
+                        titleArea.setText("");
+                        maxParArea.setText("");
+                        venueArea.setText("");
+                        startSpinner.setEditor(startEditor);
+                        endSpinner.setEditor(endEditor);
+                        comboBox.setSelectedIndex(0);
+                        organizerComboBox.setSelectedIndex(0);
+                    }
                 }
             }
         });

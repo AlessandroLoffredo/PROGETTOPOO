@@ -121,7 +121,7 @@ public class SignUp {
                                 fNameArea.setText("");
                                 break;
                         }
-                    } catch (IllegalArgumentException ex) {  //Creiamo classe Exception nuova?
+                    } catch (Exception ex) {  //Creiamo classe Exception nuova?
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");                        usernameArea.setText("");
                         passwordArea.setText("");
