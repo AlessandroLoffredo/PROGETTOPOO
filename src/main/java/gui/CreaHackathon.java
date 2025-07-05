@@ -38,6 +38,7 @@ public class CreaHackathon {
     private JLabel maxParTeamLabel;
     private JComboBox organizerComboBox;
     private JLabel organizerLabel;
+    private JLabel titleLabel2;
     private JFrame frame;
 
     /**
@@ -63,19 +64,20 @@ public class CreaHackathon {
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30));
-        labelPanel.setBackground(new Color(15, 15, 50));
-        dataPanel.setBackground(new Color(15, 15, 50));
-        buttonPanel.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        labelPanel.setBackground(new Color(30, 30, 47));
+        dataPanel.setBackground(new Color(30, 30, 47));
+        buttonPanel.setBackground(new Color(30, 30, 47));
 
-        titleLabel.setForeground(new Color(0, 255, 0));
-        venueLabel.setForeground(new Color(0, 255, 0));
-        startHackLabel.setForeground(new Color(0, 255, 0));
-        endHackLabel.setForeground(new Color(0, 255, 0));
-        maxParLabel.setForeground(new Color(0, 255, 0));
-        maxParTeamLabel.setForeground(new Color(0, 255, 0));
-        organizerLabel.setForeground(new Color(0, 255, 0));
-        creaHackathonButton.setForeground(new Color(255, 0, 150));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        venueLabel.setForeground(new Color(236, 240, 241));
+        startHackLabel.setForeground(new Color(236, 240, 241));
+        endHackLabel.setForeground(new Color(236, 240, 241));
+        maxParLabel.setForeground(new Color(236, 240, 241));
+        maxParTeamLabel.setForeground(new Color(236, 240, 241));
+        organizerLabel.setForeground(new Color(236, 240, 241));
+        creaHackathonButton.setForeground(new Color(37, 99, 235));
+        titleLabel2.setForeground(new Color(236, 240, 241));
 
 
         comboBox.addItem("-");

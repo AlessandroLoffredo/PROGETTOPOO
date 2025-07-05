@@ -22,6 +22,14 @@ public class AdminGui {
     private JTextPane infoText;
     private JButton goToButton;
     private JPanel operationPanel;
+    private JPanel profilePanel;
+    private JPanel dataPanel;
+    private JLabel userLabel;
+    private JLabel userArea;
+    private JLabel profileLabel;
+    private JLabel titleLabel;
+    private JLabel imageLabel;
+    private JLabel imageLabel2;
     private JLabel iconLabel;
     private JFrame frame;
 
@@ -38,7 +46,6 @@ public class AdminGui {
      */
     public AdminGui(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("SignIn");
-        panel = new JPanel(new BorderLayout()); // Usa BorderLayout per separare le sezioni
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -50,33 +57,32 @@ public class AdminGui {
         frame.setSize(800, 800);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        panel.setBackground(new Color(5, 0, 54));
+        panel.setBackground(new Color(236, 240, 241));
+        operationPanel.setBackground(new Color(236, 240, 241));
+        welcomeText.setBackground(new Color(236, 240, 241));
+        infoText.setBackground(new Color(236, 240, 241));
+        welcomeText.setForeground(new Color(30, 30, 47));
+        infoText.setForeground(new Color(30, 30, 47));
+        profileLabel.setForeground(new Color(236, 240, 241));
+        userLabel.setForeground(new Color(236, 240, 241));
+        userArea.setForeground(new Color(236, 240, 241));
+        createButton.setForeground(new Color(37, 99, 235));
+        goToButton.setForeground(new Color(37, 99, 235));
 
-
-        // Pannello operazioni
-        operationPanel = new JPanel();
-        operationPanel.setLayout(new GridLayout(0, 1)); // Disposizione verticale
-
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/AdminGuiIcon.jpg"));
-        Image scaledImage = imageIcon.getImage().getScaledInstance(315, 640, Image.SCALE_SMOOTH);
-
-        // CONVERTO DI NUOVO IN IMAGEICON PER ASSEGNARLA ALLA LABLE
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
-        iconLabel.setIcon(resizedIcon);
-        panel.add(iconLabel);
+        imageLabel.setIcon(resizedIcon);
 
-        welcomeText = new JTextPane();
-        createButton = new JButton("Crea un nuovo Hackathon");
-        infoText = new JTextPane();
-        goToButton = new JButton("Home");
+        userArea.setText(controller.getPlAdmin().getUsername());
 
-        operationPanel.add(welcomeText);
-        operationPanel.add(createButton);
-        operationPanel.add(infoText);
-        operationPanel.add(goToButton);
+        ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/prova.png"));
+        Image scaledImage2 = imageIcon2.getImage().getScaledInstance(427, 284, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+        imageLabel2.setIcon(resizedIcon2);
 
-        // Aggiungi il pannello operazioni nel pannello generale a destra
-        panel.add(operationPanel, BorderLayout.EAST);
+
+
 
         /*// Pannello lista
         listPanel = new JPanel();
