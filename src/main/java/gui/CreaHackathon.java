@@ -4,10 +4,7 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -85,16 +82,8 @@ public class CreaHackathon {
             comboBox.addItem(i);
         }
 
-        organizerComboBox.addItem("-");
-        ArrayList<String> organizers = new ArrayList<>();
-        try{
-            controller.getOrganizers(organizers);
-            for(String organizer : organizers){
-                organizerComboBox.addItem(organizer);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
-        }
+;
+
         //POPOLARE L'ORGANIZERCOMBOBOX CON SOLI UTENTI LIBERI...
         //VALUTARE NUOVAMENTE QUESTIONE ISBUSY
 
@@ -142,7 +131,7 @@ public class CreaHackathon {
             if (startDate.before(new Date())){
                 startSpinner.setValue(new Date());
             }
-
+            organizerComboBox.setSelectedIndex(0);
             endModel.setStart(startDate);
         });
 
@@ -151,9 +140,13 @@ public class CreaHackathon {
             if (startDate.before(new Date())){
                 endSpinner.setValue(new Date());
             }
+            organizerComboBox.setSelectedIndex(0);
         });
 
-        creaHackathonButton.addActionListener(new ActionListener() {
+
+
+
+         creaHackathonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Date date = (Date) startSpinner.getValue();
@@ -211,6 +204,32 @@ public class CreaHackathon {
                         comboBox.setSelectedIndex(0);
                         organizerComboBox.setSelectedIndex(0);
                     }
+                }
+            }
+        });
+
+
+        organizerComboBox.addItem("-");
+        organizerComboBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                Date date = (Date) startSpinner.getValue();
+                LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                date = (Date) endSpinner.getValue();
+                LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                ArrayList<String> organizers = new ArrayList<>();
+                try{
+                    controller.getOrganizers(organizers, startLDate, endLDate);
+                    organizerComboBox.removeAllItems();
+                    organizerComboBox.addItem("-");
+                    System.out.println(startLDate);
+                    System.out.println(endLDate);
+                    for(String organizer : organizers){
+                        organizerComboBox.addItem(organizer);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
                 }
             }
         });

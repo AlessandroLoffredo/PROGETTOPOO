@@ -27,7 +27,7 @@
          */
         public Controller(Home home) {
             this.user = null;
-            this.plAdmin = null;
+            this.plAdmin = new PlatformAdmin("domenico", "Domenico.05");
             this.home = home;
         }
 
@@ -165,8 +165,7 @@
     public int sendRequest(String message, String username){
         if(this.user instanceof Participant){
             Participant participant = (Participant) user;
-            int risultato = participant.sendRequest(message, username);
-            return risultato;
+            return participant.sendRequest(message, username);
         }else{
             return -2;
         }
@@ -404,9 +403,9 @@
         return plAdmin;
     }
 
-    public void getOrganizers(ArrayList<String> organizers) throws SQLException {
+    public void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException {
         UsersImplementation usersI = new UsersImplementation();
-        usersI.getOrganizers(organizers);
+        usersI.getOrganizers(organizers, start, end);
     }
 
     public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
