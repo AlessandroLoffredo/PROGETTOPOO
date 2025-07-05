@@ -83,6 +83,7 @@ public class CreaHackathon {
             comboBox.addItem(i);
         }
 
+        organizerComboBox.addItem("-");
         ArrayList<String> organizers = new ArrayList<>();
         try{
             controller.getOrganizers(organizers);
