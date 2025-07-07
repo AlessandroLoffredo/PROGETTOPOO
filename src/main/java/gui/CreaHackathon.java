@@ -82,7 +82,7 @@ public class CreaHackathon {
             comboBox.addItem(i);
         }
 
-;
+
 
         //POPOLARE L'ORGANIZERCOMBOBOX CON SOLI UTENTI LIBERI...
         //VALUTARE NUOVAMENTE QUESTIONE ISBUSY
@@ -143,6 +143,24 @@ public class CreaHackathon {
             organizerComboBox.setSelectedIndex(0);
         });
 
+        Date date = (Date) startSpinner.getValue();
+        LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        date = (Date) endSpinner.getValue();
+        LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        ArrayList<String> organizers = new ArrayList<>();
+        try{
+            controller.getOrganizers(organizers, startLDate, endLDate);
+            organizerComboBox.removeAllItems();
+            organizerComboBox.addItem("-");
+            System.out.println(startLDate);
+            System.out.println(endLDate);
+            for(String organizer : organizers){
+                organizerComboBox.addItem(organizer);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
+        }
 
 
 

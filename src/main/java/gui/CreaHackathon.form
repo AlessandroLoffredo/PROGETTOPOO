@@ -178,7 +178,7 @@
         </constraints>
         <properties>
           <font name="JetBrains Mono" size="18" style="1"/>
-          <text value="Area personale"/>
+          <text value="Crea Hackathon"/>
         </properties>
       </component>
     </children>

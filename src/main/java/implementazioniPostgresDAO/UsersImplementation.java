@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UsersImplementation implements UsersInterface {
-    public void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException{
+    /*public void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException{
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT P.username FROM PlUser P WHERE P.username NOT IN (" +
                     "SELECT O.username FROM Organizer O, Hackathon H " +
@@ -34,7 +34,35 @@ public class UsersImplementation implements UsersInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    public void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException {
+        try (Connection conn = ConnessioneDatabase.getInstance().connection) {
+            String sql = "SELECT P.username FROM PlUser P WHERE P.username NOT IN (" +
+                    "SELECT O.username FROM Organizer O JOIN Hackathon H ON O.idHack = H.idHack " +
+                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                    "P.username NOT IN (" +
+                    "SELECT J.username FROM Judge J JOIN Hackathon H ON J.idHack = H.idHack " +
+                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                    "P.username NOT IN (" +
+                    "SELECT Pa.username FROM Participant Pa JOIN Team T ON Pa.idTeam = T.idTeam JOIN Hackathon H ON T.idHack = H.idHack " +
+                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?));";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            for (int i = 1; i <= 6; i++) {
+                if (i % 2 == 1)
+                    stmt.setDate(i, Date.valueOf(start.minusDays(7)));
+                else
+                    stmt.setDate(i, Date.valueOf(end));
+            }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                organizers.add(rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
         int results = 0;

@@ -27,7 +27,7 @@
          */
         public Controller(Home home) {
             this.user = null;
-            this.plAdmin = new PlatformAdmin("domenico", "Domenico.05");
+            this.plAdmin = new PlatformAdmin("Alex", "Password");
             this.home = home;
         }
 
@@ -165,7 +165,8 @@
     public int sendRequest(String message, String username){
         if(this.user instanceof Participant){
             Participant participant = (Participant) user;
-            return participant.sendRequest(message, username);
+            int risultato = participant.sendRequest(message, username);
+            return risultato;
         }else{
             return -2;
         }

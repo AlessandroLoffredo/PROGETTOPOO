@@ -4,12 +4,16 @@ package gui;
 
 import controller.Controller;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.net.URL;
+import java.awt.event.*;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *  Classe che gestisce tutte le azioni che un Admin della piattaforma è in grado di eseguire.
@@ -17,22 +21,38 @@ import java.net.URL;
 public class AdminGui {
     private JPanel panel;
     private JPanel listPanel;
-    private JTextPane welcomeText;
     private JButton createButton;
-    private JTextPane infoText;
     private JButton goToButton;
-    private JPanel operationPanel;
+    private JPanel createHackathonPanel;
     private JPanel profilePanel;
     private JPanel dataPanel;
     private JLabel userLabel;
-    private JLabel userArea;
+    private JTextArea adminArea;
     private JLabel profileLabel;
     private JLabel titleLabel;
     private JLabel imageLabel;
     private JLabel imageLabel2;
+    private JPanel labelPanel;
+    private JLabel venueLabel;
+    private JLabel startHackLabel;
+    private JLabel endHackLabel;
+    private JLabel maxParLabel;
+    private JLabel maxParTeamLabel;
+    private JLabel organizerLabel;
+    private JTextField titleArea;
+    private JTextField venueArea;
+    private JSpinner startSpinner;
+    private JSpinner endSpinner;
+    private JTextField maxParArea;
+    private JComboBox comboBox;
+    private JComboBox organizerComboBox;
+    private JPanel buttonPanel;
+    private JButton creaHackathonButton;
+    private JPanel createPanel;
+    private JPanel fieldPanel;
+    private JTextArea welcomeArea;
     private JLabel iconLabel;
     private JFrame frame;
-
 
     /**
      * Instanzia una nuova AdminGui.
@@ -45,7 +65,7 @@ public class AdminGui {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AdminGui(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("SignIn");
+        frame = new JFrame("Area Personale");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -58,28 +78,48 @@ public class AdminGui {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         panel.setBackground(new Color(236, 240, 241));
-        operationPanel.setBackground(new Color(236, 240, 241));
-        welcomeText.setBackground(new Color(236, 240, 241));
-        infoText.setBackground(new Color(236, 240, 241));
-        welcomeText.setForeground(new Color(30, 30, 47));
-        infoText.setForeground(new Color(30, 30, 47));
+        createHackathonPanel.setBackground(new Color(236, 240, 241));
+        createPanel.setBackground(new Color(236, 240, 241));
+        labelPanel.setBackground(new Color(236, 240, 241));
+        buttonPanel.setBackground(new Color(236, 240, 241));
+        fieldPanel.setBackground(new Color(236, 240, 241));
         profileLabel.setForeground(new Color(236, 240, 241));
-        userLabel.setForeground(new Color(236, 240, 241));
-        userArea.setForeground(new Color(236, 240, 241));
+        adminArea.setForeground(new Color(236, 240, 241));
+        welcomeArea.setForeground(new Color(236, 240, 241));
+        welcomeArea.setBackground(new Color(30, 30, 47));
         createButton.setForeground(new Color(37, 99, 235));
+        creaHackathonButton.setForeground(new Color(37, 99, 235));
         goToButton.setForeground(new Color(37, 99, 235));
+        createHackathonPanel.setVisible(false);
+
+        adminArea.setBackground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(30, 30, 47));
+        venueLabel.setForeground(new Color(30, 30, 47));
+        startHackLabel.setForeground(new Color(30, 30, 47));
+        endHackLabel.setForeground(new Color(30, 30, 47));
+        maxParLabel.setForeground(new Color(30, 30, 47));
+        maxParTeamLabel.setForeground(new Color(30, 30, 47));
+        organizerLabel.setForeground(new Color(30, 30, 47));
+        creaHackathonButton.setForeground(new Color(37, 99, 235));
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
 
-        userArea.setText(controller.getPlAdmin().getUsername());
+        welcomeArea.setText("Benvenuto nell'area di gestione!\n" +
+                "Clicca 'Crea Hackathon' per iniziare.");
+        adminArea.append(controller.getPlAdmin().getUsername());
 
         ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/prova.png"));
-        Image scaledImage2 = imageIcon2.getImage().getScaledInstance(427, 284, Image.SCALE_SMOOTH);
+        Image scaledImage2 = imageIcon2.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
         imageLabel2.setIcon(resizedIcon2);
+
+        comboBox.addItem("-");
+        for (int i = 2; i < 6; i++) {
+            comboBox.addItem(i);
+        }
 
 
 
@@ -127,17 +167,25 @@ public class AdminGui {
         }
 */
         /*
-        * questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
-        * degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
-        */
-        createButton.addActionListener(new ActionListener() {
+         * questo tipo di gui non è destinata solo ad admin gui, che in realtà non necessità neanche id questa disposizione
+         * degli elementi, ma è stata inserita qui al fine di trovare il modo di implementarla
+         */
+        /*createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CreaHackathon crea = new CreaHackathon(frame, controller);
                 frame.setVisible(false);
                 crea.getFrame().setVisible(true);
             }
+        });*/
+        createButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createHackathonPanel.setVisible(true);
+                createHackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+            }
         });
+
         goToButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -145,7 +193,173 @@ public class AdminGui {
                 frame.dispose();
             }
         });
+
+
+        //PROVA CREA HACKATHON IN QUESTA GUI
+        SpinnerDateModel model = new SpinnerDateModel(new Date(), new Date(), null, Calendar.DAY_OF_MONTH);
+        startSpinner.setModel(model);
+
+        // Formattazione della visualizzazione della data
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(startSpinner, "dd/MM/yyyy");
+        startSpinner.setEditor(editor);
+
+
+        SpinnerDateModel model2 = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+        endSpinner.setModel(model2);
+
+        JSpinner.DateEditor editor2 = new JSpinner.DateEditor(endSpinner, "dd/MM/yyyy");
+        endSpinner.setEditor(editor2);
+
+        startSpinner.addChangeListener(e -> {
+            Date startDate = (Date) startSpinner.getValue();
+            Date endDate = (Date) endSpinner.getValue();
+            if (endDate.before(startDate))
+                endSpinner.setValue(startDate);
+        });
+
+        // Creazione modello per la data di inizio
+        SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+        startSpinner.setModel(startModel);
+        JSpinner.DateEditor startEditor = new JSpinner.DateEditor(startSpinner, "dd/MM/yyyy");
+        startSpinner.setEditor(startEditor);
+
+        // Creazione modello per la data di fine
+        SpinnerDateModel endModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
+        endSpinner.setModel(endModel);
+        JSpinner.DateEditor endEditor = new JSpinner.DateEditor(endSpinner, "dd/MM/yyyy");
+        endSpinner.setEditor(endEditor);
+
+        startSpinner.addChangeListener(e -> {
+            Date startDate = (Date) startSpinner.getValue();
+            Date endDate = (Date) endSpinner.getValue();
+
+            // Se la data finale è minore della data di inizio, aggiorniamo endSpinner
+            if (endDate.before(startDate)) {
+                endSpinner.setValue(startDate);
+            }
+            if (startDate.before(new Date())) {
+                startSpinner.setValue(new Date());
+            }
+            organizerComboBox.setSelectedIndex(0);
+            endModel.setStart(startDate);
+        });
+
+        endSpinner.addChangeListener(e -> {
+            Date startDate = (Date) endSpinner.getValue();
+            if (startDate.before(new Date())) {
+                endSpinner.setValue(new Date());
+            }
+            organizerComboBox.setSelectedIndex(0);
+        });
+
+        Date date = (Date) startSpinner.getValue();
+        LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        date = (Date) endSpinner.getValue();
+        LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        ArrayList<String> organizers = new ArrayList<>();
+        try {
+            controller.getOrganizers(organizers, startLDate, endLDate);
+            organizerComboBox.removeAllItems();
+            organizerComboBox.addItem("-");
+            for (String organizer : organizers) {
+                organizerComboBox.addItem(organizer);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
+        }
+
+
+        creaHackathonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date date = (Date) startSpinner.getValue();
+                LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                date = (Date) endSpinner.getValue();
+                LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (titleArea.getText().isEmpty() || venueArea.getText().isEmpty() || maxParArea.getText().isEmpty() || comboBox.getSelectedItem().equals("-")) {
+                    JOptionPane.showMessageDialog(panel, "Inserire i valori in tutti i campi", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int n = 0;
+                    try {
+                        n = Integer.parseInt(maxParArea.getText());
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(panel, "Inserire il numero di partecipanti in cifre", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                    }
+                    try {
+                        int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString());
+                        switch (code) {
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
+                                titleArea.setText("");
+                                venueArea.setText("");
+                                break;
+                            case -3:
+                                JOptionPane.showMessageDialog(panel, "L'Hackathon deve distare almeno una settimana dal giorno corrente");
+                                startSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                                endSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                                break;
+                            case 0:
+                                JOptionPane.showMessageDialog(panel, "Creazione del nuovo evento avvenuta con successo");
+                                createHackathonPanel.setVisible(false);
+                                break;
+                            case -1:
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Errore durante la creazione del nuovo hackathon");
+                                titleArea.setText("");
+                                maxParArea.setText("");
+                                venueArea.setText("");
+                                startSpinner.setEditor(startEditor);
+                                endSpinner.setEditor(endEditor);
+                                comboBox.setSelectedIndex(0);
+                                organizerComboBox.setSelectedIndex(0);
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la creazione dell'evento");
+                        titleArea.setText("");
+                        maxParArea.setText("");
+                        venueArea.setText("");
+                        startSpinner.setEditor(startEditor);
+                        endSpinner.setEditor(endEditor);
+                        comboBox.setSelectedIndex(0);
+                        organizerComboBox.setSelectedIndex(0);
+                    }
+                }
+            }
+        });
+
+
+        organizerComboBox.addItem("-");
+        organizerComboBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                Date date = (Date) startSpinner.getValue();
+                LocalDate startLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                date = (Date) endSpinner.getValue();
+                LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                ArrayList<String> organizers = new ArrayList<>();
+                try {
+                    controller.getOrganizers(organizers, startLDate, endLDate);
+                    organizerComboBox.removeAllItems();
+                    organizerComboBox.addItem("-");
+                    for (String organizer : organizers) {
+                        organizerComboBox.addItem(organizer);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
+                }
+            }
+        });
+
+        //PROVA GRAFICO
     }
+
+
+    //FINE PROVA
+
     /**
      * Restituisce il frame principale della gui.
      *
