@@ -220,7 +220,7 @@
                 </constraints>
                 <properties>
                   <font name="PT Mono" size="16"/>
-                  <text value="Invita guidici per l'Hackathon"/>
+                  <text value="Invita giudici per l'Hackathon"/>
                 </properties>
               </component>
             </children>

@@ -4,10 +4,7 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -86,21 +83,43 @@ public class Home {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(loginButton.getText().equalsIgnoreCase("LOGIN")){
+                if(loginButton.getText().equalsIgnoreCase("LOGIN")) {
                     Login login = new Login(frame, controller);
+                    JFrame loginFrame = login.getFrame();
+
+                    // Configurazione iniziale
                     frame.setEnabled(false);
-                    login.getFrame().setAlwaysOnTop(true);
-                    login.getFrame().requestFocus();
-                    login.getFrame().setVisible(true);
-                    login.getFrame().addWindowFocusListener(new WindowAdapter() {
+                    loginFrame.setAlwaysOnTop(true);
+                    loginFrame.setVisible(true);
+
+                    // Gestione intelligente del focus
+                    loginFrame.addWindowStateListener(new WindowStateListener() {
                         @Override
-                        public void windowLostFocus(WindowEvent e) {
-                            login.getFrame().toFront();
-                            login.getFrame().requestFocus();
+                        public void windowStateChanged(WindowEvent e) {
+                            if ((e.getNewState() & Frame.ICONIFIED) == 0) {
+                                // Solo se NON è iconizzata, mantieni il focus
+                                loginFrame.toFront();
+                                loginFrame.requestFocus();
+                            }
                         }
                     });
 
-                }if(loginButton.getText().equalsIgnoreCase("LOGOUT")){
+                    loginFrame.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            frame.setEnabled(true);
+                            frame.toFront();
+                        }
+
+                        @Override
+                        public void windowDeiconified(WindowEvent e) {
+                            // Quando viene ripristinata dalla barra delle applicazioni
+                            loginFrame.toFront();
+                            loginFrame.requestFocus();
+                        }
+                    });
+
+                } else if(loginButton.getText().equalsIgnoreCase("LOGOUT")) {
                     System.out.println(controller.getPlAdmin());
                     controller.logout();
                     System.out.println(controller.getPlAdmin());

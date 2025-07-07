@@ -149,7 +149,7 @@ public class CreaHackathon {
         LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         ArrayList<String> organizers = new ArrayList<>();
         try{
-            controller.getOrganizers(organizers, startLDate, endLDate);
+            controller.getFreeUser(organizers, startLDate, endLDate);
             organizerComboBox.removeAllItems();
             organizerComboBox.addItem("-");
             System.out.println(startLDate);
@@ -157,7 +157,7 @@ public class CreaHackathon {
             for(String organizer : organizers){
                 organizerComboBox.addItem(organizer);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
         }
@@ -237,7 +237,7 @@ public class CreaHackathon {
                 LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 ArrayList<String> organizers = new ArrayList<>();
                 try{
-                    controller.getOrganizers(organizers, startLDate, endLDate);
+                    controller.getFreeUser(organizers, startLDate, endLDate);
                     organizerComboBox.removeAllItems();
                     organizerComboBox.addItem("-");
                     System.out.println(startLDate);
@@ -245,7 +245,7 @@ public class CreaHackathon {
                     for(String organizer : organizers){
                         organizerComboBox.addItem(organizer);
                     }
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
                 }

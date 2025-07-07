@@ -1,15 +1,18 @@
 package gui;
 
 import controller.Controller;
+import implementazioniPostgresDAO.UsersImplementation;
 import model.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
+import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -91,14 +94,14 @@ public class AreaPersonaleOrganizzatore {
         cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
         cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
 
+        LocalDate[] dates = new LocalDate[2];
+        controller.getDates(dates);
 
-        if(controller.verifyingStartHack()){
+        if (controller.isStarted()) {
             organizerPanel.setVisible(false);
-        }
-        else{
-            //INSERIRE UTENTI NELLA COMBOBOX CHE NON SONO IMPEGNATI A FARE ALTRO...
-            //VALUTARE SE INSERIRE NUOVAMENTE ISBUSY
-            comboBox1.addItem("-");
+            startSingUpButton.setEnabled(false);
+            spinner1.setEnabled(false);
+            startSingUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
         }
 
         spinner1.addChangeListener(e -> {
@@ -137,15 +140,32 @@ public class AreaPersonaleOrganizzatore {
         startSingUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(controller.verifyingStartRegDate()){
+                if (controller.verifyingStartRegDate()) {
                     JOptionPane.showMessageDialog(panel, "Hai già inserito la data di inizio iscrizioni per l'Hackathon", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                }
-                else{
+                } else {
                     SimpleDateFormat dateFormatted = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = (Date) spinner1.getValue();
                     int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler far partire le iscrizioni da: " + dateFormatted.format(date) + "?", "Data inizio iscrizioni", JOptionPane.YES_NO_OPTION);
                     if (scelta == JOptionPane.YES_OPTION) {
-                        controller.handleStartSignUp(date);
+                        LocalDate startRegDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        int code = controller.handleStartSignUp(startRegDate);
+                        switch (code) {
+                            case -1:
+                                JOptionPane.showMessageDialog(panel, "La data deve essere almeno due giorni prima dell'inizo dell'Hackathon");
+                                break;
+                            case 1:
+                                JOptionPane.showMessageDialog(panel, "Inserimento della data avvenuto con successo");
+                                startSingUpButton.setEnabled(false);
+                                spinner1.setEnabled(false);
+                                startSingUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+                                if (controller.isStarted())
+                                    organizerPanel.setVisible(false);
+                                break;
+                            case 0:
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Errore durante l'aggiornamento della data");
+                                break;
+                        }
                     }
                 }
                 spinner1.setValue(new Date());
@@ -155,22 +175,29 @@ public class AreaPersonaleOrganizzatore {
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(comboBox1.getSelectedItem().equals("-")){
+                if (comboBox1.getSelectedItem().equals("-")) {
                     JOptionPane.showMessageDialog(panel, "Devi scegliere un utente", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
-                    int code = controller.sendRequestOrganizer((User)comboBox1.getSelectedItem());
-                    if(code == 1){
-                        JOptionPane.showMessageDialog(panel, "Hai già inviato una richiesta a questo utente", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo");
-                    }
+                } else {
+                    int code = controller.sendRequestOrganizer((String) comboBox1.getSelectedItem());
+
                 }
             }
         });
-    }
 
+        try {
+            ArrayList<String> judges = new ArrayList<>();
+            controller.getFreeUser(judges, dates[0], dates[1]);
+            comboBox1.addItem("-");
+            System.out.println(dates[0]);
+            System.out.println(dates[0]);
+            for (String judge : judges) {
+                comboBox1.addItem(judge);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEI GIUDICI");
+        }
+    }
     /**
      * Restituisce il frame principale della gui.
      *

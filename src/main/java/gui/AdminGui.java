@@ -258,13 +258,13 @@ public class AdminGui {
         LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         ArrayList<String> organizers = new ArrayList<>();
         try {
-            controller.getOrganizers(organizers, startLDate, endLDate);
+            controller.getFreeUser(organizers, startLDate, endLDate);
             organizerComboBox.removeAllItems();
             organizerComboBox.addItem("-");
             for (String organizer : organizers) {
                 organizerComboBox.addItem(organizer);
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
         }
@@ -341,13 +341,13 @@ public class AdminGui {
                 LocalDate endLDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 ArrayList<String> organizers = new ArrayList<>();
                 try {
-                    controller.getOrganizers(organizers, startLDate, endLDate);
+                    controller.getFreeUser(organizers, startLDate, endLDate);
                     organizerComboBox.removeAllItems();
                     organizerComboBox.addItem("-");
                     for (String organizer : organizers) {
                         organizerComboBox.addItem(organizer);
                     }
-                } catch (SQLException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEGLI ORGANIZZATORI");
                 }

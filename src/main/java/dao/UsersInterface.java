@@ -6,5 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface UsersInterface {
-    void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException;
+    void getFreeUser(ArrayList<String> freeUsers, LocalDate start, LocalDate end) throws SQLException;
+    int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username);
 }

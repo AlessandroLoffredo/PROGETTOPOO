@@ -27,7 +27,8 @@
          */
         public Controller(Home home) {
             this.user = null;
-            this.plAdmin = new PlatformAdmin("Alex", "Password");
+            //this.plAdmin = new PlatformAdmin("Alex", "Password");
+            this.plAdmin = null;
             this.home = home;
         }
 
@@ -178,19 +179,9 @@
      * @param username Username dell'utente da invitare.
      * @return int : Un codice che identifica le varie situazioni che possono accadere.
      */
-    public int sendRequestOrganizer(User username){
-        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA USER A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
-        //SI DOVRA' CERCARE NEL DB L'USER CORRISPONDENTE ALL'USERNAME
-            /*ArrayList<Request> richieste = username.getRequestsJudge();
-            for(Request r : richieste){
-                if(r.getSender().equals(username)){
-                    return 1;
-                }
-            }
-            username.addRequest(new Request("Invito per giudicare l'Hackathon: " + ((Organizer)user).getOrganizedHackathon().getTitle(), user));
-
-             */
-        return 0;
+    public int sendRequestOrganizer(String username){
+        OrgImplementation orgI = new OrgImplementation();
+        return orgI.inviteUser(this.user.getUsername(), username);
     }
 
     /**
@@ -274,52 +265,29 @@
      *
      * @param date La data di inizio registrazioni.
      */
-    public void handleStartSignUp(Date date){
-        System.out.println(date);
+    public int handleStartSignUp(LocalDate date){
+        OrgImplementation orgI = new OrgImplementation();
+        return orgI.setUpDate(date, this.user.getUsername());
     }
 
+    public void getDates(LocalDate[] dates){
+        OrgImplementation orgI = new OrgImplementation();
+        orgI.getDates(this.user.getUsername(), dates);
+    }
     /**
      * Controlla se, per l'Hackathon gestito da un organizzatore, è già stata gestita la data di apertura delle registrazioni.
      *
      * @return boolean : per sapere se sono state aperte.
      */
-    public boolean verifyingStartRegDate(){
-            /*if(((Organizer)user).getOrganizedHackathon().getStartRegDate() == null){
-                return false;
-            }
-            else {
-                return true;
-            }
-            */
-        //INSERITO PER COMODITA' PER TEST
-        return true;
+    public boolean verifyingStartRegDate() {
+        OrgImplementation orgI = new OrgImplementation();
+        return orgI.verifyDate(this.user.getUsername());
     }
 
-    /**
-     * Verifica se l'Hackathon gestito da un organizzatore è già cominciato.
-     *
-     * @return boolean : per sapere se è cominciato.
-     */
-    public boolean verifyingStartHack(){
-            /*if(((Organizer)user).getOrganizedHackathon().getStartDate().equals(new Date())){
-                return true;
-            }
-            else {
-                return false;
-            }
-             */
-        //INSERITO PER COMODITA' PER TEST
-        return false;
+    public boolean isStarted(){
+        OrgImplementation orgI = new OrgImplementation();
+        return orgI.isStarted(this.user.getUsername());
     }
-
-        /*public int handleCreateHackathon(String title, String venue, Date startHack, Date endHack, int maxPar, int maxParTeam){
-            //CONTROLLI CON IL DB PER VERIFICARE CHE NON CI SIANO ALTRI HACKATHON UGUALI...
-            //VALUTARE E DETERMINARE QUALI ELEMENTI POSSONO ESSERE UGUALI...
-            //E NEL CASO RETSITUIRE 1
-            //DOBBIAMO CREARE ATTRIBUTO ADMIN??
-            // (admin.createHackathon(title, venue, startHack, endHack, maxPar, maxParTeam);
-        }
-         */
 
     /**
      * Create team int.
@@ -404,9 +372,9 @@
         return plAdmin;
     }
 
-    public void getOrganizers(ArrayList<String> organizers, LocalDate start, LocalDate end) throws SQLException {
+    public void getFreeUser(ArrayList<String> freeUsers, LocalDate start, LocalDate end){
         UsersImplementation usersI = new UsersImplementation();
-        usersI.getOrganizers(organizers, start, end);
+        usersI.getFreeUser(freeUsers, start, end);
     }
 
     public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
