@@ -26,7 +26,11 @@
          * @param home il frame principale della classe Home
          */
         public Controller(Home home) {
-            this.user = null;
+            //this.user = null;
+            //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
+            //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
+            //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
+            this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
             this.plAdmin = null;
             this.home = home;

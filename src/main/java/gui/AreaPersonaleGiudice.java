@@ -7,6 +7,7 @@ import model.Team;
 
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,30 +20,24 @@ import java.util.ArrayList;
  */
 public class AreaPersonaleGiudice {
     private JPanel panel;
-    private JPanel dataPanel;
     private JLabel fNameLabel;
-    private JTextArea fNameArea;
+    private JLabel fNameArea;
     private JLabel lNameLabel;
-    private JTextArea lNameArea;
+    private JLabel lNameArea;
     private JLabel userLabel;
-    private JTextArea userArea;
+    private JLabel userArea;
     private JButton homeButton;
     private JPanel operationPanel;
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
-    private JPanel judjePanel;
     private JList docList;
     private JPanel markPanel;
     private JTextArea problemArea;
     private JPanel problemPanel;
     private JButton sendProbButton;
     private JPanel selectExaminePanel;
-    private JPanel selectPanel;
     private JComboBox teamComboBox;
     private JButton selectButton;
-    private JPanel examinePanel;
-    private JPanel listPanel;
-    private JPanel commentPanel;
     private JTextArea commentArea;
     private JButton loadButton;
     private JButton assigneButton;
@@ -50,6 +45,17 @@ public class AreaPersonaleGiudice {
     private JSlider markSlider;
     private JLabel commentLabel;
     private JLabel markLabel;
+    private JPanel profilePanel;
+    private JPanel dataPanel;
+    private JLabel profileLabel;
+    private JLabel titleLabel;
+    private JLabel imageLabel;
+    private JScrollPane scrollPane;
+    private JPanel scrollPanel;
+    private JLabel problemLabel;
+    private JScrollPane docScrollPane;
+    private JLabel commentAreaLabel;
+    private JButton logoutButton;
     private JFrame frame;
 
     /**
@@ -77,24 +83,60 @@ public class AreaPersonaleGiudice {
         frame.setLocationRelativeTo(null);
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        problemArea.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        fNameArea.setBackground(new Color(15, 15, 50));
-        lNameArea.setBackground(new Color(15, 15, 50));
-        userArea.setBackground(new Color(15, 15, 50));
-        docList.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        scrollPanel.setBackground(new Color(236, 240, 241));
+        scrollPane.setBackground(new Color(236, 240, 241));
+        problemPanel.setBackground(new Color(236, 240, 241));
+        problemPanel.setBackground(new Color(236, 240, 241));
+        markPanel.setBackground(new Color(236, 240, 241));
+        titleLabel.setForeground(new Color(30, 30, 47));
+        profilePanel.setBackground(new Color(30, 30, 47));
+        fNameLabel.setForeground(new Color(236, 240, 241));
+        lNameLabel.setForeground(new Color(236, 240, 241));
+        userLabel.setForeground(new Color(236, 240, 241));
+        fNameArea.setForeground(new Color(236, 240, 241));
+        lNameArea.setForeground(new Color(236, 240, 241));
+        userArea.setForeground(new Color(236, 240, 241));
+        profileLabel.setForeground(new Color(236, 240, 241));
 
-        fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        userLabel.setForeground(new Color(0, 255, 0));
-        markLabel.setForeground(new Color(0, 255, 0));
-        commentLabel.setForeground(new Color(0, 255, 0));
-        markSlider.setForeground(Color.GREEN);
+        problemLabel.setForeground(new Color(30, 30, 47));
+        problemArea.setBackground(new Color(236, 240, 241));
+        problemArea.setForeground(new Color(30, 30, 47));
+        commentLabel.setForeground(new Color(30, 30, 47));
+        teamComboBox.setBackground(new Color(236, 240, 241));
+        teamComboBox.setForeground(new Color(30, 30, 47));
+        docList.setBackground(new Color(236, 240, 241));
+        docList.setForeground(new Color(30, 30, 47));
+        commentArea.setBackground(new Color(236, 240, 241));
+        commentArea.setForeground(new Color(30, 30, 47));
+        markLabel.setForeground(new Color(30, 30, 47));
+        teamComboBoxMark.setBackground(new Color(236, 240, 241));
+        teamComboBoxMark.setForeground(new Color(30, 30, 47));
+        markSlider.setForeground(new Color(37, 99, 235));
+        markSlider.setBackground(new Color(236, 240, 241));
 
-        cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
-        cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
-        docList.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        problemArea.setForeground(new Color(0, 255, 0));
+        cambiaUsernameButton.setForeground(new Color(37, 99, 235));
+        cambiaPasswordButton.setForeground(new Color(37, 99, 235));
+        homeButton.setForeground(new Color(37, 99, 235));
+        sendProbButton.setForeground(new Color(37, 99, 235));
+        selectButton.setForeground(new Color(37, 99, 235));
+        loadButton.setForeground(new Color(37, 99, 235));
+        assigneButton.setForeground(new Color(37, 99, 235));
+        logoutButton.setForeground(new Color(37, 99, 235));
+
+        problemArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        commentArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        docScrollPane.setBorder(new LineBorder(new Color(30, 30, 47)));
+        scrollPane.setBorder(null);
+
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        imageLabel.setIcon(resizedIcon);
+
+        fNameArea.setText(controller.getUser().getfName());
+        lNameArea.setText(controller.getUser().getlName());
+        userArea.setText(controller.getUser().getUsername());
 
         markSlider.setMaximum(10);
         markSlider.setMinimum(0);
@@ -162,14 +204,14 @@ public class AreaPersonaleGiudice {
 
         //BISOGNERA' CARICARE NELLA TEAMCOMBOBOX E NELLA TEAMCOMBOBOXMARK I NOMI DI TUTTI I TEAM NELL'HACKATHON TRAMITE DB
 
-        teamComboBox.addItem("-");
-        teamComboBoxMark.addItem("-");
+        teamComboBox.addItem("Seleziona un team");
+        teamComboBoxMark.addItem("Seleziona un Team");
 
 
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(teamComboBox.getSelectedItem().equals("-")){
+                if(teamComboBox.getSelectedItem().equals("Seleziona un team")){
                     JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
@@ -204,7 +246,7 @@ public class AreaPersonaleGiudice {
         assigneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(teamComboBoxMark.getSelectedItem().equals("-")){
+                if(teamComboBoxMark.getSelectedItem().equals("Seleziona un team")){
                     JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
@@ -213,6 +255,18 @@ public class AreaPersonaleGiudice {
                         controller.handleAssignMark((Team) teamComboBoxMark.getSelectedItem(), markSlider.getValue());
                     }
                 }
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                controller.getHome().getFrame().setVisible(true);
+                controller.logout();
+                JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
+                controller.getHome().getAreaPersonaleButton().setEnabled(false);
+                controller.getHome().getLoginButton().setText("Login");
             }
         });
     }

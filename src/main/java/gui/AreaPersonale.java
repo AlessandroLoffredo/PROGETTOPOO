@@ -32,7 +32,7 @@ public class AreaPersonale {
     private JPanel messagePanel;
     private JList<Request> requestList;
     private JButton homeButton;
-    private JTextField messageArea;
+    private JTextArea messageArea;
     private JPanel teamPanel;
     private JLabel teamLabel;
     private JLabel textArea1;
@@ -47,6 +47,9 @@ public class AreaPersonale {
     private JPanel profilePanel;
     private JPanel elementsPanel;
     private JTextArea textArea2;
+    private JScrollPane scrollPane;
+    private JScrollPane messageScrollPane;
+    private JPanel titlePanel;
     private JFrame frame;
 
     /**
@@ -88,16 +91,19 @@ public class AreaPersonale {
         textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         textArea2.append("\n\n\n\n\n\n\n\n");
 
-        panel.setBackground(new Color(236, 240, 241));
+        panel.setBackground(new Color(30, 30, 47));
         profilePanel.setBackground(new Color(30, 30, 47));
         textArea1.setBackground(new Color(30, 30, 47));
+        textArea1.setForeground(new Color(30, 30, 47));
         fNameArea.setBackground(new Color(30, 30, 47));
         lNameArea.setBackground(new Color(30, 30, 47));
         userArea.setBackground(new Color(30, 30, 47));
+        titlePanel.setBackground(new Color(30, 30, 47));
         requestList.setBackground(new Color(236, 240, 241));
         requestList.setForeground(new Color(30, 30, 47));
         elementsPanel.setBackground(new Color(236, 240, 241));
         lastsHackPanel.setBackground(new Color(236, 240, 241));
+        textArea2.setBackground(new Color(236, 240, 241));
         messagePanel.setBackground(new Color(236, 240, 241));
         participantPanel.setBackground(new Color(236, 240, 241));
 
@@ -111,8 +117,10 @@ public class AreaPersonale {
         teamLabel.setForeground(new Color(236, 240, 241));
         descLabel.setForeground(new Color(30, 30, 47));
         messageLabel.setForeground(new Color(30, 30, 47));
+        messageArea.setForeground(new Color(30, 30, 47));
+        participantComboBox.setForeground(new Color(30, 30, 47));
         profileLabel.setForeground(new Color(236, 240, 241));
-        titleLabel.setForeground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(236, 240, 241));
 
         cambiaUsernameButton.setForeground(new Color(37, 99, 235));
         cambiaPasswordButton.setForeground(new Color(37, 99, 235));
@@ -120,6 +128,7 @@ public class AreaPersonale {
         homeButton.setForeground(new Color(37, 99, 235));
         textArea1.setForeground(new Color(236, 240, 241));
         inviaRichiestaButton.setForeground(new Color(37, 99, 235));
+        teamButton.setForeground(new Color(37, 99, 235));
 
         fNameArea.setText(controller.getUser().getfName());
         lNameArea.setText(controller.getUser().getlName());
@@ -139,8 +148,27 @@ public class AreaPersonale {
             }
         });
 
-        participantComboBox.addItem("-");
+        scrollPane.setBorder(new LineBorder(new Color(236, 240, 241)));
+        messageScrollPane.setBorder(new LineBorder(new Color(30, 30, 47)));
+
+        messageArea.setLineWrap(true);
+        messageArea.setWrapStyleWord(true);
+        int width = messageArea.getPreferredSize().width;
+        messageArea.setPreferredSize(new Dimension(width, 100));
+        participantComboBox.addItem("Seleziona un partecipante");
         participantComboBox.addItem("MAMMT");
+        messageArea.setText("Scrivi un messaggio motivazionale");
+        messageArea.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                messageArea.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                messageArea.setText("Scrivi un messaggio motivazionale");
+            }
+        });
 
 
         DefaultListModel<Request> model = new DefaultListModel<>();
@@ -234,14 +262,14 @@ public class AreaPersonale {
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase("-") || messageArea.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Inserire il messaggio e/o scegliere l'utente", "WARNING", JOptionPane.WARNING_MESSAGE);
+                if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase("Seleziona un partecipante") || messageArea.getText().equalsIgnoreCase("Scrivi un messaggio motivazionale")) {
+                    JOptionPane.showMessageDialog(panel, "Inserire il messaggio e/o selezionare il partecipante", "WARNING", JOptionPane.WARNING_MESSAGE);
                 } else {
                     int code = controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
                     if (code == -2) {
                         JOptionPane.showMessageDialog(panel, "Non sei autorizzato a mandare richieste", "WARNING", JOptionPane.WARNING_MESSAGE);
                     } else if (code == -1) {
-                        JOptionPane.showMessageDialog(panel, "Il team dell'utente a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(panel, "Il team del partecipante a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         messageArea.setText("");

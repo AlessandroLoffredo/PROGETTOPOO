@@ -5,6 +5,7 @@ import implementazioniPostgresDAO.UsersImplementation;
 import model.User;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Array;
@@ -21,13 +22,12 @@ import java.util.Date;
  */
 public class AreaPersonaleOrganizzatore {
     private JPanel panel;
-    private JPanel dataPanel;
     private JLabel fNameLabel;
-    private JTextArea fNameArea;
+    private JLabel fNameArea;
     private JLabel lNameLabel;
-    private JTextArea lNameArea;
+    private JLabel lNameArea;
     private JLabel userLabel;
-    private JTextArea userArea;
+    private JLabel userArea;
     private JButton homeButton;
     private JPanel operationPanel;
     private JButton cambiaUsernameButton;
@@ -40,9 +40,16 @@ public class AreaPersonaleOrganizzatore {
     private JLabel invLabel;
     private JLabel hackLabel;
     private JLabel dateLabel;
-    private JPanel invPanel;
     private JPanel organizerPanel;
     private JComboBox comboBox1;
+    private JPanel profilePanel;
+    private JLabel profileLabel;
+    private JLabel titleLabel;
+    private JLabel imageLabel;
+    private JPanel datePanel;
+    private JButton logoutButton;
+    private JPanel elementsPanel;
+    private JPanel dataPanel;
     private JFrame frame;
 
     /**
@@ -75,24 +82,45 @@ public class AreaPersonaleOrganizzatore {
         JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
         spinner1.setEditor(startEditor);
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        infoHackathon.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        fNameArea.setBackground(new Color(15, 15, 50));
-        lNameArea.setBackground(new Color(15, 15, 50));
-        userArea.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        profilePanel.setBackground(new Color(30, 30, 47));
+        fNameLabel.setForeground(new Color(236, 240, 241));
+        lNameLabel.setForeground(new Color(236, 240, 241));
+        userLabel.setForeground(new Color(236, 240, 241));
+        fNameArea.setForeground(new Color(236, 240, 241));
+        lNameArea.setForeground(new Color(236, 240, 241));
+        userArea.setForeground(new Color(236, 240, 241));
+        profileLabel.setForeground(new Color(236, 240, 241));
+        infoHackathon.setBackground(new Color(30, 30, 47));
+        datePanel.setBackground(new Color(236, 240, 241));
+        elementsPanel.setBackground(new Color(236, 240, 241));
+        organizerPanel.setBackground(new Color(236, 240, 241));
+
+        hackLabel.setForeground(new Color(236, 240, 241));
+        infoHackathon.setForeground(new Color(236, 240, 241));
+        invLabel.setBackground(new Color(30, 30, 47));
+        dateLabel.setBackground(new Color(30, 30, 47));
+        spinner1.setForeground(new Color(30, 30, 47));
+        comboBox1.setForeground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        dateLabel.setForeground(new Color(30, 30, 47));
+        invLabel.setForeground(new Color(30, 30, 47));
 
 
-        fNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        lNameLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        userLabel.setForeground(new Color(0, 255, 0));
-        hackLabel.setForeground(new Color(0, 255, 0));
-        infoHackathon.setForeground(new Color(0, 200, 255));
-        invLabel.setForeground(new Color(0, 255, 0));
-        dateLabel.setForeground(new Color(0, 255, 0));
+        cambiaUsernameButton.setForeground(new Color(37, 99, 235));
+        cambiaPasswordButton.setForeground(new Color(37, 99, 235));
+        startSingUpButton.setForeground(new Color(37, 99, 235));
+        inviaRichiestaButton.setForeground(new Color(37, 99, 235));
+        homeButton.setForeground(new Color(37, 99, 235));
+        logoutButton.setForeground(new Color(37, 99, 235));
 
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        imageLabel.setIcon(resizedIcon);
 
-        cambiaUsernameButton.setForeground(new Color(0, 200, 255)); // Azzurro cyberR
-        cambiaPasswordButton.setForeground(new Color(255, 0, 150)); // Magenta neon
+        datePanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+        organizerPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
         LocalDate[] dates = new LocalDate[2];
         controller.getDates(dates);
@@ -175,7 +203,7 @@ public class AreaPersonaleOrganizzatore {
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (comboBox1.getSelectedItem().equals("-")) {
+                if (comboBox1.getSelectedItem().equals("Seleziona un utente")) {
                     JOptionPane.showMessageDialog(panel, "Devi scegliere un utente", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int code = controller.sendRequestOrganizer((String) comboBox1.getSelectedItem());
@@ -187,7 +215,7 @@ public class AreaPersonaleOrganizzatore {
         try {
             ArrayList<String> judges = new ArrayList<>();
             controller.getFreeUser(judges, dates[0], dates[1]);
-            comboBox1.addItem("-");
+            comboBox1.addItem("Seleziona un utente");
             System.out.println(dates[0]);
             System.out.println(dates[0]);
             for (String judge : judges) {
@@ -197,6 +225,18 @@ public class AreaPersonaleOrganizzatore {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEI GIUDICI");
         }
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                controller.getHome().getFrame().setVisible(true);
+                controller.logout();
+                JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
+                controller.getHome().getAreaPersonaleButton().setEnabled(false);
+                controller.getHome().getLoginButton().setText("Login");
+            }
+        });
     }
     /**
      * Restituisce il frame principale della gui.
