@@ -96,6 +96,11 @@ public class OrgImplementation implements OrgInterface {
             inserted = stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
+            if(e.getMessage().contains("userisntbusyfunct()")){
+                inserted = -1;
+            }else if(e.getMessage().contains("differentusers")){
+                inserted = -2;
+            }
         }
         return inserted;
     }

@@ -78,11 +78,6 @@ public class AreaPersonaleOrganizzatore {
         frame.setLocationRelativeTo(null);
 
 
-        SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
-        spinner1.setModel(startModel);
-        JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
-        spinner1.setEditor(startEditor);
-
         panel.setBackground(new Color(30, 30, 47));
         profilePanel.setBackground(new Color(30, 30, 47));
         fNameLabel.setForeground(new Color(236, 240, 241));
@@ -125,6 +120,13 @@ public class AreaPersonaleOrganizzatore {
 
         LocalDate[] dates = new LocalDate[2];
         controller.getDates(dates);
+        ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
+        Date startDate = Date.from(zonedDateTime.toInstant());
+        SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
+        spinner1.setModel(startModel);
+        JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
+        spinner1.setEditor(startEditor);
+
 
         if (controller.isStarted()) {
             organizerPanel.setVisible(false);
@@ -207,8 +209,30 @@ public class AreaPersonaleOrganizzatore {
                 if (comboBox1.getSelectedItem().equals("Seleziona un utente")) {
                     JOptionPane.showMessageDialog(panel, "Devi scegliere un utente", "ERRORE", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int code = controller.sendRequestOrganizer((String) comboBox1.getSelectedItem());
-
+                    try{
+                        int code = controller.sendRequestOrganizer((String) comboBox1.getSelectedItem());
+                        switch (code) {
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "L'utente invitato deve essere diverso dall'organizzatore che invita");
+                                break;
+                            case -1:
+                                JOptionPane.showMessageDialog(panel, "L'utente invitato è impegnato nel periodo di tempo dell'Hackathon che gestisci");
+                                break;
+                            case 0:
+                                JOptionPane.showMessageDialog(panel, "Utente già invitato");
+                                break;
+                            case 1:
+                                JOptionPane.showMessageDialog(panel, "Utente " + comboBox1.getSelectedItem() + " invitato");
+                                break;
+                            default:
+                                JOptionPane.showMessageDialog(panel, "Errore durante l'invito");
+                                break;
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(panel, "Errore durante l'invito");
+                    }
+                    comboBox1.setSelectedIndex(0);
                 }
             }
         });
@@ -239,15 +263,6 @@ public class AreaPersonaleOrganizzatore {
             }
         });
 
-
-        spinner1.addChangeListener(e -> {
-            Date choosenDate = (Date) spinner1.getValue();
-            ZonedDateTime zonedDateTime = dates[0].minusDays(1).atStartOfDay(ZoneId.systemDefault());
-            Date startDate = Date.from(zonedDateTime.toInstant());
-            if (choosenDate.before(startDate)) {
-                spinner1.setValue(startDate);
-            }
-        });
     }
     /**
      * Restituisce il frame principale della gui.

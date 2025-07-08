@@ -12,7 +12,7 @@ public class UsersImplementation implements UsersInterface {
         try (Connection conn = ConnessioneDatabase.getInstance().connection) {
             String sql = "SELECT P.username FROM PlUser P WHERE P.username NOT IN (" +
                     "SELECT O.username FROM Organizer O JOIN Hackathon H ON O.idHack = H.idHack " +
-                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                    "WHERE NOT (H.endDate < ? OR (H.startDate - 15) > ?)) AND " +
                     "P.username NOT IN (" +
                     "SELECT J.username FROM Judge J JOIN Hackathon H ON J.idHack = H.idHack " +
                     "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
