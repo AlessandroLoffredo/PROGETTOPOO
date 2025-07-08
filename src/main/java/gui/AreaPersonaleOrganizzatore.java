@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -235,6 +236,16 @@ public class AreaPersonaleOrganizzatore {
                 JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
                 controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 controller.getHome().getLoginButton().setText("Login");
+            }
+        });
+
+
+        spinner1.addChangeListener(e -> {
+            Date choosenDate = (Date) spinner1.getValue();
+            ZonedDateTime zonedDateTime = dates[0].minusDays(1).atStartOfDay(ZoneId.systemDefault());
+            Date startDate = Date.from(zonedDateTime.toInstant());
+            if (choosenDate.before(startDate)) {
+                spinner1.setValue(startDate);
             }
         });
     }
