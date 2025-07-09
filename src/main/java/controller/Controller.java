@@ -26,11 +26,11 @@
          * @param home il frame principale della classe Home
          */
         public Controller(Home home) {
-            //this.user = null;
+            this.user = null;
             //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
-            this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
+            //this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
             this.plAdmin = null;
             this.home = home;
@@ -63,18 +63,19 @@
          */
         //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
         public int handleLogin(String username, char[] password) throws Exception{
+            String[] names = new String[2];
             AuthImplementation authI = new AuthImplementation();
-            int log = authI.logIn(username, new String(password));
+            int log = authI.logIn(username, new String(password), names);
             if(log == 1){
                 this.plAdmin = new PlatformAdmin(username, new String(password));
             }else if(log == 2){
-                this.user = new Organizer(null, null, username, new String(password));
+                this.user = new Organizer(names[0], names[1], username, new String(password));
             } else if(log == 3) {
-                this.user = new Judge(null, null, username, new String(password));
+                this.user = new Judge(names[0], names[1], username, new String(password));
             } else if (log == 4) {
-                this.user = new Participant(null, null, username, new String(password));
+                this.user = new Participant(names[0], names[1], username, new String(password));
             } else if (log == 5) {
-                this.user = new User(null, null, username, new String(password));
+                this.user = new User(names[0], names[1], username, new String(password));
             }else{
                 return -1;
             }
@@ -204,13 +205,13 @@
     /**
      * Gestisce ciò che avviene quando un partecipante permette ad un altro di unirsi al suo team tramite richiesta.
      *
-     * @param username       L'utente che invia la richiesta.
-     * @param frameChiamante Il frame da dove viene chiamato il metodo, da questa dipende l'azione successiva.
+     * @param sender       L'utente che invia la richiesta.
      * @return int : Codice che identifica le varie situazioni che possono accadere.
      */
     //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
-    public int handleAccRequest(String username, JFrame frameChiamante){
-        User sender = User.findUser(username);
+    public int handleAccRequest(String sender){
+
+        /*User sender = User.findUser(username);
         Participant p = (Participant) sender;
         p.setParTeam(null);
         Participant p2 = new Participant(null, null, "pippo", "pluto");
@@ -221,7 +222,7 @@
                 creaTeam.getFrame().setVisible(true);
                 frameChiamante.setEnabled(false);
             }
-        }
+        }*/
         return 0;
     }
 
@@ -360,7 +361,6 @@
                     AreaPersonale areaPersonaleU = new AreaPersonale(frame, this);
                     areaPersonaleU.getFrame().setVisible(true);
                     areaPersonaleU.getMessagePanel().setVisible(false);
-                    areaPersonaleU.getParticipantPanel().setVisible(false);
                     areaPersonaleU.getTeamPanel().setVisible(false);
                     break;
             }
@@ -379,6 +379,11 @@
     public void getFreeUser(ArrayList<String> freeUsers, LocalDate start, LocalDate end){
         UsersImplementation usersI = new UsersImplementation();
         usersI.getFreeUser(freeUsers, start, end);
+    }
+
+    public void getInvites(ArrayList<Request> requests, String reciver){
+        UsersImplementation usersI = new UsersImplementation();
+        usersI.getInvites(requests, reciver);
     }
 
     public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){

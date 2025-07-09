@@ -77,6 +77,10 @@ public class AreaPersonaleOrganizzatore {
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
 
+        fNameArea.setText(controller.getUser().getfName());
+        lNameArea.setText(controller.getUser().getlName());
+        userArea.setText(controller.getUser().getUsername());
+
 
         panel.setBackground(new Color(30, 30, 47));
         profilePanel.setBackground(new Color(30, 30, 47));
@@ -122,25 +126,33 @@ public class AreaPersonaleOrganizzatore {
         controller.getDates(dates);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-        SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
-        spinner1.setModel(startModel);
-        JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
-        spinner1.setEditor(startEditor);
 
 
         if (controller.isStarted()) {
-            organizerPanel.setVisible(false);
-            startSingUpButton.setEnabled(false);
+            organizerPanel.setEnabled(false);
+            datePanel.setEnabled(false);
             spinner1.setEnabled(false);
-            startSingUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+            startSingUpButton.setEnabled(false);
+            comboBox1.setEnabled(false);
+            inviaRichiestaButton.setEnabled(false);
+            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+            organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
+        } else {
+            System.out.println(dates[0]);
+            System.out.println(dates[1]);
+            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
+            spinner1.setModel(startModel);
+            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
+            spinner1.setEditor(startEditor);
+            spinner1.setValue(new Date());
+            /*spinner1.addChangeListener(e -> {
+                Date data = (Date) spinner1.getValue();
+                if (data.before(new Date())) {
+                    spinner1.setValue(new Date());
+                }
+            });*/
         }
 
-        spinner1.addChangeListener(e -> {
-            Date data = (Date) spinner1.getValue();
-            if (data.before(new Date())) {
-                spinner1.setValue(new Date());
-            }
-        });
 
         homeButton.addActionListener(new ActionListener() {
             @Override

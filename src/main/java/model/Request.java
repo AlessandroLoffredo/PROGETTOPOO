@@ -5,7 +5,7 @@ package model;
  */
 public class Request {
     private String message;
-    private User sender;
+    private String sender;
 
     /**
      * Istanzia una nuova Request.
@@ -21,7 +21,7 @@ public class Request {
      * @param message messaggio motivazionale
      * @param user    utente che invia la richiesta
      */
-    public Request(String message, User user) {
+    public Request(String message, String user) {
         this.message = message;
         this.sender = user;
     }
@@ -31,7 +31,7 @@ public class Request {
      *
      * @return User: utente che ha inviato la richiesta
      */
-    public User getSender() {
+    public String getSender() {
         return this.sender;
     }
 
@@ -40,7 +40,7 @@ public class Request {
      *
      * @param sender utente che ha inviato la richiesta.
      */
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
@@ -64,6 +64,6 @@ public class Request {
 
     @Override
     public String toString() {
-        return this.sender.getUsername() + ": " +this.message;
+        return this.message + this.sender;
     }
 }

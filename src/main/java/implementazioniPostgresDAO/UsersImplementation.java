@@ -1,7 +1,8 @@
 package implementazioniPostgresDAO;
-
+//TODO RICORDARE DI CAMBIARE IL NUMERO DI GIORNI IN GETINVITES
 import dao.*;
 import database.ConnessioneDatabase;
+import model.Request;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -63,4 +64,30 @@ public class UsersImplementation implements UsersInterface {
         }
         return results;
     }
+
+    public void getInvites(ArrayList<Request> requests, String reciver){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT I.organizer, H.title FROM Invites I, Hackathon H WHERE I.idHackOrg = H.idHack AND " +
+                         "H.startRegDate >= CURRENT_DATE AND " +
+                         "CURRENT_DATE >= (H.startDate - 30)  AND " +
+                         "I.invitedUser = ?;";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, reciver);
+            ResultSet rs = stmt.executeQuery();
+            int i = 0;
+            while (rs.next()){
+                requests.add(new Request("Sei stato invitato come giudice per '" + rs.getString("title") + "' da: ", rs.getString("organizer")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    /* FACCIAMO UNA FUNZIONE PER CERCARE L'IDHACK DELL'ORGANIZER E INSERIRE TUTTO IN INVITES?
+    public int acceptInvite(String sender, String reciver){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "INSERT INTO judje " +
+                         "VALUES ()"
+        }
+    }*/
 }

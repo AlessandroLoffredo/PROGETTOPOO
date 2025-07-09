@@ -50,7 +50,8 @@ public class OrgImplementation implements OrgInterface {
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
-                    "O.username = ? AND H.startRegDate >= CURRENT_DATE";
+                         "O.username = ? AND H.startRegDate <= CURRENT_DATE OR " +
+                         "H.startRegDate IS NOT NULL";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();

@@ -114,7 +114,7 @@ public class Participant extends User {
         if(parReceiver.getParTeam().getParList().size() == this.parHackathon.getMaxTeamParticipant()){
             return -1;
         }else{
-            parReceiver.addInvRecived(new Request(message, this)); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
+            parReceiver.addInvRecived(new Request(message, this.getUsername())); //stiamo aggiungendo la richiesta di invito alla lista degli inviti ricevuti
             return 0;
         }
     }

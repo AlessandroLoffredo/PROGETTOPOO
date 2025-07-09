@@ -7,10 +7,10 @@ import dao.*;
 import database.*;
 
 public class AuthImplementation implements AuthInterface {
-    public int logIn(String username, String password){
+    public int logIn(String username, String password, String[] names){
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT COUNT(*) AS conto FROM platformAdmin P WHERE P.username = ? AND P.passkey = ?";
+            String sql = "SELECT  COUNT(*) AS conto FROM platformAdmin P WHERE P.username = ? AND P.passkey = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -19,13 +19,15 @@ public class AuthImplementation implements AuthInterface {
                 results = rs.getInt("conto");
             }
             if(results == 0){
-                sql = "SELECT COUNT(*) AS conto FROM plUser P WHERE P.username = ? AND P.passkey = ?";
+                sql = "SELECT fName, lName FROM plUser P WHERE P.username = ? AND P.passkey = ?";
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1, username);
                 stmt.setString(2, password);
                 rs = stmt.executeQuery();
-                while (rs.next()) {
-                    results = rs.getInt("conto");
+                if (rs.next()) {
+                    names[0] = rs.getString("fName");
+                    names[1] = rs.getString("lName");
+                    results = 1;
                 }
                 if(results == 0)
                     return results;
@@ -36,7 +38,7 @@ public class AuthImplementation implements AuthInterface {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, username);
                     rs = stmt.executeQuery();
-                    while (rs.next()) {
+                    if (rs.next()) {
                         results = rs.getInt("conto");
                     }
                     if(results == 1)
@@ -48,7 +50,7 @@ public class AuthImplementation implements AuthInterface {
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, username);
                         rs = stmt.executeQuery();
-                        while (rs.next()) {
+                        if (rs.next()) {
                             results = rs.getInt("conto");
                         }
                         if(results == 1)
@@ -62,7 +64,7 @@ public class AuthImplementation implements AuthInterface {
                             stmt = conn.prepareStatement(sql);
                             stmt.setString(1, username);
                             rs = stmt.executeQuery();
-                            while (rs.next()) {
+                            if (rs.next()) {
                                 results = rs.getInt("conto");
                             }
                             if(results == 1)

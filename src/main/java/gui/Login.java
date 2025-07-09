@@ -2,10 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 import controller.*;
 
@@ -121,17 +118,38 @@ public class Login {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignUp signUp = new SignUp(frameChiamante, controller);
-                signUp.getFrame().setVisible(true);
+                SignUp signUp = new SignUp(frame, controller);
+                JFrame signUpFrame = signUp.getFrame();
+
+                // Configurazione iniziale
                 frame.dispose();
-                signUp.getFrame().setAlwaysOnTop(true);
-                signUp.getFrame().requestFocus();
-                signUp.getFrame().setVisible(true);
-                signUp.getFrame().addWindowFocusListener(new WindowAdapter() {
+                signUpFrame.setAlwaysOnTop(true);
+                signUpFrame.setVisible(true);
+
+                // Gestione intelligente del focus
+                signUpFrame.addWindowStateListener(new WindowStateListener() {
                     @Override
-                    public void windowLostFocus(WindowEvent e) {
-                        signUp.getFrame().toFront();
-                        signUp.getFrame().requestFocus();
+                    public void windowStateChanged(WindowEvent e) {
+                        if ((e.getNewState() & Frame.ICONIFIED) == 0) {
+                            // Solo se NON è iconizzata, mantieni il focus
+                            signUpFrame.toFront();
+                            signUpFrame.requestFocus();
+                        }
+                    }
+                });
+
+                signUpFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        frameChiamante.setEnabled(true);
+                        frameChiamante.toFront();
+                    }
+
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {
+                        // Quando viene ripristinata dalla barra delle applicazioni
+                        signUpFrame.toFront();
+                        signUpFrame.requestFocus();
                     }
                 });
             }
@@ -145,7 +163,7 @@ public class Login {
                     passwordArea.setEchoChar((char) 0);
                 } else {
                     lockButton.setText("\uD83D\uDD12");
-                    passwordArea.setEchoChar('•');
+                    passwordArea.setEchoChar('*');
                 }
             }
         });

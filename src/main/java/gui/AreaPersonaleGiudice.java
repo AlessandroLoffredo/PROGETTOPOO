@@ -89,7 +89,7 @@ public class AreaPersonaleGiudice {
         problemPanel.setBackground(new Color(236, 240, 241));
         problemPanel.setBackground(new Color(236, 240, 241));
         markPanel.setBackground(new Color(236, 240, 241));
-        titleLabel.setForeground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(236, 240, 241));
         profilePanel.setBackground(new Color(30, 30, 47));
         fNameLabel.setForeground(new Color(236, 240, 241));
         lNameLabel.setForeground(new Color(236, 240, 241));

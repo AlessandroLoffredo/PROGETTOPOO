@@ -26,7 +26,7 @@ public class AreaPersonale {
     private JLabel userLabel;
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
-    private JPanel participantPanel;
+    private JPanel requestsPanel;
     private JButton inviaRichiestaButton;
     private JComboBox participantComboBox;
     private JPanel messagePanel;
@@ -105,7 +105,7 @@ public class AreaPersonale {
         lastsHackPanel.setBackground(new Color(236, 240, 241));
         textArea2.setBackground(new Color(236, 240, 241));
         messagePanel.setBackground(new Color(236, 240, 241));
-        participantPanel.setBackground(new Color(236, 240, 241));
+        requestsPanel.setBackground(new Color(236, 240, 241));
 
         fNameLabel.setForeground(new Color(236, 240, 241));
         lNameLabel.setForeground(new Color(236, 240, 241));
@@ -171,9 +171,9 @@ public class AreaPersonale {
         });
 
 
-        DefaultListModel<Request> model = new DefaultListModel<>();
 
-        ArrayList<Request> richieste = new ArrayList<>();
+
+        /*ArrayList<Request> richieste = new ArrayList<>();
         richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
         richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
         richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
@@ -194,14 +194,47 @@ public class AreaPersonale {
         richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
         richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
         richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
+        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));*/
         //for(Request r : controller.getRequests())
           //  model.addElement(r);
 
-        for(Request r : richieste)
-            model.addElement(r);
-
+        DefaultListModel<Request> model = new DefaultListModel<>();
         requestList.setModel(model);
+        if(controller.getUser() instanceof User){
+            ArrayList<Request> requests = new ArrayList<>();
+            controller.getInvites(requests, controller.getUser().getUsername());
+            for (Request r : requests)
+                model.addElement(r);
+        } else {
+            ArrayList<Request> richieste = new ArrayList<>();
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            richieste.add(new Request("ciao", "mammt"));
+            richieste.add(new Request("suca", "patt"));
+            richieste.add(new Request("ciuccm e pall", "nonnt"));
+            for(Request r : controller.getRequests()) {
+                model.addElement(r);
+            }
+        }
+
+
+
 //        frame.add(new JScrollPane(requestList));
 
         requestList.addListSelectionListener(new ListSelectionListener() {
@@ -213,7 +246,7 @@ public class AreaPersonale {
                     // Split della stringa
                     String[] parti = requestList.getSelectedValue().toString().split(":", 2); // Il '2' limita il numero di suddivisioni
 
-                    int t = controller.handleAccRequest(parti[0], frame);
+                    int t = controller.handleAccRequest(parti[1]);
                 } else {
                     System.out.println("L'utente ha scelto No.");
                 }
@@ -325,7 +358,7 @@ public class AreaPersonale {
      *
      * @return JPanel: panel che contiene gli elementi di gestione della lista di richieste.
      */
-    public JPanel getParticipantPanel() {
-        return participantPanel;
+    public JPanel getRequestsPanel() {
+        return requestsPanel;
     }
 }

@@ -130,52 +130,6 @@ public class Home {
             }
         });
 
-        /*signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SignUp signUp = new SignUp(frame, controller);
-                frame.setVisible(false);
-                signUp.getFrame().setVisible(true);
-
-
-                /*JLabel newLabel = new JLabel("Nuova etichetta aggiunta!");
-                panel1.add(newLabel);
-                panel1.revalidate(); // Aggiorna il layout
-                panel1.repaint(); // Ridisegna la GUI
-
-
-                AreaPersonale areaPersonale = new AreaPersonale(frame);
-                frame.setVisible(false);
-                areaPersonale.getFrame().setVisible(true);
-
-                HackathonGui hack = new HackathonGui(frame);
-                frame.setVisible(false);
-                hack.getFrame().setVisible(true);
-
-                CambiaUsername cambia = new CambiaUsername(frame);
-                frame.setVisible(false);
-                cambia.getFrame().setVisible(true);
-                */
-
-                /*CreaHackathon crea = new CreaHackathon(frame);
-                frame.setVisible(false);
-                crea.getFrame().setVisible(true);*/
-
-                /*TeamArea team = new TeamArea(frame, controller);
-                frame.setVisible(false);
-                team.getFrame().setVisible(true);*/
-
-                /*CreaTeam creaTeam = new CreaTeam(frame, controller);
-                frame.setVisible(false);
-                creaTeam.getFrame().setVisible(true);*/
-
-                /*HackathonGui hack = new HackathonGui(frame, controller);
-                frame.setVisible(false);
-                hack.getFrame().setVisible(true);*/
-
-            //}
-
-        //});
 
         areaPersonaleButton.addActionListener(new ActionListener() {
             @Override

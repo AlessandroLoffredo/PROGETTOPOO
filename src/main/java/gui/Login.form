@@ -92,6 +92,7 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <echoChar value="*"/>
                   <font name="JetBrains Mono"/>
                 </properties>
               </component>
