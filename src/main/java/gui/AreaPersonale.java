@@ -30,7 +30,7 @@ public class AreaPersonale {
     private JButton inviaRichiestaButton;
     private JComboBox participantComboBox;
     private JPanel messagePanel;
-    private JList<Request> requestList;
+    private JList<String> requestList;
     private JButton homeButton;
     private JTextArea messageArea;
     private JPanel teamPanel;
@@ -143,7 +143,6 @@ public class AreaPersonale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
-                controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 frame.dispose();
             }
         });
@@ -171,39 +170,12 @@ public class AreaPersonale {
         });
 
 
-
-
-        /*ArrayList<Request> richieste = new ArrayList<>();
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));
-        richieste.add(new Request("ciao", new User(null, null, "mammt", "pippo")));
-        richieste.add(new Request("suca", new User(null, null, "patt", "pippo")));
-        richieste.add(new Request("ciuccm e pall",  new User(null, null, "nonnt", "pippo")));*/
-        //for(Request r : controller.getRequests())
-          //  model.addElement(r);
-
-        DefaultListModel<Request> model = new DefaultListModel<>();
+        DefaultListModel<String> model = new DefaultListModel<>();
         requestList.setModel(model);
-        if(controller.getUser() instanceof User){
-            ArrayList<Request> requests = new ArrayList<>();
-            controller.getInvites(requests, controller.getUser().getUsername());
-            for (Request r : requests)
+        if(controller.getUserClass()){
+            ArrayList<String> requests = new ArrayList<>();
+            controller.getInvites(requests);
+            for (String r : requests)
                 model.addElement(r);
         } else {
             ArrayList<Request> richieste = new ArrayList<>();
@@ -228,9 +200,9 @@ public class AreaPersonale {
             richieste.add(new Request("ciao", "mammt"));
             richieste.add(new Request("suca", "patt"));
             richieste.add(new Request("ciuccm e pall", "nonnt"));
-            for(Request r : controller.getRequests()) {
+            /*for(String r : controller.getRequests()) {
                 model.addElement(r);
-            }
+            }*/
         }
 
 
@@ -240,19 +212,29 @@ public class AreaPersonale {
         requestList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                //if (e.getValueIsAdjusting()) return;
+
+                int selectedIndex = requestList.getSelectedIndex();
+                if (selectedIndex == -1) return;
+                int code = 0;
+                String[] parti = requestList.getSelectedValue().toString().split(":", 2);
                 int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
                 if (scelta == JOptionPane.YES_OPTION) {
                     System.out.println("L'utente ha scelto Sì.");
-                    // Split della stringa
-                    String[] parti = requestList.getSelectedValue().toString().split(":", 2); // Il '2' limita il numero di suddivisioni
-
-                    int t = controller.handleAccRequest(parti[1]);
+                    code = controller.handleAccRequest(parti[1]);
                 } else {
                     System.out.println("L'utente ha scelto No.");
+                    code = controller.handleDecRequest(parti[1]);
                 }
-
+                if(code == 0) {
+                    JOptionPane.showMessageDialog(panel, "Errore durante la gestione dell'invito");
+                }else{
+                    DefaultListModel<String> model = (DefaultListModel<String>) requestList.getModel();
+                    model.remove(selectedIndex);
+                }
             }
         });
+
         cambiaUsernameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

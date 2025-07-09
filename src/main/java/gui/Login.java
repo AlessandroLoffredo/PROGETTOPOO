@@ -118,7 +118,7 @@ public class Login {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignUp signUp = new SignUp(frame, controller);
+                SignUp signUp = new SignUp(frameChiamante, controller);
                 JFrame signUpFrame = signUp.getFrame();
 
                 // Configurazione iniziale
@@ -173,6 +173,23 @@ public class Login {
          *
          * @return JFrame: Il frame principale.
          */
+        loginButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    loginButton.doClick();
+                }
+            }
+        });
+
+        passwordArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    loginButton.doClick();
+                }
+            }
+        });
     }
 
     public JFrame getFrame() {

@@ -122,35 +122,35 @@ public class AreaPersonaleOrganizzatore {
         datePanel.setBorder(new LineBorder(new Color(30, 30, 47)));
         organizerPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
-        LocalDate[] dates = new LocalDate[2];
+        LocalDate[] dates = new LocalDate[3];
         controller.getDates(dates);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-
 
         if (controller.isStarted()) {
             organizerPanel.setEnabled(false);
             datePanel.setEnabled(false);
             spinner1.setEnabled(false);
             startSingUpButton.setEnabled(false);
-            comboBox1.setEnabled(false);
-            inviaRichiestaButton.setEnabled(false);
             datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
             organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
+            ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
+            Date startRegDate = Date.from(zonedDateTime1.toInstant());
+            SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
+            spinner1.setModel(startModel);
+            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
+            spinner1.setEditor(startEditor);
+            spinner1.setValue(startRegDate);
+            if(startRegDate.before(new Date()) || startRegDate.equals(new Date())){
+                comboBox1.setEnabled(false);
+                inviaRichiestaButton.setEnabled(false);
+            }
         } else {
-            System.out.println(dates[0]);
-            System.out.println(dates[1]);
             SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
             spinner1.setModel(startModel);
             JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
             spinner1.setEditor(startEditor);
             spinner1.setValue(new Date());
-            /*spinner1.addChangeListener(e -> {
-                Date data = (Date) spinner1.getValue();
-                if (data.before(new Date())) {
-                    spinner1.setValue(new Date());
-                }
-            });*/
         }
 
 
@@ -254,7 +254,7 @@ public class AreaPersonaleOrganizzatore {
             controller.getFreeUser(judges, dates[0], dates[1]);
             comboBox1.addItem("Seleziona un utente");
             System.out.println(dates[0]);
-            System.out.println(dates[0]);
+            System.out.println(dates[1]);
             for (String judge : judges) {
                 comboBox1.addItem(judge);
             }

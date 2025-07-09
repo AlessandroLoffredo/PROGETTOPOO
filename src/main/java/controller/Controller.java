@@ -4,12 +4,8 @@
     import implementazioniPostgresDAO.*;
     import model.*;
     import javax.swing.*;
-    import java.net.PasswordAuthentication;
-    import java.sql.SQLException;
     import java.time.LocalDate;
     import java.util.ArrayList;
-    import java.util.Date;
-    import java.util.Locale;
 
     /**
      * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
@@ -20,6 +16,8 @@
         private User user;
         private Home home;
         private PlatformAdmin plAdmin;
+        private String sender;
+
         /**
          * Istanzia un nuovo controller.
          *
@@ -194,13 +192,13 @@
      *
      * @return ArrayList : Lista di invita della classe Participant.
      */
-    public ArrayList<Request> getRequests(){
+    /*public ArrayList<String> getRequests(){
         if(this.user instanceof Participant){
             return ((Participant) user).getInvRecived();
         }else{
             return null;
         }
-    }
+    }*/
 
     /**
      * Gestisce ciò che avviene quando un partecipante permette ad un altro di unirsi al suo team tramite richiesta.
@@ -210,22 +208,15 @@
      */
     //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
     public int handleAccRequest(String sender){
-
-        /*User sender = User.findUser(username);
-        Participant p = (Participant) sender;
-        p.setParTeam(null);
-        Participant p2 = new Participant(null, null, "pippo", "pluto");
-        p2.setParTeam(null);
-        if(p.getParTeam() == null){
-            if(p2.getParTeam() == null){
-                CreaTeam creaTeam = new CreaTeam(frameChiamante, this);
-                creaTeam.getFrame().setVisible(true);
-                frameChiamante.setEnabled(false);
-            }
-        }*/
-        return 0;
+        UsersImplementation userI = new UsersImplementation();
+        System.out.println(this.user.getUsername());
+        return userI.acceptInvite(sender, this.user.getUsername()); //TODO CHIEDERE AD ALEXXX SE QUESTA INTERFACE è GIUSTA
     }
 
+    public int handleDecRequest(String sender){
+        UsersImplementation userI = new UsersImplementation();
+        return userI.declineInvite(sender, this.user.getUsername());
+    }
     /**
      * Gestisce l'aggiunta della descrizione del problema di un Hackathon da parte di un giudice.
      *
@@ -272,7 +263,7 @@
      */
     public int handleStartSignUp(LocalDate date){
         OrgImplementation orgI = new OrgImplementation();
-        return orgI.setUpDate(date, this.user.getUsername());
+        return orgI.setupDate(date, this.user.getUsername());
     }
 
     public void getDates(LocalDate[] dates){
@@ -381,9 +372,9 @@
         usersI.getFreeUser(freeUsers, start, end);
     }
 
-    public void getInvites(ArrayList<Request> requests, String reciver){
+    public void getInvites(ArrayList<String> requests){
         UsersImplementation usersI = new UsersImplementation();
-        usersI.getInvites(requests, reciver);
+        usersI.getInvites(requests, this.user.getUsername());
     }
 
     public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
@@ -396,5 +387,9 @@
             int insert = usersI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username);
             return insert;
         }
+    }
+
+    public boolean getUserClass(){
+        return this.user instanceof User;
     }
 }

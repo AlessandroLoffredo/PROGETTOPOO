@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class OrgImplementation implements OrgInterface {
     @Override
-    public int setUpDate(LocalDate date, String username) {
+    public int setupDate(LocalDate date, String username) {
         int resultsUp = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "UPDATE Hackathon " +
@@ -50,8 +50,7 @@ public class OrgImplementation implements OrgInterface {
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
-                         "O.username = ? AND H.startRegDate <= CURRENT_DATE OR " +
-                         "H.startRegDate IS NOT NULL";
+                         "O.username = ? AND H.startRegDate IS NOT NULL";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
@@ -68,7 +67,7 @@ public class OrgImplementation implements OrgInterface {
 
     public void getDates(String username, LocalDate dates[]){
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT H.startDate, H.endDate FROM Hackathon H, Organizer O " +
+            String sql = "SELECT H.startDate, H.endDate, H.startRegDate FROM Hackathon H, Organizer O " +
                     "WHERE H.idHack = O.idHack AND O.username = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
@@ -76,6 +75,7 @@ public class OrgImplementation implements OrgInterface {
             while(rs.next()){
                 dates[0] = rs.getDate("startDate").toLocalDate();
                 dates[1] = rs.getDate("endDate").toLocalDate();
+                dates[2] = rs.getDate("startRegDate").toLocalDate();
             }
         }catch (SQLException e){
             e.printStackTrace();
