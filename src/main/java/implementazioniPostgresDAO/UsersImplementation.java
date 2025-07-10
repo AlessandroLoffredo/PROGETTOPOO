@@ -101,14 +101,32 @@ public class UsersImplementation implements UsersInterface {
         return results;
     }
 
-    public int declineInvite(String sender, String receiver){
+    /*public int declineInvite(String sender, String receiver){
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "DELETE FROM Invite WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
+            String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
                          "SELECT H.idHack FROM Hackathon H WHERE O.idHack = H.idHack AND H.startDate >= CURRENT_DATE)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
+            results = stmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            //results = 0;
+        }
+        return results;
+    }*/
+
+    public int declineInvite(String sender, String receiver){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
+                         "SELECT H.idHack FROM Hackathon H WHERE H.startDate >= CURRENT_DATE AND H.idHack = " +
+                         "(SELECT O.idHack FROM Organizer O WHERE O.username = ?))";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, sender);
+            stmt.setString(2, receiver);
+            stmt.setString(3, sender);
             results = stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

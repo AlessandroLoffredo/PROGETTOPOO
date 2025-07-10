@@ -46,7 +46,7 @@ public class AuthImplementation implements AuthInterface {
                     else{
                         sql = "SELECT COUNT(*) AS conto FROM Judge J, Hackathon H WHERE J.username = ? AND " +
                                 "J.idHack = H.idHack AND " +
-                                "H.endDate >= CURRENT_DATE AND (H.startDate - 7) <= CURRENT_DATE";
+                                "H.endDate >= CURRENT_DATE AND (H.startDate - 30) <= CURRENT_DATE";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, username);
                         rs = stmt.executeQuery();

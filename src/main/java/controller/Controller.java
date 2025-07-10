@@ -209,7 +209,6 @@
     //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
     public int handleAccRequest(String sender){
         UsersImplementation userI = new UsersImplementation();
-        System.out.println(this.user.getUsername());
         return userI.acceptInvite(sender, this.user.getUsername()); //TODO CHIEDERE AD ALEXXX SE QUESTA INTERFACE è GIUSTA
     }
 

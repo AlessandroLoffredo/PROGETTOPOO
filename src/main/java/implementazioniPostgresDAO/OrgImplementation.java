@@ -5,6 +5,7 @@ import database.ConnessioneDatabase;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class OrgImplementation implements OrgInterface {
     @Override
@@ -104,5 +105,29 @@ public class OrgImplementation implements OrgInterface {
             }
         }
         return inserted;
+    }
+
+    public void findHack(String username, ArrayList<Object> datas){
+        try (Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT * " +
+                         "FROM Hackathon H, Organizer O " +
+                         "WHERE H.idHack = O.idHack AND O.username = ? AND H.startDate-30 >= CURRENT_DATE AND H.endDate > CURRENT_DATE";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                datas.add(rs.getString("title"));
+                datas.add(rs.getString("venue"));
+                datas.add(rs.getInt("regCounter"));
+                datas.add(rs.getDate("startDate"));
+                datas.add(rs.getDate("endDate"));
+                datas.add(rs.getInt("maxRegistration"));
+                datas.add(rs.getInt("maxTeamPar"));
+                datas.add(rs.getString("problemDesc"));
+                datas.add(rs.getDate("startRegDate"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

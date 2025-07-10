@@ -216,15 +216,13 @@ public class AreaPersonale {
 
                 int selectedIndex = requestList.getSelectedIndex();
                 if (selectedIndex == -1) return;
-                int code = 0;
+                int code;
                 String[] parti = requestList.getSelectedValue().toString().split(":", 2);
                 int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
                 if (scelta == JOptionPane.YES_OPTION) {
-                    System.out.println("L'utente ha scelto Sì.");
-                    code = controller.handleAccRequest(parti[1]);
+                    code = controller.handleAccRequest(parti[1].trim());
                 } else {
-                    System.out.println("L'utente ha scelto No.");
-                    code = controller.handleDecRequest(parti[1]);
+                    code = controller.handleDecRequest(parti[1].trim());
                 }
                 if(code == 0) {
                     JOptionPane.showMessageDialog(panel, "Errore durante la gestione dell'invito");

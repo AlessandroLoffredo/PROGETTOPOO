@@ -1,15 +1,11 @@
 package gui;
 
 import controller.Controller;
-import implementazioniPostgresDAO.UsersImplementation;
-import model.User;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -33,7 +29,6 @@ public class AreaPersonaleOrganizzatore {
     private JPanel operationPanel;
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
-    private JTextArea infoHackathon;
     private JPanel hackathonPanel;
     private JButton startSingUpButton;
     private JSpinner spinner1;
@@ -51,6 +46,25 @@ public class AreaPersonaleOrganizzatore {
     private JButton logoutButton;
     private JPanel elementsPanel;
     private JPanel dataPanel;
+    private JLabel currentTitleLabel;
+    private JLabel currentVenueLabel;
+    private JLabel currentStartLabel;
+    private JLabel currentEndLabel;
+    private JLabel currentStarRegLabel;
+    private JLabel currentProbDescLabel;
+    private JLabel currentMaxTeamParLabel;
+    private JLabel currentCounterLabel;
+    private JLabel currentMaxRegLabel;
+    private JLabel currentTitleArea;
+    private JLabel currentVenueArea;
+    private JLabel currentStartArea;
+    private JLabel currentMaxRegArea;
+    private JLabel currentEndArea;
+    private JLabel currentCounterArea;
+    private JLabel currentStarRegArea;
+    private JLabel currentMaxTeamParArea;
+    private JScrollPane currentProbDescScroll;
+    private JTextArea currentProbDescArea;
     private JFrame frame;
 
     /**
@@ -91,13 +105,12 @@ public class AreaPersonaleOrganizzatore {
         lNameArea.setForeground(new Color(236, 240, 241));
         userArea.setForeground(new Color(236, 240, 241));
         profileLabel.setForeground(new Color(236, 240, 241));
-        infoHackathon.setBackground(new Color(30, 30, 47));
         datePanel.setBackground(new Color(236, 240, 241));
         elementsPanel.setBackground(new Color(236, 240, 241));
         organizerPanel.setBackground(new Color(236, 240, 241));
+        hackathonPanel.setBackground(new Color(236, 240, 241));
 
-        hackLabel.setForeground(new Color(236, 240, 241));
-        infoHackathon.setForeground(new Color(236, 240, 241));
+        hackLabel.setForeground(new Color(30, 30, 47));
         invLabel.setBackground(new Color(30, 30, 47));
         dateLabel.setBackground(new Color(30, 30, 47));
         spinner1.setForeground(new Color(30, 30, 47));
@@ -113,6 +126,50 @@ public class AreaPersonaleOrganizzatore {
         inviaRichiestaButton.setForeground(new Color(37, 99, 235));
         homeButton.setForeground(new Color(37, 99, 235));
         logoutButton.setForeground(new Color(37, 99, 235));
+
+        currentVenueLabel.setText("\uD83C\uDF10 Sede:");
+        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setForeground(new Color(30, 30, 47));
+        currentVenueLabel.setBackground(new Color(236, 240, 241));
+        currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
+        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setForeground(new Color(30, 30, 47));
+        currentTitleLabel.setBackground(new Color(236, 240, 241));
+        currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
+        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setForeground(new Color(30, 30, 47));
+        currentStartLabel.setBackground(new Color(236, 240, 241));
+        currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
+        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setForeground(new Color(30, 30, 47));
+        currentEndLabel.setBackground(new Color(236, 240, 241));
+        currentStarRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
+        currentStarRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStarRegLabel.setForeground(new Color(30, 30, 47));
+        currentStarRegLabel.setBackground(new Color(236, 240, 241));
+        currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
+        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setForeground(new Color(30, 30, 47));
+        currentMaxRegLabel.setBackground(new Color(236, 240, 241));
+        currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
+        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setForeground(new Color(30, 30, 47));
+        currentCounterLabel.setBackground(new Color(236, 240, 241));
+        currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
+        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
+        currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
+        currentProbDescLabel.setText("\uD83D\uDCC3 Descrizione problema:");
+        currentProbDescLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentProbDescLabel.setForeground(new Color(30, 30, 47));
+        currentProbDescLabel.setBackground(new Color(236, 240, 241));
+        currentProbDescArea.setForeground(new Color(30, 30, 47));
+        currentProbDescArea.setBackground(new Color(236, 240, 241));
+        currentProbDescScroll.setBorder(new LineBorder(null));
+        currentProbDescArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        int width = currentProbDescArea.getWidth();
+        currentProbDescArea.setPreferredSize(new Dimension(width, 100));
+        hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
