@@ -148,6 +148,20 @@ public class AreaPersonaleGiudice {
         markSlider.setPaintTicks(true); // Mostra i tick
         markSlider.setPaintLabels(true); // Mostra i numeri
 
+        problemArea.setWrapStyleWord(true);
+        problemArea.setLineWrap(true);
+
+        ArrayList<Object> data = new ArrayList<>();
+        String description = controller.getDescription(data);
+        if(description == null || description.isEmpty()){
+            problemArea.setText("");
+        }else{
+            problemArea.setText(description);
+            sendProbButton.setText("Modifica la descrizione del problema");
+            data.clear();
+            sendProbButton.setEnabled(controller.isRegStarted(data));
+        }
+
 
         homeButton.addActionListener(new ActionListener() {
             @Override
@@ -178,29 +192,23 @@ public class AreaPersonaleGiudice {
         sendProbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(controller.getUser() != null){
-                    if (problemArea.getText().isEmpty()) {
-                        JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        controller.handleProblemDescription(problemArea.getText());
-                        problemArea.setText("");
+                if (problemArea.getText().isEmpty()) {
+                    JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int code = controller.handleProblemDescription(problemArea.getText());
+                    if(code == 1){
                         if (sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")) {
                             JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
                             sendProbButton.setText("Modifica descrizione problema");
                         } else {
                             JOptionPane.showMessageDialog(panel, "Descrizione modificata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
                         }
+                    }else{
+                        JOptionPane.showMessageDialog(panel, "Errore nel caricamento della descrizione");
                     }
-                }else{
-                    JOptionPane.showMessageDialog(panel, "Accedi prima di inserire la descrizione", "ERROR", JOptionPane.ERROR_MESSAGE);
-
                 }
             }
         });
-
-        if(!(((Judge)controller.getUser()).getJudgedHack().getProblemDescription().isEmpty())){
-            sendProbButton.setText("Modifica descrizione problema");
-        }
 
         //BISOGNERA' CARICARE NELLA TEAMCOMBOBOX E NELLA TEAMCOMBOBOXMARK I NOMI DI TUTTI I TEAM NELL'HACKATHON TRAMITE DB
 

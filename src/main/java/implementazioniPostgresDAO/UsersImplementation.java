@@ -37,42 +37,14 @@ public class UsersImplementation implements UsersInterface {
     }
 
 
-    public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
-        int results = 0;
-        try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT doubleInsHackOrg(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, title);
-            stmt.setString(2, venue);
-            stmt.setDate(3, Date.valueOf(startDate));
-            stmt.setDate(4, Date.valueOf(endDate));
-            stmt.setInt(5, maxReg);
-            stmt.setInt(6, maxPerTeam);
-            stmt.setString(7, username);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-                results = rs.getInt(1);
-        }catch (SQLException e){
-            e.printStackTrace();
-            if(e.getMessage().contains("checkdatefunct()")) {
-                results = -4;
-            }else if (e.getMessage().contains("duration")) {
-                results = -5;
-            }else if (e.getMessage().contains("checkstart")) {
-                results = -3;
-            }
-        }
-        return results;
-    }
-
-    public void getInvites(ArrayList<String> requests, String reciver){
+    public void getInvites(ArrayList<String> requests, String receiver){
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT I.organizer, H.title FROM Invites I, Hackathon H WHERE I.idHackOrg = H.idHack AND " +
                          "H.startRegDate >= CURRENT_DATE AND " +
                          "CURRENT_DATE >= (H.startDate - 30)  AND " +
                          "I.invitedUser = ?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, reciver);
+            stmt.setString(1, receiver);
             ResultSet rs = stmt.executeQuery();
             int i = 0;
             while (rs.next()){
@@ -100,22 +72,6 @@ public class UsersImplementation implements UsersInterface {
         }
         return results;
     }
-
-    /*public int declineInvite(String sender, String receiver){
-        int results = 0;
-        try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
-                         "SELECT H.idHack FROM Hackathon H WHERE O.idHack = H.idHack AND H.startDate >= CURRENT_DATE)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, sender);
-            stmt.setString(2, receiver);
-            results = stmt.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
-            //results = 0;
-        }
-        return results;
-    }*/
 
     public int declineInvite(String sender, String receiver){
         int results = 0;

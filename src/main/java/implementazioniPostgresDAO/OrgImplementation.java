@@ -107,24 +107,28 @@ public class OrgImplementation implements OrgInterface {
         return inserted;
     }
 
-    public void findHack(String username, ArrayList<Object> datas){
+    public void findHack(String username, ArrayList<Object> data, String tabella){
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
-                         "FROM Hackathon H, Organizer O " +
-                         "WHERE H.idHack = O.idHack AND O.username = ? AND H.startDate-30 >= CURRENT_DATE AND H.endDate > CURRENT_DATE";
+                         "FROM Hackathon H, Judge J " +
+                         "WHERE H.idHack = J.idHack AND J.username = ? AND H.endDate > CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
+//          stmt.setString(1, tabella);
+//          stmt.setString(2, tabella);
+//          stmt.setString(3, tabella);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                datas.add(rs.getString("title"));
-                datas.add(rs.getString("venue"));
-                datas.add(rs.getInt("regCounter"));
-                datas.add(rs.getDate("startDate"));
-                datas.add(rs.getDate("endDate"));
-                datas.add(rs.getInt("maxRegistration"));
-                datas.add(rs.getInt("maxTeamPar"));
-                datas.add(rs.getString("problemDesc"));
-                datas.add(rs.getDate("startRegDate"));
+                System.out.println(rs.getString("title") + rs.getString("problemDesc"));
+                data.add(rs.getString("title"));
+                data.add(rs.getString("venue"));
+                data.add(rs.getInt("regCounter"));
+                data.add(rs.getDate("startDate"));
+                data.add(rs.getDate("endDate"));
+                data.add(rs.getInt("maxRegistration"));
+                data.add(rs.getInt("maxTeamPar"));
+                data.add(rs.getString("problemDesc"));
+                data.add(rs.getDate("startRegDate"));
             }
         } catch (SQLException e){
             e.printStackTrace();

@@ -6,6 +6,7 @@
     import javax.swing.*;
     import java.time.LocalDate;
     import java.util.ArrayList;
+    import java.util.Date;
 
     /**
      * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
@@ -206,7 +207,7 @@
      * @param sender       L'utente che invia la richiesta.
      * @return int : Codice che identifica le varie situazioni che possono accadere.
      */
-    //MOLTO DA RIVEDERE UTILIZZATO, è STATO SCRITTO PER IL TESTING
+
     public int handleAccRequest(String sender){
         UsersImplementation userI = new UsersImplementation();
         return userI.acceptInvite(sender, this.user.getUsername()); //TODO CHIEDERE AD ALEXXX SE QUESTA INTERFACE è GIUSTA
@@ -221,8 +222,9 @@
      *
      * @param description La descrizione del problema.
      */
-    public void handleProblemDescription(String description){
-        ((Judge)user).describeProblem(description);
+    public int handleProblemDescription(String description){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        return judgeI.updateDescription(description, this.user.getUsername());
     }
 
     /**
@@ -382,13 +384,26 @@
         } else if (startDate.isBefore((LocalDate.now().plusDays(7)))) {
             return -3;
         } else {
-            UsersImplementation usersI = new UsersImplementation();
-            int insert = usersI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username);
-            return insert;
+            AdminImplementation adminI = new AdminImplementation();
+            return adminI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username);
         }
     }
 
     public boolean getUserClass(){
         return this.user instanceof User;
+    }
+
+    public String getDescription(ArrayList<Object> data){
+        OrgImplementation orgI = new OrgImplementation();
+        orgI.findHack(this.user.getUsername(), data, "Judge");
+        System.out.println(data.size());
+        return ((String) data.get(data.size()-2));
+    }
+
+    public boolean isRegStarted(ArrayList<Object> data){    //CONTROLLA SE LE REGISTRAZIONI SONO COMINCIATE
+        //DOBBIAMO SALVARE LE INFO DELL'HACKATHON
+        OrgImplementation orgI = new OrgImplementation();
+        orgI.findHack(this.user.getUsername(), data, "Judge");
+        return !(((Date) data.getLast()).before(new Date()));
     }
 }
