@@ -17,6 +17,7 @@
         private User user;
         private Home home;
         private PlatformAdmin plAdmin;
+        private Hackathon hackathon;
         private String sender;
 
         /**
@@ -33,6 +34,7 @@
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
             this.plAdmin = null;
             this.home = home;
+            this.hackathon = null;
         }
 
         /**
@@ -52,6 +54,10 @@
             return user;
         }
 
+        public Hackathon getHackathon() {
+            return hackathon;
+        }
+
         /**
          * Gestisce l'azione di login di un utente già registrato.
          *
@@ -69,8 +75,10 @@
                 this.plAdmin = new PlatformAdmin(username, new String(password));
             }else if(log == 2){
                 this.user = new Organizer(names[0], names[1], username, new String(password));
+                this.findHack();
             } else if(log == 3) {
                 this.user = new Judge(names[0], names[1], username, new String(password));
+                this.findHack();
             } else if (log == 4) {
                 this.user = new Participant(names[0], names[1], username, new String(password));
             } else if (log == 5) {
@@ -158,6 +166,7 @@
     public void logout(){
         this.user = null;
         this.plAdmin = null;
+        this.hackathon = null;
     }
 
     /**
@@ -323,7 +332,7 @@
                 int result = this.user.subscribe(nameHack);
                 if (result == 0) {
                     this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
-                    ((Participant) this.user).setParHackathon(Hackathon.findHackathon(nameHack));
+                    //((Participant) this.user).setParHackathon(Hackathon.findHackathon(nameHack));
                 }
                 return result;
             }
@@ -395,15 +404,49 @@
 
     public String getDescription(ArrayList<Object> data){
         OrgImplementation orgI = new OrgImplementation();
-        orgI.findHack(this.user.getUsername(), data, "Judge");
+        orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
         System.out.println(data.size());
         return ((String) data.get(data.size()-2));
     }
 
-    public boolean isRegStarted(ArrayList<Object> data){    //CONTROLLA SE LE REGISTRAZIONI SONO COMINCIATE
+    public boolean isRegStarted(){    //CONTROLLA SE LE REGISTRAZIONI SONO COMINCIATE
         //DOBBIAMO SALVARE LE INFO DELL'HACKATHON
-        OrgImplementation orgI = new OrgImplementation();
-        orgI.findHack(this.user.getUsername(), data, "Judge");
-        return !(((Date) data.getLast()).before(new Date()));
+        return !(this.hackathon.getStartRegDate()).before(new Date());
     }
+
+    public void findHack(){
+        OrgImplementation orgI = new OrgImplementation();
+        ArrayList<Object> data = new ArrayList<>();
+        orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
+        String title = (String)data.get(0);
+        String venue = (String)data.get(1);
+        Date startDate = (Date)data.get(2);
+        Date endDate = (Date)data.get(3);
+        int maxReg = (int)data.get(4);
+        int maxTeamPar = (int)data.get(5);
+        String problemDesc = (String)data.get(7);
+        Date startRegDate = (Date)data.get(8);
+        int regCounter = (int)data.get(6);
+        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+    }
+
+    public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JTextArea currentProbDescArea){
+        currentTitleArea.setText(this.getHackathon().getTitle());
+        currentVenueArea.setText(this.getHackathon().getVenue());
+        currentStartArea.setText(this.getHackathon().getStartDate().toString());
+        currentEndArea.setText(this.getHackathon().getEndDate().toString());
+        if(this.getHackathon().getProblemDescription().equals(null) || this.getHackathon().getProblemDescription().equals("")){
+            currentProbDescArea.setText("Descrizione problema ancora non definita");
+        } else {
+            currentProbDescArea.setText(this.getHackathon().getProblemDescription());
+        }
+        if(this.getHackathon().getStartRegDate().toString().equals(null)){
+            currentStartRegArea.setText("Data ancora non definita");
+        } else {
+            currentStartRegArea.setText(this.getHackathon().getStartRegDate().toString());
+        }
+        currentMaxRegArea.setText(String.valueOf(this.getHackathon().getMaxRegistration()));
+        currentCounterArea.setText(String.valueOf(this.getHackathon().getRegCounter()));
+    }
+
 }

@@ -110,8 +110,8 @@ public class OrgImplementation implements OrgInterface {
     public void findHack(String username, ArrayList<Object> data, String tabella){
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
-                         "FROM Hackathon H, Judge J " +
-                         "WHERE H.idHack = J.idHack AND J.username = ? AND H.endDate > CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
+                         "FROM Hackathon H, " + tabella + " T " +
+                         "WHERE H.idHack = T.idHack AND username = ? AND H.endDate > CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
 //          stmt.setString(1, tabella);
 //          stmt.setString(2, tabella);
@@ -122,11 +122,11 @@ public class OrgImplementation implements OrgInterface {
                 System.out.println(rs.getString("title") + rs.getString("problemDesc"));
                 data.add(rs.getString("title"));
                 data.add(rs.getString("venue"));
-                data.add(rs.getInt("regCounter"));
                 data.add(rs.getDate("startDate"));
                 data.add(rs.getDate("endDate"));
                 data.add(rs.getInt("maxRegistration"));
                 data.add(rs.getInt("maxTeamPar"));
+                data.add(rs.getInt("regCounter"));
                 data.add(rs.getString("problemDesc"));
                 data.add(rs.getDate("startRegDate"));
             }

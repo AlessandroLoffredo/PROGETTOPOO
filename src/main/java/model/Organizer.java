@@ -72,4 +72,9 @@ public class Organizer extends User{
     public Hackathon getOrganizedHackathon() {
         return organizedHackathon;
     }
+
+    @Override
+    public String toString(){
+        return "Organizer";
+    }
 }

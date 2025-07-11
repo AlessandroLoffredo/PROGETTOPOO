@@ -122,4 +122,9 @@ public class User extends Person {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString(){
+        return "PlUser";
+    }
 }

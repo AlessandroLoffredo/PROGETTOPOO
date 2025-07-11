@@ -181,4 +181,9 @@ public class Participant extends User {
     public ArrayList<Request> getInvRecived() {
         return invRecived;
     }
+
+    @Override
+    public String toString(){
+        return "Participant";
+    }
 }

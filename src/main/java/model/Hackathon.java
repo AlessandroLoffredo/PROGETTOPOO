@@ -35,10 +35,10 @@ public class Hackathon {
      * @param endDate            Data di fine.
      * @param maxRegistration    Numero massimo di partecipanti all'Hackathon.
      * @param maxTeamParticipant Numero massimo di partecipanti all'interno di un team.
-     * @param hackOrganizer      Organizzatore dell'Hackathon
+     //* @param hackOrganizer      Organizzatore dell'Hackathon
      */
 //BUILDER
-    public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer) {
+    public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, String problemDescription, Date startRegDate, int regCounter/*, Organizer hackOrganizer*/) {
         this.title = title;
         this.venue = venue;
         this.startDate = startDate;
@@ -46,14 +46,14 @@ public class Hackathon {
         this.maxRegistration = maxRegistration;
         this.maxTeamParticipant = maxTeamParticipant;
         this.ranking = new ArrayList<>();
-        this.problemDescription = "";
-        this.startRegDate = null;
+        this.problemDescription = problemDescription;
+        this.startRegDate = startRegDate;
         Calendar giorno = Calendar.getInstance();
         giorno.setTime(startDate);
         giorno.add(Calendar.DAY_OF_MONTH, -2);
         this.endRegDate = giorno.getTime();
-        this.regCounter = 0;
-        this.hackOrganizer = hackOrganizer;
+        this.regCounter = regCounter;
+        //this.hackOrganizer = hackOrganizer;
         this.judesList = new ArrayList<>();
     }
 
@@ -198,6 +198,15 @@ public class Hackathon {
         return startDate;
     }
 
+    public String getVenue() {
+        return venue;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+
     public static Hackathon findHackathon(String name){
         //QUERY PER TROVARE L'HACKATHON
         //return fine a se stessa inserita per testing
@@ -210,7 +219,7 @@ public class Hackathon {
         } catch (ParseException e) {
             System.out.println("Errore: Formato della data non valido!");
         }
-        Hackathon hack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
+        Hackathon hack = new Hackathon("hack", "napoli", data, fdata, 50, 2, "prova", new Date(), 0/*, new Organizer(null, null, "pippo", "pluto")*/);
         return hack;
     }
 }

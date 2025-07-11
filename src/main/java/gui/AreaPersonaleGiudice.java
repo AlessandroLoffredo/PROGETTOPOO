@@ -56,6 +56,24 @@ public class AreaPersonaleGiudice {
     private JScrollPane docScrollPane;
     private JLabel commentAreaLabel;
     private JButton logoutButton;
+    private JPanel hackathonPanel;
+    private JLabel hackLabel;
+    private JLabel currentStartLabel;
+    private JLabel currentStartArea;
+    private JLabel currentEndLabel;
+    private JLabel currentEndArea;
+    private JLabel currentStartRegLabel;
+    private JLabel currentStartRegArea;
+    private JLabel currentMaxTeamParLabel;
+    private JLabel currentMaxTeamParArea;
+    private JLabel currentCounterLabel;
+    private JLabel currentMaxRegLabel;
+    private JLabel currentCounterArea;
+    private JLabel currentMaxRegArea;
+    private JLabel currentVenueLabel;
+    private JLabel currentVenueArea;
+    private JLabel currentTitleLabel;
+    private JLabel currentTitleArea;
     private JFrame frame;
 
     /**
@@ -79,12 +97,13 @@ public class AreaPersonaleGiudice {
         });
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(800, 800);
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
 
 
         panel.setBackground(new Color(30, 30, 47));
         scrollPanel.setBackground(new Color(236, 240, 241));
+        hackathonPanel.setBackground(new Color(236, 240, 241));
         scrollPane.setBackground(new Color(236, 240, 241));
         problemPanel.setBackground(new Color(236, 240, 241));
         problemPanel.setBackground(new Color(236, 240, 241));
@@ -124,10 +143,60 @@ public class AreaPersonaleGiudice {
         assigneButton.setForeground(new Color(37, 99, 235));
         logoutButton.setForeground(new Color(37, 99, 235));
 
+        currentVenueLabel.setText("\uD83C\uDF10 Sede:");
+        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setForeground(new Color(30, 30, 47));
+        currentVenueLabel.setBackground(new Color(236, 240, 241));
+        currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
+        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setForeground(new Color(30, 30, 47));
+        currentTitleLabel.setBackground(new Color(236, 240, 241));
+        currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
+        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setForeground(new Color(30, 30, 47));
+        currentStartLabel.setBackground(new Color(236, 240, 241));
+        currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
+        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setForeground(new Color(30, 30, 47));
+        currentEndLabel.setBackground(new Color(236, 240, 241));
+        currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
+        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setForeground(new Color(30, 30, 47));
+        currentStartRegLabel.setBackground(new Color(236, 240, 241));
+        currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
+        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setForeground(new Color(30, 30, 47));
+        currentMaxRegLabel.setBackground(new Color(236, 240, 241));
+        currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
+        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setForeground(new Color(30, 30, 47));
+        currentCounterLabel.setBackground(new Color(236, 240, 241));
+        currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
+        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
+        currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
+        currentVenueArea.setForeground(new Color(30, 30, 47));
+        currentTitleArea.setForeground(new Color(30, 30, 47));
+        currentStartArea.setForeground(new Color(30, 30, 47));
+        currentEndArea.setForeground(new Color(30, 30, 47));
+        currentStartRegArea.setForeground(new Color(30, 30, 47));
+        currentMaxRegArea.setForeground(new Color(30, 30, 47));
+        currentCounterArea.setForeground(new Color(30, 30, 47));
+
+        hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+
         problemArea.setBorder(new LineBorder(new Color(30, 30, 47)));
         commentArea.setBorder(new LineBorder(new Color(30, 30, 47)));
         docScrollPane.setBorder(new LineBorder(new Color(30, 30, 47)));
         scrollPane.setBorder(null);
+
+        controller.findHack();
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, problemArea);
+
+        int commentWidth = commentArea.getWidth();
+        commentArea.setPreferredSize(new Dimension(commentWidth, 100));
+        int problemWidth = problemArea.getWidth();
+        problemArea.setPreferredSize(new Dimension(problemWidth, 100));
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -143,7 +212,7 @@ public class AreaPersonaleGiudice {
         markSlider.setValue(5);
 
         markSlider.setMinorTickSpacing(1); // Ogni step è di 1
-        markSlider.setMajorTickSpacing(1); // Mostra i tick ogni 10 unità
+        markSlider.setMajorTickSpacing(1); // Mostra i tick ogni 1 unità
         markSlider.setSnapToTicks(true); // Il cursore si muove esattamente sui tick
         markSlider.setPaintTicks(true); // Mostra i tick
         markSlider.setPaintLabels(true); // Mostra i numeri
@@ -151,7 +220,7 @@ public class AreaPersonaleGiudice {
         problemArea.setWrapStyleWord(true);
         problemArea.setLineWrap(true);
 
-        ArrayList<Object> data = new ArrayList<>();
+        /*ArrayList<Object> data = new ArrayList<>();
         String description = controller.getDescription(data);
         if(description == null || description.isEmpty()){
             problemArea.setText("");
@@ -160,6 +229,11 @@ public class AreaPersonaleGiudice {
             sendProbButton.setText("Modifica la descrizione del problema");
             data.clear();
             sendProbButton.setEnabled(controller.isRegStarted(data));
+        }*/
+        if(problemArea.getText().equals("Descrizione problema ancora non definita")){
+            sendProbButton.setText("Carica descrizione problema");
+        } else {
+            sendProbButton.setText("Modifica la descrizione del problema");
         }
 
 

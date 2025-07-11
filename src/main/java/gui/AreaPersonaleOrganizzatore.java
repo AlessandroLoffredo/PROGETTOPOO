@@ -50,7 +50,7 @@ public class AreaPersonaleOrganizzatore {
     private JLabel currentVenueLabel;
     private JLabel currentStartLabel;
     private JLabel currentEndLabel;
-    private JLabel currentStarRegLabel;
+    private JLabel currentStartRegLabel;
     private JLabel currentProbDescLabel;
     private JLabel currentMaxTeamParLabel;
     private JLabel currentCounterLabel;
@@ -61,7 +61,7 @@ public class AreaPersonaleOrganizzatore {
     private JLabel currentMaxRegArea;
     private JLabel currentEndArea;
     private JLabel currentCounterArea;
-    private JLabel currentStarRegArea;
+    private JLabel currentStartRegArea;
     private JLabel currentMaxTeamParArea;
     private JScrollPane currentProbDescScroll;
     private JTextArea currentProbDescArea;
@@ -88,7 +88,7 @@ public class AreaPersonaleOrganizzatore {
         });
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(800, 800);
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
 
         fNameArea.setText(controller.getUser().getfName());
@@ -143,10 +143,10 @@ public class AreaPersonaleOrganizzatore {
         currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
         currentEndLabel.setForeground(new Color(30, 30, 47));
         currentEndLabel.setBackground(new Color(236, 240, 241));
-        currentStarRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
-        currentStarRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-        currentStarRegLabel.setForeground(new Color(30, 30, 47));
-        currentStarRegLabel.setBackground(new Color(236, 240, 241));
+        currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
+        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setForeground(new Color(30, 30, 47));
+        currentStartRegLabel.setBackground(new Color(236, 240, 241));
         currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
         currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
         currentMaxRegLabel.setForeground(new Color(30, 30, 47));
@@ -171,6 +171,8 @@ public class AreaPersonaleOrganizzatore {
         currentProbDescArea.setPreferredSize(new Dimension(width, 100));
         hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentProbDescArea);
+
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
@@ -189,8 +191,8 @@ public class AreaPersonaleOrganizzatore {
             datePanel.setEnabled(false);
             spinner1.setEnabled(false);
             startSingUpButton.setEnabled(false);
-            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
             organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
+            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
             ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
             Date startRegDate = Date.from(zonedDateTime1.toInstant());
             SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);

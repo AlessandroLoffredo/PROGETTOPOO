@@ -315,7 +315,7 @@
                   <text value="Label"/>
                 </properties>
               </component>
-              <component id="8bee" class="javax.swing.JLabel" binding="currentStarRegLabel">
+              <component id="8bee" class="javax.swing.JLabel" binding="currentStartRegLabel">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -324,7 +324,7 @@
                   <text value="Inizio iscrizioni: "/>
                 </properties>
               </component>
-              <component id="a212b" class="javax.swing.JLabel" binding="currentStarRegArea">
+              <component id="a212b" class="javax.swing.JLabel" binding="currentStartRegArea">
                 <constraints>
                   <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -442,6 +442,7 @@
                   <component id="cb049" class="javax.swing.JTextArea" binding="currentProbDescArea">
                     <constraints/>
                     <properties>
+                      <editable value="false"/>
                       <font name="JetBrains Mono"/>
                     </properties>
                   </component>

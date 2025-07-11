@@ -30,7 +30,7 @@ public class Judge extends User{
         } catch (ParseException e) {
             System.out.println("Errore: Formato della data non valido!");
         }
-        this.judgedHack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
+        //this.judgedHack = new Hackathon("hack", "napoli", data, fdata, 50, 2, new Organizer(null, null, "pippo", "pluto"));
     }
 
     /**
@@ -78,5 +78,10 @@ public class Judge extends User{
             team.getDocList().getLast().setComment(comment);
         }
         in.close();
+    }
+
+    @Override
+    public String toString(){
+        return "Judge";
     }
 }
