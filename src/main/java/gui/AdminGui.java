@@ -7,13 +7,13 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+
 
 /**
  *  Classe che gestisce tutte le azioni che un Admin della piattaforma è in grado di eseguire.
@@ -51,8 +51,12 @@ public class AdminGui {
     private JPanel createPanel;
     private JPanel fieldPanel;
     private JTextArea welcomeArea;
+    private JLabel immaginePanel;
+    private JButton caricaFotoButton;
+    private JLabel pathLabel;
     private JLabel iconLabel;
     private JFrame frame;
+    private File file = null;
 
     /**
      * Instanzia una nuova AdminGui.
@@ -287,7 +291,7 @@ public class AdminGui {
                         JOptionPane.showMessageDialog(panel, "Inserire il numero di partecipanti in cifre", "ERRORE", JOptionPane.ERROR_MESSAGE);
                     }
                     try {
-                        int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString());
+                        int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString(), file);
                         switch (code) {
                             case -2:
                                 JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
@@ -354,6 +358,26 @@ public class AdminGui {
             }
         });
 
+        caricaFotoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UIManager.put("FileChooser.background", new Color(238, 238, 238));
+                UIManager.put("FileChooser.foreground", new Color(0, 0, 0));
+                UIManager.put("FileChooser.listViewBackground", new Color(255, 255, 255));
+                UIManager.put("FileChooser.listViewForeground", new Color(0, 0, 0));
+                UIManager.put("FileChooser.buttonBackground", new Color(240, 240, 240));
+                UIManager.put("Panel.background", new Color(240, 240, 240));
+                JFileChooser fileChooser = new JFileChooser();
+                int scelta = fileChooser.showOpenDialog(frame);
+                if(scelta == JFileChooser.APPROVE_OPTION){
+                    file = fileChooser.getSelectedFile();
+                    System.out.println(file);
+                    pathLabel.setText(file.toString());
+
+                }
+            }
+        });
+        pathLabel.setBorder(new LineBorder(Color.black));
         //PROVA GRAFICO
     }
 

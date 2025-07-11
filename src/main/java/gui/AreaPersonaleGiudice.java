@@ -191,7 +191,7 @@ public class AreaPersonaleGiudice {
         scrollPane.setBorder(null);
 
         controller.findHack();
-        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, problemArea);
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
 
         int commentWidth = commentArea.getWidth();
         commentArea.setPreferredSize(new Dimension(commentWidth, 100));
@@ -220,16 +220,7 @@ public class AreaPersonaleGiudice {
         problemArea.setWrapStyleWord(true);
         problemArea.setLineWrap(true);
 
-        /*ArrayList<Object> data = new ArrayList<>();
-        String description = controller.getDescription(data);
-        if(description == null || description.isEmpty()){
-            problemArea.setText("");
-        }else{
-            problemArea.setText(description);
-            sendProbButton.setText("Modifica la descrizione del problema");
-            data.clear();
-            sendProbButton.setEnabled(controller.isRegStarted(data));
-        }*/
+
         if(problemArea.getText().equals("Descrizione problema ancora non definita")){
             sendProbButton.setText("Carica descrizione problema");
         } else {

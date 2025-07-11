@@ -1,10 +1,13 @@
 package implementazioniPostgresDAO;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import dao.*;
 import database.*;
+import java.nio.file.Files;
 
 public class AuthImplementation implements AuthInterface {
     public int logIn(String username, String password, String[] names){

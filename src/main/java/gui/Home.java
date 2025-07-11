@@ -23,6 +23,7 @@ public class Home {
     private JPanel imagePanel;
     private JLabel imageLabel;
     private JScrollPane scrollPane;
+    private JPanel lastHackathonPanel;
     private static JFrame frame;
     private Controller controller;
 

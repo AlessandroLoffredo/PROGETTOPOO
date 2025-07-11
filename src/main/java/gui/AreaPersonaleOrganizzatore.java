@@ -171,7 +171,7 @@ public class AreaPersonaleOrganizzatore {
         currentProbDescArea.setPreferredSize(new Dimension(width, 100));
         hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
-        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentProbDescArea);
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea,currentProbDescArea);
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);

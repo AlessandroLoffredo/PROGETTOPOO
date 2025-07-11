@@ -4,6 +4,11 @@
     import implementazioniPostgresDAO.*;
     import model.*;
     import javax.swing.*;
+    import java.io.File;
+    import java.io.IOException;
+    import java.nio.file.Files;
+    import java.nio.file.Path;
+    import java.nio.file.Paths;
     import java.time.LocalDate;
     import java.util.ArrayList;
     import java.util.Date;
@@ -35,8 +40,14 @@
             this.plAdmin = null;
             this.home = home;
             this.hackathon = null;
+            //this.photo();
         }
 
+
+        /*public void photo() {
+            AuthImplementation authImplementation = new AuthImplementation();
+            authImplementation.updateHackathonPhotos();
+        }*/
         /**
          * Restituisce l'attributo home.
          *
@@ -387,14 +398,30 @@
         usersI.getInvites(requests, this.user.getUsername());
     }
 
-    public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
+    public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, File file){
         if(title.length() > 50 || venue.length() > 25){
             return -2;
         } else if (startDate.isBefore((LocalDate.now().plusDays(7)))) {
             return -3;
         } else {
             AdminImplementation adminI = new AdminImplementation();
-            return adminI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username);
+            if(file == null){
+                return adminI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username, null);
+            }
+            Path imagePath = file.toPath();
+
+            if (!Files.exists(imagePath)) {
+                System.err.println("File immagine non trovato: " + imagePath);
+                return -5;
+            }
+            byte[] photoData;
+            try{
+                photoData = Files.readAllBytes(imagePath);
+                return adminI.newHack(title, venue, startDate, endDate, maxReg, maxPerTeam, username, photoData);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return -5;
+            }
         }
     }
 
@@ -430,11 +457,12 @@
         this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
-    public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JTextArea currentProbDescArea){
+    public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
         currentTitleArea.setText(this.getHackathon().getTitle());
         currentVenueArea.setText(this.getHackathon().getVenue());
         currentStartArea.setText(this.getHackathon().getStartDate().toString());
         currentEndArea.setText(this.getHackathon().getEndDate().toString());
+        currentMaxTeamParArea.setText(String.valueOf(getHackathon().getMaxTeamParticipant()));
         if(this.getHackathon().getProblemDescription().equals(null) || this.getHackathon().getProblemDescription().equals("")){
             currentProbDescArea.setText("Descrizione problema ancora non definita");
         } else {

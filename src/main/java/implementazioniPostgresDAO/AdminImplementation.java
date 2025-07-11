@@ -7,10 +7,10 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class AdminImplementation implements AdminInterface {
-    public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username){
+    public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, byte[] photoData){
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT doubleInsHackOrg(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "SELECT doubleInsHackOrg(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, title);
             stmt.setString(2, venue);
@@ -18,7 +18,8 @@ public class AdminImplementation implements AdminInterface {
             stmt.setDate(4, Date.valueOf(endDate));
             stmt.setInt(5, maxReg);
             stmt.setInt(6, maxPerTeam);
-            stmt.setString(7, username);
+            stmt.setBytes(7, photoData);
+            stmt.setString(8, username);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
                 results = rs.getInt(1);
