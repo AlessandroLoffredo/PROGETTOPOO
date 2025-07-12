@@ -23,6 +23,7 @@
         private Home home;
         private PlatformAdmin plAdmin;
         private Hackathon hackathon;
+        private int idHack;
         private String sender;
 
         /**
@@ -316,39 +317,13 @@
         return Team.create(nickname, ((Participant) this.user));
     }
 
-    public int subscribe(JFrame frame, String nameHack){
-        if(this.user != null && (!(this.user instanceof User))){
-            return -2;
-        }else{
-            if(this.user == null){
-                // Pulsanti personalizzati
-                Object[] options = {"Accedi", "Registrati"};
-                int scelta = JOptionPane.showOptionDialog(
-                        frame,
-                        "Non hai eseguito l'accesso",
-                        "AUTHENTICATION",
-                        JOptionPane.YES_NO_OPTION, // Tipo di opzioni (può essere ignorato)
-                        JOptionPane.QUESTION_MESSAGE,
-                        null, // Nessuna icona personalizzata
-                        options, // Pulsanti personalizzati
-                        options[0] // Pulsante di default (Se l'utente preme invio senza selezionare nulla)
-                );
-                if(scelta == 0){
-                    Login login = new Login(frame, this);
-                } else if (scelta == 1) {
-                    SignUp signUp = new SignUp(frame, this);
-                }
-            }
-            if(this.user != null){
-                int result = this.user.subscribe(nameHack);
-                if (result == 0) {
-                    this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
-                    //((Participant) this.user).setParHackathon(Hackathon.findHackathon(nameHack));
-                }
-                return result;
-            }
+    public int subscribe(LocalDate start, LocalDate end){
+        if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
+            return -1;
+        } else{
+            UsersImplementation userI = new UsersImplementation();
+            return userI.veryfingIsFree(this.user.getUsername(), start, end);
         }
-        return -4;
     }
 
     public void areaPersonale(JFrame frame){
@@ -463,7 +438,7 @@
         currentStartArea.setText(this.getHackathon().getStartDate().toString());
         currentEndArea.setText(this.getHackathon().getEndDate().toString());
         currentMaxTeamParArea.setText(String.valueOf(getHackathon().getMaxTeamParticipant()));
-        if(this.getHackathon().getProblemDescription().equals(null) || this.getHackathon().getProblemDescription().equals("")){
+        if(this.getHackathon().getProblemDescription() == null || this.getHackathon().getProblemDescription().equals("")){
             currentProbDescArea.setText("Descrizione problema ancora non definita");
         } else {
             currentProbDescArea.setText(this.getHackathon().getProblemDescription());
@@ -477,4 +452,56 @@
         currentCounterArea.setText(String.valueOf(this.getHackathon().getRegCounter()));
     }
 
+    public void findLastHack(){
+        UsersImplementation userI = new UsersImplementation();
+        ArrayList<Object> data = new ArrayList<>();
+        userI.lastHack(data);
+        String title = (String)data.get(0);
+        String venue = (String)data.get(1);
+        Date startDate = (Date)data.get(2);
+        Date endDate = (Date)data.get(3);
+        int maxReg = (int)data.get(4);
+        int maxTeamPar = (int)data.get(5);
+        String problemDesc = (String)data.get(7);
+        Date startRegDate = (Date)data.get(8);
+        int regCounter = (int)data.get(6);
+        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+    }
+
+    public void getHackList(ArrayList<ArrayList<Object>> data){
+        HackathonImplementation hackI = new HackathonImplementation();
+        hackI.getHackList(data);
+    }
+
+    public int getIdHack() {
+        return idHack;
+    }
+
+    public void setIdHack(int idHack) {
+        this.idHack = idHack;
+    }
+
+    public void setHackathon(Hackathon hackathon) {
+        this.hackathon = hackathon;
+    }
+
+    public void getJudgesList(ArrayList<String> judges){
+        HackathonImplementation hackI = new HackathonImplementation();
+        hackI.getJudgesList(judges, this.idHack);
+    }
+
+    public String getOrganizer(){
+        HackathonImplementation hackI = new HackathonImplementation();
+        return hackI.getOrganizer(this.idHack);
+    }
+
+    /*public int subrscibeTeam(){   PROBABILMENTE MEGLIO FARE UN TRIGGER O ALTRIMENTI FARE ALTRA QUERY PER PRENDERE IDTEAM APPENA INSERITO E USARLO PER INSERIRE PARTICIPANT
+        Teamimplementation teamI = new Teamimplementation();
+        return teamI.subscribeTeam(this.user.getUsername(), this.idHack);
+    }
+
+    public int subrscibeParticipant(){
+        ParticipantImplementation partI = new ParticipantImplementation();
+        return partI.subscribeTeam(this.user.getUsername(), this.idHack);
+    }*/
 }

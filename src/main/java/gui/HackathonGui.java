@@ -3,11 +3,16 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 
 
 /**
@@ -15,19 +20,44 @@ import java.awt.event.WindowEvent;
  */
 public class HackathonGui {
     private JPanel panel;
-    private JTextArea titleArea;
-    private JTextArea organizerArea;
     private JPanel headerPanel;
-    private JList judjeList;
-    private JTextArea infoArea;
-    private JPanel hackPanel;
-    private JTextArea descProbArea;
+    private JPanel infoPanel;
     private JButton accessButton;
     private JButton subscribeHackButton;
     private JPanel imagePanel;
     private JButton homeButton;
-    private JPanel infoPanel;
     private JPanel descPanel;
+    private JLabel titleLabel;
+    private JPanel hackathonPanel;
+    private JLabel hackLabel;
+    private JLabel currentStartLabel;
+    private JLabel currentStartArea;
+    private JLabel currentEndLabel;
+    private JLabel currentEndArea;
+    private JLabel currentStartRegLabel;
+    private JLabel currentStartRegArea;
+    private JLabel currentMaxTeamParLabel;
+    private JLabel currentMaxTeamParArea;
+    private JLabel currentCounterLabel;
+    private JLabel currentMaxRegLabel;
+    private JLabel currentCounterArea;
+    private JLabel currentMaxRegArea;
+    private JLabel currentVenueLabel;
+    private JLabel currentVenueArea;
+    private JLabel currentTitleLabel;
+    private JLabel currentTitleArea;
+    private JPanel problemPanel;
+    private JTextArea problemArea;
+    private JLabel problemLabel;
+    private JScrollPane problemScrollPane;
+    private JScrollPane scrollPane;
+    private JPanel scrollPanel;
+    private JTextArea judjesArea;
+    private JPanel staffPanel;
+    private JLabel judjesLabel;
+    private JLabel organizerLabel;
+    private JLabel organizerArea;
+    private JPanel organizerAreaPanel;
     private JFrame frame;
 
 
@@ -45,35 +75,98 @@ public class HackathonGui {
     public HackathonGui(JFrame frameChiamante, Controller controller){
         frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-                frameChiamante.setVisible(true);
-                frame.dispose();
-            }
-        });
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(new Dimension(900, 700));
+        frame.setSize(new Dimension(1000, 700));
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
-        panel.setBackground(new Color(10, 10, 30));
-        headerPanel.setBackground(new Color(15, 15, 50));
-        hackPanel.setBackground(new Color(10, 10, 30));
-        imagePanel.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        infoPanel.setBackground(new Color(236, 240, 241));
+        imagePanel.setBackground(new Color(30, 30, 47));
+        hackathonPanel.setBackground(new Color(236, 240, 241));
+        problemPanel.setBackground(new Color(236, 240, 241));
+        staffPanel.setBackground(new Color(236, 240, 241));
+        judjesArea.setBackground(new Color(236, 240, 241));
+        organizerAreaPanel.setBackground(new Color(236, 240, 241));
+        organizerAreaPanel.setForeground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        judjesLabel.setForeground(new Color(30, 30, 47));
+        organizerLabel.setForeground(new Color(30, 30, 47));
+        judjesArea.setForeground(new Color(30, 30, 47));
+        organizerArea.setForeground(new Color(30, 30, 47));
 
-        titleArea.setBackground(new Color(15, 15, 50));
-        organizerArea.setBackground(new Color(15, 15, 50));
-        judjeList.setBackground(new Color(15, 15, 50));
-        infoArea.setBackground(new Color(15, 15, 50));
-        descProbArea.setBackground(new Color(15, 15, 50));
 
-        titleArea.setForeground(new Color(0, 255, 0));
-        organizerArea.setForeground(new Color(0, 255, 0));
-        judjeList.setForeground(new Color(0, 255, 0));
-        infoArea.setForeground(new Color(0, 255, 0));
-        descProbArea.setForeground(new Color(0, 255, 0));
-        subscribeHackButton.setForeground(new Color(255, 0, 150));
+        homeButton.setForeground(new Color(37, 99, 235));
+        subscribeHackButton.setForeground(new Color(37, 99, 235));
+        accessButton.setForeground(new Color(37, 99, 235));
+
+        currentVenueLabel.setText("\uD83C\uDF10 Sede:");
+        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setForeground(new Color(30, 30, 47));
+        currentVenueLabel.setBackground(new Color(236, 240, 241));
+        currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
+        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setForeground(new Color(30, 30, 47));
+        currentTitleLabel.setBackground(new Color(236, 240, 241));
+        currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
+        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setForeground(new Color(30, 30, 47));
+        currentStartLabel.setBackground(new Color(236, 240, 241));
+        currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
+        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setForeground(new Color(30, 30, 47));
+        currentEndLabel.setBackground(new Color(236, 240, 241));
+        currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
+        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setForeground(new Color(30, 30, 47));
+        currentStartRegLabel.setBackground(new Color(236, 240, 241));
+        currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
+        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setForeground(new Color(30, 30, 47));
+        currentMaxRegLabel.setBackground(new Color(236, 240, 241));
+        currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
+        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setForeground(new Color(30, 30, 47));
+        currentCounterLabel.setBackground(new Color(236, 240, 241));
+        currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
+        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
+        currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
+        problemLabel.setForeground(new Color(30, 30, 47));
+        problemLabel.setBackground(new Color(236, 240, 241));
+        problemArea.setForeground(new Color(30, 30, 47));
+        problemArea.setBackground(new Color(236, 240, 241));
+        problemScrollPane.setBorder(new LineBorder(null));
+        problemArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        int width = problemArea.getWidth();
+        problemArea.setPreferredSize(new Dimension(width, 100));
+
+        hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+        problemPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+        staffPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+        judjesArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        organizerAreaPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+
+        titleLabel.setText(controller.getHackathon().getTitle());
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
+
+
+        ArrayList<String> judges = new ArrayList<>();
+        controller.getJudgesList(judges);
+        if(judges.isEmpty()){
+            judjesArea.setText("Al momento non sono stati ancora determinati i giudici per questo Hackathon");
+        } else {
+            judjesArea.setText("");
+            for(String s : judges){
+                judjesArea.append(s + "\n");
+            }
+        }
+
+        organizerArea.setText(controller.getOrganizer());
+        //System.out.println(controller.getOrganizer());
+        //System.out.println(controller.getIdHack());
+
 
 
 
@@ -94,7 +187,9 @@ public class HackathonGui {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.getHackList(controller.getHome().getData());
                 controller.getHome().getFrame().setVisible(true);
+                controller.getHome().getFrame().repaint();
                 frame.dispose();
             }
         });
@@ -102,15 +197,24 @@ public class HackathonGui {
         subscribeHackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int code = controller.subscribe(frame, titleArea.getText());
-                if(code == -1){
-                    JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                } else if (code == -2) {
-                    JOptionPane.showMessageDialog(panel, "Non puoi iscriverti ad una Hackathon se ricopri un ruolo in un altro Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                } else if (code == -3) {
-                    JOptionPane.showMessageDialog(panel, "Il termine massimo per le iscrizioni è scaduto", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                } else if (code == 0) {
-                    JOptionPane.showMessageDialog(panel, "Iscrizione effettuata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate start = LocalDate.parse(currentStartArea.getText(), formatter);
+                LocalDate end = LocalDate.parse(currentEndArea.getText(), formatter);
+                int code = controller.subscribe(start, end);
+                switch (code){
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case -2: //QUI METTIAMO DISTINZIONE TRA "SEI GIA' IMPEGNATO" E "SEI GIA' ISCRITTO"? SAREBBE COMODO VERIFICARE SOLO SE E' IMPEGNATO E DIRE CHE NON PUO' PARTECIPARE BLOCCANDO A PRIORI IL PULSANTE
+                        JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(panel, "Iscrizione effettuata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    case 0:
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'iscrizione", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        break;
                 }
             }
         });

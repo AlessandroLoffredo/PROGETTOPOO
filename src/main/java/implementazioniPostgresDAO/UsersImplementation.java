@@ -2,7 +2,7 @@ package implementazioniPostgresDAO;
 //TODO RICORDARE DI CAMBIARE IL NUMERO DI GIORNI IN GETINVITES
 import dao.*;
 import database.ConnessioneDatabase;
-import model.Request;
+
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,14 +12,14 @@ public class UsersImplementation implements UsersInterface {
     public void getFreeUser(ArrayList<String> freeUsers, LocalDate start, LocalDate end){
         try (Connection conn = ConnessioneDatabase.getInstance().connection) {
             String sql = "SELECT P.username FROM PlUser P WHERE P.username NOT IN (" +
-                    "SELECT O.username FROM Organizer O JOIN Hackathon H ON O.idHack = H.idHack " +
-                    "WHERE NOT (H.endDate < ? OR (H.startDate - 15) > ?)) AND " +
-                    "P.username NOT IN (" +
-                    "SELECT J.username FROM Judge J JOIN Hackathon H ON J.idHack = H.idHack " +
-                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
-                    "P.username NOT IN (" +
-                    "SELECT Pa.username FROM Participant Pa JOIN Team T ON Pa.idTeam = T.idTeam JOIN Hackathon H ON T.idHack = H.idHack " +
-                    "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?));";
+                            "SELECT O.username FROM Organizer O JOIN Hackathon H ON O.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 15) > ?)) AND " +
+                            "P.username NOT IN (" +
+                            "SELECT J.username FROM Judge J JOIN Hackathon H ON J.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                            "P.username NOT IN (" +
+                            "SELECT Pa.username FROM Participant Pa JOIN Team T ON Pa.idTeam = T.idTeam JOIN Hackathon H ON T.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?));";
             PreparedStatement stmt = conn.prepareStatement(sql);
             for (int i = 1; i <= 6; i++) {
                 if (i % 2 == 1)
@@ -90,4 +90,60 @@ public class UsersImplementation implements UsersInterface {
         }
         return results;
     }
+
+    public void lastHack (ArrayList<Object> data){
+        try (Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT * " +
+                         "FROM Hackathon H " +
+                         "WHERE H.startDate > CURRENT_DATE ORDER BY H.startDate ASC LIMIT 1";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                data.add(rs.getString("title"));
+                data.add(rs.getString("venue"));
+                data.add(rs.getDate("startDate"));
+                data.add(rs.getDate("endDate"));
+                data.add(rs.getInt("maxRegistration"));
+                data.add(rs.getInt("maxTeamPar"));
+                data.add(rs.getInt("regCounter"));
+                data.add(rs.getString("problemDesc"));
+                data.add(rs.getDate("startRegDate"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public int veryfingIsFree(String username, LocalDate start, LocalDate end){
+        try (Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT COUNT(P.username) AS conto FROM PlUser P WHERE P.username NOT IN (" +
+                            "SELECT O.username FROM Organizer O JOIN Hackathon H ON O.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 15) > ?)) AND " +
+                            "P.username NOT IN (" +
+                            "SELECT J.username FROM Judge J JOIN Hackathon H ON J.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                            "P.username NOT IN (" +
+                            "SELECT Pa.username FROM Participant Pa JOIN Team T ON Pa.idTeam = T.idTeam JOIN Hackathon H ON T.idHack = H.idHack " +
+                            "WHERE NOT (H.endDate < ? OR (H.startDate - 7) > ?)) AND " +
+                         "P.username = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            for (int i = 1; i <= 6; i++) {
+                if (i % 2 == 1)
+                    stmt.setDate(i, Date.valueOf(start.minusDays(7)));
+                else
+                    stmt.setDate(i, Date.valueOf(end));
+            }
+            stmt.setString(7, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("conto"); // Restituisce 1 se libero, 0 se occupato
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -3;
+    }
+
 }
