@@ -74,7 +74,7 @@ public class UsersImplementation implements UsersInterface {
     }
 
     public int declineInvite(String sender, String receiver){
-        int results = 0;
+        int results;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
                          "SELECT H.idHack FROM Hackathon H WHERE H.startDate >= CURRENT_DATE AND H.idHack = " +
@@ -147,4 +147,23 @@ public class UsersImplementation implements UsersInterface {
         return -3;
     }
 
+    public int subscribe(String username, int idHack){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT doubleInsParTeam(?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setInt(2, idHack);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                results = rs.getInt(1);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            results = 0;
+        }
+        return results;
+    }
 }

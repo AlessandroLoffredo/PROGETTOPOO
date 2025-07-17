@@ -2,7 +2,6 @@ package gui;
 
 import controller.Controller;
 import model.Request;
-import model.User;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -155,8 +154,26 @@ public class AreaPersonale {
         messageArea.setWrapStyleWord(true);
         int width = messageArea.getPreferredSize().width;
         messageArea.setPreferredSize(new Dimension(width, 100));
-        participantComboBox.addItem("Seleziona un partecipante");
-        participantComboBox.addItem("MAMMT");
+        if(!controller.getUserClass()){
+            participantComboBox.addItem("Seleziona un partecipante");
+            ArrayList<String> participants = new ArrayList<>();
+            try {
+                controller.getHackParticipants(participants);
+                if (participants.isEmpty()) {
+                    participantComboBox.removeAllItems();
+                    participantComboBox.addItem("Nessun partecipante disponibile");
+                    participantComboBox.setEnabled(false);
+                } else {
+                    for (String par : participants) {
+                        participantComboBox.addItem(par);
+                    }
+                }
+            } catch (Exception e) {
+                participantComboBox.addItem("Errore nel caricamento");
+                participantComboBox.setEnabled(false);
+                e.printStackTrace();
+            }
+        }
         messageArea.setText("Scrivi un messaggio motivazionale");
         messageArea.addFocusListener(new FocusListener() {
             @Override
@@ -179,6 +196,10 @@ public class AreaPersonale {
             for (String r : requests)
                 model.addElement(r);
         } else {
+
+
+
+
             ArrayList<Request> richieste = new ArrayList<>();
             richieste.add(new Request("ciao", "mammt"));
             richieste.add(new Request("suca", "patt"));

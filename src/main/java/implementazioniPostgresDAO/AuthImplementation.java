@@ -63,7 +63,7 @@ public class AuthImplementation implements AuthInterface {
                                     "WHERE P.username = ? AND " +
                                     "P.idTeam = T.idTeam AND " +
                                     "H.endDate >= CURRENT_DATE AND " +
-                                    "T.idHack = H.idHack AND (H.startDate - 7) <= CURRENT_DATE";
+                                    "T.idHack = H.idHack AND (H.startDate - 30) <= CURRENT_DATE";
                             stmt = conn.prepareStatement(sql);
                             stmt.setString(1, username);
                             rs = stmt.executeQuery();

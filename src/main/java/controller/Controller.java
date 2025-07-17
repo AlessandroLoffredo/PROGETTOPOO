@@ -323,7 +323,11 @@
             return -1;
         } else{
             UsersImplementation userI = new UsersImplementation();
-            return userI.veryfingIsFree(this.user.getUsername(), start, end);
+            if(userI.veryfingIsFree(this.user.getUsername(), start, end) == 1){
+                return userI.subscribe(this.user.getUsername(), this.idHack);
+            }else{
+                return -2;
+            }
         }
     }
 
@@ -402,7 +406,7 @@
     }
 
     public boolean getUserClass(){
-        return this.user instanceof User;
+        return !(this.user instanceof Participant || this.user instanceof Judge || this.user instanceof Organizer);
     }
 
     public String getDescription(ArrayList<Object> data){
@@ -505,19 +509,16 @@
         return hackI.getOrganizer(this.idHack);
     }
 
+    public void getRanking(ArrayList<String> ranking, int idLastHack) {
+
+    }
+
     /*public int subrscibeTeam(){   PROBABILMENTE MEGLIO FARE UN TRIGGER O ALTRIMENTI FARE ALTRA QUERY PER PRENDERE IDTEAM APPENA INSERITO E USARLO PER INSERIRE PARTICIPANT
         Teamimplementation teamI = new Teamimplementation();
         return teamI.subscribeTeam(this.user.getUsername(), this.idHack);
-    }
-
-    public int subrscibeParticipant(){
-        ParticipantImplementation partI = new ParticipantImplementation();
-        return partI.subscribeTeam(this.user.getUsername(), this.idHack);
     }*/
-
-    public void getRanking(ArrayList<String> ranking, int idHack){
-        HackathonImplementation hackI = new HackathonImplementation();
-        hackI.getRanking(ranking, idHack);
+    public void getHackParticipants(ArrayList<String> participants){
+        ParticipantImplementation parI = new ParticipantImplementation();
+        parI.getParticipants(participants, this.idHack, this.user.getUsername());
     }
-
 }

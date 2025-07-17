@@ -80,6 +80,7 @@ public class HackathonGui {
         frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         frame.pack();
         frame.setSize(new Dimension(1000, 700));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -209,6 +210,7 @@ public class HackathonGui {
                 controller.getHome().getFrame().setVisible(true);
                 controller.getHome().getFrame().repaint();
                 controller.setPhoto(null);
+                controller.setHackathon(null);
                 frame.dispose();
             }
         });
@@ -224,7 +226,7 @@ public class HackathonGui {
                     case -1:
                         JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
-                    case -2: //QUI METTIAMO DISTINZIONE TRA "SEI GIA' IMPEGNATO" E "SEI GIA' ISCRITTO"? SAREBBE COMODO VERIFICARE SOLO SE E' IMPEGNATO E DIRE CHE NON PUO' PARTECIPARE BLOCCANDO A PRIORI IL PULSANTE
+                    case -2:
                         JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     case 1:

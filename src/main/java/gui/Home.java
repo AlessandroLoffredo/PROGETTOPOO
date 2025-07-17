@@ -62,7 +62,7 @@ public class Home {
      * Punto in cui si entra effettivamente nel programma.
      *
      * @param args gli argomenti in input
-     * @throws MalformedURLException Eccezzione per gestire URL scritti male
+     * @throws MalformedURLException Eccezione per gestire URL scritti male
      */
     public static void main(String[] args) {
         frame = new JFrame("Hackathon");
@@ -216,6 +216,7 @@ public class Home {
                     System.out.println(controller.getPlAdmin());
                     JOptionPane.showMessageDialog(panel, "Logout eseguito");
                     areaPersonaleButton.setEnabled(false);
+                    controller.setHackathon(null);
                     loginButton.setText("LogIn");
                 }
             }
@@ -281,11 +282,11 @@ public class Home {
             String s = new String();
             Object o = new Object();
             if (arrayList.get(8) == null) {
-               s = ("\uD83D\uDDD3 Inizio registrazioni: da definire");
-               o = null;
+                s = ("\uD83D\uDDD3 Inizio registrazioni: da definire");
+                o = null;
             } else {
-               s = ("\uD83D\uDDD3 Inizio registrazioni: ");
-               o = arrayList.get(8);
+                s = ("\uD83D\uDDD3 Inizio registrazioni: ");
+                o = arrayList.get(8);
             }
             hackListPanel.add(setStyleLabel(startRegHack, o, s), gbc2);
             gbc2.gridx = 2;
@@ -320,14 +321,14 @@ public class Home {
                     if(controller.getUser() == null && controller.getPlAdmin() == null){
                         JOptionPane.showMessageDialog(panel, "Accedi per visualizzare tutti i dettagli e partecipare all'Hackathon!", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     } else {
+                        controller.setHackathon(new Hackathon((String) arrayList.get(0), (String) arrayList.get(1), (Date) arrayList.get(2),
+                                (Date) arrayList.get(3), (int) arrayList.get(4), (int) arrayList.get(5),
+                                (String) arrayList.get(7), (Date) arrayList.get(8), (int) arrayList.get(6)));
                         controller.setIdHack(idHack);
                         controller.setPhoto((byte[]) arrayList.get(10));
                         HackathonGui hackGui = new HackathonGui(frame, controller);
                         hackGui.getFrame().setVisible(true);
                         //System.out.println(controller.getIdHack());
-                        controller.setHackathon(new Hackathon((String) arrayList.get(0), (String) arrayList.get(1), (Date) arrayList.get(2),
-                                (Date) arrayList.get(3), (int) arrayList.get(4), (int) arrayList.get(5),
-                                (String) arrayList.get(7), (Date) arrayList.get(8), (int) arrayList.get(6)));
                         frame.setVisible(false);
                     }
                 }

@@ -25,13 +25,16 @@ public class AdminImplementation implements AdminInterface {
                 results = rs.getInt(1);
         }catch (SQLException e){
             e.printStackTrace();
-            if(e.getMessage().contains("checkdatefunct()")) {
+            if (e.getMessage().contains("duration")) {
                 results = -4;
-            }else if (e.getMessage().contains("duration")) {
-                results = -5;
-            }else if (e.getMessage().contains("checkstart")) {
+            }else if (e.getMessage().contains("checkdate")) {
                 results = -3;
+            }else{
+                results = -1;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            results = -1;
         }
         return results;
     }

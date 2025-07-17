@@ -293,15 +293,18 @@ public class AdminGui {
                     try {
                         int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString(), file);
                         switch (code) {
-                            case -2:
-                                JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
-                                titleArea.setText("");
-                                venueArea.setText("");
+                            case -4:
+                                JOptionPane.showMessageDialog(panel, "L'Hackathon deve durare almeno un giorno");
                                 break;
                             case -3:
                                 JOptionPane.showMessageDialog(panel, "L'Hackathon deve distare almeno una settimana dal giorno corrente");
                                 startSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                                 endSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                                break;
+                            case -2:
+                                JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
+                                titleArea.setText("");
+                                venueArea.setText("");
                                 break;
                             case 0:
                                 JOptionPane.showMessageDialog(panel, "Creazione del nuovo evento avvenuta con successo");
