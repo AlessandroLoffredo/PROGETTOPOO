@@ -1,5 +1,6 @@
 package implementazioniPostgresDAO;
 
+import dao.HackathonInterface;
 import database.ConnessioneDatabase;
 
 import java.sql.Connection;
@@ -8,13 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class HackathonImplementation {
+public class HackathonImplementation implements HackathonInterface {
     //TODO DOBBIAMO VALUTARE SE NE SONO TROPPI QUANDO FERMARCI NEL CARICARLI
     public void getHackList (ArrayList<ArrayList<Object>> data){
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
-                    "FROM Hackathon H " +
-                    "ORDER BY H.startDate ASC";
+                         "FROM Hackathon H " +
+                         "ORDER BY H.startDate ASC";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
@@ -29,6 +30,8 @@ public class HackathonImplementation {
                 hack.add(rs.getString("problemDesc"));
                 hack.add(rs.getDate("startRegDate"));
                 hack.add(rs.getInt("idHack"));
+                byte[] imageBytes = rs.getBytes("photo");
+                hack.add(imageBytes);
                 data.add(hack);
             }
         } catch (SQLException e){
@@ -68,5 +71,21 @@ public class HackathonImplementation {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void getRanking (ArrayList<String> ranking, int idHack){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT * " +
+                         "FROM Ranking " +
+                         "WHERE idHack = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idHack);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                ranking.add(rs.getString("nickname"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

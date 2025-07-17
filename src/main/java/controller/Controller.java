@@ -25,6 +25,7 @@
         private Hackathon hackathon;
         private int idHack;
         private String sender;
+        private byte[] photo;
 
         /**
          * Istanzia un nuovo controller.
@@ -32,16 +33,16 @@
          * @param home il frame principale della classe Home
          */
         public Controller(Home home) {
-            this.user = null;
             //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
+            this.user = null;
             this.plAdmin = null;
             this.home = home;
             this.hackathon = null;
-            //this.photo();
+            this.photo = null;
         }
 
 
@@ -443,7 +444,7 @@
         } else {
             currentProbDescArea.setText(this.getHackathon().getProblemDescription());
         }
-        if(this.getHackathon().getStartRegDate().toString().equals(null)){
+        if(this.getHackathon().getStartRegDate().toString() == null){
             currentStartRegArea.setText("Data ancora non definita");
         } else {
             currentStartRegArea.setText(this.getHackathon().getStartRegDate().toString());
@@ -452,7 +453,7 @@
         currentCounterArea.setText(String.valueOf(this.getHackathon().getRegCounter()));
     }
 
-    public void findLastHack(){
+    public int findLastHack(){
         UsersImplementation userI = new UsersImplementation();
         ArrayList<Object> data = new ArrayList<>();
         userI.lastHack(data);
@@ -466,6 +467,7 @@
         Date startRegDate = (Date)data.get(8);
         int regCounter = (int)data.get(6);
         this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+        return (int)data.get(9);
     }
 
     public void getHackList(ArrayList<ArrayList<Object>> data){
@@ -485,7 +487,15 @@
         this.hackathon = hackathon;
     }
 
-    public void getJudgesList(ArrayList<String> judges){
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+        public void getJudgesList(ArrayList<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.idHack);
     }
@@ -504,4 +514,10 @@
         ParticipantImplementation partI = new ParticipantImplementation();
         return partI.subscribeTeam(this.user.getUsername(), this.idHack);
     }*/
+
+    public void getRanking(ArrayList<String> ranking, int idHack){
+        HackathonImplementation hackI = new HackathonImplementation();
+        hackI.getRanking(ranking, idHack);
+    }
+
 }

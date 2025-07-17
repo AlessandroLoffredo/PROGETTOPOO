@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -9,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -58,6 +61,7 @@ public class HackathonGui {
     private JLabel organizerLabel;
     private JLabel organizerArea;
     private JPanel organizerAreaPanel;
+    private JLabel imageLabel;
     private JFrame frame;
 
 
@@ -78,6 +82,7 @@ public class HackathonGui {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setSize(new Dimension(1000, 700));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
@@ -151,6 +156,19 @@ public class HackathonGui {
         titleLabel.setText(controller.getHackathon().getTitle());
         controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
 
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(controller.getPhoto());
+            BufferedImage image = ImageIO.read(bis);
+            Image scaledImage2 = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+            imageLabel.setIcon(resizedIcon2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
+            Image scaledImage2 = imageIcon2.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+            imageLabel.setIcon(resizedIcon2);
+        }
 
         ArrayList<String> judges = new ArrayList<>();
         controller.getJudgesList(judges);
@@ -190,6 +208,7 @@ public class HackathonGui {
                 controller.getHackList(controller.getHome().getData());
                 controller.getHome().getFrame().setVisible(true);
                 controller.getHome().getFrame().repaint();
+                controller.setPhoto(null);
                 frame.dispose();
             }
         });

@@ -4,12 +4,7 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import controller.*;
+import java.awt.event.*;
 
 /**
  * Classe che permette ad un utente qualsiasi di modificare la propria password.
@@ -28,6 +23,9 @@ public class CambiaPassword {
     private JLabel newPasswordLabel;
     private JPanel panel;
     private JLabel titleLabel;
+    private JButton lockButton1;
+    private JButton lockButton2;
+    private JButton lockButton3;
     private JFrame frame;
 
 
@@ -117,6 +115,54 @@ public class CambiaPassword {
                         oldPasswordArea.setText("");
                         newPasswordArea.setText("");
                     }
+                }
+            }
+        });
+
+        newPasswordArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    changeButton.doClick();
+                }
+            }
+        });
+
+        lockButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lockButton1.getText().equals("\uD83D\uDD12")) {
+                    lockButton1.setText("\uD83D\uDD13");
+                    oldPasswordArea.setEchoChar((char) 0);
+                } else {
+                    lockButton1.setText("\uD83D\uDD12");
+                    oldPasswordArea.setEchoChar('*');
+                }
+            }
+        });
+
+        lockButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lockButton2.getText().equals("\uD83D\uDD12")) {
+                    lockButton2.setText("\uD83D\uDD13");
+                    passwordArea.setEchoChar((char) 0);
+                } else {
+                    lockButton2.setText("\uD83D\uDD12");
+                    passwordArea.setEchoChar('*');
+                }
+            }
+        });
+
+        lockButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lockButton3.getText().equals("\uD83D\uDD12")) {
+                    lockButton3.setText("\uD83D\uDD13");
+                    newPasswordArea.setEchoChar((char) 0);
+                } else {
+                    lockButton3.setText("\uD83D\uDD12");
+                    newPasswordArea.setEchoChar('*');
                 }
             }
         });

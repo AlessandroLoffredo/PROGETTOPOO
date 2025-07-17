@@ -2,7 +2,6 @@ package gui;
 
 import controller.Controller;
 import model.Document;
-import model.Judge;
 import model.Team;
 
 
@@ -86,7 +85,7 @@ public class AreaPersonaleGiudice {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Area Personale");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -98,6 +97,7 @@ public class AreaPersonaleGiudice {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1000, 800);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
 

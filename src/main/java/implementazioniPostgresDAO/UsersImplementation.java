@@ -108,6 +108,7 @@ public class UsersImplementation implements UsersInterface {
                 data.add(rs.getInt("regCounter"));
                 data.add(rs.getString("problemDesc"));
                 data.add(rs.getDate("startRegDate"));
+                data.add(rs.getInt("idHack"));
             }
         } catch (SQLException e){
             e.printStackTrace();

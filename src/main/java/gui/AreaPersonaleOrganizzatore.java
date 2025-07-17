@@ -77,7 +77,7 @@ public class AreaPersonaleOrganizzatore {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AreaPersonaleOrganizzatore(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Area Personale");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -89,6 +89,7 @@ public class AreaPersonaleOrganizzatore {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1000, 800);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
         fNameArea.setText(controller.getUser().getfName());

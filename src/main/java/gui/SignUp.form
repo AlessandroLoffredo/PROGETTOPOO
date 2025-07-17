@@ -79,7 +79,9 @@
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <echoChar value="*"/>
+                </properties>
               </component>
               <component id="436a6" class="javax.swing.JLabel" binding="fNameLabel">
                 <constraints>

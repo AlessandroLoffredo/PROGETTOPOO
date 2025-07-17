@@ -96,7 +96,6 @@ public class SignUp {
                                 break;
                             case -2:
                                 JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
-                                usernameArea.setText("");
                                 break;
                             case -3:
                                 JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
@@ -182,6 +181,15 @@ public class SignUp {
                         loginFrame.requestFocus();
                     }
                 });
+            }
+        });
+
+        passwordArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    signUpButton.doClick();
+                }
             }
         });
     }

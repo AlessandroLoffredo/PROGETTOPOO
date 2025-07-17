@@ -3,12 +3,14 @@ package gui;
 import controller.Controller;
 import model.Hackathon;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -51,6 +53,7 @@ public class Home {
     private JScrollPane currentProbDescScroll;
     private JTextArea currentProbDescArea;
     private JLabel rankingLabel;
+    private JList rankingList;
     private static JFrame frame;
     private Controller controller;
     private ArrayList<ArrayList<Object>> data = new ArrayList<>();
@@ -62,7 +65,7 @@ public class Home {
      * @throws MalformedURLException Eccezzione per gestire URL scritti male
      */
     public static void main(String[] args) {
-        frame = new JFrame("Home");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(new Home().panel);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,6 +102,8 @@ public class Home {
         titleLabel.setForeground(new Color(236, 240, 241));
         loginButton.setForeground(new Color(37, 99, 235));
         areaPersonaleButton.setForeground(new Color(37, 99, 235));
+        rankingList.setBackground(new Color(236, 240, 241));
+        rankingList.setForeground(new Color(30, 30, 47));
 
         UIManager.put("OptionPane.background", new Color(30, 30, 47));
         UIManager.put("Panel.background", new Color(30, 30, 47));
@@ -149,9 +154,19 @@ public class Home {
         currentProbDescArea.setPreferredSize(new Dimension(width, 100));
         hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
-        controller.findLastHack();
+        int idLastHack = controller.findLastHack();
         controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea,currentProbDescArea);
-
+        DefaultListModel<String> model = new DefaultListModel<>();
+        rankingList.setModel(model);
+        ArrayList<String> ranking = new ArrayList<>();
+        controller.getRanking(ranking, idLastHack);
+        for(String nickname : ranking){
+            model.removeAllElements();
+            model.addElement(nickname);
+        }
+        if(ranking.isEmpty()){
+            model.addElement("Classifica ancora non disponibile");
+        }
 
 
         //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
@@ -214,84 +229,80 @@ public class Home {
             }
         });
 
-        int i = 0;
+
         scrollPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         for(ArrayList<Object> arrayList : data) {
             int idHack = (int) arrayList.get(9);
             GridBagConstraints gbc2 = new GridBagConstraints();
             gbc2.insets = new Insets(10, 10, 10, 10);
-            gbc2.gridy = 0;
-            gbc2.gridx = 0;
-            gbc2.anchor = GridBagConstraints.WEST;
             JPanel hackListPanel = new JPanel(new GridBagLayout());
-            JLabel titleHack = new JLabel();
-            titleHack.setText("\uD83D\uDCCC " + arrayList.get(0));
-            titleHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            titleHack.setForeground(new Color(30, 30, 47));
-            titleHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(titleHack, gbc2);
-            gbc2.gridx = 1;
-            JLabel venueHack = new JLabel();
-            venueHack.setText("\uD83C\uDF10 " + arrayList.get(1));
-            venueHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            venueHack.setForeground(new Color(30, 30, 47));
-            venueHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(venueHack, gbc2);
-            gbc2.gridy = 1;
+
             gbc2.gridx = 0;
-            JLabel startHack = new JLabel();
-            startHack.setText("\uD83D\uDDD3 Inizio Hackathon: " + arrayList.get(2));
-            startHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            startHack.setForeground(new Color(30, 30, 47));
-            startHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(startHack, gbc2);
-            gbc2.gridx = 1;
-            JLabel endHack = new JLabel();
-            endHack.setText("\uD83D\uDDD3 Fine Hackathon: " + arrayList.get(3));
-            endHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            endHack.setForeground(new Color(30, 30, 47));
-            endHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(endHack, gbc2);
-            gbc2.gridy = 2;
-            gbc2.gridx = 0;
-            JLabel startRegHack = new JLabel();
-            if (arrayList.get(8) == null) {
-                startRegHack.setText("Data inizio registrazioni ancora non definita");
-            } else {
-                startRegHack.setText("\uD83D\uDDD3 Inizio registrazioni: " + arrayList.get(8));
+            gbc2.gridy = 0;
+            gbc2.gridheight = 6;
+            gbc2.fill = GridBagConstraints.VERTICAL;
+            gbc2.anchor = GridBagConstraints.WEST;
+
+            JLabel imageHack = new JLabel();
+            try {
+                ByteArrayInputStream bis = new ByteArrayInputStream((byte[])arrayList.get(10));
+                BufferedImage image = ImageIO.read(bis);
+                Image scaledImage2 = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+                imageHack.setIcon(resizedIcon2);
+            } catch (Exception e) {
+                e.printStackTrace();
+                ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
+                Image scaledImage2 = imageIcon2.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+                imageHack.setIcon(resizedIcon2);
             }
-            startRegHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            startRegHack.setForeground(new Color(30, 30, 47));
-            startRegHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(startRegHack, gbc2);
+            hackListPanel.add(imageHack, gbc2);
+            gbc2.gridheight = 1;
+            gbc2.gridy = 0;
             gbc2.gridx = 1;
+            gbc2.anchor = GridBagConstraints.WEST;
+            JLabel titleHack = new JLabel();
+            hackListPanel.add(setStyleLabel(titleHack, arrayList.get(0), "\uD83D\uDCCC "), gbc2);
+            gbc2.gridx = 2;
+            JLabel venueHack = new JLabel();
+            hackListPanel.add(setStyleLabel(venueHack, arrayList.get(1), "\uD83C\uDF10 "), gbc2);
+            gbc2.gridy = 1;
+            gbc2.gridx = 1;
+            JLabel startHack = new JLabel();
+            hackListPanel.add(setStyleLabel(startHack, arrayList.get(2), "\uD83D\uDDD3 Inizio Hackathon: "), gbc2);
+            gbc2.gridx = 2;
+            JLabel endHack = new JLabel();
+            hackListPanel.add(setStyleLabel(endHack, arrayList.get(3), "\uD83D\uDDD3 Fine Hackathon: "), gbc2);
+            gbc2.gridy = 2;
+            gbc2.gridx = 1;
+            JLabel startRegHack = new JLabel();
+            String s = new String();
+            Object o = new Object();
+            if (arrayList.get(8) == null) {
+               s = ("\uD83D\uDDD3 Inizio registrazioni: da definire");
+               o = null;
+            } else {
+               s = ("\uD83D\uDDD3 Inizio registrazioni: ");
+               o = arrayList.get(8);
+            }
+            hackListPanel.add(setStyleLabel(startRegHack, o, s), gbc2);
+            gbc2.gridx = 2;
             JLabel maxPHack = new JLabel();
-            maxPHack.setText("\uD83C\uDF9F " + arrayList.get(4));
-            maxPHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            maxPHack.setForeground(new Color(30, 30, 47));
-            maxPHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(maxPHack, gbc2);
+            hackListPanel.add(setStyleLabel(maxPHack, arrayList.get(4), "\uD83C\uDF9F "), gbc2);
             gbc2.gridy = 3;
-            gbc2.gridx = 0;
-            JLabel counterHack = new JLabel();
-            counterHack.setText("\uD83D\uDEB9 " + arrayList.get(6));
-            counterHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            counterHack.setForeground(new Color(30, 30, 47));
-            counterHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(counterHack, gbc2);
             gbc2.gridx = 1;
+            JLabel counterHack = new JLabel();
+            hackListPanel.add(setStyleLabel(counterHack, arrayList.get(6), "\uD83D\uDEB9 "), gbc2);
+            gbc2.gridx = 2;
             JLabel maxPTHack = new JLabel();
-            maxPTHack.setText("\uD83D\uDC6B " + arrayList.get(5));
-            maxPHack.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
-            maxPTHack.setForeground(new Color(30, 30, 47));
-            maxPTHack.setBackground(new Color(236, 240, 241));
-            hackListPanel.add(maxPTHack, gbc2);
+            hackListPanel.add(setStyleLabel(maxPTHack, arrayList.get(5), "\uD83D\uDC6B "), gbc2);
             gbc2.gridy = 4;
-            gbc2.gridx = 0;
+            gbc2.gridx = 1;
             hackListPanel.setBackground(new Color(236, 240, 241));
             hackListPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
-            hackListPanel.setPreferredSize(new Dimension(893, 147));
+            hackListPanel.setPreferredSize(new Dimension(850, 250));
 
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.gridx = 0;
@@ -300,7 +311,7 @@ public class Home {
             gbc.anchor = GridBagConstraints.WEST;
 
             scrollPanel.add(hackListPanel, gbc);
-            i++;
+
 
             //FORSE MEGLIO CREARE BOTTONE IN OGNI PANEL
             hackListPanel.addMouseListener(new MouseAdapter() {
@@ -310,7 +321,8 @@ public class Home {
                         JOptionPane.showMessageDialog(panel, "Accedi per visualizzare tutti i dettagli e partecipare all'Hackathon!", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         controller.setIdHack(idHack);
-                        HackathonGui hackGui = new HackathonGui(frame, controller); //SI POTREBBE CREARE VARIABILE IDHACK IN CONTROLLER PER GESTIRLI
+                        controller.setPhoto((byte[]) arrayList.get(10));
+                        HackathonGui hackGui = new HackathonGui(frame, controller);
                         hackGui.getFrame().setVisible(true);
                         //System.out.println(controller.getIdHack());
                         controller.setHackathon(new Hackathon((String) arrayList.get(0), (String) arrayList.get(1), (Date) arrayList.get(2),
@@ -324,12 +336,14 @@ public class Home {
             hackListPanel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    hackListPanel.setBorder(new LineBorder(new Color(37, 99, 235), 3));
+                    if(frame.isEnabled())
+                        hackListPanel.setBorder(new LineBorder(new Color(37, 99, 235), 3));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    hackListPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
+                    if(frame.isEnabled())
+                        hackListPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
                 }
             });
         }
@@ -360,5 +374,13 @@ public class Home {
 
     public ArrayList<ArrayList<Object>> getData() {
         return data;
+    }
+
+    public JLabel setStyleLabel (JLabel label, Object o, String s){
+        label.setText(s + o);
+        label.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        label.setForeground(new Color(30, 30, 47));
+        label.setBackground(new Color(236, 240, 241));
+        return label;
     }
 }

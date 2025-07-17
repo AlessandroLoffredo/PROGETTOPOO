@@ -2,10 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 import controller.*;
 
@@ -23,6 +20,7 @@ public class CambiaUsername {
     private JPanel buttonPanel;
     private JButton changeButton;
     private JLabel titleLabel;
+    private JButton lockButton;
     private JFrame frame;
 
 
@@ -77,6 +75,7 @@ public class CambiaUsername {
                                 break;
                             case -2:
                                 JOptionPane.showMessageDialog(panel, "Password errata");
+                                passwordArea.setText("");
                                 break;
                             case -3:
                                 JOptionPane.showMessageDialog(panel, "L'username deve essere diverso da quello attuale");
@@ -100,6 +99,28 @@ public class CambiaUsername {
                         passwordArea.setText("");
                         usernameArea.setText("");
                     }
+                }
+            }
+        });
+
+        passwordArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                    changeButton.doClick();
+                }
+            }
+        });
+
+        lockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lockButton.getText().equals("\uD83D\uDD12")) {
+                    lockButton.setText("\uD83D\uDD13");
+                    passwordArea.setEchoChar((char) 0);
+                } else {
+                    lockButton.setText("\uD83D\uDD12");
+                    passwordArea.setEchoChar('*');
                 }
             }
         });
