@@ -303,7 +303,7 @@ public class Home {
             gbc2.gridx = 1;
             hackListPanel.setBackground(new Color(236, 240, 241));
             hackListPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
-            hackListPanel.setPreferredSize(new Dimension(850, 250));
+            hackListPanel.setPreferredSize(new Dimension(700, 250));
 
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.gridx = 0;
@@ -378,7 +378,10 @@ public class Home {
     }
 
     public JLabel setStyleLabel (JLabel label, Object o, String s){
-        label.setText(s + o);
+        if(o != null)
+            label.setText(s + o);
+        else
+            label.setText(s);
         label.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
         label.setForeground(new Color(30, 30, 47));
         label.setBackground(new Color(236, 240, 241));

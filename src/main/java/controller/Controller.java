@@ -36,9 +36,9 @@
             //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
-            //this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
+            this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
-            this.user = null;
+            //this.user = null;
             this.plAdmin = null;
             this.home = home;
             this.hackathon = null;
@@ -335,25 +335,30 @@
         if(this.plAdmin != null){
             AdminGui areaPersonalePA = new AdminGui(frame, this);
             areaPersonalePA.getFrame().setVisible(true);
+            frame.setVisible(false);
         }else {
             switch (this.user.getClass().getSimpleName()) {
                 case "Participant":
                     AreaPersonale areaPersonale = new AreaPersonale(frame, this);
                     areaPersonale.getFrame().setVisible(true);
+                    frame.setVisible(false);
                     break;
                 case "Organizer":
                     AreaPersonaleOrganizzatore areaPersonaleO = new AreaPersonaleOrganizzatore(frame, this);
                     areaPersonaleO.getFrame().setVisible(true);
+                    frame.setVisible(false);
                     break;
                 case "Judge":
                     AreaPersonaleGiudice areaPersonaleG = new AreaPersonaleGiudice(frame, this);
                     areaPersonaleG.getFrame().setVisible(true);
+                    frame.setVisible(false);
                     break;
                 case "User":
                     AreaPersonale areaPersonaleU = new AreaPersonale(frame, this);
                     areaPersonaleU.getFrame().setVisible(true);
                     areaPersonaleU.getMessagePanel().setVisible(false);
                     areaPersonaleU.getTeamPanel().setVisible(false);
+                    frame.setVisible(false);
                     break;
             }
         }
@@ -448,7 +453,7 @@
         } else {
             currentProbDescArea.setText(this.getHackathon().getProblemDescription());
         }
-        if(this.getHackathon().getStartRegDate().toString() == null){
+        if(this.getHackathon().getStartRegDate() == null){
             currentStartRegArea.setText("Data ancora non definita");
         } else {
             currentStartRegArea.setText(this.getHackathon().getStartRegDate().toString());

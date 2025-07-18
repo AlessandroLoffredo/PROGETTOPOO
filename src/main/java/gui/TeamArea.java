@@ -3,6 +3,7 @@ package gui;
 import controller.Controller;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,20 +18,23 @@ public class TeamArea {
     private JPanel panel;
     private JList participantsList;
     private JList docList;
-    private JPanel headerPanel;
     private JPanel docPanel;
-    private JPanel participantsPanel;
     private JButton loadDocButton;
-    private JTextArea nickArea;
+    private JLabel nickArea;
     private JButton hackButton;
     private JLabel nickLabel;
-    private JLabel hackathonLabel;
-    private JTextArea hackathonArea;
-    private JTextArea dateArea;
-    private JLabel dateLabel;
     private JButton homeButton;
     private JButton sendButton;
     private JPanel loadSendPanel;
+    private JPanel profilePanel;
+    private JPanel dataPanel;
+    private JButton cambiaNicknameButton;
+    private JLabel teamLabel;
+    private JLabel profileLabel;
+    private JPanel titlePanel;
+    private JLabel titleLabel;
+    private JLabel imageLabel;
+    private JLabel docLabel;
     private JFrame frame;
     private File file;
 
@@ -58,31 +62,41 @@ public class TeamArea {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(950, 800);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
 
 
 
-        panel.setBackground(new Color(10, 10, 30)); // Blu notte/nero futuristico
-        headerPanel.setBackground(new Color(15, 15, 50)); // Uguale a hackListPanel
-        docPanel.setBackground(new Color(15, 15, 50));
-        participantsPanel.setBackground(new Color(15, 15, 50));
-        nickArea.setBackground(new Color(15, 15, 50));
-        hackathonArea.setBackground(new Color(15, 15, 50));
-        dateArea.setBackground(new Color(15, 15, 50));
-        docList.setBackground(new Color(15, 15, 50));
-        participantsList.setBackground(new Color(15, 15, 50));
+        panel.setBackground(new Color(30, 30, 47));
+        profilePanel.setBackground(new Color(30, 30, 47));
+        profileLabel.setForeground(new Color(236, 240, 241));
+        teamLabel.setForeground(new Color(236, 240, 241));
+        docPanel.setBackground(new Color(236, 240, 241));
+        loadSendPanel.setBackground(new Color(236, 240, 241));
+        nickArea.setBackground(new Color(30, 30, 47));
+        docList.setBackground(new Color(236, 240, 241));
+        participantsList.setBackground(new Color(30, 30, 47));
+        participantsList.setForeground(new Color(236, 240, 241));
+        nickLabel.setForeground(new Color(236, 240, 241));
+        nickArea.setForeground(new Color(236, 240, 241));
+        docLabel.setForeground(new Color(30, 30, 47));
+        docList.setForeground(new Color(30, 30, 47));
+        participantsList.setForeground(new Color(30, 30, 47));
+        titleLabel.setForeground(new Color(236, 240, 241));
+        cambiaNicknameButton.setForeground(new Color(37, 99, 235));
+        homeButton.setForeground(new Color(37, 99, 235));
+        hackButton.setForeground(new Color(37, 99, 235));
+        loadDocButton.setForeground(new Color(37, 99, 235));
+        sendButton.setForeground(new Color(37, 99, 235));
 
-        nickLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        hackathonLabel.setForeground(new Color(0, 255, 0)); // Verde neon tipo Matrix
-        dateLabel.setForeground(new Color(0, 255, 0));
-        nickArea.setForeground(new Color(0, 255, 0));
-        hackathonArea.setForeground(new Color(0, 255, 0));
-        dateArea.setForeground(new Color(0, 255, 0));
-        docList.setForeground(new Color(0, 255, 0));
-        participantsList.setForeground(new Color(0, 255, 0));
+        docList.setBorder(new LineBorder(new Color(30, 30, 47)));
+        docList.setPreferredSize(new Dimension(100, 100));
 
-
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
+        Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        imageLabel.setIcon(resizedIcon);
 
 
         hackButton.addActionListener(new ActionListener() {
