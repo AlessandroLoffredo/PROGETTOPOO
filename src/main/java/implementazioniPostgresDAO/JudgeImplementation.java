@@ -5,7 +5,9 @@ import database.ConnessioneDatabase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class JudgeImplementation implements JudgeInterface {
     public int updateDescription(String description, String username){
@@ -23,5 +25,21 @@ public class JudgeImplementation implements JudgeInterface {
             e.printStackTrace();
         }
         return results;
+    }
+
+    public void getTeams(ArrayList<String> teams, int idHack){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT T.nickname FROM TEAM T WHERE T.idHack = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idHack);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                teams.add(rs.getString(1));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

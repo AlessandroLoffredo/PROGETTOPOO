@@ -183,7 +183,9 @@ public class AreaPersonale {
 
             @Override
             public void focusLost(FocusEvent e) {
-                messageArea.setText("Scrivi un messaggio motivazionale");
+                if(messageArea.getText().equalsIgnoreCase("")){
+                    messageArea.setText("Scrivi un messaggio motivazionale");
+                }
             }
         });
 
@@ -297,18 +299,25 @@ public class AreaPersonale {
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println((String) participantComboBox.getSelectedItem() + " - " +  messageArea.getText());
                 if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase("Seleziona un partecipante") || messageArea.getText().equalsIgnoreCase("Scrivi un messaggio motivazionale")) {
                     JOptionPane.showMessageDialog(panel, "Inserire il messaggio e/o selezionare il partecipante", "WARNING", JOptionPane.WARNING_MESSAGE);
                 } else {
                     int code = controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
-                    if (code == -2) {
-                        JOptionPane.showMessageDialog(panel, "Non sei autorizzato a mandare richieste", "WARNING", JOptionPane.WARNING_MESSAGE);
-                    } else if (code == -1) {
-                        JOptionPane.showMessageDialog(panel, "Il team del partecipante a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
-                        messageArea.setText("");
-                        participantComboBox.setSelectedIndex(0);
+                    switch (code) {
+                        case -1:
+                            JOptionPane.showMessageDialog(panel, "Il team del partecipante a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            break;
+                        case 0:
+                            JOptionPane.showMessageDialog(panel, "Hai già inviato una richiesta a quest'utente");
+                            break;
+                        case 1:
+                            JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                            messageArea.setText("");
+                            participantComboBox.setSelectedIndex(0);
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(panel, "Errore durante l'invio della richiesta");
                     }
                 }
             }

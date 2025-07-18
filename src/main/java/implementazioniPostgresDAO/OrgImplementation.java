@@ -129,6 +129,7 @@ public class OrgImplementation implements OrgInterface {
                 data.add(rs.getInt("regCounter"));
                 data.add(rs.getString("problemDesc"));
                 data.add(rs.getDate("startRegDate"));
+                data.add(rs.getInt("idHack"));
             }
         } catch (SQLException e){
             e.printStackTrace();

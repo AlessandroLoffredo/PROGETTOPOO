@@ -275,9 +275,13 @@ public class AreaPersonaleGiudice {
             }
         });
 
-        //BISOGNERA' CARICARE NELLA TEAMCOMBOBOX E NELLA TEAMCOMBOBOXMARK I NOMI DI TUTTI I TEAM NELL'HACKATHON TRAMITE DB
 
         teamComboBox.addItem("Seleziona un team");
+        ArrayList<String> teams = new ArrayList<>();
+        controller.getTeams(teams);
+        for(String team : teams)
+            teamComboBox.addItem(team);
+
         teamComboBoxMark.addItem("Seleziona un Team");
 
 

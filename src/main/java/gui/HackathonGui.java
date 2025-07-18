@@ -223,11 +223,17 @@ public class HackathonGui {
                 LocalDate end = LocalDate.parse(currentEndArea.getText(), formatter);
                 int code = controller.subscribe(start, end);
                 switch (code){
-                    case -1:
-                        JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                    case -4:
+                        JOptionPane.showMessageDialog(panel, "Non è più possibile iscriversi a quest'evento");
+                        break;
+                    case -3:
+                        JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     case -2:
-                        JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(panel, "Le iscrizioni non sono ancora cominciate");
+                        break;
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Iscrizione effettuata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);

@@ -8,7 +8,6 @@
     import java.io.IOException;
     import java.nio.file.Files;
     import java.nio.file.Path;
-    import java.nio.file.Paths;
     import java.time.LocalDate;
     import java.util.ArrayList;
     import java.util.Date;
@@ -26,7 +25,7 @@
         private int idHack;
         private String sender;
         private byte[] photo;
-
+        private int currIdHack;
         /**
          * Istanzia un nuovo controller.
          *
@@ -36,9 +35,9 @@
             //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
             //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
-            this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
+            //this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
             //this.plAdmin = new PlatformAdmin("Alex", "Password");
-            //this.user = null;
+            this.user = null;
             this.plAdmin = null;
             this.home = home;
             this.hackathon = null;
@@ -94,6 +93,8 @@
                 this.findHack();
             } else if (log == 4) {
                 this.user = new Participant(names[0], names[1], username, new String(password));
+                this.findHack();
+                System.out.println(this.currIdHack);
             } else if (log == 5) {
                 this.user = new User(names[0], names[1], username, new String(password));
             }else{
@@ -190,13 +191,8 @@
      * @return int : Codice che identifica le diverse situazioni che possono accadere.
      */
     public int sendRequest(String message, String username){
-        if(this.user instanceof Participant){
-            Participant participant = (Participant) user;
-            int risultato = participant.sendRequest(message, username);
-            return risultato;
-        }else{
-            return -2;
-        }
+        ParticipantImplementation parI = new ParticipantImplementation();
+        return parI.sendRequests(this.user.getUsername(), this.currIdHack, username, message);
     }
 
     /**
@@ -232,7 +228,7 @@
 
     public int handleAccRequest(String sender){
         UsersImplementation userI = new UsersImplementation();
-        return userI.acceptInvite(sender, this.user.getUsername()); //TODO CHIEDERE AD ALEXXX SE QUESTA INTERFACE è GIUSTA
+        return userI.acceptInvite(sender, this.user.getUsername());
     }
 
     public int handleDecRequest(String sender){
@@ -321,12 +317,15 @@
     public int subscribe(LocalDate start, LocalDate end){
         if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
             return -1;
-        } else{
+        } else if (this.hackathon.getStartRegDate().after(new Date())) {
+            return -2;
+        }
+        else{
             UsersImplementation userI = new UsersImplementation();
             if(userI.veryfingIsFree(this.user.getUsername(), start, end) == 1){
                 return userI.subscribe(this.user.getUsername(), this.idHack);
             }else{
-                return -2;
+                return -3;
             }
         }
     }
@@ -427,19 +426,25 @@
     }
 
     public void findHack(){
-        OrgImplementation orgI = new OrgImplementation();
-        ArrayList<Object> data = new ArrayList<>();
-        orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
-        String title = (String)data.get(0);
-        String venue = (String)data.get(1);
-        Date startDate = (Date)data.get(2);
-        Date endDate = (Date)data.get(3);
-        int maxReg = (int)data.get(4);
-        int maxTeamPar = (int)data.get(5);
-        String problemDesc = (String)data.get(7);
-        Date startRegDate = (Date)data.get(8);
-        int regCounter = (int)data.get(6);
-        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+            ArrayList<Object> data = new ArrayList<>();
+        if(this.user instanceof Organizer || this.user instanceof Judge){
+            OrgImplementation orgI = new OrgImplementation();
+            orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
+        }else{
+            ParticipantImplementation parI = new ParticipantImplementation();
+            parI.findHack(this.user.getUsername(), data);
+        }
+            String title = (String) data.get(0);
+            String venue = (String) data.get(1);
+            Date startDate = (Date) data.get(2);
+            Date endDate = (Date) data.get(3);
+            int maxReg = (int) data.get(4);
+            int maxTeamPar = (int) data.get(5);
+            int regCounter = (int) data.get(6);
+            String problemDesc = (String) data.get(7);
+            Date startRegDate = (Date) data.get(8);
+            this.currIdHack = (int) data.get(9);
+            this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
     public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
@@ -524,6 +529,11 @@
     }*/
     public void getHackParticipants(ArrayList<String> participants){
         ParticipantImplementation parI = new ParticipantImplementation();
-        parI.getParticipants(participants, this.idHack, this.user.getUsername());
+        parI.getParticipants(participants, this.currIdHack, this.user.getUsername(), this.hackathon.getMaxTeamParticipant());
+    }
+
+    public void getTeams(ArrayList<String> teams){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        judgeI.getTeams(teams, this.currIdHack);
     }
 }

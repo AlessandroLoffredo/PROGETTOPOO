@@ -160,6 +160,8 @@ public class UsersImplementation implements UsersInterface {
             }
         }catch(SQLException e){
             e.printStackTrace();
+            if(e.getMessage().contains("checkenddateparticipant"))
+                results = -4;
         } catch (Exception e) {
             e.printStackTrace();
             results = 0;
