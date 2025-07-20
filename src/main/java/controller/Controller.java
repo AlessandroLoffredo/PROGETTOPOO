@@ -535,4 +535,9 @@
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getTeams(teams, this.currIdHack);
     }
+
+    public int getMark(String team){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        return judgeI.getMark(team, this.user.getUsername(), this.currIdHack);
+    }
 }
