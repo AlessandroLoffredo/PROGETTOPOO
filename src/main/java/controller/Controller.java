@@ -251,17 +251,17 @@
      * @param team Il team di cui il giudice vuole vedere la lista.
      * @return ArrayList : La lista dei documenti di un team.
      */
-    public ArrayList<Document> handleLoadFile(Team team){
-        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
-        //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
-        return team.getDocList();
+    public void handleLoadFile(String team, ArrayList<byte[]> files, ArrayList<String> names, ArrayList<String> comments){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        judgeI.getDocuments(team, this.currIdHack, files, names, comments);
+        for(String comm : comments)
+            System.out.println(comm);
     }
 
-        /*public void handleComment(String comment, JFrame frame){
-            if(COMMENTO GIA' PRESENTE PER IL DOC)
-            COME ARRIVIAMO AL DOC?
-            CI SARANNO COMMENTI DA PIU' GIUDICI?
-        }*/
+    public int handleComment(String comment, String doc, String team){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        return judgeI.setComment(comment, this.user.getUsername(), this.currIdHack, doc, team);
+    }
 
     /**
      * Gestisce l'assegnazione di un voto da parte di un giudice ad un team per il lavoro svolto.
@@ -269,10 +269,9 @@
      * @param team Il team da giudicare.
      * @param mark Il voto assegnato.
      */
-    public void handleAssignMark(Team team, int mark){
-        //SI DEVE MODIFICARE IL PARAMETRO IN INGRESSO DA TEAM A STRING, USATO PER SEMPLICTA' E PER EVITARE ERRORI
-        //SI DOVRA' CERCARE NEL DB IL TEAM CORRISPONDENTE AL NICKNAME
-        team.addMark((short) mark);
+    public int handleAssignMark(String team, int mark){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        return judgeI.assignMark(team, mark, this.user.getUsername(), this.currIdHack);
     }
 
     /**

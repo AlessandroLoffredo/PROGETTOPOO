@@ -236,7 +236,6 @@ public class AreaPersonale {
         requestList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                //if (e.getValueIsAdjusting()) return;
 
                 int selectedIndex = requestList.getSelectedIndex();
                 if (selectedIndex == -1) return;
