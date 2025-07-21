@@ -545,4 +545,9 @@
         UsersImplementation userI = new UsersImplementation();
         userI.getLastsUserHack(hackathon, this.user.getUsername());
     }
+
+    public int getMark(String team){
+        JudgeImplementation judgeI = new JudgeImplementation();
+        return judgeI.getMark(team, this.user.getUsername(), this.currIdHack);
+    }
 }
