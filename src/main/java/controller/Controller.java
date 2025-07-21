@@ -496,6 +496,10 @@
         this.idHack = idHack;
     }
 
+    public void setHackathon(String title, String venue, Date startDate, Date endDate, int maxReg, int maxTeamPar, String problemDesc, Date startRegDate, int regCounter) {
+        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+    }
+
     public void setHackathon(Hackathon hackathon) {
         this.hackathon = hackathon;
     }
@@ -519,7 +523,8 @@
     }
 
     public void getRanking(ArrayList<String> ranking, int idLastHack) {
-
+        HackathonImplementation hackI = new HackathonImplementation();
+        hackI.getRanking(ranking, idLastHack);
     }
 
     /*public int subrscibeTeam(){   PROBABILMENTE MEGLIO FARE UN TRIGGER O ALTRIMENTI FARE ALTRA QUERY PER PRENDERE IDTEAM APPENA INSERITO E USARLO PER INSERIRE PARTICIPANT
@@ -534,5 +539,10 @@
     public void getTeams(ArrayList<String> teams){
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getTeams(teams, this.currIdHack);
+    }
+
+    public void getLastsUserHack(ArrayList<ArrayList<Object>> hackathon){
+        UsersImplementation userI = new UsersImplementation();
+        userI.getLastsUserHack(hackathon, this.user.getUsername());
     }
 }

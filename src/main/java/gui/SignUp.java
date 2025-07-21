@@ -77,7 +77,7 @@ public class SignUp {
         lockButton.setText("\uD83D\uDD12");
         lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         lockButton.setBackground(new Color(30, 30, 47));
-        lockButton.setForeground(new Color(30, 30, 47));
+        lockButton.setForeground(new Color(236, 240, 241));
 
 
         signUpButton.addActionListener(new ActionListener() {
@@ -139,7 +139,7 @@ public class SignUp {
                 }
                 else {
                     lockButton.setText("\uD83D\uDD12");
-                    passwordArea.setEchoChar('•');
+                    passwordArea.setEchoChar('*');
                 }
             }
         });

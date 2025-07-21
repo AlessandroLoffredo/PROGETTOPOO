@@ -66,6 +66,21 @@ public class CambiaPassword {
         newPasswordLabel.setForeground(new Color(236, 240, 241));
         changeButton.setForeground(new Color(37, 99, 235));
 
+        lockButton1.setText("\uD83D\uDD12");
+        lockButton1.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton1.setBackground(new Color(30, 30, 47));
+        lockButton1.setForeground(new Color(236, 240, 241));
+
+        lockButton2.setText("\uD83D\uDD12");
+        lockButton2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton2.setBackground(new Color(30, 30, 47));
+        lockButton2.setForeground(new Color(236, 240, 241));
+
+        lockButton3.setText("\uD83D\uDD12");
+        lockButton3.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton3.setBackground(new Color(30, 30, 47));
+        lockButton3.setForeground(new Color(236, 240, 241));
+
 
         changeButton.addActionListener(new ActionListener()
         {

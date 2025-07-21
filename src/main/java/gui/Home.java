@@ -1,7 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.Hackathon;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -169,6 +168,7 @@ public class Home {
         }
 
 
+
         //aggiungere la negazione quando effettivamente istanziamo un utente nel controller
 
         loginButton.addActionListener(new ActionListener() {
@@ -321,9 +321,9 @@ public class Home {
                     if(controller.getUser() == null && controller.getPlAdmin() == null){
                         JOptionPane.showMessageDialog(panel, "Accedi per visualizzare tutti i dettagli e partecipare all'Hackathon!", "INFO", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        controller.setHackathon(new Hackathon((String) arrayList.get(0), (String) arrayList.get(1), (Date) arrayList.get(2),
+                        controller.setHackathon((String) arrayList.get(0), (String) arrayList.get(1), (Date) arrayList.get(2),
                                 (Date) arrayList.get(3), (int) arrayList.get(4), (int) arrayList.get(5),
-                                (String) arrayList.get(7), (Date) arrayList.get(8), (int) arrayList.get(6)));
+                                (String) arrayList.get(7), (Date) arrayList.get(8), (int) arrayList.get(6));
                         controller.setIdHack(idHack);
                         controller.setPhoto((byte[]) arrayList.get(10));
                         HackathonGui hackGui = new HackathonGui(frame, controller);

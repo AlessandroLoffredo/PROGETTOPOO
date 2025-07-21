@@ -58,6 +58,11 @@ public class CambiaUsername {
         changeButton.setForeground(new Color(37, 99, 235));
         passwordLabel.setForeground(new Color(236, 240, 241));
 
+        lockButton.setText("\uD83D\uDD12");
+        lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton.setBackground(new Color(30, 30, 47));
+        lockButton.setForeground(new Color(236, 240, 241));
+
 
 
         changeButton.addActionListener(new ActionListener() {

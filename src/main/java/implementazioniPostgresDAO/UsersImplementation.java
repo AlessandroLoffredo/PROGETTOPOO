@@ -95,7 +95,7 @@ public class UsersImplementation implements UsersInterface {
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H " +
-                         "WHERE H.startDate > CURRENT_DATE ORDER BY H.startDate ASC LIMIT 1";
+                         "WHERE H.endDate < CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
@@ -167,5 +167,38 @@ public class UsersImplementation implements UsersInterface {
             results = 0;
         }
         return results;
+    }
+
+    public void getLastsUserHack(ArrayList<ArrayList<Object>> hackathon, String username){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT * FROM Hackathon H " +
+                         "WHERE H.endDate < CURRENT_DATE AND (EXISTS (SELECT 1 FROM Organizer O WHERE O.idHack = H.idHack AND O.username = ?) OR " +
+                         "EXISTS (SELECT 1 FROM Judge J WHERE J.idHack = H.idHack AND J.username = ?) OR " +
+                         "EXISTS (SELECT 1 FROM Participant PA, Team T WHERE T.idHack = H.idHack AND T.idTeam = PA.idTeam AND PA.username = ?)) " +
+                         "ORDER BY endDate ASC";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, username);
+            stmt.setString(3, username);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                ArrayList<Object> hack = new ArrayList<>();
+                hack.add(rs.getString("title"));
+                hack.add(rs.getString("venue"));
+                hack.add(rs.getDate("startDate"));
+                hack.add(rs.getDate("endDate"));
+                hack.add(rs.getInt("maxRegistration"));
+                hack.add(rs.getInt("maxTeamPar"));
+                hack.add(rs.getInt("regCounter"));
+                hack.add(rs.getString("problemDesc"));
+                hack.add(rs.getDate("startRegDate"));
+                hack.add(rs.getInt("idHack"));
+                byte[] imageBytes = rs.getBytes("photo");
+                hack.add(imageBytes);
+                hackathon.add(hack);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

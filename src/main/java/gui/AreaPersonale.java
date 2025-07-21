@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Classe che contiene tutte le azioni e le informazioni di un utente o di un partecipante.
@@ -45,10 +46,11 @@ public class AreaPersonale {
     private JButton logoutButton;
     private JPanel profilePanel;
     private JPanel elementsPanel;
-    private JTextArea textArea2;
+    private JList lastsHackList;
     private JScrollPane scrollPane;
     private JScrollPane messageScrollPane;
     private JPanel titlePanel;
+    private JLabel hackListLabel;
     private JFrame frame;
 
     /**
@@ -80,7 +82,7 @@ public class AreaPersonale {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
-        textArea2.setLineWrap(true);
+        /*textArea2.setLineWrap(true);
         textArea2.setWrapStyleWord(true);
         textArea2.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -89,7 +91,7 @@ public class AreaPersonale {
         textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
         textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
         textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        textArea2.append("\n\n\n\n\n\n\n\n");
+        textArea2.append("\n\n\n\n\n\n\n\n");*/
 
         panel.setBackground(new Color(30, 30, 47));
         profilePanel.setBackground(new Color(30, 30, 47));
@@ -101,9 +103,10 @@ public class AreaPersonale {
         titlePanel.setBackground(new Color(30, 30, 47));
         requestList.setBackground(new Color(236, 240, 241));
         requestList.setForeground(new Color(30, 30, 47));
+        hackListLabel.setForeground(new Color(30, 30, 47));
         elementsPanel.setBackground(new Color(236, 240, 241));
         lastsHackPanel.setBackground(new Color(236, 240, 241));
-        textArea2.setBackground(new Color(236, 240, 241));
+        lastsHackList.setBackground(new Color(236, 240, 241));
         messagePanel.setBackground(new Color(236, 240, 241));
         requestsPanel.setBackground(new Color(236, 240, 241));
 
@@ -333,6 +336,36 @@ public class AreaPersonale {
                 controller.getHome().getLoginButton().setText("Login");
             }
         });
+
+        ArrayList<ArrayList<Object>> lastsHack = new ArrayList<>();
+        DefaultListModel<String> model2 = new DefaultListModel<>();
+        controller.getLastsUserHack(lastsHack);
+        model2.removeAllElements();
+        for(ArrayList<Object> arrayList : lastsHack){
+            model2.addElement((String) arrayList.get(0));
+        }
+        lastsHackList.setModel(model2);
+        if(model2.isEmpty()){
+            model2.removeAllElements();
+            model2.addElement("Non hai ancora partecipato ad alcun hackathon");
+            lastsHackList.setEnabled(false);
+        }
+
+        else {
+            lastsHackList.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    controller.setHackathon((String) lastsHack.get(lastsHackList.getSelectedIndex()).get(0), (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(1), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(2),
+                            (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(3), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(4), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(5),
+                            (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(7), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(8), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(6));
+                    controller.setIdHack((int) lastsHack.get(lastsHackList.getSelectedIndex()).get(9));
+                    controller.setPhoto((byte[]) lastsHack.get(lastsHackList.getSelectedIndex()).get(10));
+                    HackathonGui hackathonGui = new HackathonGui(frame, controller);
+                    hackathonGui.getFrame().setVisible(true);
+                    frame.dispose();
+                }
+            });
+        }
     }
 
 
