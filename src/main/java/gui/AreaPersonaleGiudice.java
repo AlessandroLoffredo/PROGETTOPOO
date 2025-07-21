@@ -393,6 +393,10 @@ public class AreaPersonaleGiudice {
                         switch (code){
                             case 1:
                                 JOptionPane.showMessageDialog(panel, "Voto inserito correttamente");
+                                markSlider.setValue(markSlider.getValue());
+                                markSlider.setEnabled(false);
+                                markSlider.setToolTipText("Hai già inserito il voto per questo team");
+                                assigneButton.setEnabled(false);
                                 break;
                             case  0:
                             default:
@@ -415,7 +419,22 @@ public class AreaPersonaleGiudice {
                 controller.getHome().getLoginButton().setText("Login");
             }
         });
-        docList.addComponentListener(new ComponentAdapter() {
+
+        teamComboBoxMark.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int grade = controller.getMark((String) teamComboBoxMark.getSelectedItem());
+                if (grade != -1) {
+                    markSlider.setValue(grade);
+                    markSlider.setEnabled(false);
+                    markSlider.setToolTipText("Hai già inserito il voto per questo team");
+                    assigneButton.setEnabled(false);
+                } else {
+                    markSlider.setEnabled(true);
+                    markSlider.setToolTipText(null);
+                    assigneButton.setEnabled(true);
+                }
+            }
         });
     }
 

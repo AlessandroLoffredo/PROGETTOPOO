@@ -104,4 +104,25 @@ public class JudgeImplementation implements JudgeInterface {
         }
         return results;
     }
+
+    public int getMark(String team, String username, int idHack){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT M.grade FROM Marks M WHERE M.jusername = ? AND M.idHack = ? AND M.idTeam = (" +
+                    "SELECT T.idTeam FROM Team T WHERE T.idHack = ? AND T.nickname = ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setInt(2, idHack);
+            stmt.setInt(3, idHack);
+            stmt.setString(4, team);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }
