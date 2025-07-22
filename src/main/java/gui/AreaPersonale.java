@@ -146,6 +146,7 @@ public class AreaPersonale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
+                controller.findHack();
                 frame.dispose();
             }
         });
@@ -162,8 +163,8 @@ public class AreaPersonale {
             ArrayList<String> participants = new ArrayList<>();
             try {
                 controller.getHackParticipants(participants);
+                participantComboBox.removeAllItems();
                 if (participants.isEmpty()) {
-                    participantComboBox.removeAllItems();
                     participantComboBox.addItem("Nessun partecipante disponibile");
                     participantComboBox.setEnabled(false);
                 } else {
@@ -196,40 +197,27 @@ public class AreaPersonale {
         DefaultListModel<String> model = new DefaultListModel<>();
         requestList.setModel(model);
         if(controller.getUserClass()){
-            ArrayList<String> requests = new ArrayList<>();
-            controller.getInvites(requests);
-            for (String r : requests)
-                model.addElement(r);
+            model.removeAllElements();
+            ArrayList<String> invites = new ArrayList<>();
+            controller.getInvites(invites);
+            if(invites.isEmpty()){
+                model.addElement("Non hai ricevuto alcun invito");
+            }else{
+                for (String invite : invites){
+                    model.addElement(invite);
+                }
+            }
         } else {
-
-
-
-
-            ArrayList<Request> richieste = new ArrayList<>();
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            richieste.add(new Request("ciao", "mammt"));
-            richieste.add(new Request("suca", "patt"));
-            richieste.add(new Request("ciuccm e pall", "nonnt"));
-            /*for(String r : controller.getRequests()) {
-                model.addElement(r);
-            }*/
+            model.removeAllElements();
+            ArrayList<String> requests = new ArrayList<>();
+            controller.getRequests(requests);
+            if(requests.isEmpty()){
+                model.addElement("Non hai ricevuto alcuna richiesta");
+            }else{
+                for(String request : requests){
+                    model.addElement(request);
+                }
+            }
         }
 
 
@@ -349,9 +337,7 @@ public class AreaPersonale {
             model2.removeAllElements();
             model2.addElement("Non hai ancora partecipato ad alcun hackathon");
             lastsHackList.setEnabled(false);
-        }
-
-        else {
+        } else {
             lastsHackList.addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent e) {
@@ -366,8 +352,9 @@ public class AreaPersonale {
                 }
             });
         }
-    }
 
+
+    }
 
     /**
      * Restituisce il frame principale della gui.

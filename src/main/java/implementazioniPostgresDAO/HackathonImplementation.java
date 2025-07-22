@@ -15,7 +15,7 @@ public class HackathonImplementation implements HackathonInterface {
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H " +
-                         "ORDER BY H.startDate ASC";
+                         "ORDER BY H.startDate DESC";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
@@ -85,6 +85,23 @@ public class HackathonImplementation implements HackathonInterface {
                 ranking.add(rs.getString("nickname"));
             }
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void removeRequests(String idHacks){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT removeExpRequests('0-25-34')";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            //stmt.setString(1, idHacks);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                results = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

@@ -56,7 +56,7 @@ public class Home {
     private static JFrame frame;
     private Controller controller;
     private ArrayList<ArrayList<Object>> data = new ArrayList<>();
-
+    private int callDelete = 0;
     /**
      * Punto in cui si entra effettivamente nel programma.
      *
@@ -85,8 +85,10 @@ public class Home {
     public Home(){
 
         controller = new Controller(this);
-        controller.getHackList(data);
-
+        if (this.callDelete == 0) {
+            controller.getHackList(data);
+            this.callDelete++;
+        }
         //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);

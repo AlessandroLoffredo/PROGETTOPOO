@@ -114,6 +114,7 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
+                controller.findHack();
                 frame.dispose();
             }
         });

@@ -233,6 +233,7 @@ public class AreaPersonaleGiudice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
+                controller.findHack();
                 frame.dispose();
             }
         });

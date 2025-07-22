@@ -193,6 +193,7 @@ public class HackathonGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.areaPersonale(frame);
+                controller.findHack();
             }
         });
 
@@ -210,7 +211,7 @@ public class HackathonGui {
                 controller.getHome().getFrame().setVisible(true);
                 controller.getHome().getFrame().repaint();
                 controller.setPhoto(null);
-                controller.setHackathon(null);
+                controller.findHack();
                 frame.dispose();
             }
         });

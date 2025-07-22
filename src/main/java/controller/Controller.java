@@ -425,7 +425,7 @@
     }
 
     public void findHack(){
-            ArrayList<Object> data = new ArrayList<>();
+        ArrayList<Object> data = new ArrayList<>();
         if(this.user instanceof Organizer || this.user instanceof Judge){
             OrgImplementation orgI = new OrgImplementation();
             orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
@@ -486,6 +486,16 @@
     public void getHackList(ArrayList<ArrayList<Object>> data){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getHackList(data);
+        if(!data.isEmpty()){
+            String idHacks = "0";
+            for(ArrayList<Object> list : data){
+                if(((Date)list.get(3)).before(new Date())){
+                    idHacks = idHacks + "-" + list.get(9);
+                    System.out.println(idHacks);
+                }
+            }
+            hackI.removeRequests(idHacks);
+        }
     }
 
     public int getIdHack() {
@@ -549,5 +559,10 @@
     public int getMark(String team){
         JudgeImplementation judgeI = new JudgeImplementation();
         return judgeI.getMark(team, this.user.getUsername(), this.currIdHack);
+    }
+
+    public void getRequests(ArrayList<String> requests){
+        ParticipantImplementation parI = new ParticipantImplementation();
+        parI.getRequests(requests, this.user.getUsername());
     }
 }

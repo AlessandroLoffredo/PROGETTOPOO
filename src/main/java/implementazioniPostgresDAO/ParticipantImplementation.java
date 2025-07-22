@@ -108,5 +108,23 @@ public class ParticipantImplementation {
             results = -3;
         }
         return results;
+
     }
+    public void getRequests(ArrayList<String> requests, String username){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT R.sender, R.rmessage FROM Requests R WHERE " +
+                    "R.receiver = ? )";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                requests.add(rs.getString(1) + ": " + rs.getString(2));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

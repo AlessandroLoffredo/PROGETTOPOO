@@ -218,6 +218,7 @@ public class AreaPersonaleOrganizzatore {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
+                controller.findHack();
                 frame.dispose();
             }
         });
