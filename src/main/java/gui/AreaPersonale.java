@@ -1,7 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.Request;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -202,6 +201,7 @@ public class AreaPersonale {
             controller.getInvites(invites);
             if(invites.isEmpty()){
                 model.addElement("Non hai ricevuto alcun invito");
+                requestList.setEnabled(false);
             }else{
                 for (String invite : invites){
                     model.addElement(invite);
@@ -213,6 +213,7 @@ public class AreaPersonale {
             controller.getRequests(requests);
             if(requests.isEmpty()){
                 model.addElement("Non hai ricevuto alcuna richiesta");
+                requestList.setEnabled(false);
             }else{
                 for(String request : requests){
                     model.addElement(request);
@@ -233,16 +234,32 @@ public class AreaPersonale {
                 int code;
                 String[] parti = requestList.getSelectedValue().toString().split(":", 2);
                 int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
-                if (scelta == JOptionPane.YES_OPTION) {
-                    code = controller.handleAccRequest(parti[1].trim());
-                } else {
-                    code = controller.handleDecRequest(parti[1].trim());
+                if(controller.getUserClass()){
+                    if (scelta == JOptionPane.YES_OPTION) {
+                        code = controller.handleAccInvite(parti[1].trim());
+                    } else if (scelta == JOptionPane.NO_OPTION){
+                        code = controller.handleDecInvite(parti[1].trim());
+                    } else{
+                        code = -1;
+                    }
+                }else{
+                    if (scelta == JOptionPane.YES_OPTION) {
+                        code = controller.handleAccRequest(parti[0].trim());
+                    } else if(scelta == JOptionPane.NO_OPTION){
+                        code = controller.handleDecRequest(parti[0].trim());
+                    }else {
+                        code = -1;
+                    }
                 }
                 if(code == 0) {
                     JOptionPane.showMessageDialog(panel, "Errore durante la gestione dell'invito");
+                }else if(code == -1) {
+                    //se clicca la x sull'option pane non deve succedere nulla //TODO CAPIRE SE DEVE SUCCEDRE QLC
                 }else{
                     DefaultListModel<String> model = (DefaultListModel<String>) requestList.getModel();
                     model.remove(selectedIndex);
+                    String string = scelta == JOptionPane.YES_OPTION ? "accettata" : "rifiutata";
+                    JOptionPane.showMessageDialog(panel, "Richiesta " + string + " con successo");
                 }
             }
         });

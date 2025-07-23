@@ -113,7 +113,7 @@ public class ParticipantImplementation {
     public void getRequests(ArrayList<String> requests, String username){
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT R.sender, R.rmessage FROM Requests R WHERE " +
-                    "R.receiver = ? )";
+                    "R.receiver = ? ";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
@@ -127,4 +127,44 @@ public class ParticipantImplementation {
         }
     }
 
+    public int acceptRequest(String sender, String receiver, int idHack){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT acceptRequest(?, ? ,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, sender);
+            stmt.setString(2, receiver);
+            stmt.setInt(3, idHack);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                results = rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            results = 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            results = 0;
+        }
+        return results;
+    }
+
+    public int declineRequest(String sender, String receiver){
+        int results;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "DELETE FROM Requests WHERE sender = ? AND receiver = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, sender);
+            stmt.setString(2, receiver);
+            results = stmt.executeUpdate();
+            System.out.println(results + " - " + sender + " - " + receiver);
+        }catch (SQLException e){
+            e.printStackTrace();
+            results = 0;
+        }catch (Exception e) {
+            e.printStackTrace();
+            results = 0;
+        }
+        return results;
+    }
 }

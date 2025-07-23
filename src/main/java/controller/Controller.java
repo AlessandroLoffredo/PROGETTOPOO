@@ -226,14 +226,24 @@
      * @return int : Codice che identifica le varie situazioni che possono accadere.
      */
 
-    public int handleAccRequest(String sender){
+    public int handleAccInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
         return userI.acceptInvite(sender, this.user.getUsername());
     }
 
-    public int handleDecRequest(String sender){
+    public int handleAccRequest(String sender){
+        ParticipantImplementation parI = new ParticipantImplementation();
+        return parI.acceptRequest(sender, this.user.getUsername(), this.currIdHack);
+    }
+
+    public int handleDecInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
         return userI.declineInvite(sender, this.user.getUsername());
+    }
+
+    public int handleDecRequest(String sender){
+        ParticipantImplementation parI = new ParticipantImplementation();
+        return parI.declineRequest(sender, this.user.getUsername());
     }
     /**
      * Gestisce l'aggiunta della descrizione del problema di un Hackathon da parte di un giudice.
@@ -494,6 +504,7 @@
                     System.out.println(idHacks);
                 }
             }
+            idHacks = idHacks + "-";
             hackI.removeRequests(idHacks);
         }
     }

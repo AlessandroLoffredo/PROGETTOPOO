@@ -331,6 +331,7 @@ public class AreaPersonaleGiudice {
                         commentArea.setText(commento);
                         commentArea.setEnabled(false);
                         commentArea.setToolTipText("Documento già commentato");
+                        loadButton.setEnabled(false);
                     }
                 }else if (e.getClickCount() == 2) { // Rileva il doppio click
                     if (selectedIndex == -1) return;

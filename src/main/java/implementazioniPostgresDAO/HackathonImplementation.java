@@ -92,9 +92,9 @@ public class HackathonImplementation implements HackathonInterface {
     public void removeRequests(String idHacks){
         int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT removeExpRequests('0-25-34')";
+            String sql = "SELECT removeExpRequests(?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            //stmt.setString(1, idHacks);
+            stmt.setString(1, idHacks);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 results = rs.getInt(1);

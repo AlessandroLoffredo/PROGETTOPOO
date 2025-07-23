@@ -56,7 +56,7 @@ public class UsersImplementation implements UsersInterface {
     }
 
     public int acceptInvite(String sender, String receiver){
-        int results;
+        int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "INSERT INTO judge(username, idHack) " +
                          "SELECT ?, O.idHack FROM Organizer O " +
@@ -69,12 +69,15 @@ public class UsersImplementation implements UsersInterface {
         }catch (SQLException e){
             e.printStackTrace();
             results = 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            results = 0;
         }
         return results;
     }
 
     public int declineInvite(String sender, String receiver){
-        int results;
+        int results = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
                          "SELECT H.idHack FROM Hackathon H WHERE H.startDate >= CURRENT_DATE AND H.idHack = " +
@@ -85,6 +88,9 @@ public class UsersImplementation implements UsersInterface {
             stmt.setString(3, sender);
             results = stmt.executeUpdate();
         }catch (SQLException e){
+            e.printStackTrace();
+            results = 0;
+        } catch (Exception e) {
             e.printStackTrace();
             results = 0;
         }
