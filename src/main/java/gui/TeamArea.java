@@ -5,11 +5,9 @@ import controller.Controller;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Classe che contiene tutte le informazioni e le azioni relative ad un team.
@@ -67,7 +65,8 @@ public class TeamArea {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
-
+        controller.getTeam();
+        nickArea.setText(controller.getNickname());
 
 
         panel.setBackground(new Color(30, 30, 47));
@@ -78,8 +77,8 @@ public class TeamArea {
         loadSendPanel.setBackground(new Color(236, 240, 241));
         nickArea.setBackground(new Color(30, 30, 47));
         docList.setBackground(new Color(236, 240, 241));
-        participantsList.setBackground(new Color(30, 30, 47));
-        participantsList.setForeground(new Color(236, 240, 241));
+        participantsList.setBackground(new Color(236, 240, 241));
+        participantsList.setForeground(new Color(30, 30, 47));
         nickLabel.setForeground(new Color(236, 240, 241));
         nickArea.setForeground(new Color(236, 240, 241));
         docLabel.setForeground(new Color(30, 30, 47));
@@ -100,6 +99,14 @@ public class TeamArea {
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
 
+        ArrayList<String> teammates = new ArrayList<>();
+        controller.findTeammates(teammates);
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(String s : teammates){
+            model.addElement(s);
+        }
+        participantsList.setModel(model);
+        System.out.println(teammates);
 
         hackButton.addActionListener(new ActionListener() {
             @Override
@@ -144,6 +151,46 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.sendFile(file, file.getName());
+            }
+        });
+
+        cambiaNicknameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CambiaNickname cambiaNickname = new CambiaNickname(frame, controller);
+                JFrame cambiaNicknameFrame = cambiaNickname.getFrame();
+
+                // Configurazione iniziale
+                frame.setEnabled(false);
+                cambiaNicknameFrame.setAlwaysOnTop(true);
+                cambiaNicknameFrame.setVisible(true);
+
+                // Gestione intelligente del focus
+                cambiaNicknameFrame.addWindowStateListener(new WindowStateListener() {
+                    @Override
+                    public void windowStateChanged(WindowEvent e) {
+                        if ((e.getNewState() & Frame.ICONIFIED) == 0) {
+                            // Solo se NON è iconizzata, mantieni il focus
+                            cambiaNicknameFrame.toFront();
+                            cambiaNicknameFrame.requestFocus();
+                        }
+                    }
+                });
+
+                cambiaNicknameFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        frame.setEnabled(true);
+                        frame.toFront();
+                    }
+
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {
+                        // Quando viene ripristinata dalla barra delle applicazioni
+                        cambiaNicknameFrame.toFront();
+                        cambiaNicknameFrame.requestFocus();
+                    }
+                });
             }
         });
     }

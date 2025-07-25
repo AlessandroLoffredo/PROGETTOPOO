@@ -577,6 +577,26 @@
         parI.getRequests(requests, this.user.getUsername());
     }
 
+    public void getTeam(){
+        TeamImplementation teamI = new TeamImplementation();
+        this.idTeam = teamI.getTeam(this.user.getUsername(), this.currIdHack);
+    }
+
+    public String getNickname(){
+        TeamImplementation teamI = new TeamImplementation();
+        return teamI.getNickname(this.idTeam);
+    }
+
+    public int changeNickname(String nickname){
+        TeamImplementation teamI = new TeamImplementation();
+        return teamI.changeNickname(nickname, this.idTeam);
+    }
+
+    public void findTeammates(ArrayList<String> teammates){
+        TeamImplementation teamI = new TeamImplementation();
+        teamI.findTeammates(teammates, this.idTeam);
+    }
+
     public int sendFile(File file, String name){
         Teamimplementation teamI = new Teamimplementation();
         return teamI.sendFile(file, name, this.currIdHack);
