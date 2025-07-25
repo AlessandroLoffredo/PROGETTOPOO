@@ -12,9 +12,9 @@ import java.awt.event.WindowEvent;
 /**
  * Classe che permette di creare un Team.
  */
-public class CreaTeam {
-    private JPanel createPanel;
-    private JButton createButton;
+public class CambiaNickname {
+    private JPanel changePanel;
+    private JButton changeButton;
     private JPanel panel;
     private JTextField nickArea;
     private JPanel dataPanel;
@@ -31,7 +31,7 @@ public class CreaTeam {
      * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
      * @param controller     Il controller istanziato dalla classe Home.java
      */
-    public CreaTeam(JFrame frameChiamante, Controller controller) {
+    public CambiaNickname(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("Crea Team");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
@@ -49,15 +49,35 @@ public class CreaTeam {
 
         panel.setBackground(new Color(30, 30, 47));
         dataPanel.setBackground(new Color(30, 30, 47));
-        createPanel.setBackground(new Color(30, 30, 47));
+        changePanel.setBackground(new Color(30, 30, 47));
+        titlaLabel.setForeground(new Color(236, 240, 241));
 
         nickLabel.setForeground(new Color(236, 240, 241));
-        createButton.setForeground(new Color(37, 99, 235));
+        changeButton.setForeground(new Color(37, 99, 235));
 
-        createButton.addActionListener(new ActionListener() {
+        changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.createTeam(nickArea.getText());
+                int code = controller.changeNickname(nickArea.getText());
+                switch (code){
+                    case 1:
+                        break;
+                    case 0:
+                    case -1:
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Errore durante il cambio del nickname");
+                        break;
+                }
+                frameChiamante.setEnabled(true);
+                frame.dispose();
+            }
+        });
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                frameChiamante.setEnabled(true);
+                frame.dispose();
             }
         });
     }
