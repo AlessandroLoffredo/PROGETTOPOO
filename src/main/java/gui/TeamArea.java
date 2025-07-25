@@ -141,7 +141,6 @@ public class TeamArea {
                 int scelta = fileChooser.showOpenDialog(frame);
                 if(scelta == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
-                    System.out.println(file);
                     pathLabel.setText(file.toString());
                 }
             }
@@ -151,6 +150,23 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.sendFile(file, file.getName());
+                UIManager.put("Panel.background", new Color(30, 30, 47));
+                System.out.println(code);
+                switch (code){
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "Hai già caricato questo documento");
+                        System.out.println("Hai già caricato questo documento");
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(panel, "Inserimento del file andato a buon fine");
+                        System.out.println("SI");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del file");
+                        System.out.println("NO");
+                        break;
+                }
+            UIManager.put("Panel.background", new Color(240, 240, 240));
             }
         });
 

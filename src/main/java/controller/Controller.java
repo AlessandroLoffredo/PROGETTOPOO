@@ -9,6 +9,7 @@
     import java.nio.file.Files;
     import java.nio.file.Path;
     import java.time.LocalDate;
+    import java.time.ZoneId;
     import java.util.ArrayList;
     import java.util.Date;
 
@@ -23,9 +24,9 @@
         private PlatformAdmin plAdmin;
         private Hackathon hackathon;
         private int idHack;
-        private String sender;
         private byte[] photo;
         private int currIdHack;
+        private int idTeam;
         /**
          * Istanzia un nuovo controller.
          *
@@ -598,7 +599,17 @@
     }
 
     public int sendFile(File file, String name){
-        Teamimplementation teamI = new Teamimplementation();
-        return teamI.sendFile(file, name, this.currIdHack);
+        TeamImplementation teamI = new TeamImplementation();
+        int results = 0;
+        try{
+            results = teamI.sendFile(Files.readAllBytes(file.toPath()),
+            name, this.idTeam, new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            System.out.println(results);
+        } catch (IOException e) {
+            e.printStackTrace();
+            results = -2;
+        }
+        System.out.println(results);
+        return results;
     }
 }
