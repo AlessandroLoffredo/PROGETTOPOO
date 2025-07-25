@@ -37,6 +37,8 @@ public class TeamArea {
     private JLabel docLabel;
     private JFrame frame;
     private File file;
+    private JLabel pathLabel;
+
 
 
 
@@ -132,15 +134,16 @@ public class TeamArea {
                 int scelta = fileChooser.showOpenDialog(frame);
                 if(scelta == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
-                    //ogni persona può mandare un file? quanti ne mandiamo?
+                    System.out.println(file);
+                    pathLabel.setText(file.toString());
                 }
-            };
+            }
         });
 
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //GESTIONE CON DB PER VERIFICA DOC CON STESSO NOME GIA' INVIATO
+                int code = controller.sendFile(file, file.getName());
             }
         });
     }

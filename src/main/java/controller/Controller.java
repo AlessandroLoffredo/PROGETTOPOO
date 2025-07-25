@@ -576,4 +576,9 @@
         ParticipantImplementation parI = new ParticipantImplementation();
         parI.getRequests(requests, this.user.getUsername());
     }
+
+    public int sendFile(File file, String name){
+        Teamimplementation teamI = new Teamimplementation();
+        return teamI.sendFile(file, name, this.currIdHack);
+    }
 }
