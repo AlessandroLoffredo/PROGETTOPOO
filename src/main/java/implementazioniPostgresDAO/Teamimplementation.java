@@ -97,12 +97,30 @@ public class TeamImplementation {
             if(e.getMessage().contains("pkdoc")){
                 results = -1;
             }
-            
         } catch (Exception e){
             e.printStackTrace();
             results = -3;
         }
         System.out.println(results);
         return results;
+    }
+
+    public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments, int idTeam){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT D.dname, D.description, D.dComment FROM Doc D WHERE " +
+                    "D.idTeam  = ? ORDER BY D.loadDate DESC";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idTeam);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                docs.add(rs.getString(1));
+                files.add(rs.getBytes(2));
+                comments.add(rs.getString(3));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

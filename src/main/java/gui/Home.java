@@ -85,7 +85,10 @@ public class Home {
     public Home(){
 
         controller = new Controller(this);
-        controller.getHackList(data);
+        if(callDelete == 0){
+            controller.getHackList(data);
+            callDelete++;
+        }
 
         //CREO IMAGEICON, LA CONVERTO IN IMAGE PER RIDIMENSIONARE
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));

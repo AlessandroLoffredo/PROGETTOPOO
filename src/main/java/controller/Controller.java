@@ -454,6 +454,7 @@
             String problemDesc = (String) data.get(7);
             Date startRegDate = (Date) data.get(8);
             this.currIdHack = (int) data.get(9);
+            this.photo = (byte[]) data.get(10);
             this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
@@ -534,14 +535,24 @@
         this.photo = photo;
     }
 
-        public void getJudgesList(ArrayList<String> judges){
+    public void getJudgesList(ArrayList<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.idHack);
+    }
+
+    public void getActJudgesList(ArrayList<String> judges){
+        HackathonImplementation hackI = new HackathonImplementation();
+        hackI.getJudgesList(judges, this.currIdHack);
     }
 
     public String getOrganizer(){
         HackathonImplementation hackI = new HackathonImplementation();
         return hackI.getOrganizer(this.idHack);
+    }
+
+    public String getActOrganizer(){
+        HackathonImplementation hackI = new HackathonImplementation();
+        return hackI.getOrganizer(this.currIdHack);
     }
 
     public void getRanking(ArrayList<String> ranking, int idLastHack) {
@@ -611,5 +622,10 @@
         }
         System.out.println(results);
         return results;
+    }
+
+    public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments){
+        TeamImplementation teamI = new TeamImplementation();
+        teamI.getDocuments(docs, files, comments, this.idTeam);
     }
 }

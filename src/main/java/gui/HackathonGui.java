@@ -172,17 +172,21 @@ public class HackathonGui {
         }
 
         ArrayList<String> judges = new ArrayList<>();
-        controller.getJudgesList(judges);
-        if(judges.isEmpty()){
+        if(frameChiamante.equals(controller.getHome().getFrame())){
+            controller.getJudgesList(judges);
+            organizerArea.setText(controller.getOrganizer());
+        } else {
+            controller.getActJudgesList(judges);
+            organizerArea.setText(controller.getActOrganizer());
+        }
+        if (judges.isEmpty()) {
             judjesArea.setText("Al momento non sono stati ancora determinati i giudici per questo Hackathon");
         } else {
             judjesArea.setText("");
-            for(String s : judges){
+            for (String s : judges) {
                 judjesArea.append(s + "\n");
             }
         }
-
-        organizerArea.setText(controller.getOrganizer());
         //System.out.println(controller.getOrganizer());
         //System.out.println(controller.getIdHack());
 
@@ -207,7 +211,6 @@ public class HackathonGui {
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.getHackList(controller.getHome().getData());
                 controller.getHome().getFrame().setVisible(true);
                 controller.getHome().getFrame().repaint();
                 controller.setPhoto(null);

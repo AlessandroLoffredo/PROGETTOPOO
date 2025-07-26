@@ -7,6 +7,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -36,9 +38,11 @@ public class TeamArea {
     private JFrame frame;
     private File file;
     private JLabel pathLabel;
-
-
-
+    private JTextArea commentArea;
+    private JLabel commentLabel;
+    private ArrayList<String> documents;
+    private ArrayList<byte[]> files;
+    private ArrayList<String> comments;
 
     /**
      * Instanzia una nuova TeamArea.
@@ -111,10 +115,10 @@ public class TeamArea {
         hackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.findHack();
                 HackathonGui hackathonGui = new HackathonGui(frame, controller);
                 hackathonGui.getFrame().setVisible(true);
                 frame.dispose();
-
                 //BISOGNA FARE VERIFICA SU HACKATHON A CUI SI E' REGISTRATO IL TEAM
             }
         });
@@ -146,6 +150,16 @@ public class TeamArea {
             }
         });
 
+        documents = new ArrayList<>();          //TODO LE DEFINIZIONI SONO STATE FATTE SOPRA
+        files = new ArrayList<>();
+        comments = new ArrayList<>();
+        controller.getDocuments(documents, files, comments);
+        DefaultListModel<String> model1 = new DefaultListModel<>();
+        for(String doc : documents){
+            model1.addElement(doc);
+        }
+        docList.setModel(model1);
+
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,13 +171,23 @@ public class TeamArea {
                         JOptionPane.showMessageDialog(panel, "Hai già caricato questo documento");
                         System.out.println("Hai già caricato questo documento");
                         break;
+                    /*TODO L'AGGIUNTA DI UN DOC ROMPE LA PAGINA DOPO CHE SI TORNA ALLA HOME
+                        PROBABILMENTE A CAUSA DEL CAMBIO DI COLORE QUANDO AGGIUNGO IL DOC
+                        INOLTRE LE DATE NON TENGONO IL TIMESTAMP, QUINDI NON POSSIAMO ORDINARE I DOCUMENTI IN MODO PRECISO
+                     */
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Inserimento del file andato a buon fine");
-                        System.out.println("SI");
+                        model1.removeAllElements();
+                        files = new ArrayList<>();
+                        comments = new ArrayList<>();
+                        documents = new ArrayList<>();
+                        controller.getDocuments(documents, files, comments);
+                        for(String doc : documents){
+                            model1.addElement(doc);
+                        }
                         break;
                     default:
                         JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del file");
-                        System.out.println("NO");
                         break;
                 }
             UIManager.put("Panel.background", new Color(240, 240, 240));
@@ -207,6 +231,42 @@ public class TeamArea {
                         cambiaNicknameFrame.requestFocus();
                     }
                 });
+            }
+        });
+
+
+        docList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedIndex = docList.locationToIndex(e.getPoint());
+                System.out.println(selectedIndex);
+                if(e.getClickCount() == 1){
+                    String commento = comments.get(selectedIndex);
+                    if (commento != null) {
+                        commentArea.setText(commento);
+                    }else{
+                        commentArea.setText("Il documento non è stato ancora commentato");
+                    }
+                }else if (e.getClickCount() == 2) { // Rileva il doppio click
+                    if (selectedIndex == -1) return;
+                    try {
+                        // Crea un file temporaneo in memoria
+                        Path tempFile = Files.createTempFile("temp_", ".pdf");
+                        Files.write(tempFile, files.get(selectedIndex));
+
+                        // Apri con l'applicazione predefinita
+                        Desktop.getDesktop().open(tempFile.toFile());
+
+                        // Elimina il file all'uscita
+                        tempFile.toFile().deleteOnExit();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        JOptionPane.showMessageDialog(docList,
+                                "Errore nell'apertura del file",
+                                "Errore",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         });
     }

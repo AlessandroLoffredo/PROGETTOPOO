@@ -69,6 +69,7 @@ public class ParticipantImplementation {
                 data.add(rs.getString("problemDesc"));
                 data.add(rs.getDate("startRegDate"));
                 data.add(rs.getInt("idHack"));
+                data.add(rs.getBytes("photo"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
