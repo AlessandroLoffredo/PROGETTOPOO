@@ -51,7 +51,7 @@
             <children>
               <component id="8dbe8" class="javax.swing.JButton" binding="loadDocButton">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="JetBrains Mono"/>
@@ -60,7 +60,7 @@
               </component>
               <component id="f8060" class="javax.swing.JButton" binding="sendButton">
                 <constraints>
-                  <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="JetBrains Mono"/>
@@ -72,13 +72,13 @@
                   <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="ccc18" class="javax.swing.JLabel" binding="pathLabel">
+              <component id="faf7d" class="javax.swing.JTextArea" binding="pathArea">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
                 </constraints>
-                <properties>
-                  <text value=""/>
-                </properties>
+                <properties/>
               </component>
             </children>
           </grid>

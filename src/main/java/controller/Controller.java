@@ -325,7 +325,9 @@
     }
 
     public int subscribe(LocalDate start, LocalDate end){
-        if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
+        if (!(this.hackathon.getEndDate().after(new Date()))){
+            return -4;
+        } else if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
             return -1;
         } else if (this.hackathon.getStartRegDate().after(new Date())) {
             return -2;
@@ -333,7 +335,7 @@
         else{
             UsersImplementation userI = new UsersImplementation();
             if(userI.veryfingIsFree(this.user.getUsername(), start, end) == 1){
-                return userI.subscribe(this.user.getUsername(), this.idHack);
+                return userI.subscribe(this.user.getUsername(), this.idHack); //QUI DOVREBBE RESTITUIRE -4 SE GENERE ECCEZIONE, NON CONVIENE VERIFICARE A PRIORI CHE LA DATA DI FINE NON SIA STATA SUPERATA?
             }else{
                 return -3;
             }

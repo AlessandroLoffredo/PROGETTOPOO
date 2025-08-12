@@ -37,7 +37,7 @@ public class Login {
 
      */
     public Login(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Login");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.pack();
         frame.setVisible(true);
@@ -91,14 +91,14 @@ public class Login {
                                 frame.dispose();
                                 break;
                             default:
-                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
+                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
                                 usernameArea.setText("");
                                 passwordArea.setText("");
                                 break;
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
                         usernameArea.setText("");
                         passwordArea.setText("");
                     }

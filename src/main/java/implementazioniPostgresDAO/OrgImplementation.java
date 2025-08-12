@@ -111,7 +111,7 @@ public class OrgImplementation implements OrgInterface {
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H, " + tabella + " T " +
-                         "WHERE H.idHack = T.idHack AND username = ? AND H.endDate > CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
+                         "WHERE H.idHack = T.idHack AND username = ? AND H.endDate >= CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
 //          stmt.setString(1, tabella);
 //          stmt.setString(2, tabella);

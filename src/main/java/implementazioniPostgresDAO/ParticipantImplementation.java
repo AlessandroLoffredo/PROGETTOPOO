@@ -53,7 +53,7 @@ public class ParticipantImplementation {
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * FROM HACKATHON H, TEAM T, PARTICIPANT P " +
                     "WHERE T.idHack = H.idHack AND T.idTeam = P.idTeam AND P.username = ? " +
-                    "AND H.endDate > CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
+                    "AND H.endDate >= CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();

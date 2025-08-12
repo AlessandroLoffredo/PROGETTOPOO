@@ -2,10 +2,8 @@ package implementazioniPostgresDAO;
 
 import database.ConnessioneDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TeamImplementation {
@@ -76,6 +74,49 @@ public class TeamImplementation {
                 teammates.add(rs.getString("username"));
             }
         } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public int sendFile(byte[] file, String name, int idTeam, LocalDate dataUpload){
+        int results = 0;
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "INSERT INTO doc (dname, loaddate, description, idTeam) " +
+                    "VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, name);
+            stmt.setDate(2, Date.valueOf(dataUpload));
+            stmt.setBytes(3, file);
+            stmt.setInt(4, idTeam);
+            results = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if(e.getMessage().contains("pkdoc")){
+                results = -1;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            results = -3;
+        }
+        System.out.println(results);
+        return results;
+    }
+
+    public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments, int idTeam){
+        try(Connection conn = ConnessioneDatabase.getInstance().connection){
+            String sql = "SELECT D.dname, D.description, D.dComment FROM Doc D WHERE " +
+                    "D.idTeam  = ? ORDER BY D.loadDate DESC";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idTeam);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                docs.add(rs.getString(1));
+                files.add(rs.getBytes(2));
+                comments.add(rs.getString(3));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

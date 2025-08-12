@@ -37,7 +37,7 @@ public class TeamArea {
     private JLabel docLabel;
     private JFrame frame;
     private File file;
-    private JLabel pathLabel;
+    private JTextArea pathArea;
     private JTextArea commentArea;
     private JLabel commentLabel;
     private ArrayList<String> documents;
@@ -54,7 +54,7 @@ public class TeamArea {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public TeamArea(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Area Team");
+        frame = new JFrame("Hackathon");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -87,6 +87,8 @@ public class TeamArea {
         nickArea.setForeground(new Color(236, 240, 241));
         docLabel.setForeground(new Color(30, 30, 47));
         docList.setForeground(new Color(30, 30, 47));
+        commentArea.setBackground(new Color(236, 240, 241));
+        commentArea.setForeground(new Color(30, 30, 47));
         participantsList.setForeground(new Color(30, 30, 47));
         titleLabel.setForeground(new Color(236, 240, 241));
         cambiaNicknameButton.setForeground(new Color(37, 99, 235));
@@ -96,7 +98,17 @@ public class TeamArea {
         sendButton.setForeground(new Color(37, 99, 235));
 
         docList.setBorder(new LineBorder(new Color(30, 30, 47)));
-        docList.setPreferredSize(new Dimension(100, 100));
+        docList.setMaximumSize(new Dimension(100, 100));
+        commentArea.setBorder(new LineBorder(new Color(30, 30, 47)));
+        pathArea.setMaximumSize(new Dimension(100, 100));
+        pathArea.setBorder(null);
+        pathArea.setBackground(null);
+        pathArea.setForeground(new Color(30, 30, 47));
+        pathArea.setLineWrap(true);
+        pathArea.setWrapStyleWord(true);
+
+
+
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -145,8 +157,9 @@ public class TeamArea {
                 int scelta = fileChooser.showOpenDialog(frame);
                 if(scelta == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
-                    pathLabel.setText(file.toString());
+                    pathArea.setText(file.toString());
                 }
+                UIManager.put("Panel.background", new Color(30, 30, 47));
             }
         });
 
@@ -164,7 +177,7 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.sendFile(file, file.getName());
-                UIManager.put("Panel.background", new Color(30, 30, 47));
+                //UIManager.put("Panel.background", new Color(30, 30, 47));
                 System.out.println(code);
                 switch (code){
                     case -1:
@@ -190,7 +203,7 @@ public class TeamArea {
                         JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del file");
                         break;
                 }
-            UIManager.put("Panel.background", new Color(240, 240, 240));
+            //UIManager.put("Panel.background", new Color(240, 240, 240));
             }
         });
 

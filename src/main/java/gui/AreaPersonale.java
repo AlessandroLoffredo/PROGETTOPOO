@@ -167,6 +167,7 @@ public class AreaPersonale {
                     participantComboBox.addItem("Nessun partecipante disponibile");
                     participantComboBox.setEnabled(false);
                 } else {
+                    participantComboBox.addItem("Seleziona un partecipante");
                     for (String par : participants) {
                         participantComboBox.addItem(par);
                     }
