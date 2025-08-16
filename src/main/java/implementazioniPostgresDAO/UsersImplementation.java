@@ -101,7 +101,7 @@ public class UsersImplementation implements UsersInterface {
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H " +
-                         "WHERE H.endDate < CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
+                         "WHERE H.endDate < CURRENT_DATE ORDER BY H.endDate DESC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){

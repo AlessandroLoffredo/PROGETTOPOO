@@ -172,14 +172,14 @@ public class HackathonGui {
         }
 
         ArrayList<String> judges = new ArrayList<>();
-        /*if(frameChiamante.equals(controller.getHome().getFrame())){
+        if(controller.getCurrIdHack() == -1){
             controller.getJudgesList(judges);
             organizerArea.setText(controller.getOrganizer());
         } else {
             controller.getActJudgesList(judges);
             organizerArea.setText(controller.getActOrganizer());
-        }*/
-        controller.getJudgesList(judges);
+        }
+        //controller.getJudgesList(judges);
         organizerArea.setText(controller.getOrganizer());
         if (judges.isEmpty()) {
             judjesArea.setText("Al momento non sono stati ancora determinati i giudici per questo Hackathon");

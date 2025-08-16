@@ -43,6 +43,8 @@
             this.home = home;
             this.hackathon = null;
             this.photo = null;
+            this.currIdHack = -1;
+            //questa inizializzazioen serve a capire se chi si è loggato è legato a qualche hackathon che si sta svolgendo
         }
 
 
@@ -629,5 +631,9 @@
     public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments){
         TeamImplementation teamI = new TeamImplementation();
         teamI.getDocuments(docs, files, comments, this.idTeam);
+    }
+
+    public int getCurrIdHack() {
+        return currIdHack;
     }
 }
