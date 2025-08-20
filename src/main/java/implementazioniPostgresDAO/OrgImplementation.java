@@ -9,15 +9,15 @@ import java.util.ArrayList;
 
 public class OrgImplementation implements OrgInterface {
     @Override
-    public int setupDate(LocalDate date, String username) {
+    public int setupDate(LocalDate date, int idHack) {
         int resultsUp = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "UPDATE Hackathon " +
                     "SET startRegDate = ? " +
-                    "WHERE idHack = (SELECT O.idHack FROM Organizer O WHERE O.username = ?)";
+                    "WHERE idHack = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(date));
-            stmt.setString(2, username);
+            stmt.setInt(2, idHack);
             resultsUp = stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -69,32 +69,41 @@ public class OrgImplementation implements OrgInterface {
     public void getDates(String username, LocalDate dates[]){
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT H.startDate, H.endDate, H.startRegDate FROM Hackathon H, Organizer O " +
-                    "WHERE H.idHack = O.idHack AND O.username = ?";
+                    "WHERE H.idHack = O.idHack AND O.username = ? AND H.endDate >= CURRENT_DATE " +
+                    "ORDER BY H.endDate ASC " +
+                    "LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 dates[0] = rs.getDate("startDate").toLocalDate();
                 dates[1] = rs.getDate("endDate").toLocalDate();
-                dates[2] = rs.getDate("startRegDate").toLocalDate();
+                // Gestisci il caso in cui startRegDate sia null
+                java.sql.Date startRegDate = rs.getDate("startRegDate");
+                if (startRegDate != null) {
+                    dates[2] = startRegDate.toLocalDate();
+                } else {
+                    dates[2] = null; // o un valore di default
+                }
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public int inviteUser(String sender, String receiver){
+    public int inviteUser(String sender, String receiver, int idHack){
         int inserted = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "INSERT INTO Invites (organizer, idhackorg, inviteduser) " +
                     "SELECT ?, H.idHack, ? FROM Hackathon H, Organizer O " +
-                    "WHERE H.idHack = O.idHack AND O.username = ? AND ? NOT IN ( " +
+                    "WHERE H.idHack = ? AND O.username = ? AND H.idHack = O.idHack AND ? NOT IN ( " +
                     "SELECT I.invitedUser FROM Invites I WHERE I.idHackOrg = H.idHack)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
-            stmt.setString(3, sender);
-            stmt.setString(4, receiver);
+            stmt.setInt(3, idHack);
+            stmt.setString(4, sender);
+            stmt.setString(5, receiver);
             inserted = stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

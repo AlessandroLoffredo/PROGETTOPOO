@@ -236,7 +236,7 @@ public class HackathonGui {
                         JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
                     case -2:
-                        JOptionPane.showMessageDialog(panel, "Le iscrizioni non sono ancora cominciate");
+                        JOptionPane.showMessageDialog(panel, "Le iscrizioni non sono ancora cominciate o non sono state ancora definite");
                         break;
                     case -1:
                         JOptionPane.showMessageDialog(panel, "L'Hackathon ha raggiunto il massimo degli iscritti", "INFO", JOptionPane.INFORMATION_MESSAGE);

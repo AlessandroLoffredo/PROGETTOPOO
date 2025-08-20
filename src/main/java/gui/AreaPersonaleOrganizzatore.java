@@ -184,9 +184,9 @@ public class AreaPersonaleOrganizzatore {
 
         LocalDate[] dates = new LocalDate[3];
         controller.getDates(dates);
+        System.out.println(dates[0] + " + " + dates[1]);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-
         if (controller.isStarted()) {
             organizerPanel.setEnabled(false);
             datePanel.setEnabled(false);
@@ -206,11 +206,10 @@ public class AreaPersonaleOrganizzatore {
                 inviaRichiestaButton.setEnabled(false);
             }
         } else {
-            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
+            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), new Date(), startDate, Calendar.DAY_OF_MONTH);
             spinner1.setModel(startModel);
             JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
             spinner1.setEditor(startEditor);
-            spinner1.setValue(new Date());
         }
 
 

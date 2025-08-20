@@ -294,25 +294,25 @@ public class AdminGui {
                         int code = controller.handleCreateHackathon(titleArea.getText(), venueArea.getText(), startLDate, endLDate, n, ((int) comboBox.getSelectedItem()), organizerComboBox.getSelectedItem().toString(), file);
                         switch (code) {
                             case -4:
-                                JOptionPane.showMessageDialog(panel, "L'Hackathon deve durare almeno un giorno");
+                                JOptionPane.showMessageDialog(null, "L'Hackathon deve durare almeno un giorno");
                                 break;
                             case -3:
-                                JOptionPane.showMessageDialog(panel, "L'Hackathon deve distare almeno una settimana dal giorno corrente");
+                                JOptionPane.showMessageDialog(null, "L'Hackathon deve distare almeno una settimana dal giorno corrente");
                                 startSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                                 endSpinner.setValue(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()));
                                 break;
                             case -2:
-                                JOptionPane.showMessageDialog(panel, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
+                                JOptionPane.showMessageDialog(null, "Il titolo deve avere massimo 50 caratteri\nLa sede deve avere massimo 25 caratteri");
                                 titleArea.setText("");
                                 venueArea.setText("");
                                 break;
                             case 0:
-                                JOptionPane.showMessageDialog(panel, "Creazione del nuovo evento avvenuta con successo");
+                                JOptionPane.showMessageDialog(null, "Creazione del nuovo evento avvenuta con successo");
                                 createHackathonPanel.setVisible(false);
                                 break;
                             case -1:
                             default:
-                                JOptionPane.showMessageDialog(panel, "Errore durante la creazione del nuovo hackathon");
+                                JOptionPane.showMessageDialog(null, "Errore durante la creazione del nuovo hackathon");
                                 titleArea.setText("");
                                 maxParArea.setText("");
                                 venueArea.setText("");
@@ -324,7 +324,7 @@ public class AdminGui {
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
-                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la creazione dell'evento");
+                        JOptionPane.showMessageDialog(null, "Qualcosa è andato storto durante la creazione dell'evento");
                         titleArea.setText("");
                         maxParArea.setText("");
                         venueArea.setText("");
@@ -372,11 +372,12 @@ public class AdminGui {
                 UIManager.put("Panel.background", new Color(240, 240, 240));
                 JFileChooser fileChooser = new JFileChooser();
                 int scelta = fileChooser.showOpenDialog(frame);
-                if(scelta == JFileChooser.APPROVE_OPTION){
+                if (scelta == JFileChooser.APPROVE_OPTION) {
                     file = fileChooser.getSelectedFile();
                     System.out.println(file);
                     pathLabel.setText(file.toString());
-
+                }else{
+                    UIManager.put("Panel.background", new Color(30, 30, 47));
                 }
             }
         });

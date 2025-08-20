@@ -206,7 +206,7 @@
      */
     public int sendRequestOrganizer(String username){
         OrgImplementation orgI = new OrgImplementation();
-        return orgI.inviteUser(this.user.getUsername(), username);
+        return orgI.inviteUser(this.user.getUsername(), username, this.currIdHack);
     }
 
     /**
@@ -294,7 +294,7 @@
      */
     public int handleStartSignUp(LocalDate date){
         OrgImplementation orgI = new OrgImplementation();
-        return orgI.setupDate(date, this.user.getUsername());
+        return orgI.setupDate(date, this.currIdHack);
     }
 
     public void getDates(LocalDate[] dates){
@@ -331,7 +331,7 @@
             return -4;
         } else if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
             return -1;
-        } else if (this.hackathon.getStartRegDate().after(new Date())) {
+        } else if (this.hackathon.getStartRegDate() == null || this.hackathon.getStartRegDate().after(new Date())) {
             return -2;
         }
         else{
