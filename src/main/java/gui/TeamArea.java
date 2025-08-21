@@ -144,6 +144,13 @@ public class TeamArea {
             }
         });
 
+        if(!controller.isHackStarted()){
+            loadDocButton.setEnabled(false);
+            sendButton.setEnabled(false);
+            loadDocButton.setToolTipText("L'evento non è ancora cominciato");
+            sendButton.setToolTipText("L'evento non è ancora cominciato");
+        }
+
         loadDocButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -177,7 +184,7 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.sendFile(file, file.getName());
-                //UIManager.put("Panel.background", new Color(30, 30, 47));
+                UIManager.put("Panel.background", new Color(30, 30, 47));
                 System.out.println(code);
                 switch (code){
                     case -1:
@@ -187,6 +194,9 @@ public class TeamArea {
                     /*TODO L'AGGIUNTA DI UN DOC ROMPE LA PAGINA DOPO CHE SI TORNA ALLA HOME
                         PROBABILMENTE A CAUSA DEL CAMBIO DI COLORE QUANDO AGGIUNGO IL DOC
                         INOLTRE LE DATE NON TENGONO IL TIMESTAMP, QUINDI NON POSSIAMO ORDINARE I DOCUMENTI IN MODO PRECISO
+                     */
+                    /*
+                    TODO RECENTE 21/08 SEMBRA FUNZIONARE
                      */
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Inserimento del file andato a buon fine");

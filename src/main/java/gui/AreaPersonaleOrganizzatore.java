@@ -206,7 +206,7 @@ public class AreaPersonaleOrganizzatore {
                 inviaRichiestaButton.setEnabled(false);
             }
         } else {
-            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), new Date(), startDate, Calendar.DAY_OF_MONTH);
+            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), new Date(), startDate, Calendar.DAY_OF_YEAR);
             spinner1.setModel(startModel);
             JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
             spinner1.setEditor(startEditor);

@@ -128,7 +128,7 @@ public class OrgImplementation implements OrgInterface {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                System.out.println(rs.getString("title") + rs.getString("problemDesc"));
+                System.out.println(rs.getString("title") + " + " + rs.getString("problemDesc"));
                 data.add(rs.getString("title"));
                 data.add(rs.getString("venue"));
                 data.add(rs.getDate("startDate"));
@@ -142,6 +142,8 @@ public class OrgImplementation implements OrgInterface {
                 data.add(rs.getBytes("photo"));
             }
         } catch (SQLException e){
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

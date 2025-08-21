@@ -224,7 +224,6 @@ public class AreaPersonale {
 
 
 
-//        frame.add(new JScrollPane(requestList));
 
         requestList.addListSelectionListener(new ListSelectionListener() {
             @Override

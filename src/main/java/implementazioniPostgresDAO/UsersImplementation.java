@@ -40,8 +40,8 @@ public class UsersImplementation implements UsersInterface {
     public void getInvites(ArrayList<String> requests, String receiver){
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT I.organizer, H.title FROM Invites I, Hackathon H WHERE I.idHackOrg = H.idHack AND " +
-                         "H.startRegDate >= CURRENT_DATE AND " +
-                         "CURRENT_DATE >= (H.startDate - 30)  AND " +
+                         "(H.startRegDate >= CURRENT_DATE OR H.startRegDate IS NULL) AND " +
+                         "CURRENT_DATE >= (H.startDate - 7)  AND " +
                          "I.invitedUser = ?;";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, receiver);
@@ -61,7 +61,8 @@ public class UsersImplementation implements UsersInterface {
             String sql = "INSERT INTO judge(username, idHack) " +
                          "SELECT ?, O.idHack FROM Organizer O " +
                          "JOIN Hackathon H ON O.idHack = H.idHack " +
-                         "WHERE O.username = ? AND H.endDate >= CURRENT_DATE";
+                         "WHERE O.username = ? AND H.startDate >= CURRENT_DATE " +
+                         "ORDER BY H.startDate ASC LIMIT 1";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, receiver);
             stmt.setString(2, sender);
@@ -78,10 +79,13 @@ public class UsersImplementation implements UsersInterface {
 
     public int declineInvite(String sender, String receiver){
         int results = 0;
+        System.out.println(sender + " + " + receiver);
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "DELETE FROM Invites I WHERE I.organizer = ? AND I.invitedUser = ? AND I.idHackOrg = (" +
-                         "SELECT H.idHack FROM Hackathon H WHERE H.startDate >= CURRENT_DATE AND H.idHack = " +
-                         "(SELECT O.idHack FROM Organizer O WHERE O.username = ?))";
+                    "SELECT H.idHack FROM Hackathon H " +
+                    "JOIN Organizer O ON H.idHack = O.idHack " +
+                    "WHERE O.username = ? AND H.startDate >= CURRENT_DATE " +
+                    "ORDER BY H.startDate ASC LIMIT 1)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
@@ -94,6 +98,7 @@ public class UsersImplementation implements UsersInterface {
             e.printStackTrace();
             results = 0;
         }
+        System.out.println(results);
         return results;
     }
 

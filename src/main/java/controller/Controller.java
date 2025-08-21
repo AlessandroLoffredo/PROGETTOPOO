@@ -79,10 +79,9 @@
          * @param username L'username dell'utente che intende accedere
          * @param password La password dell'utente che intende accedere
          * @return int : Codice che indentifica le diverse situazioni di un accesso.
-         * @throws Exception Gestione della situazione in cui non accada nessuna delle opzioni previste.
          */
         //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
-        public int handleLogin(String username, char[] password) throws Exception{
+        public int handleLogin(String username, char[] password) {
             String[] names = new String[2];
             AuthImplementation authI = new AuthImplementation();
             int log = authI.logIn(username, new String(password), names);
@@ -184,6 +183,7 @@
         this.user = null;
         this.plAdmin = null;
         this.hackathon = null;
+        this.currIdHack = -1;
     }
 
     /**
@@ -206,6 +206,7 @@
      */
     public int sendRequestOrganizer(String username){
         OrgImplementation orgI = new OrgImplementation();
+        System.out.println(this.user.getUsername() + " + " + username + " + " +this.currIdHack);
         return orgI.inviteUser(this.user.getUsername(), username, this.currIdHack);
     }
 
@@ -316,6 +317,9 @@
         return orgI.isStarted(this.user.getUsername());
     }
 
+    public boolean isHackStarted(){
+        return !this.hackathon.getStartDate().after(new Date());
+    }
     /**
      * Create team int.
      *
@@ -337,7 +341,11 @@
         else{
             UsersImplementation userI = new UsersImplementation();
             if(userI.veryfingIsFree(this.user.getUsername(), start, end) == 1){
-                return userI.subscribe(this.user.getUsername(), this.idHack); //QUI DOVREBBE RESTITUIRE -4 SE GENERE ECCEZIONE, NON CONVIENE VERIFICARE A PRIORI CHE LA DATA DI FINE NON SIA STATA SUPERATA?
+                int code = userI.subscribe(this.user.getUsername(), this.idHack); //QUI DOVREBBE RESTITUIRE -4 SE GENERE ECCEZIONE, NON CONVIENE VERIFICARE A PRIORI CHE LA DATA DI FINE NON SIA STATA SUPERATA?
+                if(code == 1){
+                    this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
+                }
+                return code;
             }else{
                 return -3;
             }
@@ -439,27 +447,30 @@
         return !(this.hackathon.getStartRegDate()).before(new Date());
     }
 
-    public void findHack(){
+    public void findHack() {
         ArrayList<Object> data = new ArrayList<>();
-        if(this.user instanceof Organizer || this.user instanceof Judge){
+        if (this.user instanceof Organizer || this.user instanceof Judge) {
             OrgImplementation orgI = new OrgImplementation();
             orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
-        }else{
+        } else if (this.user instanceof Participant){
             ParticipantImplementation parI = new ParticipantImplementation();
             parI.findHack(this.user.getUsername(), data);
+        } else {
+            return;
         }
-            String title = (String) data.get(0);
-            String venue = (String) data.get(1);
-            Date startDate = (Date) data.get(2);
-            Date endDate = (Date) data.get(3);
-            int maxReg = (int) data.get(4);
-            int maxTeamPar = (int) data.get(5);
-            int regCounter = (int) data.get(6);
-            String problemDesc = (String) data.get(7);
-            Date startRegDate = (Date) data.get(8);
-            this.currIdHack = (int) data.get(9);
-            this.photo = (byte[]) data.get(10);
-            this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+        String title = (String) data.get(0);
+        String venue = (String) data.get(1);
+        Date startDate = (Date) data.get(2);
+        Date endDate = (Date) data.get(3);
+        int maxReg = (int) data.get(4);
+        int maxTeamPar = (int) data.get(5);
+        int regCounter = (int) data.get(6);
+        String problemDesc = (String) data.get(7);
+        Date startRegDate = (Date) data.get(8);
+        this.currIdHack = (int) data.get(9);
+        this.photo = (byte[]) data.get(10);
+        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+        System.out.println(this.hackathon.getTitle());
     }
 
     public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
@@ -468,7 +479,7 @@
         currentStartArea.setText(this.getHackathon().getStartDate().toString());
         currentEndArea.setText(this.getHackathon().getEndDate().toString());
         currentMaxTeamParArea.setText(String.valueOf(getHackathon().getMaxTeamParticipant()));
-        if(this.getHackathon().getProblemDescription() == null || this.getHackathon().getProblemDescription().equals("")){
+        if(this.getHackathon().getProblemDescription() == null || this.getHackathon().getProblemDescription().isEmpty()){
             currentProbDescArea.setText("Descrizione problema ancora non definita");
         } else {
             currentProbDescArea.setText(this.getHackathon().getProblemDescription());
