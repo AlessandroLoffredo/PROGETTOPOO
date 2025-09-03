@@ -8,15 +8,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class HackathonImplementation implements HackathonInterface {
-    //TODO DOBBIAMO VALUTARE SE NE SONO TROPPI QUANDO FERMARCI NEL CARICARLI
-    public void getHackList (ArrayList<ArrayList<Object>> data){
+    public void getHackList (List<List<Object>> data){
+        PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H " +
-                         "ORDER BY H.startDate DESC";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+                         "ORDER BY H.startDate DESC " +
+                         "LIMIT 15";
+            stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 ArrayList<Object> hack = new ArrayList<>();
@@ -36,15 +38,23 @@ public class HackathonImplementation implements HackathonInterface {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void getJudgesList (ArrayList<String> judges, int idHack){
+    public void getJudgesList (List<String> judges, int idHack){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT J.username " +
                          "FROM Judge J " +
                          "WHERE J.idHack = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idHack);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
@@ -52,16 +62,24 @@ public class HackathonImplementation implements HackathonInterface {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public String getOrganizer (int idHack){
         String result = null;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT O.username " +
                          "FROM Organizer O " +
                          "WHERE O.idHack = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idHack);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
@@ -69,16 +87,24 @@ public class HackathonImplementation implements HackathonInterface {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }
 
-    public void getRanking (ArrayList<String> ranking, int idHack){
+    public void getRanking (List<String> ranking, int idHack){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Ranking " +
                          "WHERE idHack = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idHack);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
@@ -86,23 +112,35 @@ public class HackathonImplementation implements HackathonInterface {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void removeRequests(String idHacks){
-        int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT removeExpRequests(?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, idHacks);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                results = rs.getInt(1);
+                rs.getInt(1);
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

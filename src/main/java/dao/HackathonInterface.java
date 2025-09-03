@@ -1,10 +1,11 @@
 package dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface HackathonInterface {
-    void getHackList (ArrayList<ArrayList<Object>> data);
-    void getJudgesList (ArrayList<String> judges, int idHack);
+    void getHackList (List<List<Object>> data);
+    void getJudgesList (List<String> judges, int idHack);
     String getOrganizer (int idHack);
-    void getRanking (ArrayList<String> ranking, int idHack);
+    void getRanking (List<String> ranking, int idHack);
+    void removeRequests(String idHacks);
 }

@@ -34,7 +34,7 @@ public class CambiaUsername {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public CambiaUsername(JFrame frameChiamante, Controller controller){
-        frame = new JFrame("Cambia username");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -47,7 +47,7 @@ public class CambiaUsername {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-
+        String emoji = "\uD83D\uDD12";
 
         panel.setBackground(new Color(30, 30, 47));
         usernamePanel.setBackground(new Color(30, 30, 47));
@@ -58,7 +58,7 @@ public class CambiaUsername {
         changeButton.setForeground(new Color(37, 99, 235));
         passwordLabel.setForeground(new Color(236, 240, 241));
 
-        lockButton.setText("\uD83D\uDD12");
+        lockButton.setText(emoji);
         lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         lockButton.setBackground(new Color(30, 30, 47));
         lockButton.setForeground(new Color(236, 240, 241));
@@ -100,6 +100,7 @@ public class CambiaUsername {
                                 break;
                         }
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
                         passwordArea.setText("");
                         usernameArea.setText("");
@@ -120,11 +121,11 @@ public class CambiaUsername {
         lockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lockButton.getText().equals("\uD83D\uDD12")) {
+                if (lockButton.getText().equals(emoji)) {
                     lockButton.setText("\uD83D\uDD13");
                     passwordArea.setEchoChar((char) 0);
                 } else {
-                    lockButton.setText("\uD83D\uDD12");
+                    lockButton.setText(emoji);
                     passwordArea.setEchoChar('*');
                 }
             }

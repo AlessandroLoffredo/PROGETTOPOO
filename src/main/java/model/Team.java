@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe che contiene gli elementi principali di un Team, elemento che partecipa all'HAckathon e che effettivamente entra in gara per vincere.
@@ -10,7 +11,6 @@ public class Team {
     private ArrayList<Integer> judgesMark;
     private final String nickname;
     private ArrayList<Participant> parList;
-    private Hackathon hackathon;
     private ArrayList<Document> docList;
 
 
@@ -26,7 +26,6 @@ public class Team {
         this.judgesMark = new ArrayList<>();
         this.finalMark = 0;
         this.parList = new ArrayList<>();
-        this.hackathon = hackathon;
         this.docList = new ArrayList<>();
     }
 
@@ -73,7 +72,7 @@ public class Team {
      *
      * @return ArrayList: lista dei partecipanti che fanno parte del team.
      */
-    public ArrayList<Participant> getParList(){
+    public List<Participant> getParList(){
         return parList;
     }
 
@@ -82,7 +81,7 @@ public class Team {
      *
      * @return ArrayList: lista dei documenti del team.
      */
-    public ArrayList<Document> getDocList(){
+    public List<Document> getDocList(){
         return docList;
     }
 
@@ -95,30 +94,4 @@ public class Team {
         this.docList.add(doc);
     }
 
-    /**
-     * Permette di calcolare il voto finale del team facendo una media dei voti ricevuti dai giudici.
-     */
-    public void avgMark(){
-        for (int mark : this.judgesMark) {
-            this.finalMark += (short) mark;
-        }
-        if (!this.judgesMark.isEmpty()) {
-            this.finalMark /= this.judgesMark.size();
-            this.finalMark = (short) Math.round(this.finalMark);
-        } else {
-            System.out.println("La lista dei punteggi è vuota. Impossibile calcolare il finalMark.");
-        }
-    }
-
-    public static int create(String nickname, Participant creator){
-        //QUERY PER CONTROLLARE L'ESISTENZA DELLA COPPIA NICKNAME-HACKATHON (creator ha un metodo per sapere a quale hackathon partecipa)
-        int result = 0;
-        if(result == 0){
-            Team team = new Team(nickname, creator.getParHackathon());
-            team.addParticipant(creator);
-            return 0;
-        }else{
-            return -1;
-        }
-    }
 }

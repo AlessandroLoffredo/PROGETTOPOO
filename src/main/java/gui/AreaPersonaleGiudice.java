@@ -1,17 +1,17 @@
 package gui;
 
 import controller.Controller;
-import model.Document;
+
 
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -29,18 +29,17 @@ public class AreaPersonaleGiudice {
     private JPanel operationPanel;
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
-    private JList docList;
+    private JList<String> docList;
     private JPanel markPanel;
     private JTextArea problemArea;
     private JPanel problemPanel;
     private JButton sendProbButton;
     private JPanel selectExaminePanel;
-    private JComboBox teamComboBox;
+    private JComboBox<String> teamComboBox;
     private JButton selectButton;
     private JTextArea commentArea;
     private JButton loadButton;
     private JButton assigneButton;
-    private JComboBox teamComboBoxMark;
     private JSlider markSlider;
     private JLabel commentLabel;
     private JLabel markLabel;
@@ -85,7 +84,7 @@ public class AreaPersonaleGiudice {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -97,9 +96,11 @@ public class AreaPersonaleGiudice {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1000, 800);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
-
+        String font = "Segoe UI Emoji";
+        String error = "ERRORE";
+        String teamSelection = "Seleziona un team";
 
         panel.setBackground(new Color(30, 30, 47));
         scrollPanel.setBackground(new Color(236, 240, 241));
@@ -129,8 +130,6 @@ public class AreaPersonaleGiudice {
         commentArea.setBackground(new Color(236, 240, 241));
         commentArea.setForeground(new Color(30, 30, 47));
         markLabel.setForeground(new Color(30, 30, 47));
-        teamComboBoxMark.setBackground(new Color(236, 240, 241));
-        teamComboBoxMark.setForeground(new Color(30, 30, 47));
         markSlider.setForeground(new Color(37, 99, 235));
         markSlider.setBackground(new Color(236, 240, 241));
 
@@ -142,38 +141,38 @@ public class AreaPersonaleGiudice {
         loadButton.setForeground(new Color(37, 99, 235));
         assigneButton.setForeground(new Color(37, 99, 235));
         logoutButton.setForeground(new Color(37, 99, 235));
-
+        
         currentVenueLabel.setText("\uD83C\uDF10 Sede:");
-        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentVenueLabel.setForeground(new Color(30, 30, 47));
         currentVenueLabel.setBackground(new Color(236, 240, 241));
         currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
-        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentTitleLabel.setForeground(new Color(30, 30, 47));
         currentTitleLabel.setBackground(new Color(236, 240, 241));
         currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
-        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartLabel.setForeground(new Color(30, 30, 47));
         currentStartLabel.setBackground(new Color(236, 240, 241));
         currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
-        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentEndLabel.setForeground(new Color(30, 30, 47));
         currentEndLabel.setBackground(new Color(236, 240, 241));
         currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
-        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartRegLabel.setForeground(new Color(30, 30, 47));
         currentStartRegLabel.setBackground(new Color(236, 240, 241));
         currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
-        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxRegLabel.setForeground(new Color(30, 30, 47));
         currentMaxRegLabel.setBackground(new Color(236, 240, 241));
 
         currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
-        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentCounterLabel.setForeground(new Color(30, 30, 47));
         currentCounterLabel.setBackground(new Color(236, 240, 241));
         currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
-        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
         currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
         currentVenueArea.setForeground(new Color(30, 30, 47));
@@ -190,9 +189,6 @@ public class AreaPersonaleGiudice {
         commentArea.setBorder(new LineBorder(new Color(30, 30, 47)));
         docScrollPane.setBorder(new LineBorder(new Color(30, 30, 47)));
         scrollPane.setBorder(null);
-
-        controller.findHack();
-        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
 
         int commentWidth = commentArea.getWidth();
         commentArea.setPreferredSize(new Dimension(commentWidth, 100));
@@ -211,7 +207,6 @@ public class AreaPersonaleGiudice {
         markSlider.setMaximum(10);
         markSlider.setMinimum(0);
         markSlider.setValue(5);
-
         markSlider.setMinorTickSpacing(1); // Ogni step è di 1
         markSlider.setMajorTickSpacing(1); // Mostra i tick ogni 1 unità
         markSlider.setSnapToTicks(true); // Il cursore si muove esattamente sui tick
@@ -221,19 +216,23 @@ public class AreaPersonaleGiudice {
         problemArea.setWrapStyleWord(true);
         problemArea.setLineWrap(true);
 
+        DefaultListModel<String> model = new DefaultListModel<>();
+        docList.setModel(model);
+        ArrayList<byte[]> files = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> comments = new ArrayList<>();
 
-        if(problemArea.getText().equals("Descrizione problema ancora non definita")){
-            sendProbButton.setText("Carica descrizione problema");
-        } else {
-            sendProbButton.setText("Modifica la descrizione del problema");
-        }
-
+        controller.findHack();
+        controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
+        this.loadDescription();
+        this.fillTeams(controller, teamSelection);
 
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
                 controller.findHack();
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 frame.dispose();
             }
         });
@@ -259,63 +258,19 @@ public class AreaPersonaleGiudice {
         sendProbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (problemArea.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int code = controller.handleProblemDescription(problemArea.getText());
-                    if(code == 1){
-                        if (sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")) {
-                            JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
-                            sendProbButton.setText("Modifica descrizione problema");
-                        } else {
-                            JOptionPane.showMessageDialog(panel, "Descrizione modificata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(panel, "Errore nel caricamento della descrizione");
-                    }
-                }
+                sendProblem(controller);
             }
         });
 
 
-        teamComboBox.addItem("Seleziona un team");
-        teamComboBoxMark.addItem("Seleziona un Team");
-        ArrayList<String> teams = new ArrayList<>();
-
-        controller.getTeams(teams);
-        for(String team : teams) {
-            teamComboBox.addItem(team);
-            teamComboBoxMark.addItem(team);
-        }
-
-
-        DefaultListModel<String> model = new DefaultListModel<>();
-        docList.setModel(model);
-        ArrayList<byte[]> files = new ArrayList<>();
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> comments = new ArrayList<>();
 
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(teamComboBox.getSelectedItem().equals("Seleziona un team")){
-                    JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
-                    files.removeAll(files);
-                    names.removeAll(names);
-                    comments.removeAll(comments);
-                    model.removeAllElements();
-                    controller.handleLoadFile((String) teamComboBox.getSelectedItem(), files, names, comments);
-                    if(files.isEmpty() || names.isEmpty()){
-                        model.addElement("Questo team non ha caricato documenti");
-                        docList.setEnabled(false);
-                    }else{
-                        docList.setEnabled(true);
-                        for(String name : names){
-                            model.addElement(name);
-                        }
-                    }
+                loadDocs(controller, teamSelection, error, files, names, comments, model);
+                if(Date.valueOf(currentStartArea.getText()).after(new java.util.Date())){
+                    assigneButton.setEnabled(false);
+                    loadButton.setEnabled(false);
                 }
             }
         });
@@ -323,87 +278,35 @@ public class AreaPersonaleGiudice {
         docList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int selectedIndex = docList.locationToIndex(e.getPoint());
-                System.out.println(selectedIndex);
-                if(e.getClickCount() == 1){
-                    String commento = comments.get(selectedIndex);
-                    if (commento != null) {
-                        commentArea.setText(commento);
-                        commentArea.setEnabled(false);
-                        commentArea.setToolTipText("Documento già commentato");
-                        loadButton.setEnabled(false);
-                    }
-                }else if (e.getClickCount() == 2) { // Rileva il doppio click
-                    if (selectedIndex == -1) return;
-                    try {
-                        // Crea un file temporaneo in memoria
-                        Path tempFile = Files.createTempFile("temp_", ".pdf");
-                        Files.write(tempFile, files.get(selectedIndex));
-
-                        // Apri con l'applicazione predefinita
-                        Desktop.getDesktop().open(tempFile.toFile());
-
-                        // Elimina il file all'uscita
-                        tempFile.toFile().deleteOnExit();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(docList,
-                                "Errore nell'apertura del file",
-                                "Errore",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+                openDocs(e, comments, files);
             }
         });
 
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(commentArea.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(panel, "Scrivi un commento", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                }else if(docList.isSelectedIndex(-1) || teamComboBox.getSelectedItem().equals("Selezione un team")){
-                    JOptionPane.showMessageDialog(panel, "Selezione sia il team che il documento");
-                }else{
-                    int code = controller.handleComment(commentArea.getText(), (String) docList.getSelectedValue(), (String)teamComboBox.getSelectedItem());
-                    switch (code){
-                        case 0:
-                            JOptionPane.showMessageDialog(panel, "Non è stato possibile caricare il commento");
-                            break;
-                        case 1:
-                            JOptionPane.showMessageDialog(panel, "Commento caricato correttamente");
-                            commentArea.setEnabled(false);
-                            commentArea.setToolTipText("Documento già commentato");
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(panel, "Errore nel caricamento del documento");
-                            break;
-                    }
-                }
+                uploadComment(controller, error);
             }
         });
 
         assigneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(teamComboBoxMark.getSelectedItem().equals("Seleziona un team")){
-                    JOptionPane.showMessageDialog(panel, "Seleziona un team", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                if(teamComboBox.getSelectedItem().equals(teamSelection)){
+                    JOptionPane.showMessageDialog(panel, teamSelection, error, JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                    int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler assegnare: " + markSlider.getValue() + "\nal team: " + teamComboBoxMark.getSelectedItem(),"Assegna voto", JOptionPane.YES_NO_OPTION);
+                    int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler assegnare: " + markSlider.getValue() + "\nal team: " + teamComboBox.getSelectedItem(),"Assegna voto", JOptionPane.YES_NO_OPTION);
                     if(scelta == JOptionPane.YES_OPTION){
-                        int code = controller.handleAssignMark((String) teamComboBoxMark.getSelectedItem(), markSlider.getValue());
-                        switch (code){
-                            case 1:
-                                JOptionPane.showMessageDialog(panel, "Voto inserito correttamente");
-                                markSlider.setValue(markSlider.getValue());
-                                markSlider.setEnabled(false);
-                                markSlider.setToolTipText("Hai già inserito il voto per questo team");
-                                assigneButton.setEnabled(false);
-                                break;
-                            case  0:
-                            default:
-                                JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del voto");
-                                break;
+                        int code = controller.handleAssignMark((String) teamComboBox.getSelectedItem(), markSlider.getValue());
+                        if (code == 1) {
+                            JOptionPane.showMessageDialog(panel, "Voto inserito correttamente");
+                            markSlider.setValue(markSlider.getValue());
+                            markSlider.setEnabled(false);
+                            markSlider.setToolTipText("Hai già inserito il voto per questo team");
+                            assigneButton.setEnabled(false);
+                        } else {
+                            JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del voto");
                         }
                     }
                 }
@@ -413,29 +316,20 @@ public class AreaPersonaleGiudice {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.getHome().getFrame().setVisible(true);
                 controller.logout();
                 JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
                 controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 controller.getHome().getLoginButton().setText("Login");
+                frame.dispose();
             }
         });
 
-        teamComboBoxMark.addActionListener(new ActionListener() {
+        teamComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int grade = controller.getMark((String) teamComboBoxMark.getSelectedItem());
-                if (grade != -1) {
-                    markSlider.setValue(grade);
-                    markSlider.setEnabled(false);
-                    markSlider.setToolTipText("Hai già inserito il voto per questo team");
-                    assigneButton.setEnabled(false);
-                } else {
-                    markSlider.setEnabled(true);
-                    markSlider.setToolTipText(null);
-                    assigneButton.setEnabled(true);
-                }
+                lockMark(controller);
             }
         });
     }
@@ -448,5 +342,136 @@ public class AreaPersonaleGiudice {
      */
     public JFrame getFrame() {
         return frame;
+    }
+
+    private void loadDescription(){
+        if(problemArea.getText().equals("Descrizione problema ancora non definita")){
+            sendProbButton.setText("Carica descrizione problema");
+        } else {
+            sendProbButton.setText("Modifica la descrizione del problema");
+        }
+    }
+
+    private void fillTeams(Controller controller, String teamSelection){
+        teamComboBox.addItem(teamSelection);
+        ArrayList<String> teams = new ArrayList<>();
+
+        controller.getTeams(teams);
+        for(String team : teams) {
+            teamComboBox.addItem(team);
+        }
+    }
+
+    private void sendProblem(Controller controller){
+        if (problemArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int code = controller.handleProblemDescription(problemArea.getText());
+            if(code == 1){
+                if (sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")) {
+                    JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                    sendProbButton.setText("Modifica descrizione problema");
+                } else {
+                    JOptionPane.showMessageDialog(panel, "Descrizione modificata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(panel, "Errore nel caricamento della descrizione");
+            }
+        }
+    }
+
+    private void loadDocs(Controller controller, String teamSelection, String error,
+                          ArrayList<byte[]> files, ArrayList<String> names, ArrayList<String> comments,
+                          DefaultListModel<String> model){
+        if(teamComboBox.getSelectedItem().equals(teamSelection)){
+            JOptionPane.showMessageDialog(panel, teamSelection, error, JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            files.clear();
+            names.clear();
+            comments.clear();
+            model.removeAllElements();
+            controller.handleLoadFile((String) teamComboBox.getSelectedItem(), files, names, comments);
+            if(files.isEmpty() || names.isEmpty()){
+                model.addElement("Questo team non ha caricato documenti");
+                docList.setEnabled(false);
+                loadButton.setEnabled(false);
+                assigneButton.setEnabled(false);
+            }else{
+                docList.setEnabled(true);
+                loadButton.setEnabled(true);
+                assigneButton.setEnabled(true);
+                for(String name : names){
+                    model.addElement(name);
+                }
+            }
+        }
+    }
+
+    private void openDocs(MouseEvent e, ArrayList<String> comments, ArrayList<byte[]> files){
+        int selectedIndex = docList.locationToIndex(e.getPoint());
+        if(e.getClickCount() == 1){
+            String commento = comments.get(selectedIndex);
+            if (commento != null) {
+                commentArea.setText(commento);
+                commentArea.setEnabled(false);
+                commentArea.setToolTipText("Documento già commentato");
+                loadButton.setEnabled(false);
+            }
+        }else if (e.getClickCount() == 2) { // Rileva il doppio click
+            if (selectedIndex == -1) return;
+            try {
+                // Crea un file temporaneo in memoria
+                Path tempFile = Files.createTempFile("temp_", ".pdf");
+                Files.write(tempFile, files.get(selectedIndex));
+
+                // Apri con l'applicazione predefinita
+                Desktop.getDesktop().open(tempFile.toFile());
+
+                // Elimina il file all'uscita
+                tempFile.toFile().deleteOnExit();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(docList,
+                        "Errore nell'apertura del file",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void uploadComment(Controller controller, String error){
+        if(commentArea.getText().isEmpty()){
+            JOptionPane.showMessageDialog(panel, "Scrivi un commento", error, JOptionPane.ERROR_MESSAGE);
+        }else if(docList.isSelectedIndex(-1) || teamComboBox.getSelectedItem().equals("Selezione un team")){
+            JOptionPane.showMessageDialog(panel, "Seleziona sia il team che il documento");
+        }else{
+            int code = controller.handleComment(commentArea.getText(), docList.getSelectedValue(), (String)teamComboBox.getSelectedItem());
+            switch (code){
+                case 0:
+                    JOptionPane.showMessageDialog(panel, "Seleziona un documento da commentare");
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(panel, "Commento caricato correttamente");
+                    commentArea.setEnabled(false);
+                    commentArea.setToolTipText("Documento già commentato");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(panel, "Errore nel caricamento del documento");
+                    break;
+            }
+        }
+    }
+
+    private void lockMark(Controller controller){
+        int grade = controller.getMark((String) teamComboBox.getSelectedItem());
+        if (grade != -1) {
+            markSlider.setValue(grade);
+            markSlider.setEnabled(false);
+            markSlider.setToolTipText("Hai già inserito il voto per questo team");
+            assigneButton.setEnabled(false);
+        } else {
+            markSlider.setToolTipText(null);
+        }
     }
 }

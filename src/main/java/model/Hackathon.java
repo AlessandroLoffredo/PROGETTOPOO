@@ -1,11 +1,5 @@
 package model;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Classe che contiene gli elementi principali di un Hackathon, evento su cui si basa tutto il programma.
@@ -22,7 +16,7 @@ public class Hackathon {
     private Date startRegDate;
     private Date endRegDate;
     private int regCounter;
-    private Organizer hackOrganizer;
+
     private ArrayList<Judge> judesList;
 
 
@@ -35,7 +29,7 @@ public class Hackathon {
      * @param endDate            Data di fine.
      * @param maxRegistration    Numero massimo di partecipanti all'Hackathon.
      * @param maxTeamParticipant Numero massimo di partecipanti all'interno di un team.
-     //* @param hackOrganizer      Organizzatore dell'Hackathon
+
      */
 //BUILDER
     public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, String problemDescription, Date startRegDate, int regCounter/*, Organizer hackOrganizer*/) {
@@ -53,7 +47,6 @@ public class Hackathon {
         giorno.add(Calendar.DAY_OF_MONTH, -2);
         this.endRegDate = giorno.getTime();
         this.regCounter = regCounter;
-        //this.hackOrganizer = hackOrganizer;
         this.judesList = new ArrayList<>();
     }
 
@@ -70,20 +63,9 @@ public class Hackathon {
      *
      * @return ArrayList: lista dei team che partecipano all'Hackathon.
      */
-    public ArrayList<Team> getTeam(){ return ranking; }
+    public List<Team> getTeam(){ return ranking; }
 
-    /**
-     * Ordina i team partecipanti all'Hackathon e pubblica le classifiche.
-     */
-    public void publishRanking() {
-        for (Team team : ranking) {
-            team.avgMark();
-        }
-        ranking.sort(Comparator.comparing(Team::getFinalMark));
-        for (Team team : ranking) {
-            System.out.println(team.getNickname());
-        }
-    }
+
 
     /**
      * Aggiorna il counter che tiene traccia di quanti partecipanti ci sono in un Hackathon.
@@ -150,26 +132,7 @@ public class Hackathon {
      */
     public void addJudge(Judge j){ judesList.add(j); }
 
-    /*public void endHackathon(){
-        for(Team team : ranking){
-            for(Participant participant : team.getParList()){
-                participant.setIsBusy(false);
-            }
-        }
-        hackOrganizer.setIsBusy(false);
-        for(Judge judge : judesList){
-            judge.setIsBusy(false);
-        }
-    }*/
 
-    /**
-     * Restituisce l'organizzatore dell'Hackathon.
-     *
-     * @return Organizer: organizzatore dell'Hackathon.
-     */
-    public Organizer getHackOrganizer(){
-        return this.hackOrganizer;
-    }
 
     /**
      * Restituisce il giorno in cui terminano le iscrizioni all'Hackathon.
@@ -206,20 +169,4 @@ public class Hackathon {
         return endDate;
     }
 
-
-    public static Hackathon findHackathon(String name){
-        //QUERY PER TROVARE L'HACKATHON
-        //return fine a se stessa inserita per testing
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date data = null;
-        Date fdata = null;
-        try {
-            data = dateFormat.parse("23/05/2025"); // Converte la stringa in Data
-            fdata = dateFormat.parse("24/05/2025");
-        } catch (ParseException e) {
-            System.out.println("Errore: Formato della data non valido!");
-        }
-        Hackathon hack = new Hackathon("hack", "napoli", data, fdata, 50, 2, "prova", new Date(), 0/*, new Organizer(null, null, "pippo", "pluto")*/);
-        return hack;
-    }
 }

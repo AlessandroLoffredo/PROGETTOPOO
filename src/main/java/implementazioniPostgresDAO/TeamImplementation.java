@@ -1,18 +1,20 @@
 package implementazioniPostgresDAO;
 
+import dao.TeamInterface;
 import database.ConnessioneDatabase;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
-public class TeamImplementation {
+public class TeamImplementation implements TeamInterface {
     public int getTeam(String username, int idHack){
+        PreparedStatement stmt = null;
         int idTeam = 0;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT P.idTeam FROM Participant P, Team T " +
                          "WHERE P.idTeam = T.idTeam AND P.username = ? AND T.idHack = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             stmt.setInt(2, idHack);
             ResultSet rs = stmt.executeQuery();
@@ -22,17 +24,25 @@ public class TeamImplementation {
         } catch (SQLException e){
             e.printStackTrace();
             idTeam = -1;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return idTeam;
     }
 
     public String getNickname(int idTeam){
         String nick = null;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT nickname " +
                          "FROM Team " +
                          "WHERE idTeam = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idTeam);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()){
@@ -40,34 +50,49 @@ public class TeamImplementation {
             }
         } catch (SQLException e){
             e.printStackTrace();
-            nick = null;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return nick;
     }
 
     public int changeNickname(String nickname, int idTeam){
         int results;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "UPDATE Team " +
                          "SET nickname = ? " +
                          "WHERE idTeam = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, nickname);
             stmt.setInt(2, idTeam);
             results = stmt.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
             results = -1;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return results;
     }
 
-    public void findTeammates(ArrayList<String> teammates, int idTeam){
+    public void findTeammates(List<String> teammates, int idTeam){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT username " +
                          "FROM Participant " +
                          "WHERE idTeam = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idTeam);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
@@ -75,15 +100,23 @@ public class TeamImplementation {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public int sendFile(byte[] file, String name, int idTeam, LocalDate dataUpload){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "INSERT INTO doc (dname, loaddate, description, idTeam) " +
                     "VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setDate(2, Date.valueOf(dataUpload));
             stmt.setBytes(3, file);
@@ -97,16 +130,23 @@ public class TeamImplementation {
         } catch (Exception e){
             e.printStackTrace();
             results = -3;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println(results);
         return results;
     }
 
-    public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments, int idTeam){
+    public void getDocuments(List<String> docs, List<byte[]> files, List<String> comments, int idTeam){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT D.dname, D.description, D.dComment FROM Doc D WHERE " +
                     "D.idTeam  = ? ORDER BY D.loadDate DESC";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idTeam);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
@@ -114,10 +154,15 @@ public class TeamImplementation {
                 files.add(rs.getBytes(2));
                 comments.add(rs.getString(3));
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

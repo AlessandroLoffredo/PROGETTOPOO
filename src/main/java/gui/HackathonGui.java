@@ -8,8 +8,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
@@ -62,6 +60,9 @@ public class HackathonGui {
     private JLabel organizerArea;
     private JPanel organizerAreaPanel;
     private JLabel imageLabel;
+    private JTextArea rankingTextArea;
+    private JLabel rankingLabel;
+    private JScrollPane rankingScrollPane;
     private JFrame frame;
 
 
@@ -77,15 +78,16 @@ public class HackathonGui {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public HackathonGui(JFrame frameChiamante, Controller controller){
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         frame.pack();
         frame.setSize(new Dimension(1000, 700));
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        String font = "Segoe UI Emoji";
+        ArrayList<String> teams = new ArrayList<>();
 
         panel.setBackground(new Color(30, 30, 47));
         infoPanel.setBackground(new Color(236, 240, 241));
@@ -108,35 +110,35 @@ public class HackathonGui {
         accessButton.setForeground(new Color(37, 99, 235));
 
         currentVenueLabel.setText("\uD83C\uDF10 Sede:");
-        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentVenueLabel.setForeground(new Color(30, 30, 47));
         currentVenueLabel.setBackground(new Color(236, 240, 241));
         currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
-        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentTitleLabel.setForeground(new Color(30, 30, 47));
         currentTitleLabel.setBackground(new Color(236, 240, 241));
         currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
-        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartLabel.setForeground(new Color(30, 30, 47));
         currentStartLabel.setBackground(new Color(236, 240, 241));
         currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
-        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentEndLabel.setForeground(new Color(30, 30, 47));
         currentEndLabel.setBackground(new Color(236, 240, 241));
         currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
-        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartRegLabel.setForeground(new Color(30, 30, 47));
         currentStartRegLabel.setBackground(new Color(236, 240, 241));
         currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
-        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxRegLabel.setForeground(new Color(30, 30, 47));
         currentMaxRegLabel.setBackground(new Color(236, 240, 241));
         currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
-        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentCounterLabel.setForeground(new Color(30, 30, 47));
         currentCounterLabel.setBackground(new Color(236, 240, 241));
         currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
-        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
         currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
         problemLabel.setForeground(new Color(30, 30, 47));
@@ -147,6 +149,11 @@ public class HackathonGui {
         problemArea.setBorder(new LineBorder(new Color(30, 30, 47)));
         int width = problemArea.getWidth();
         problemArea.setPreferredSize(new Dimension(width, 100));
+        rankingLabel.setForeground(new Color(223,225,229));
+        rankingTextArea.setForeground(new Color(223,225,229));
+        rankingTextArea.setBackground(new Color(30, 30, 47));
+        rankingTextArea.setBorder(new LineBorder(new Color(223,225,229)));
+        rankingScrollPane.setBorder(null);
 
         hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
         problemPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
@@ -156,6 +163,15 @@ public class HackathonGui {
 
         titleLabel.setText(controller.getHackathon().getTitle());
         controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
+        controller.fillRanking(teams);
+        rankingTextArea.setLineWrap(true);
+        if(!teams.isEmpty()){
+            for (String t : teams) {
+                rankingTextArea.append(t + "\n");
+            }
+        }else{
+            rankingTextArea.append("La classifica per quest'evento non è ancora disponibile");
+        }
 
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(controller.getPhoto());
@@ -163,9 +179,15 @@ public class HackathonGui {
             Image scaledImage2 = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
             imageLabel.setIcon(resizedIcon2);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
             ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/Hackerlogo.jpg"));
+            Image scaledImage2 = imageIcon2.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
+            imageLabel.setIcon(resizedIcon2);
+        } catch (Exception e){
+            e.printStackTrace();
+            ImageIcon imageIcon2 = new ImageIcon(getClass().getResource("/errorImage.jpg"));
             Image scaledImage2 = imageIcon2.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             ImageIcon resizedIcon2 = new ImageIcon(scaledImage2);
             imageLabel.setIcon(resizedIcon2);
@@ -179,7 +201,7 @@ public class HackathonGui {
             controller.getActJudgesList(judges);
             organizerArea.setText(controller.getActOrganizer());
         }
-        //controller.getJudgesList(judges);
+
         organizerArea.setText(controller.getOrganizer());
         if (judges.isEmpty()) {
             judjesArea.setText("Al momento non sono stati ancora determinati i giudici per questo Hackathon");
@@ -189,10 +211,6 @@ public class HackathonGui {
                 judjesArea.append(s + "\n");
             }
         }
-        //System.out.println(controller.getOrganizer());
-        //System.out.println(controller.getIdHack());
-
-
 
 
         accessButton.addActionListener(new ActionListener() {
@@ -203,18 +221,12 @@ public class HackathonGui {
             }
         });
 
-        /*subscribeHackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                aggiornamento nel DB, in cui l'utente diventa Partecipante se Loggato
-            }
-        });*/
-
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
                 controller.getHome().getFrame().repaint();
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.setPhoto(null);
                 controller.findHack();
                 frame.dispose();
@@ -230,7 +242,8 @@ public class HackathonGui {
                 int code = controller.subscribe(start, end);
                 switch (code){
                     case -4:
-                        JOptionPane.showMessageDialog(panel, "Non è più possibile iscriversi a quest'evento");
+                        subscribeHackButton.setToolTipText("Non è più possibile iscriversi a quest'evento");
+                        subscribeHackButton.setEnabled(false);
                         break;
                     case -3:
                         JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);

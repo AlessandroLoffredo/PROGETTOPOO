@@ -27,7 +27,7 @@ public class AreaPersonale {
     private JButton cambiaPasswordButton;
     private JPanel requestsPanel;
     private JButton inviaRichiestaButton;
-    private JComboBox participantComboBox;
+    private JComboBox<String> participantComboBox;
     private JPanel messagePanel;
     private JList<String> requestList;
     private JButton homeButton;
@@ -45,7 +45,7 @@ public class AreaPersonale {
     private JButton logoutButton;
     private JPanel profilePanel;
     private JPanel elementsPanel;
-    private JList lastsHackList;
+    private JList<String> lastsHackList;
     private JScrollPane scrollPane;
     private JScrollPane messageScrollPane;
     private JPanel titlePanel;
@@ -66,7 +66,7 @@ public class AreaPersonale {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -78,59 +78,60 @@ public class AreaPersonale {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(800, 800);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
 
-        /*textArea2.setLineWrap(true);
-        textArea2.setWrapStyleWord(true);
-        textArea2.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        textArea2.append("\n\n\n\n\n\n\n\n");
-        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        textArea2.append("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        textArea2.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        textArea2.append("\n\n\n\n\n\n\n\n");*/
+        String motivation = "Scrivi un messaggio motivazionale";
+        String selection = "Seleziona un partecipante";
+        // Palette colori
+        Color darkBg = new Color(30, 30, 47);
+        Color lightBg = new Color(236, 240, 241);
+        Color primary = new Color(37, 99, 235);
+        Color darkText = new Color(30, 30, 47);
+        Color lightText = new Color(236, 240, 241);
 
-        panel.setBackground(new Color(30, 30, 47));
-        profilePanel.setBackground(new Color(30, 30, 47));
-        textArea1.setBackground(new Color(30, 30, 47));
-        textArea1.setForeground(new Color(30, 30, 47));
-        fNameArea.setBackground(new Color(30, 30, 47));
-        lNameArea.setBackground(new Color(30, 30, 47));
-        userArea.setBackground(new Color(30, 30, 47));
-        titlePanel.setBackground(new Color(30, 30, 47));
-        requestList.setBackground(new Color(236, 240, 241));
-        requestList.setForeground(new Color(30, 30, 47));
-        hackListLabel.setForeground(new Color(30, 30, 47));
-        elementsPanel.setBackground(new Color(236, 240, 241));
-        lastsHackPanel.setBackground(new Color(236, 240, 241));
-        lastsHackList.setBackground(new Color(236, 240, 241));
-        messagePanel.setBackground(new Color(236, 240, 241));
-        requestsPanel.setBackground(new Color(236, 240, 241));
+        panel.setBackground(darkBg);
+        profilePanel.setBackground(darkBg);
+        textArea1.setBackground(darkBg);
+        textArea1.setForeground(darkText);
+        fNameArea.setBackground(darkBg);
+        lNameArea.setBackground(darkBg);
+        userArea.setBackground(darkBg);
+        titlePanel.setBackground(darkBg);
 
-        fNameLabel.setForeground(new Color(236, 240, 241));
-        lNameLabel.setForeground(new Color(236, 240, 241));
-        userLabel.setForeground(new Color(236, 240, 241));
-        fNameArea.setForeground(new Color(236, 240, 241));
-        lNameArea.setForeground(new Color(236, 240, 241));
-        userArea.setForeground(new Color(236, 240, 241));
-        teamLabel.setForeground(new Color(236, 240, 241));
-        teamLabel.setForeground(new Color(236, 240, 241));
-        descLabel.setForeground(new Color(30, 30, 47));
-        messageLabel.setForeground(new Color(30, 30, 47));
-        messageArea.setForeground(new Color(30, 30, 47));
-        participantComboBox.setForeground(new Color(30, 30, 47));
-        profileLabel.setForeground(new Color(236, 240, 241));
-        titleLabel.setForeground(new Color(236, 240, 241));
+        requestList.setBackground(lightBg);
+        requestList.setForeground(darkText);
+        hackListLabel.setForeground(darkText);
 
-        cambiaUsernameButton.setForeground(new Color(37, 99, 235));
-        cambiaPasswordButton.setForeground(new Color(37, 99, 235));
-        logoutButton.setForeground(new Color(37, 99, 235));
-        homeButton.setForeground(new Color(37, 99, 235));
-        textArea1.setForeground(new Color(236, 240, 241));
-        inviaRichiestaButton.setForeground(new Color(37, 99, 235));
-        teamButton.setForeground(new Color(37, 99, 235));
+        elementsPanel.setBackground(lightBg);
+        lastsHackPanel.setBackground(lightBg);
+        lastsHackList.setBackground(lightBg);
+        messagePanel.setBackground(lightBg);
+        requestsPanel.setBackground(lightBg);
+
+        fNameLabel.setForeground(lightText);
+        lNameLabel.setForeground(lightText);
+        userLabel.setForeground(lightText);
+        fNameArea.setForeground(lightText);
+        lNameArea.setForeground(lightText);
+        userArea.setForeground(lightText);
+        teamLabel.setForeground(lightText);
+        descLabel.setForeground(darkText);
+        messageLabel.setForeground(darkText);
+        messageArea.setForeground(darkText);
+        participantComboBox.setForeground(darkText);
+        profileLabel.setForeground(lightText);
+        titleLabel.setForeground(lightText);
+
+        cambiaUsernameButton.setForeground(primary);
+        cambiaPasswordButton.setForeground(primary);
+        logoutButton.setForeground(primary);
+        homeButton.setForeground(primary);
+        textArea1.setForeground(lightText);
+        inviaRichiestaButton.setForeground(primary);
+        teamButton.setForeground(primary);
+        scrollPane.setBorder(new LineBorder(lightText));
+        messageScrollPane.setBorder(new LineBorder(darkText));
 
         fNameArea.setText(controller.getUser().getfName());
         lNameArea.setText(controller.getUser().getlName());
@@ -141,44 +142,20 @@ public class AreaPersonale {
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
 
+        this.participantSelector(controller, motivation, selection);
+        this.fillReqInv(controller);
+        this.lastHacks(controller);
+
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.findHack();
                 frame.dispose();
             }
         });
 
-        scrollPane.setBorder(new LineBorder(new Color(236, 240, 241)));
-        messageScrollPane.setBorder(new LineBorder(new Color(30, 30, 47)));
-
-        messageArea.setLineWrap(true);
-        messageArea.setWrapStyleWord(true);
-        int width = messageArea.getPreferredSize().width;
-        messageArea.setPreferredSize(new Dimension(width, 100));
-        if(!controller.getUserClass()){
-            participantComboBox.addItem("Seleziona un partecipante");
-            ArrayList<String> participants = new ArrayList<>();
-            try {
-                controller.getHackParticipants(participants);
-                participantComboBox.removeAllItems();
-                if (participants.isEmpty()) {
-                    participantComboBox.addItem("Nessun partecipante disponibile");
-                    participantComboBox.setEnabled(false);
-                } else {
-                    participantComboBox.addItem("Seleziona un partecipante");
-                    for (String par : participants) {
-                        participantComboBox.addItem(par);
-                    }
-                }
-            } catch (Exception e) {
-                participantComboBox.addItem("Errore nel caricamento");
-                participantComboBox.setEnabled(false);
-                e.printStackTrace();
-            }
-        }
-        messageArea.setText("Scrivi un messaggio motivazionale");
         messageArea.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -188,79 +165,15 @@ public class AreaPersonale {
             @Override
             public void focusLost(FocusEvent e) {
                 if(messageArea.getText().equalsIgnoreCase("")){
-                    messageArea.setText("Scrivi un messaggio motivazionale");
+                    messageArea.setText(motivation);
                 }
             }
         });
 
-
-        DefaultListModel<String> model = new DefaultListModel<>();
-        requestList.setModel(model);
-        if(controller.getUserClass()){
-            model.removeAllElements();
-            ArrayList<String> invites = new ArrayList<>();
-            controller.getInvites(invites);
-            if(invites.isEmpty()){
-                model.addElement("Non hai ricevuto alcun invito");
-                requestList.setEnabled(false);
-            }else{
-                for (String invite : invites){
-                    model.addElement(invite);
-                }
-            }
-        } else {
-            model.removeAllElements();
-            ArrayList<String> requests = new ArrayList<>();
-            controller.getRequests(requests);
-            if(requests.isEmpty()){
-                model.addElement("Non hai ricevuto alcuna richiesta");
-                requestList.setEnabled(false);
-            }else{
-                for(String request : requests){
-                    model.addElement(request);
-                }
-            }
-        }
-
-
-
-
         requestList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-
-                int selectedIndex = requestList.getSelectedIndex();
-                if (selectedIndex == -1) return;
-                int code;
-                String[] parti = requestList.getSelectedValue().toString().split(":", 2);
-                int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
-                if(controller.getUserClass()){
-                    if (scelta == JOptionPane.YES_OPTION) {
-                        code = controller.handleAccInvite(parti[1].trim());
-                    } else if (scelta == JOptionPane.NO_OPTION){
-                        code = controller.handleDecInvite(parti[1].trim());
-                    } else{
-                        code = -1;
-                    }
-                }else{
-                    if (scelta == JOptionPane.YES_OPTION) {
-                        code = controller.handleAccRequest(parti[0].trim());
-                    } else if(scelta == JOptionPane.NO_OPTION){
-                        code = controller.handleDecRequest(parti[0].trim());
-                    }else {
-                        code = -1;
-                    }
-                }
-                if(code == 0) {
-                    JOptionPane.showMessageDialog(panel, "Errore durante la gestione dell'invito");
-                }else if(code == -1) {
-                    //se clicca la x sull'option pane non deve succedere nulla //TODO CAPIRE SE DEVE SUCCEDRE QLC
-                }else{
-                    DefaultListModel<String> model = (DefaultListModel<String>) requestList.getModel();
-                    model.remove(selectedIndex);
-                    String string = scelta == JOptionPane.YES_OPTION ? "accettata" : "rifiutata";
-                    JOptionPane.showMessageDialog(panel, "Richiesta " + string + " con successo");
-                }
+                handleReqInv(controller);
             }
         });
 
@@ -292,22 +205,10 @@ public class AreaPersonale {
             }
         });
 
-        /*
-        INSERIRE CONTROLLO PER VEDERE SE IL PARTECIPANTE FA PARTE DI UN TEAM...
-        OSCURARE L'AREA TEAM QUALORA NON NE FACCIA ANCORA PARTE
-         */
-
-        /*inviaRichiestaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.sendRequestOrganizer(messageArea.getText(), (String) participantComboBox.getSelectedItem());
-            }
-        });*/
         inviaRichiestaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println((String) participantComboBox.getSelectedItem() + " - " +  messageArea.getText());
-                if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase("Seleziona un partecipante") || messageArea.getText().equalsIgnoreCase("Scrivi un messaggio motivazionale")) {
+                if (((String) participantComboBox.getSelectedItem()).equalsIgnoreCase(selection) || messageArea.getText().equalsIgnoreCase(motivation)) {
                     JOptionPane.showMessageDialog(panel, "Inserire il messaggio e/o selezionare il partecipante", "WARNING", JOptionPane.WARNING_MESSAGE);
                 } else {
                     int code = controller.sendRequest(messageArea.getText(), (String) participantComboBox.getSelectedItem());
@@ -316,7 +217,7 @@ public class AreaPersonale {
                             JOptionPane.showMessageDialog(panel, "Il team del partecipante a cui vuoi unirti è pieno", "INFO", JOptionPane.INFORMATION_MESSAGE);
                             break;
                         case 0:
-                            JOptionPane.showMessageDialog(panel, "Hai già inviato una richiesta a quest'utente");
+                            JOptionPane.showMessageDialog(panel, "Esiste già una richiesta da/verso quest'utente");
                             break;
                         case 1:
                             JOptionPane.showMessageDialog(panel, "Richiesta inviata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
@@ -333,43 +234,15 @@ public class AreaPersonale {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.getHome().getFrame().setVisible(true);
                 controller.logout();
                 JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
                 controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 controller.getHome().getLoginButton().setText("Login");
+                frame.dispose();
             }
         });
-
-        ArrayList<ArrayList<Object>> lastsHack = new ArrayList<>();
-        DefaultListModel<String> model2 = new DefaultListModel<>();
-        controller.getLastsUserHack(lastsHack);
-        model2.removeAllElements();
-        for(ArrayList<Object> arrayList : lastsHack){
-            model2.addElement((String) arrayList.get(0));
-        }
-        lastsHackList.setModel(model2);
-        if(model2.isEmpty()){
-            model2.removeAllElements();
-            model2.addElement("Non hai ancora partecipato ad alcun hackathon");
-            lastsHackList.setEnabled(false);
-        } else {
-            lastsHackList.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    controller.setHackathon((String) lastsHack.get(lastsHackList.getSelectedIndex()).get(0), (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(1), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(2),
-                            (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(3), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(4), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(5),
-                            (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(7), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(8), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(6));
-                    controller.setIdHack((int) lastsHack.get(lastsHackList.getSelectedIndex()).get(9));
-                    controller.setPhoto((byte[]) lastsHack.get(lastsHackList.getSelectedIndex()).get(10));
-                    HackathonGui hackathonGui = new HackathonGui(frame, controller);
-                    hackathonGui.getFrame().setVisible(true);
-                    frame.dispose();
-                }
-            });
-        }
-
 
     }
 
@@ -400,12 +273,143 @@ public class AreaPersonale {
         return messagePanel;
     }
 
-    /**
-     * Restituisce il panel che contiene la lista delle richieste ricevute.
-     *
-     * @return JPanel: panel che contiene gli elementi di gestione della lista di richieste.
-     */
-    public JPanel getRequestsPanel() {
-        return requestsPanel;
+    private void participantSelector(Controller controller, String motivation, String selection){
+        messageArea.setLineWrap(true);
+        messageArea.setWrapStyleWord(true);
+        int width = messageArea.getPreferredSize().width;
+        messageArea.setPreferredSize(new Dimension(width, 100));
+
+        if(!controller.getUserClass()){
+            participantComboBox.addItem(selection);
+            ArrayList<String> participants = new ArrayList<>();
+            try {
+                controller.getHackParticipants(participants);
+                participantComboBox.removeAllItems();
+                if (participants.isEmpty()) {
+                    participantComboBox.addItem("Nessun partecipante disponibile");
+                    participantComboBox.setEnabled(false);
+                } else {
+                    participantComboBox.addItem(selection);
+                    for (String par : participants) {
+                        participantComboBox.addItem(par);
+                    }
+                }
+            } catch (Exception e) {
+                participantComboBox.addItem("Errore nel caricamento");
+                participantComboBox.setEnabled(false);
+                e.printStackTrace();
+            }
+        }
+        messageArea.setText(motivation);
+    }
+
+    private void fillReqInv(Controller controller){
+        DefaultListModel<String> model = new DefaultListModel<>();
+        requestList.setModel(model);
+        if(controller.getUserClass()){
+            model.removeAllElements();
+            ArrayList<String> invites = new ArrayList<>();
+            controller.getInvites(invites);
+            if(invites.isEmpty()){
+                model.addElement("Non hai ricevuto alcun invito");
+                requestList.setEnabled(false);
+            }else{
+                for (String invite : invites){
+                    model.addElement(invite);
+                }
+            }
+        } else {
+            model.removeAllElements();
+            ArrayList<String> requests = new ArrayList<>();
+            controller.getRequests(requests);
+            if(requests.isEmpty()){
+                model.addElement("Non hai ricevuto alcuna richiesta");
+                requestList.setEnabled(false);
+            }else{
+                for(String request : requests){
+                    model.addElement(request);
+                }
+            }
+        }
+    }
+
+    private void lastHacks(Controller controller){
+        ArrayList<ArrayList<Object>> lastsHack = new ArrayList<>();
+        DefaultListModel<String> model2 = new DefaultListModel<>();
+        controller.getLastsUserHack(lastsHack);
+        model2.removeAllElements();
+        for(ArrayList<Object> arrayList : lastsHack){
+            model2.addElement((String) arrayList.get(0));
+        }
+        lastsHackList.setModel(model2);
+        if(model2.isEmpty()){
+            model2.removeAllElements();
+            model2.addElement("Non hai ancora partecipato ad alcun hackathon");
+            lastsHackList.setEnabled(false);
+        } else {
+            lastsHackList.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    controller.setHackathon((String) lastsHack.get(lastsHackList.getSelectedIndex()).get(0), (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(1), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(2),
+                            (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(3), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(4), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(5),
+                            (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(7), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(8), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(6));
+                    controller.setIdHack((int) lastsHack.get(lastsHackList.getSelectedIndex()).get(9));
+                    controller.setPhoto((byte[]) lastsHack.get(lastsHackList.getSelectedIndex()).get(10));
+                    HackathonGui hackathonGui = new HackathonGui(frame, controller);
+                    hackathonGui.getFrame().setVisible(true);
+                    frame.dispose();
+                }
+            });
+        }
+    }
+
+    private void handleReqInv(Controller controller){
+        int selectedIndex = requestList.getSelectedIndex();
+        if (selectedIndex == -1) return;
+        int code;
+        String[] parti = requestList.getSelectedValue().split(":", 2);
+        int scelta = JOptionPane.showConfirmDialog(null, "Accettare?", "REQUEST", JOptionPane.YES_NO_OPTION);
+        if(controller.getUserClass()){
+            switch (scelta) {
+                case JOptionPane.YES_OPTION:
+                    code = controller.handleAccInvite(parti[1].trim());
+                    break;
+                case JOptionPane.NO_OPTION:
+                    code = controller.handleDecInvite(parti[1].trim());
+                    break;
+                default:
+                    code = -1;
+                    break;
+            }
+        }else{
+            switch (scelta) {
+                case JOptionPane.YES_OPTION: {
+                    code = controller.handleAccRequest(parti[0].trim());
+                    break;
+                }
+                case JOptionPane.NO_OPTION: {
+                    code = controller.handleDecRequest(parti[0].trim());
+                    break;
+                }
+                default: {
+                    code = -1;
+                    break;
+                }
+            }
+        }
+        switch (code) {
+            case 0:
+                JOptionPane.showMessageDialog(panel, "Errore durante la gestione dell'invito");
+                break;
+            case -1:
+                //se clicca la x sull'option pane non deve succedere nulla
+                break;
+            default:
+                DefaultListModel<String> model = (DefaultListModel<String>) requestList.getModel();
+                model.remove(selectedIndex);
+                String string = scelta == JOptionPane.YES_OPTION ? "accettata" : "rifiutata";
+                JOptionPane.showMessageDialog(panel, "Richiesta " + string + " con successo");
+                break;
+        }
     }
 }

@@ -1,9 +1,8 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -119,66 +118,12 @@ public class Participant extends User {
         }
     }
 
-
-
-    /*public int answerInvRecived () {
-        for(Request r : invRecived){
-            if(this.parTeam.getParList().size() == this.parHackathon.getMaxTeamParticipant()){
-                this.invRecived.remove(0);
-            }
-            else{
-                String[] parts = s.split(" ",2);
-                System.out.println("Hai ricevuto una richiesta da: " + parts[0] + "\nTi ha scritto: " + parts[1]);
-                Scanner input = new Scanner(System.in);
-                System.out.println("Accetti? (si/no)");
-                String risposta = input.nextLine().trim().toLowerCase(Locale.ITALIAN);
-                while(!risposta.equals("si") && !risposta.equals("no")){
-                    System.out.println("Puoi inserire solo si/no!");
-                    risposta = input.nextLine().trim().toLowerCase(Locale.ITALIAN);
-                }
-                if(risposta.equals("si")){
-                    if(this.parTeam != null){
-                        //this.parTeam.addParticipant(/*Partecipante*///);
-                        //Non possiamo aggiungere l'oggetto participant perchè manca il db.
-                    //}*/
-                    //else{ /*Verifica del nickname giàà esistente del team tramite db*/
-                        /*System.out.println("Non fai ancora parte di un Team! Inserisci il nome: ");
-                        String nome = input.nextLine().trim();
-                        Team newestTeam = new Team(nome, this.parHackathon);
-                        this.parTeam = newestTeam;*/
-                       // this.parTeam.addParticipant(/*Partecipante*/);
-                        /*
-                        in questa sezione verrano effettuati diversi controlli sulla validità del nome del team, tra cui team esistenti
-                        e nomi di altri partecipanti
-                        */
-                        /*this.parHackathon.addTeam(newestTeam);
-                    }
-                    this.invRecived.remove(0);
-                }
-                else if(risposta.equals("no")){
-                    this.invRecived.remove(0);
-                }
-                input.close();
-            }
-        }
-    }*/
-
-    /**
-     * Permette di creare un team.
-     */
-    public void createTeam(){
-        if(this.parHackathon.getEndRegDate().equals(LocalDate.now()) && this.parTeam == null){
-            this.parTeam = new Team(this.getUsername(), this.parHackathon);
-            this.parHackathon.addTeam(this.parTeam);
-        }
-    }
-
     /**
      * Restituisce la lista di richieste ricevute.
      *
      * @return ArrayList: richieste ricevuta.
      */
-    public ArrayList<Request> getInvRecived() {
+    public List<Request> getInvRecived() {
         return invRecived;
     }
 

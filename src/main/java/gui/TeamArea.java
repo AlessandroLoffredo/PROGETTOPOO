@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class TeamArea {
     private JPanel panel;
-    private JList participantsList;
-    private JList docList;
+    private JList<String> participantsList;
+    private JList<String> docList;
     private JPanel docPanel;
     private JButton loadDocButton;
     private JLabel nickArea;
@@ -40,9 +40,6 @@ public class TeamArea {
     private JTextArea pathArea;
     private JTextArea commentArea;
     private JLabel commentLabel;
-    private ArrayList<String> documents;
-    private ArrayList<byte[]> files;
-    private ArrayList<String> comments;
 
     /**
      * Instanzia una nuova TeamArea.
@@ -54,7 +51,7 @@ public class TeamArea {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public TeamArea(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -66,13 +63,16 @@ public class TeamArea {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(950, 800);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
+        String panelBkg = "Panel.background";
+        ArrayList<String> documents = new ArrayList<>();
+        ArrayList<byte[]> files = new ArrayList<>();
+        ArrayList<String> comments = new ArrayList<>();
 
         controller.getTeam();
+
         nickArea.setText(controller.getNickname());
-
-
         panel.setBackground(new Color(30, 30, 47));
         profilePanel.setBackground(new Color(30, 30, 47));
         profileLabel.setForeground(new Color(236, 240, 241));
@@ -107,22 +107,14 @@ public class TeamArea {
         pathArea.setLineWrap(true);
         pathArea.setWrapStyleWord(true);
 
-
-
-
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
         imageLabel.setIcon(resizedIcon);
 
-        ArrayList<String> teammates = new ArrayList<>();
-        controller.findTeammates(teammates);
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for(String s : teammates){
-            model.addElement(s);
-        }
-        participantsList.setModel(model);
-        System.out.println(teammates);
+        this.fillTeammates(controller);
+        this.blockHack(controller);
+        this.fillDocs(controller, documents, files, comments);
 
         hackButton.addActionListener(new ActionListener() {
             @Override
@@ -131,7 +123,6 @@ public class TeamArea {
                 HackathonGui hackathonGui = new HackathonGui(frame, controller);
                 hackathonGui.getFrame().setVisible(true);
                 frame.dispose();
-                //BISOGNA FARE VERIFICA SU HACKATHON A CUI SI E' REGISTRATO IL TEAM
             }
         });
 
@@ -139,17 +130,11 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.getHome().getFrame().setVisible(true);
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.findHack();
                 frame.dispose();
             }
         });
-
-        if(!controller.isHackStarted()){
-            loadDocButton.setEnabled(false);
-            sendButton.setEnabled(false);
-            loadDocButton.setToolTipText("L'evento non è ancora cominciato");
-            sendButton.setToolTipText("L'evento non è ancora cominciato");
-        }
 
         loadDocButton.addActionListener(new ActionListener() {
             @Override
@@ -159,61 +144,34 @@ public class TeamArea {
                 UIManager.put("FileChooser.listViewBackground", new Color(255, 255, 255));
                 UIManager.put("FileChooser.listViewForeground", new Color(0, 0, 0));
                 UIManager.put("FileChooser.buttonBackground", new Color(240, 240, 240));
-                UIManager.put("Panel.background", new Color(240, 240, 240));
+                UIManager.put(panelBkg, new Color(240, 240, 240));
                 JFileChooser fileChooser = new JFileChooser();
                 int scelta = fileChooser.showOpenDialog(frame);
                 if(scelta == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
                     pathArea.setText(file.toString());
                 }
-                UIManager.put("Panel.background", new Color(30, 30, 47));
+                UIManager.put(panelBkg, new Color(30, 30, 47));
             }
         });
-
-        documents = new ArrayList<>();          //TODO LE DEFINIZIONI SONO STATE FATTE SOPRA
-        files = new ArrayList<>();
-        comments = new ArrayList<>();
-        controller.getDocuments(documents, files, comments);
-        DefaultListModel<String> model1 = new DefaultListModel<>();
-        for(String doc : documents){
-            model1.addElement(doc);
-        }
-        docList.setModel(model1);
 
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.sendFile(file, file.getName());
-                UIManager.put("Panel.background", new Color(30, 30, 47));
-                System.out.println(code);
+                UIManager.put(panelBkg, new Color(30, 30, 47));
                 switch (code){
                     case -1:
                         JOptionPane.showMessageDialog(panel, "Hai già caricato questo documento");
-                        System.out.println("Hai già caricato questo documento");
                         break;
-                    /*TODO L'AGGIUNTA DI UN DOC ROMPE LA PAGINA DOPO CHE SI TORNA ALLA HOME
-                        PROBABILMENTE A CAUSA DEL CAMBIO DI COLORE QUANDO AGGIUNGO IL DOC
-                        INOLTRE LE DATE NON TENGONO IL TIMESTAMP, QUINDI NON POSSIAMO ORDINARE I DOCUMENTI IN MODO PRECISO
-                     */
-                    /*
-                    TODO RECENTE 21/08 SEMBRA FUNZIONARE
-                     */
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Inserimento del file andato a buon fine");
-                        model1.removeAllElements();
-                        files = new ArrayList<>();
-                        comments = new ArrayList<>();
-                        documents = new ArrayList<>();
-                        controller.getDocuments(documents, files, comments);
-                        for(String doc : documents){
-                            model1.addElement(doc);
-                        }
+                        fillDocs(controller, documents, files, comments);
                         break;
                     default:
                         JOptionPane.showMessageDialog(panel, "Errore durante il caricamento del file");
                         break;
                 }
-            //UIManager.put("Panel.background", new Color(240, 240, 240));
             }
         });
 
@@ -261,35 +219,7 @@ public class TeamArea {
         docList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int selectedIndex = docList.locationToIndex(e.getPoint());
-                System.out.println(selectedIndex);
-                if(e.getClickCount() == 1){
-                    String commento = comments.get(selectedIndex);
-                    if (commento != null) {
-                        commentArea.setText(commento);
-                    }else{
-                        commentArea.setText("Il documento non è stato ancora commentato");
-                    }
-                }else if (e.getClickCount() == 2) { // Rileva il doppio click
-                    if (selectedIndex == -1) return;
-                    try {
-                        // Crea un file temporaneo in memoria
-                        Path tempFile = Files.createTempFile("temp_", ".pdf");
-                        Files.write(tempFile, files.get(selectedIndex));
-
-                        // Apri con l'applicazione predefinita
-                        Desktop.getDesktop().open(tempFile.toFile());
-
-                        // Elimina il file all'uscita
-                        tempFile.toFile().deleteOnExit();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(docList,
-                                "Errore nell'apertura del file",
-                                "Errore",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+                handleDoc(e, comments, files);
             }
         });
     }
@@ -302,4 +232,65 @@ public class TeamArea {
     public JFrame getFrame() {
         return frame;
     }
+
+    private void fillTeammates(Controller controller){
+        ArrayList<String> teammates = new ArrayList<>();
+        controller.findTeammates(teammates);
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for(String s : teammates){
+            model.addElement(s);
+        }
+        participantsList.setModel(model);
+    }
+
+    private void blockHack(Controller controller){
+        if(!controller.isHackStarted()){
+            loadDocButton.setEnabled(false);
+            sendButton.setEnabled(false);
+            loadDocButton.setToolTipText("L'evento non è ancora cominciato");
+            sendButton.setToolTipText("L'evento non è ancora cominciato");
+        }
+    }
+
+    private void fillDocs(Controller controller, ArrayList<String> documents, ArrayList<byte[]> files, ArrayList<String> comments){
+        controller.getDocuments(documents, files, comments);
+        DefaultListModel<String> model1 = new DefaultListModel<>();
+        model1.removeAllElements();
+        for(String doc : documents){
+            model1.addElement(doc);
+        }
+        docList.setModel(model1);
+    }
+
+    private void handleDoc(MouseEvent e, ArrayList<String> comments, ArrayList<byte[]> files){
+        int selectedIndex = docList.locationToIndex(e.getPoint());
+        if(e.getClickCount() == 1){
+            String commento = comments.get(selectedIndex);
+            if (commento != null) {
+                commentArea.setText(commento);
+            }else{
+                commentArea.setText("Il documento non è stato ancora commentato");
+            }
+        }else if (e.getClickCount() == 2) { // Rileva il doppio click
+            if (selectedIndex == -1) return;
+            try {
+                // Crea un file temporaneo in memoria
+                Path tempFile = Files.createTempFile("temp_", ".pdf");
+                Files.write(tempFile, files.get(selectedIndex));
+
+                // Apri con l'applicazione predefinita
+                Desktop.getDesktop().open(tempFile.toFile());
+
+                // Elimina il file all'uscita
+                tempFile.toFile().deleteOnExit();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(docList,
+                        "Errore nell'apertura del file",
+                        "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
 }

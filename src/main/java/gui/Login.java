@@ -3,6 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import controller.*;
 
@@ -37,14 +38,15 @@ public class Login {
 
      */
     public Login(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.pack();
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(500, 500));
         frame.setMaximumSize(new Dimension(500, 500));
         frame.setLocationRelativeTo(null);
-
+        
+        String emoji = "\uD83D\uDD12";
 
         panel.setBackground(new Color(30, 30, 47));
         dataPanel.setBackground(new Color(30, 30, 47));
@@ -60,7 +62,7 @@ public class Login {
         titleLabel.setForeground(new Color(236, 240, 241));
         signUpButton.setForeground(new Color(37, 99, 235));
 
-        lockButton.setText("\uD83D\uDD12");
+        lockButton.setText(emoji);
         lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         lockButton.setBackground(new Color(30, 30, 47));
         lockButton.setForeground(new Color(236, 240, 241));
@@ -69,40 +71,7 @@ public class Login {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //MANIPOLARE ACCESSI DIVERSI PER UTENTI E ADMIN, CHE ENTRERANNO CON LO STESSO BUTTON
-                if (usernameArea.getText().isEmpty() || passwordArea.getPassword().toString().isEmpty()) {
-                    JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                } else {
-                    try {
-                        int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
-                        switch (code) {
-                            case -1:
-                                JOptionPane.showMessageDialog(panel, "Username o password errati");
-                                break;
-                            case 1:
-                            case 2:
-                            case 3:
-                            case 4:
-                            case 5:
-                                JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
-                                controller.getHome().getAreaPersonaleButton().setEnabled(true);
-                                controller.getHome().getLoginButton().setText("Logout");
-                                frameChiamante.setEnabled(true);
-                                frame.dispose();
-                                break;
-                            default:
-                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
-                                usernameArea.setText("");
-                                passwordArea.setText("");
-                                break;
-                        }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
-                        usernameArea.setText("");
-                        passwordArea.setText("");
-                    }
-                }
+                logIn(controller, frameChiamante);
             }
         });
 
@@ -158,11 +127,11 @@ public class Login {
         lockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lockButton.getText().equals("\uD83D\uDD12")) {
+                if (lockButton.getText().equals(emoji)) {
                     lockButton.setText("\uD83D\uDD13");
                     passwordArea.setEchoChar((char) 0);
                 } else {
-                    lockButton.setText("\uD83D\uDD12");
+                    lockButton.setText(emoji);
                     passwordArea.setEchoChar('*');
                 }
             }
@@ -187,5 +156,37 @@ public class Login {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    private void logIn(Controller controller, JFrame frameChiamante){
+        if (usernameArea.getText().isEmpty() || Arrays.toString(passwordArea.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
+        } else {
+            try {
+                int code = controller.handleLogin(usernameArea.getText(), passwordArea.getPassword());
+                switch (code) {
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "Username o password errati");
+                        break;
+                    case 1, 2, 3, 4, 5:
+                        JOptionPane.showMessageDialog(panel, "Accesso riuscito!");
+                        controller.getHome().getAreaPersonaleButton().setEnabled(true);
+                        controller.getHome().getLoginButton().setText("Logout");
+                        frameChiamante.setEnabled(true);
+                        frame.dispose();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
+                        usernameArea.setText("");
+                        passwordArea.setText("");
+                        break;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante il login");
+                usernameArea.setText("");
+                passwordArea.setText("");
+            }
+        }
     }
 }

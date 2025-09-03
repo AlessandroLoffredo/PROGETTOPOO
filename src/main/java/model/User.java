@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Superclasse di Participant, Judje e Organizer.
  * Estende la classe Person.
  */
-public class User extends Person {
+public class User {
     private final String fName;
     private final String lName;
     private String username;
@@ -62,14 +62,6 @@ public class User extends Person {
         return this.userType;
     }
 
-    /**
-     * Restituisce la lista di richieste come giudice.
-     *
-     * @return ArrayList: lista di richieste come giudice.
-     */
-    public ArrayList<Request> getRequestsJudge() {
-        return this.requestsJudge;
-    }
 
     /**
      * Aggiunge una Request alla lista di richieste come giudice.
@@ -89,28 +81,6 @@ public class User extends Person {
         this.userType = userType;
     }
 
-    /**
-     * Permette di trovare un utente tramite il suo username.
-     *
-     * @param username username dell'utente da cercare
-     * @return User: utente cercato.
-     */
-    public static User findUser(String username){
-        //QUERY CHE TROVA L'UTENTE ASSOCIATO ALLA STRINGA
-        User user = new Participant(null, null, "Cacca", "pluto");
-        return user;
-    }
-
-    public int subscribe(String nameHack){
-        Hackathon hack = Hackathon.findHackathon(nameHack);
-        if(hack.getRegCounter() < hack.getMaxRegistration()){
-            hack.addRegistration();
-            return 0;
-        }else{
-            return -1;
-        }
-    }
-
     public String getfName() {
         return fName;
     }
@@ -123,8 +93,4 @@ public class User extends Person {
         return password;
     }
 
-    @Override
-    public String toString(){
-        return "PlUser";
-    }
 }

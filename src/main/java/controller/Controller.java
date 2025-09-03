@@ -10,8 +10,10 @@
     import java.nio.file.Path;
     import java.time.LocalDate;
     import java.time.ZoneId;
+    import java.time.chrono.IsoChronology;
     import java.util.ArrayList;
     import java.util.Date;
+    import java.util.List;
 
     /**
      * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
@@ -33,11 +35,6 @@
          * @param home il frame principale della classe Home
          */
         public Controller(Home home) {
-            //this.user = new User("Alessandro", "Loffredo", "Alex", "Password");
-            //this.user = new Organizer("Alessandro", "Loffredo", "Alex", "Password");
-            //this.user = new Judge("Alessandro", "Loffredo", "Alex", "Password");
-            //this.user = new Participant("Alessandro", "Loffredo", "Alex", "Password");
-            //this.plAdmin = new PlatformAdmin("Alex", "Password");
             this.user = null;
             this.plAdmin = null;
             this.home = home;
@@ -48,10 +45,6 @@
         }
 
 
-        /*public void photo() {
-            AuthImplementation authImplementation = new AuthImplementation();
-            authImplementation.updateHackathonPhotos();
-        }*/
         /**
          * Restituisce l'attributo home.
          *
@@ -85,22 +78,33 @@
             String[] names = new String[2];
             AuthImplementation authI = new AuthImplementation();
             int log = authI.logIn(username, new String(password), names);
-            if(log == 1){
-                this.plAdmin = new PlatformAdmin(username, new String(password));
-            }else if(log == 2){
-                this.user = new Organizer(names[0], names[1], username, new String(password));
-                this.findHack();
-            } else if(log == 3) {
-                this.user = new Judge(names[0], names[1], username, new String(password));
-                this.findHack();
-            } else if (log == 4) {
-                this.user = new Participant(names[0], names[1], username, new String(password));
-                this.findHack();
-                System.out.println(this.currIdHack);
-            } else if (log == 5) {
-                this.user = new User(names[0], names[1], username, new String(password));
-            }else{
-                return -1;
+            switch (log) {
+                case 1: {
+                    this.plAdmin = new PlatformAdmin(username, new String(password));
+                    break;
+                }
+                case 2: {
+                    this.user = new Organizer(names[0], names[1], username, new String(password));
+                    this.findHack();
+                    break;
+                }
+                case 3: {
+                    this.user = new Judge(names[0], names[1], username, new String(password));
+                    this.findHack();
+                    break;
+                }
+                case 4: {
+                    this.user = new Participant(names[0], names[1], username, new String(password));
+                    this.findHack();
+                    break;
+                }
+                case 5: {
+                    this.user = new User(names[0], names[1], username, new String(password));
+                    break;
+                }
+                default: {
+                    return -1;
+                }
             }
             return log;
         }
@@ -206,22 +210,8 @@
      */
     public int sendRequestOrganizer(String username){
         OrgImplementation orgI = new OrgImplementation();
-        System.out.println(this.user.getUsername() + " + " + username + " + " +this.currIdHack);
         return orgI.inviteUser(this.user.getUsername(), username, this.currIdHack);
     }
-
-    /**
-     * Restituisce gli inviti di unione al team che un partecipante riceve.
-     *
-     * @return ArrayList : Lista di invita della classe Participant.
-     */
-    /*public ArrayList<String> getRequests(){
-        if(this.user instanceof Participant){
-            return ((Participant) user).getInvRecived();
-        }else{
-            return null;
-        }
-    }*/
 
     /**
      * Gestisce ciò che avviene quando un partecipante permette ad un altro di unirsi al suo team tramite richiesta.
@@ -232,7 +222,11 @@
 
     public int handleAccInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
-        return userI.acceptInvite(sender, this.user.getUsername());
+        int code = userI.acceptInvite(sender, this.user.getUsername());
+        if(code == 1){
+            this.user = new Judge(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
+        }
+        return code;
     }
 
     public int handleAccRequest(String sender){
@@ -265,11 +259,9 @@
      * @param team Il team di cui il giudice vuole vedere la lista.
      * @return ArrayList : La lista dei documenti di un team.
      */
-    public void handleLoadFile(String team, ArrayList<byte[]> files, ArrayList<String> names, ArrayList<String> comments){
+    public void handleLoadFile(String team, List<byte[]> files, List<String> names, List<String> comments){
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getDocuments(team, this.currIdHack, files, names, comments);
-        for(String comm : comments)
-            System.out.println(comm);
     }
 
     public int handleComment(String comment, String doc, String team){
@@ -320,15 +312,8 @@
     public boolean isHackStarted(){
         return !this.hackathon.getStartDate().after(new Date());
     }
-    /**
-     * Create team int.
-     *
-     * @param nickname the nickname
-     * @return the int
-     */
-    public int createTeam(String nickname){
-        return Team.create(nickname, ((Participant) this.user));
-    }
+
+
 
     public int subscribe(LocalDate start, LocalDate end){
         if (!(this.hackathon.getEndDate().after(new Date()))){
@@ -344,6 +329,7 @@
                 int code = userI.subscribe(this.user.getUsername(), this.idHack); //QUI DOVREBBE RESTITUIRE -4 SE GENERE ECCEZIONE, NON CONVIENE VERIFICARE A PRIORI CHE LA DATA DI FINE NON SIA STATA SUPERATA?
                 if(code == 1){
                     this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
+                    this.currIdHack = this.idHack;
                 }
                 return code;
             }else{
@@ -381,6 +367,9 @@
                     areaPersonaleU.getTeamPanel().setVisible(false);
                     frame.setVisible(false);
                     break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Errore durante il caricamento dell'area personale");
+                    break;
             }
         }
         if(frame.equals(this.home.getFrame())){
@@ -394,12 +383,12 @@
         return plAdmin;
     }
 
-    public void getFreeUser(ArrayList<String> freeUsers, LocalDate start, LocalDate end){
+    public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
         UsersImplementation usersI = new UsersImplementation();
         usersI.getFreeUser(freeUsers, start, end);
     }
 
-    public void getInvites(ArrayList<String> requests){
+    public void getInvites(List<String> requests){
         UsersImplementation usersI = new UsersImplementation();
         usersI.getInvites(requests, this.user.getUsername());
     }
@@ -417,7 +406,6 @@
             Path imagePath = file.toPath();
 
             if (!Files.exists(imagePath)) {
-                System.err.println("File immagine non trovato: " + imagePath);
                 return -5;
             }
             byte[] photoData;
@@ -435,23 +423,11 @@
         return !(this.user instanceof Participant || this.user instanceof Judge || this.user instanceof Organizer);
     }
 
-    public String getDescription(ArrayList<Object> data){
-        OrgImplementation orgI = new OrgImplementation();
-        orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
-        System.out.println(data.size());
-        return ((String) data.get(data.size()-2));
-    }
-
-    public boolean isRegStarted(){    //CONTROLLA SE LE REGISTRAZIONI SONO COMINCIATE
-        //DOBBIAMO SALVARE LE INFO DELL'HACKATHON
-        return !(this.hackathon.getStartRegDate()).before(new Date());
-    }
-
     public void findHack() {
         ArrayList<Object> data = new ArrayList<>();
         if (this.user instanceof Organizer || this.user instanceof Judge) {
             OrgImplementation orgI = new OrgImplementation();
-            orgI.findHack(this.user.getUsername(), data, this.getUser().toString());
+            orgI.findHack(this.user.getUsername(), data, this.getUser().getClass().getSimpleName());
         } else if (this.user instanceof Participant){
             ParticipantImplementation parI = new ParticipantImplementation();
             parI.findHack(this.user.getUsername(), data);
@@ -470,7 +446,6 @@
         this.currIdHack = (int) data.get(9);
         this.photo = (byte[]) data.get(10);
         this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
-        System.out.println(this.hackathon.getTitle());
     }
 
     public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
@@ -510,15 +485,16 @@
         return (int)data.get(9);
     }
 
-    public void getHackList(ArrayList<ArrayList<Object>> data){
+    public void getHackList(List<List<Object>> data){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getHackList(data);
         if(!data.isEmpty()){
             String idHacks = "0";
-            for(ArrayList<Object> list : data){
+            for(List<Object> list : data){
                 if(((Date)list.get(3)).before(new Date())){
-                    idHacks = idHacks + "-" + list.get(9);
-                    System.out.println(idHacks);
+                    StringBuilder sb = new StringBuilder(idHacks);
+                    sb.append("-").append(list.get(9));
+                    idHacks = sb.toString();
                 }
             }
             idHacks = idHacks + "-";
@@ -550,12 +526,12 @@
         this.photo = photo;
     }
 
-    public void getJudgesList(ArrayList<String> judges){
+    public void getJudgesList(List<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.idHack);
     }
 
-    public void getActJudgesList(ArrayList<String> judges){
+    public void getActJudgesList(List<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.currIdHack);
     }
@@ -570,26 +546,22 @@
         return hackI.getOrganizer(this.currIdHack);
     }
 
-    public void getRanking(ArrayList<String> ranking, int idLastHack) {
+    public void getRanking(List<String> ranking, int idLastHack) {
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getRanking(ranking, idLastHack);
     }
 
-    /*public int subrscibeTeam(){   PROBABILMENTE MEGLIO FARE UN TRIGGER O ALTRIMENTI FARE ALTRA QUERY PER PRENDERE IDTEAM APPENA INSERITO E USARLO PER INSERIRE PARTICIPANT
-        Teamimplementation teamI = new Teamimplementation();
-        return teamI.subscribeTeam(this.user.getUsername(), this.idHack);
-    }*/
-    public void getHackParticipants(ArrayList<String> participants){
+    public void getHackParticipants(List<String> participants){
         ParticipantImplementation parI = new ParticipantImplementation();
         parI.getParticipants(participants, this.currIdHack, this.user.getUsername(), this.hackathon.getMaxTeamParticipant());
     }
 
-    public void getTeams(ArrayList<String> teams){
+    public void getTeams(List<String> teams){
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getTeams(teams, this.currIdHack);
     }
 
-    public void getLastsUserHack(ArrayList<ArrayList<Object>> hackathon){
+    public void getLastsUserHack(List<ArrayList<Object>> hackathon){
         UsersImplementation userI = new UsersImplementation();
         userI.getLastsUserHack(hackathon, this.user.getUsername());
     }
@@ -599,7 +571,7 @@
         return judgeI.getMark(team, this.user.getUsername(), this.currIdHack);
     }
 
-    public void getRequests(ArrayList<String> requests){
+    public void getRequests(List<String> requests){
         ParticipantImplementation parI = new ParticipantImplementation();
         parI.getRequests(requests, this.user.getUsername());
     }
@@ -619,7 +591,7 @@
         return teamI.changeNickname(nickname, this.idTeam);
     }
 
-    public void findTeammates(ArrayList<String> teammates){
+    public void findTeammates(List<String> teammates){
         TeamImplementation teamI = new TeamImplementation();
         teamI.findTeammates(teammates, this.idTeam);
     }
@@ -630,21 +602,26 @@
         try{
             results = teamI.sendFile(Files.readAllBytes(file.toPath()),
             name, this.idTeam, new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            System.out.println(results);
         } catch (IOException e) {
             e.printStackTrace();
             results = -2;
         }
-        System.out.println(results);
         return results;
     }
 
-    public void getDocuments(ArrayList<String> docs, ArrayList<byte[]> files, ArrayList<String> comments){
+    public void getDocuments(List<String> docs, List<byte[]> files, List<String> comments){
         TeamImplementation teamI = new TeamImplementation();
         teamI.getDocuments(docs, files, comments, this.idTeam);
     }
 
     public int getCurrIdHack() {
         return currIdHack;
+    }
+
+    public void fillRanking(List<String> teams){
+    if(this.hackathon.getEndDate().before(new Date())){
+            HackathonImplementation hackI = new HackathonImplementation();
+            hackI.getRanking(teams, this.idHack);
+        }
     }
 }

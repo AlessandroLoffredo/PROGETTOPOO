@@ -39,7 +39,7 @@ public class CambiaPassword {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public CambiaPassword(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Cambia password");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -52,8 +52,10 @@ public class CambiaPassword {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-
-
+        String emoji = "\uD83D\uDD12";
+        String font = "Segoe UI Emoji";
+        String emoji2 = "\uD83D\uDD13";
+        
         panel.setBackground(new Color(30, 30, 47));
         oldPasswordPanel.setBackground(new Color(30, 30, 47));
         passwordPanel.setBackground(new Color(30, 30, 47));
@@ -66,18 +68,18 @@ public class CambiaPassword {
         newPasswordLabel.setForeground(new Color(236, 240, 241));
         changeButton.setForeground(new Color(37, 99, 235));
 
-        lockButton1.setText("\uD83D\uDD12");
-        lockButton1.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton1.setText(emoji);
+        lockButton1.setFont(new Font(font, Font.PLAIN, 18));
         lockButton1.setBackground(new Color(30, 30, 47));
         lockButton1.setForeground(new Color(236, 240, 241));
 
-        lockButton2.setText("\uD83D\uDD12");
-        lockButton2.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton2.setText(emoji);
+        lockButton2.setFont(new Font(font, Font.PLAIN, 18));
         lockButton2.setBackground(new Color(30, 30, 47));
         lockButton2.setForeground(new Color(236, 240, 241));
 
-        lockButton3.setText("\uD83D\uDD12");
-        lockButton3.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lockButton3.setText(emoji);
+        lockButton3.setFont(new Font(font, Font.PLAIN, 18));
         lockButton3.setBackground(new Color(30, 30, 47));
         lockButton3.setForeground(new Color(236, 240, 241));
 
@@ -86,51 +88,7 @@ public class CambiaPassword {
         {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(new String(oldPasswordArea.getPassword()).isEmpty() || new String(passwordArea.getPassword()).isEmpty() || new String(newPasswordArea.getPassword()).isEmpty()){
-                    JOptionPane.showMessageDialog(panel, "Inserire i dati mancanti");
-                }
-                else {
-                    try {
-                        int code = controller.changePassword(oldPasswordArea.getPassword(), passwordArea.getPassword(), newPasswordArea.getPassword());
-                        switch (code){
-                            case -1:
-                               JOptionPane.showMessageDialog(panel, "Vecchia password errata");
-                               oldPasswordArea.setText("");
-                               break;
-                            case -2:
-                               JOptionPane.showMessageDialog(panel, "La password deve essere lunga tra gli 8 ed i 16 caratteri");
-                               newPasswordArea.setText("");
-                               passwordArea.setText("");
-                               break;
-                            case -3:
-                               JOptionPane.showMessageDialog(panel, "Le password non coincidono");
-                               newPasswordArea.setText("");
-                               passwordArea.setText("");
-                               break;
-                            case -4:
-                               JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
-                               newPasswordArea.setText("");
-                               passwordArea.setText("");
-                               break;
-                            case 1:
-                               JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
-                               frameChiamante.setVisible(true);
-                               frame.dispose();
-                               break;
-                            default:
-                               JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
-                               passwordArea.setText("");
-                               oldPasswordArea.setText("");
-                               newPasswordArea.setText("");
-                               break;
-                        }
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
-                        passwordArea.setText("");
-                        oldPasswordArea.setText("");
-                        newPasswordArea.setText("");
-                    }
-                }
+                changePassword(controller, frameChiamante);
             }
         });
 
@@ -146,11 +104,11 @@ public class CambiaPassword {
         lockButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lockButton1.getText().equals("\uD83D\uDD12")) {
-                    lockButton1.setText("\uD83D\uDD13");
+                if (lockButton1.getText().equals(emoji)) {
+                    lockButton1.setText(emoji2);
                     oldPasswordArea.setEchoChar((char) 0);
                 } else {
-                    lockButton1.setText("\uD83D\uDD12");
+                    lockButton1.setText(emoji);
                     oldPasswordArea.setEchoChar('*');
                 }
             }
@@ -159,11 +117,11 @@ public class CambiaPassword {
         lockButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lockButton2.getText().equals("\uD83D\uDD12")) {
-                    lockButton2.setText("\uD83D\uDD13");
+                if (lockButton2.getText().equals(emoji)) {
+                    lockButton2.setText(emoji2);
                     passwordArea.setEchoChar((char) 0);
                 } else {
-                    lockButton2.setText("\uD83D\uDD12");
+                    lockButton2.setText(emoji);
                     passwordArea.setEchoChar('*');
                 }
             }
@@ -172,11 +130,11 @@ public class CambiaPassword {
         lockButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (lockButton3.getText().equals("\uD83D\uDD12")) {
-                    lockButton3.setText("\uD83D\uDD13");
+                if (lockButton3.getText().equals(emoji)) {
+                    lockButton3.setText(emoji2);
                     newPasswordArea.setEchoChar((char) 0);
                 } else {
-                    lockButton3.setText("\uD83D\uDD12");
+                    lockButton3.setText(emoji);
                     newPasswordArea.setEchoChar('*');
                 }
             }
@@ -190,5 +148,54 @@ public class CambiaPassword {
      */
     public JFrame getFrame() {
         return frame;
+    }
+
+    private void changePassword(Controller controller, JFrame frameChiamante){
+        if(new String(oldPasswordArea.getPassword()).isEmpty() || new String(passwordArea.getPassword()).isEmpty() || new String(newPasswordArea.getPassword()).isEmpty()){
+            JOptionPane.showMessageDialog(panel, "Inserire i dati mancanti");
+        }
+        else {
+            try {
+                int code = controller.changePassword(oldPasswordArea.getPassword(), passwordArea.getPassword(), newPasswordArea.getPassword());
+                switch (code){
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "Vecchia password errata");
+                        oldPasswordArea.setText("");
+                        break;
+                    case -2:
+                        JOptionPane.showMessageDialog(panel, "La password deve essere lunga tra gli 8 ed i 16 caratteri");
+                        newPasswordArea.setText("");
+                        passwordArea.setText("");
+                        break;
+                    case -3:
+                        JOptionPane.showMessageDialog(panel, "Le password non coincidono");
+                        newPasswordArea.setText("");
+                        passwordArea.setText("");
+                        break;
+                    case -4:
+                        JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
+                        newPasswordArea.setText("");
+                        passwordArea.setText("");
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
+                        frameChiamante.setVisible(true);
+                        frame.dispose();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                        passwordArea.setText("");
+                        oldPasswordArea.setText("");
+                        newPasswordArea.setText("");
+                        break;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");
+                passwordArea.setText("");
+                oldPasswordArea.setText("");
+                newPasswordArea.setText("");
+            }
+        }
     }
 }

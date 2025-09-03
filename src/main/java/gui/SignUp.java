@@ -5,6 +5,7 @@ import controller.Controller;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 /**
  * Classe che permette di registrarsi.
@@ -41,7 +42,7 @@ public class SignUp {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public SignUp(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("SignUp");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -54,6 +55,9 @@ public class SignUp {
         frame.setVisible(true);
         frame.setMinimumSize(new Dimension(500, 500));
         frame.setMaximumSize(new Dimension(500, 500));
+        
+        String emoji = "\uD83D\uDD12";
+        
         usernameArea.setPreferredSize(new Dimension(150, 25));
         passwordArea.setPreferredSize(new Dimension(150, 25));
         fNameArea.setPreferredSize(new Dimension(150, 25));
@@ -74,7 +78,7 @@ public class SignUp {
         titleLabel.setForeground(new Color(236, 240, 241));
         logInButton.setForeground(new Color(37, 99, 235));
 
-        lockButton.setText("\uD83D\uDD12");
+        lockButton.setText(emoji);
         lockButton.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         lockButton.setBackground(new Color(30, 30, 47));
         lockButton.setForeground(new Color(236, 240, 241));
@@ -83,62 +87,19 @@ public class SignUp {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (usernameArea.getText().isEmpty() || passwordArea.getPassword().toString().isEmpty() || fNameArea.getText().isEmpty() || lNameArea.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
-                } else if(!ageRadioButton.isSelected()) {
-                    JOptionPane.showMessageDialog(panel, "Devi confermare di avere più di 16 anni");
-                } else {
-                    try {
-                        int code = controller.handleSignUp(usernameArea.getText(), new String(passwordArea.getPassword()), fNameArea.getText(), lNameArea.getText());
-                        switch (code) {
-                            case -1:
-                                JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
-                                break;
-                            case -2:
-                                JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
-                                break;
-                            case -3:
-                                JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
-                                passwordArea.setText("");
-                                break;
-                            case -4:
-                                JOptionPane.showMessageDialog(panel, "Username già utilizzato");
-                                break;
-                            case 1:
-                                JOptionPane.showMessageDialog(panel, "Registrazione completata!");
-                                controller.getHome().getAreaPersonaleButton().setEnabled(true);
-                                controller.getHome().getLoginButton().setText("Logout");
-                                frameChiamante.setEnabled(true);
-                                frame.dispose();
-                                break;
-                            default:
-                                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
-                                usernameArea.setText("");
-                                passwordArea.setText("");
-                                lNameArea.setText("");
-                                fNameArea.setText("");
-                                break;
-                        }
-                    } catch (Exception ex) {  //Creiamo classe Exception nuova?
-                        ex.printStackTrace();
-                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");                        usernameArea.setText("");
-                        passwordArea.setText("");
-                        lNameArea.setText("");
-                        fNameArea.setText("");
-                    }
-                }
+                signUp(controller, frameChiamante);
             }
         });
 
         lockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(lockButton.getText().equals("\uD83D\uDD12")){
+                if(lockButton.getText().equals(emoji)){
                     lockButton.setText("\uD83D\uDD13");
                     passwordArea.setEchoChar((char) 0);
                 }
                 else {
-                    lockButton.setText("\uD83D\uDD12");
+                    lockButton.setText(emoji);
                     passwordArea.setEchoChar('*');
                 }
             }
@@ -201,5 +162,52 @@ public class SignUp {
      */
     public JFrame getFrame() {
         return frame;
+    }
+
+    private void signUp(Controller controller, JFrame frameChiamante){
+        if (usernameArea.getText().isEmpty() || Arrays.toString(passwordArea.getPassword()).isEmpty() || fNameArea.getText().isEmpty() || lNameArea.getText().isEmpty()){
+            JOptionPane.showMessageDialog(panel, "Riempi tutti i campi");
+        } else if(!ageRadioButton.isSelected()) {
+            JOptionPane.showMessageDialog(panel, "Devi confermare di avere più di 16 anni");
+        } else {
+            try {
+                int code = controller.handleSignUp(usernameArea.getText(), new String(passwordArea.getPassword()), fNameArea.getText(), lNameArea.getText());
+                switch (code) {
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "Il nome ed il cognome non devono superare i 20 caratteri");
+                        break;
+                    case -2:
+                        JOptionPane.showMessageDialog(panel, "L'username deve avere tra i 3 ed i 16 caratteri\nLa password deve avere tra gli 8 ed i 16 caratteri");
+                        break;
+                    case -3:
+                        JOptionPane.showMessageDialog(panel, "La password non rispecchia il formato\n1 lettera maiuscola, 1 lettera minuscola, 1 numero, 1 carattere speciale");
+                        passwordArea.setText("");
+                        break;
+                    case -4:
+                        JOptionPane.showMessageDialog(panel, "Username già utilizzato");
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(panel, "Registrazione completata!");
+                        controller.getHome().getAreaPersonaleButton().setEnabled(true);
+                        controller.getHome().getLoginButton().setText("Logout");
+                        frameChiamante.setEnabled(true);
+                        frame.dispose();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
+                        usernameArea.setText("");
+                        passwordArea.setText("");
+                        lNameArea.setText("");
+                        fNameArea.setText("");
+                        break;
+                }
+            } catch (Exception ex) {  //Creiamo classe Exception nuova?
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");                        usernameArea.setText("");
+                passwordArea.setText("");
+                lNameArea.setText("");
+                fNameArea.setText("");
+            }
+        }
     }
 }

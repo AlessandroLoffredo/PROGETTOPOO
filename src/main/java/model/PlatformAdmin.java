@@ -1,8 +1,6 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 import java.util.Scanner;
 
 /**
@@ -31,12 +29,11 @@ public class PlatformAdmin {
         //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
         Scanner in = new Scanner(System.in);
         System.out.println("Inserisci l'username (min 3 caratteri, max 15: ");
-        username = in.nextLine();
-        while (username.length()<3 || username.length()>15) {
+        this.username = in.nextLine();
+        while (this.username.length()<3 || this.username.length()>15) {
             System.out.println("L'username non rispetta i requisiti (min 3 caratteri, max 15), riprova");
         }
-        this.username = username;
-        //AGGIORNAMENTO DATI NEL DB
+
         in.close();
     }
 
@@ -73,19 +70,5 @@ public class PlatformAdmin {
         return this.password;
     }
 
-    /**
-     * Permette di creare un nuovo Hackathon.
-     *
-     * @param title              Titolo dlel'Hackathon
-     * @param venue              Luogo dove si svolgerà l'Hackathon.
-     * @param startDate          Data di inzio.
-     * @param endDate            Data di fine.
-     * @param maxRegistration    Numero massimo di partecipanti all'Hackathon.
-     * @param maxTeamParticipant Numero massimo di partecipanti all'interno di un team.
-     * @param hackOrganizer      Organizzatore dell'Hackathon
-     */
-    public void createHackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, Organizer hackOrganizer){
-        //Hackathon hack = new Hackathon(title, venue, startDate, endDate, maxRegistration, maxTeamParticipant, hackOrganizer);
-        //ANDRà FATTA UNA QUERY PER AGGIUNGERE UN NUOVO HACKATHON AL DB
-    }
+
 }

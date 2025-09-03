@@ -9,9 +9,10 @@ import java.time.LocalDate;
 public class AdminImplementation implements AdminInterface {
     public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, byte[] photoData){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT doubleInsHackOrg(?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt= conn.prepareStatement(sql);
             stmt.setString(1, title);
             stmt.setString(2, venue);
             stmt.setDate(3, Date.valueOf(startDate));
@@ -35,6 +36,14 @@ public class AdminImplementation implements AdminInterface {
         } catch (Exception e) {
             e.printStackTrace();
             results = -1;
+        } finally {
+            try{
+                if(stmt != null){
+                    stmt.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return results;
     }

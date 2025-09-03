@@ -1,25 +1,24 @@
 package implementazioniPostgresDAO;
 
 
+import dao.ParticipantInterface;
 import database.ConnessioneDatabase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
-public class ParticipantImplementation {
-    public void getParticipants(ArrayList<String> participants, int idHack, String username, int max) {
+public class ParticipantImplementation implements ParticipantInterface {
+    public void getParticipants(List<String> participants, int idHack, String username, int max) {
+        PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection) {
-            // Query corretta che:
-            // 1. Trova tutti i partecipanti allo stesso hackathon
-            // 2. Esclude quelli del team corrente dell'utente
             String sql = "SELECT P.username, T.idTeam " +
                     "FROM Participant P " +
                     "JOIN Team T ON P.idTeam = T.idTeam " +
                     "WHERE T.idHack = ? " +
-                    "AND P.idTeam <> (SELECT P2.idTeam FROM Participant P2 WHERE P2.username = ?) " +
+                    "AND P.idTeam NOT IN (SELECT P2.idTeam FROM Participant P2 WHERE P2.username = ?) " +
                     "AND P.username <> ? " +
                     "AND T.idTeam IN (" +
                     "   SELECT T2.idTeam " +
@@ -30,7 +29,7 @@ public class ParticipantImplementation {
                     "    HAVING COUNT(P3.username) < ? " +
                     ")";
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idHack);
             stmt.setString(2, username);
             stmt.setString(3, username);
@@ -40,25 +39,28 @@ public class ParticipantImplementation {
             while (rs.next()) {
                 participants.add(rs.getString(1));
             }
-        } catch (SQLException e) {
-            System.err.println("Errore SQL durante il recupero dei partecipanti:");
+        }catch (Exception e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Errore generico durante il recupero dei partecipanti:");
-            e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void findHack(String username, ArrayList<Object> data){
+    public void findHack(String username, List<Object> data){
+        PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * FROM HACKATHON H, TEAM T, PARTICIPANT P " +
                     "WHERE T.idHack = H.idHack AND T.idTeam = P.idTeam AND P.username = ? " +
                     "AND H.endDate >= CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                System.out.println(rs.getString("title") + rs.getString("problemDesc"));
                 data.add(rs.getString("title"));
                 data.add(rs.getString("venue"));
                 data.add(rs.getDate("startDate"));
@@ -71,15 +73,21 @@ public class ParticipantImplementation {
                 data.add(rs.getInt("idHack"));
                 data.add(rs.getBytes("photo"));
             }
-        } catch (SQLException e) {
+        }catch (Exception e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public int sendRequests(String sender, int idHack, String receiver, String message){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "INSERT INTO REQUESTS(sender, receiver, idteams, idteamr, rmessage) " +
                     "SELECT ?, ?, T1.idTeam, T2.idTeam, ? " +
@@ -89,8 +97,9 @@ public class ParticipantImplementation {
                     "T2.idTeam = P2.idTeam AND P2.username = ? AND " +
                     "T1.idHack = ? AND T2.idHack = ? AND " +
                     "NOT EXISTS (SELECT 1 FROM REQUESTS R WHERE " +
-                    "R.sender = ? AND R.receiver = ? AND R.idTeams = T1.idTeam AND R.idTeamR = T2.idTeam)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+                    "(R.sender = ? AND R.receiver = ? AND R.idTeamS = T2.idTeam AND R.idTeamR = T1.idTeam) OR (" +
+                    "R.sender = ? AND R.receiver = ? AND R.idTeamS = T1.idTeam AND R.idTeamR = T2.idTeam))";
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
             stmt.setString(3, message);
@@ -98,8 +107,10 @@ public class ParticipantImplementation {
             stmt.setString(5, receiver);
             stmt.setInt(6, idHack);
             stmt.setInt(7, idHack);
-            stmt.setString(8, sender);
-            stmt.setString(9, receiver);
+            stmt.setString(8, receiver);
+            stmt.setString(9, sender);
+            stmt.setString(10, sender);
+            stmt.setString(11, receiver);
             results = stmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -107,32 +118,47 @@ public class ParticipantImplementation {
         } catch (Exception e) {
             e.printStackTrace();
             results = -3;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return results;
 
     }
-    public void getRequests(ArrayList<String> requests, String username){
+
+    public void getRequests(List<String> requests, String username){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT R.sender, R.rmessage FROM Requests R WHERE " +
                     "R.receiver = ? ";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 requests.add(rs.getString(1) + ": " + rs.getString(2));
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public int acceptRequest(String sender, String receiver, int idHack){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT acceptRequest(?, ? ,?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
             stmt.setInt(3, idHack);
@@ -140,31 +166,39 @@ public class ParticipantImplementation {
             if(rs.next()){
                 results = rs.getInt(1);
             }
-        }catch (SQLException e){
-            e.printStackTrace();
-            results = 0;
         } catch (Exception e) {
             e.printStackTrace();
             results = 0;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return results;
     }
 
     public int declineRequest(String sender, String receiver){
         int results;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "DELETE FROM Requests WHERE sender = ? AND receiver = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
             results = stmt.executeUpdate();
-            System.out.println(results + " - " + sender + " - " + receiver);
-        }catch (SQLException e){
-            e.printStackTrace();
-            results = 0;
         }catch (Exception e) {
             e.printStackTrace();
             results = 0;
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return results;
     }

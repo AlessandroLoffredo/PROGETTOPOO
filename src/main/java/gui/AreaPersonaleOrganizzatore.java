@@ -4,6 +4,7 @@ import controller.Controller;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
@@ -30,14 +31,14 @@ public class AreaPersonaleOrganizzatore {
     private JButton cambiaUsernameButton;
     private JButton cambiaPasswordButton;
     private JPanel hackathonPanel;
-    private JButton startSingUpButton;
+    private JButton startSignUpButton;
     private JSpinner spinner1;
     private JButton inviaRichiestaButton;
     private JLabel invLabel;
     private JLabel hackLabel;
     private JLabel dateLabel;
     private JPanel organizerPanel;
-    private JComboBox comboBox1;
+    private JComboBox<String> comboBox1;
     private JPanel profilePanel;
     private JLabel profileLabel;
     private JLabel titleLabel;
@@ -77,7 +78,7 @@ public class AreaPersonaleOrganizzatore {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public AreaPersonaleOrganizzatore(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Hackathon");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -89,8 +90,12 @@ public class AreaPersonaleOrganizzatore {
         frame.pack();
         frame.setVisible(true);
         frame.setSize(1000, 800);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
+        String font = "Segoe UI Emoji";
+        String dateFormat = "dd/MM/yyyy";
+        LocalDate[] dates = new LocalDate[3];
+
 
         fNameArea.setText(controller.getUser().getfName());
         lNameArea.setText(controller.getUser().getlName());
@@ -123,45 +128,45 @@ public class AreaPersonaleOrganizzatore {
 
         cambiaUsernameButton.setForeground(new Color(37, 99, 235));
         cambiaPasswordButton.setForeground(new Color(37, 99, 235));
-        startSingUpButton.setForeground(new Color(37, 99, 235));
+        startSignUpButton.setForeground(new Color(37, 99, 235));
         inviaRichiestaButton.setForeground(new Color(37, 99, 235));
         homeButton.setForeground(new Color(37, 99, 235));
         logoutButton.setForeground(new Color(37, 99, 235));
 
         currentVenueLabel.setText("\uD83C\uDF10 Sede:");
-        currentVenueLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentVenueLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentVenueLabel.setForeground(new Color(30, 30, 47));
         currentVenueLabel.setBackground(new Color(236, 240, 241));
         currentTitleLabel.setText("\uD83D\uDCCC Titolo:");
-        currentTitleLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentTitleLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentTitleLabel.setForeground(new Color(30, 30, 47));
         currentTitleLabel.setBackground(new Color(236, 240, 241));
         currentStartLabel.setText("\uD83D\uDDD3 Inizio Hackathon:");
-        currentStartLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartLabel.setForeground(new Color(30, 30, 47));
         currentStartLabel.setBackground(new Color(236, 240, 241));
         currentEndLabel.setText("\uD83D\uDDD3 Fine Hackathon:");
-        currentEndLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentEndLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentEndLabel.setForeground(new Color(30, 30, 47));
         currentEndLabel.setBackground(new Color(236, 240, 241));
         currentStartRegLabel.setText("\uD83D\uDDD3 Inizio iscrizioni:");
-        currentStartRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentStartRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentStartRegLabel.setForeground(new Color(30, 30, 47));
         currentStartRegLabel.setBackground(new Color(236, 240, 241));
         currentMaxRegLabel.setText("\uD83C\uDF9F Partecipanti massimi:");
-        currentMaxRegLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxRegLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxRegLabel.setForeground(new Color(30, 30, 47));
         currentMaxRegLabel.setBackground(new Color(236, 240, 241));
         currentCounterLabel.setText("\uD83D\uDEB9 Contatore iscritti:");
-        currentCounterLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentCounterLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentCounterLabel.setForeground(new Color(30, 30, 47));
         currentCounterLabel.setBackground(new Color(236, 240, 241));
         currentMaxTeamParLabel.setText("\uD83D\uDC6B Partecipanti massimi per team:");
-        currentMaxTeamParLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentMaxTeamParLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentMaxTeamParLabel.setForeground(new Color(30, 30, 47));
         currentMaxTeamParLabel.setBackground(new Color(236, 240, 241));
         currentProbDescLabel.setText("\uD83D\uDCC3 Descrizione problema:");
-        currentProbDescLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 14));
+        currentProbDescLabel.setFont(new Font(font, Font.PLAIN, 14));
         currentProbDescLabel.setForeground(new Color(30, 30, 47));
         currentProbDescLabel.setBackground(new Color(236, 240, 241));
         currentProbDescArea.setForeground(new Color(30, 30, 47));
@@ -182,41 +187,14 @@ public class AreaPersonaleOrganizzatore {
         datePanel.setBorder(new LineBorder(new Color(30, 30, 47)));
         organizerPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
-        LocalDate[] dates = new LocalDate[3];
-        controller.getDates(dates);
-        System.out.println(dates[0] + " + " + dates[1]);
-        ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
-        Date startDate = Date.from(zonedDateTime.toInstant());
-        if (controller.isStarted()) {
-            organizerPanel.setEnabled(false);
-            datePanel.setEnabled(false);
-            spinner1.setEnabled(false);
-            startSingUpButton.setEnabled(false);
-            organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
-            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-            ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
-            Date startRegDate = Date.from(zonedDateTime1.toInstant());
-            SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
-            spinner1.setModel(startModel);
-            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
-            spinner1.setEditor(startEditor);
-            spinner1.setValue(startRegDate);
-            if(startRegDate.before(new Date()) || startRegDate.equals(new Date())){
-                comboBox1.setEnabled(false);
-                inviaRichiestaButton.setEnabled(false);
-            }
-        } else {
-            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), new Date(), startDate, Calendar.DAY_OF_YEAR);
-            spinner1.setModel(startModel);
-            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, "dd/MM/yyyy");
-            spinner1.setEditor(startEditor);
-        }
-
+        this.blockJudge(controller, dateFormat, dates);
+        this.fillJudge(controller, dates);
 
         homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.findHack();
                 frame.dispose();
             }
@@ -240,38 +218,10 @@ public class AreaPersonaleOrganizzatore {
             }
         });
 
-        startSingUpButton.addActionListener(new ActionListener() {
+        startSignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (controller.verifyingStartRegDate()) {
-                    JOptionPane.showMessageDialog(panel, "Hai già inserito la data di inizio iscrizioni per l'Hackathon", "ERRORE", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    SimpleDateFormat dateFormatted = new SimpleDateFormat("dd/MM/yyyy");
-                    Date date = (Date) spinner1.getValue();
-                    int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler far partire le iscrizioni da: " + dateFormatted.format(date) + "?", "Data inizio iscrizioni", JOptionPane.YES_NO_OPTION);
-                    if (scelta == JOptionPane.YES_OPTION) {
-                        LocalDate startRegDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        int code = controller.handleStartSignUp(startRegDate);
-                        switch (code) {
-                            case -1:
-                                JOptionPane.showMessageDialog(panel, "La data deve essere almeno due giorni prima dell'inizo dell'Hackathon");
-                                break;
-                            case 1:
-                                JOptionPane.showMessageDialog(panel, "Inserimento della data avvenuto con successo");
-                                startSingUpButton.setEnabled(false);
-                                spinner1.setEnabled(false);
-                                startSingUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-                                if (controller.isStarted())
-                                    organizerPanel.setVisible(false);
-                                break;
-                            case 0:
-                            default:
-                                JOptionPane.showMessageDialog(panel, "Errore durante l'aggiornamento della data");
-                                break;
-                        }
-                    }
-                }
-                spinner1.setValue(new Date());
+                startSignUp(controller, startSignUpButton, dateFormat);
             }
         });
 
@@ -309,32 +259,25 @@ public class AreaPersonaleOrganizzatore {
             }
         });
 
-        try {
-            ArrayList<String> judges = new ArrayList<>();
-            controller.getFreeUser(judges, dates[0], dates[1]);
-            comboBox1.addItem("Seleziona un utente");
-            System.out.println(dates[0]);
-            System.out.println(dates[1]);
-            for (String judge : judges) {
-                comboBox1.addItem(judge);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEI GIUDICI");
-        }
-
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
+                controller.getHome().fillHacks(controller.getHome().getFont());
                 controller.getHome().getFrame().setVisible(true);
                 controller.logout();
                 JOptionPane.showMessageDialog(controller.getHome().getFrame(), "Logout eseguito");
                 controller.getHome().getAreaPersonaleButton().setEnabled(false);
                 controller.getHome().getLoginButton().setText("Login");
+                frame.dispose();
             }
         });
 
+        spinner1.addChangeListener(e -> {
+            Date startDateIns = (Date) spinner1.getValue();
+            if(new Date().after(startDateIns)){
+                spinner1.setValue(new Date());
+            }
+        });
     }
     /**
      * Restituisce il frame principale della gui.
@@ -344,4 +287,80 @@ public class AreaPersonaleOrganizzatore {
     public JFrame getFrame() {
         return frame;
     }
+
+    private void blockJudge(Controller controller, String dateFormat, LocalDate[] dates){
+        controller.getDates(dates);
+        ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
+        Date startDate = Date.from(zonedDateTime.toInstant());
+        if (controller.isStarted()) {
+            organizerPanel.setEnabled(false);
+            datePanel.setEnabled(false);
+            spinner1.setEnabled(false);
+            startSignUpButton.setEnabled(false);
+            organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
+            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+            ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
+            Date startRegDate = Date.from(zonedDateTime1.toInstant());
+            SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
+            spinner1.setModel(startModel);
+            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
+            spinner1.setEditor(startEditor);
+            spinner1.setValue(startRegDate);
+            if(startRegDate.before(new Date()) || startRegDate.equals(new Date())){
+                comboBox1.setEnabled(false);
+                inviaRichiestaButton.setEnabled(false);
+            }
+        } else {
+            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_YEAR);
+            spinner1.setModel(startModel);
+            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
+            spinner1.setEditor(startEditor);
+        }
+    }
+
+    private void startSignUp(Controller controller, JButton startSignUpButton, String dateFormat){
+        if (controller.verifyingStartRegDate()) {
+            JOptionPane.showMessageDialog(panel, "Hai già inserito la data di inizio iscrizioni per l'Hackathon", "ERRORE", JOptionPane.ERROR_MESSAGE);
+        } else {
+            SimpleDateFormat dateFormatted = new SimpleDateFormat(dateFormat);
+            Date date = (Date) spinner1.getValue();
+            int scelta = JOptionPane.showConfirmDialog(panel, "Sei sicuro di voler far partire le iscrizioni da: " + dateFormatted.format(date) + "?", "Data inizio iscrizioni", JOptionPane.YES_NO_OPTION);
+            if (scelta == JOptionPane.YES_OPTION) {
+                LocalDate startRegDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int code = controller.handleStartSignUp(startRegDate);
+                switch (code) {
+                    case -1:
+                        JOptionPane.showMessageDialog(panel, "La data deve essere almeno due giorni prima dell'inizo dell'Hackathon");
+                        break;
+                    case 1:
+                        JOptionPane.showMessageDialog(panel, "Inserimento della data avvenuto con successo");
+                        startSignUpButton.setEnabled(false);
+                        spinner1.setEnabled(false);
+                        startSignUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+                        if (controller.isStarted())
+                            organizerPanel.setVisible(false);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(panel, "Errore durante l'aggiornamento della data");
+                        break;
+                }
+            }
+        }
+            spinner1.setValue(spinner1.getValue());
+    }
+
+    private void fillJudge(Controller controller, LocalDate[] dates){
+        try {
+            ArrayList<String> judges = new ArrayList<>();
+            controller.getFreeUser(judges, dates[0], dates[1]);
+            comboBox1.addItem("Seleziona un utente");
+            for (String judge : judges) {
+                comboBox1.addItem(judge);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEI GIUDICI");
+        }
+    }
+
 }

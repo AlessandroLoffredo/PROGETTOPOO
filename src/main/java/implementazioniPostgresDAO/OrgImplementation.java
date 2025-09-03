@@ -5,17 +5,18 @@ import database.ConnessioneDatabase;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 public class OrgImplementation implements OrgInterface {
-    @Override
+
     public int setupDate(LocalDate date, int idHack) {
         int resultsUp = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "UPDATE Hackathon " +
                     "SET startRegDate = ? " +
                     "WHERE idHack = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setDate(1, Date.valueOf(date));
             stmt.setInt(2, idHack);
             resultsUp = stmt.executeUpdate();
@@ -24,55 +25,73 @@ public class OrgImplementation implements OrgInterface {
             if(e.getMessage().contains("registration")){
                 resultsUp = -1;
             }
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return resultsUp;
     }
 
     public boolean verifyDate(String username){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
                     "O.username = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
                 results = rs.getInt("conto");
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        if(results == 1)
-            return true;
-        else
-            return false;
+        return results == 1;
     }
 
     public boolean isStarted(String username){
         int results = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
                          "O.username = ? AND H.startRegDate IS NOT NULL";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
                 results = rs.getInt("conto");
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        if(results == 1)
-            return true;
-        else
-            return false;
+        return results == 1;
     }
 
-    public void getDates(String username, LocalDate dates[]){
+    public void getDates(String username, LocalDate[] dates){
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT H.startDate, H.endDate, H.startRegDate FROM Hackathon H, Organizer O " +
                     "WHERE H.idHack = O.idHack AND O.username = ? AND H.endDate >= CURRENT_DATE " +
                     "ORDER BY H.endDate ASC " +
                     "LIMIT 1";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
@@ -88,17 +107,25 @@ public class OrgImplementation implements OrgInterface {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public int inviteUser(String sender, String receiver, int idHack){
         int inserted = 0;
+        PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "INSERT INTO Invites (organizer, idhackorg, inviteduser) " +
                     "SELECT ?, H.idHack, ? FROM Hackathon H, Organizer O " +
                     "WHERE H.idHack = ? AND O.username = ? AND H.idHack = O.idHack AND ? NOT IN ( " +
                     "SELECT I.invitedUser FROM Invites I WHERE I.idHackOrg = H.idHack)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, sender);
             stmt.setString(2, receiver);
             stmt.setInt(3, idHack);
@@ -112,23 +139,27 @@ public class OrgImplementation implements OrgInterface {
             }else if(e.getMessage().contains("differentusers")){
                 inserted = -2;
             }
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return inserted;
     }
 
-    public void findHack(String username, ArrayList<Object> data, String tabella){
+    public void findHack(String username, List<Object> data, String tabella){
+        PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * " +
                          "FROM Hackathon H, " + tabella + " T " +
                          "WHERE H.idHack = T.idHack AND username = ? AND H.endDate >= CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-//          stmt.setString(1, tabella);
-//          stmt.setString(2, tabella);
-//          stmt.setString(3, tabella);
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                System.out.println(rs.getString("title") + " + " + rs.getString("problemDesc"));
                 data.add(rs.getString("title"));
                 data.add(rs.getString("venue"));
                 data.add(rs.getDate("startDate"));
@@ -141,10 +172,15 @@ public class OrgImplementation implements OrgInterface {
                 data.add(rs.getInt("idHack"));
                 data.add(rs.getBytes("photo"));
             }
-        } catch (SQLException e){
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if(stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

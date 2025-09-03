@@ -32,7 +32,7 @@ public class CambiaNickname {
      * @param controller     Il controller istanziato dalla classe Home.java
      */
     public CambiaNickname(JFrame frameChiamante, Controller controller) {
-        frame = new JFrame("Crea Team");
+        frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -59,14 +59,8 @@ public class CambiaNickname {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int code = controller.changeNickname(nickArea.getText());
-                switch (code){
-                    case 1:
-                        break;
-                    case 0:
-                    case -1:
-                    default:
-                        JOptionPane.showMessageDialog(panel, "Errore durante il cambio del nickname");
-                        break;
+                if (code != 1){
+                    JOptionPane.showMessageDialog(panel, "Errore durante il cambio del nickname");
                 }
                 frameChiamante.setEnabled(true);
                 frame.dispose();
