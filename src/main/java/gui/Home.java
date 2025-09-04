@@ -255,7 +255,7 @@ public class Home {
                 }
             });
 
-        } else if(loginButton.getText().equalsIgnoreCase("LOGOUT")) {
+        } else {
             controller.logout();
             JOptionPane.showMessageDialog(panel, "Logout eseguito");
             areaPersonaleButton.setEnabled(false);
