@@ -10,7 +10,6 @@
     import java.nio.file.Path;
     import java.time.LocalDate;
     import java.time.ZoneId;
-    import java.time.chrono.IsoChronology;
     import java.util.ArrayList;
     import java.util.Date;
     import java.util.List;
@@ -67,20 +66,19 @@
         /**
          * Restituisce l'hackathon
          *
-         * @return the hackathon
+         * @return hackathon a cui si fa riferimento durante l'esecuzione
          */
         public Hackathon getHackathon() {
             return hackathon;
         }
 
         /**
-         * Handle login int.
+         * Gestisce l'azione di LogIn dell'utente e ne determina il ruolo
          *
-         * @param username the username
-         * @param password the password
-         * @return the int
+         * @param username username dell'utente
+         * @param password password dell'utente
+         * @return codice che permette di sapere se il LogIn è andato a buon fine
          */
-//SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
         public int handleLogin(String username, char[] password) {
             String[] names = new String[2];
             AuthImplementation authI = new AuthImplementation();
@@ -118,13 +116,13 @@
 
 
         /**
-         * Handle sign up int.
+         * Gestisce la registrazione di un utente
          *
-         * @param username the username
-         * @param password the password
-         * @param fName    the f name
-         * @param lName    the l name
-         * @return the int
+         * @param username il nuovo username con cui ci si vuole registrare
+         * @param password la nuova password con cui ci si vuoke registrare
+         * @param fName    nome
+         * @param lName    cognome
+         * @return codice che permette di sapere se la SignUp è andata a buon fine
          */
         public int handleSignUp(String username, String password, String fName, String lName){
         if(fName.length() > 20 || lName.length() > 20) {
@@ -141,12 +139,12 @@
     }
 
         /**
-         * Change password int.
+         * Gestisce l'azione che permette all'utente di cambiare password
          *
-         * @param oldPassword   the old password
-         * @param newPassword   the new password
-         * @param confirmedPass the confirmed pass
-         * @return the int
+         * @param oldPassword   la vecchia password dell'utente
+         * @param newPassword   la nuova password dell'utente
+         * @param confirmedPass la nuova password confermata
+         * @return codice che permette di determinare se il cambio password è andato a buon fine
          */
         public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
         if (!this.user.getPassword().equals(new String(oldPassword))) {
@@ -165,11 +163,11 @@
     }
 
         /**
-         * Change username int.
+         * Gestisce l'azione che permette all'utente di cambiare username
          *
-         * @param newUsername the new username
-         * @param password    the password
-         * @return the int
+         * @param newUsername il nuovo username dell'utente
+         * @param password    la password, usata come campo di conferma
+         * @return codice che permette di sapere se il cambio username è andato a buon fine
          */
         public int changeUsername(String newUsername, char[] password){
         if(newUsername.length() < 3 || newUsername.length() > 16){
@@ -188,7 +186,7 @@
     }
 
         /**
-         * Logout.
+         * Gestisce l'azione di LogOut dell'utente
          */
         public void logout(){
         this.user = null;
@@ -198,22 +196,22 @@
     }
 
         /**
-         * Send request int.
+         * Gestisce l'azione che permette ad un partecipante di inviare un messaggio motivazione ad un altro, chiedendogli di unirsi al suo team
          *
-         * @param message  the message
-         * @param username the username
-         * @return the int
+         * @param message  il messaggio inviato dall'utente
+         * @param username l'username dell'utente a cui ci vogliamo unire
+         * @return codice che permette di sapere se la richiesta è stata inviata correttamente o meno
          */
         public int sendRequest(String message, String username){
-        ParticipantImplementation parI = new ParticipantImplementation();
-        return parI.sendRequests(this.user.getUsername(), this.currIdHack, username, message);
+            ParticipantImplementation parI = new ParticipantImplementation();
+            return parI.sendRequests(this.user.getUsername(), this.currIdHack, username, message);
     }
 
         /**
-         * Send request organizer int.
+         * Gestisce la possibilità che l'organizzatore ha di invitare utenti chiedendogli di diventare giudici di un hackathon
          *
-         * @param username the username
-         * @return the int
+         * @param username l'username dell'utente invitato
+         * @return codice che permette di sapere se l'invito è stato invitato correttamente o meno
          */
         public int sendRequestOrganizer(String username){
         OrgImplementation orgI = new OrgImplementation();
@@ -221,10 +219,10 @@
     }
 
         /**
-         * Handle acc invite int.
+         * Gestisce il caso in cui l'utente invitato come giudice accetti l'invito
          *
-         * @param sender the sender
-         * @return the int
+         * @param sender l'username dell'utente che ha inviato l'invito
+         * @return codice che permette di sapere se il sistema è riuscito a gestire l'accettazione dell'invito correttamente
          */
         public int handleAccInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
@@ -236,10 +234,10 @@
     }
 
         /**
-         * Handle acc request int.
+         * Gestisce il caso in cui l'utente che riceve la richiesta, la accetta
          *
-         * @param sender the sender
-         * @return the int
+         * @param sender l'username dell'utente che ha inviato la richiesta
+         * @return codice che permette di sapere se il sistema è riuscito a gestire l'accettazione della richiesta correttamente
          */
         public int handleAccRequest(String sender){
         ParticipantImplementation parI = new ParticipantImplementation();
@@ -247,10 +245,10 @@
     }
 
         /**
-         * Handle dec invite int.
+         * Gestisce il caso in cui l'utente invitato come giudice rifiuta l'invito
          *
-         * @param sender the sender
-         * @return the int
+         * @param sender l'username dell'utente che ha inviato l'invito
+         * @return codice che permette di sapere se il sistema è riuscito a gestire il rifiuto dell'invito correttamente
          */
         public int handleDecInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
@@ -258,10 +256,10 @@
     }
 
         /**
-         * Handle dec request int.
+         * Gestisce il caso in cui l'utente che riceve la richiesta, la rifiuta
          *
-         * @param sender the sender
-         * @return the int
+         * @param sender l'username dell'utente che ha inviato la richiesta
+         * @return codice che permette di sapere se il sistema è riuscito a gestire il rifiuto della richiesta correttamente
          */
         public int handleDecRequest(String sender){
         ParticipantImplementation parI = new ParticipantImplementation();
@@ -269,10 +267,10 @@
     }
 
         /**
-         * Handle problem description int.
+         * Gestisce la definizione della descrizione del problema da parte di un giudice
          *
-         * @param description the description
-         * @return the int
+         * @param description la descrizione inviata dal giudice
+         * @return codice che permette di sapere se la descrizione è stata memorizzata correttamente
          */
         public int handleProblemDescription(String description){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -280,12 +278,12 @@
     }
 
         /**
-         * Handle load file.
+         * Gestisce la volontà del giudice di conoscere tutti i documenti di un team
          *
-         * @param team     the team
-         * @param files    the files
-         * @param names    the names
-         * @param comments the comments
+         * @param team     il nickname del team di cui si richiedono i documenti
+         * @param files    la lista dei documenti
+         * @param names    la lista dei nomi dei documenti
+         * @param comments la lista dei commenti caricati dai giudici per i documenti
          */
         public void handleLoadFile(String team, List<byte[]> files, List<String> names, List<String> comments){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -293,12 +291,12 @@
     }
 
         /**
-         * Handle comment int.
+         * Gestisce il commento inserito da un giudici per un documento
          *
-         * @param comment the comment
-         * @param doc     the doc
-         * @param team    the team
-         * @return the int
+         * @param comment il commento inserito dal giudice
+         * @param doc     il nome del documento che il giudice vuole commentare
+         * @param team    il nickname del team che ha caricato il documento commentato
+         * @return codice che permette di sapere se il commento è stato inserito corrente
          */
         public int handleComment(String comment, String doc, String team){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -306,11 +304,11 @@
     }
 
         /**
-         * Handle assign mark int.
+         * Gestisce l'inserimento di un voto da parte di un giudice ad un team
          *
-         * @param team the team
-         * @param mark the mark
-         * @return the int
+         * @param team il nickname del team votato
+         * @param mark il voto inserito dal giudice
+         * @return codice che permette di sapere di sapere se il voto è stato inserito correttamente
          */
         public int handleAssignMark(String team, int mark){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -318,10 +316,10 @@
     }
 
         /**
-         * Handle start sign up int.
+         * Gestisce l'inserimento della data di apertura registrazioni da parte dell'organizzatore
          *
-         * @param date the date
-         * @return the int
+         * @param date la data inserita dall'organizzatore
+         * @return codice che permette di sapere se la data è stata inserita correttamente
          */
         public int handleStartSignUp(LocalDate date){
         OrgImplementation orgI = new OrgImplementation();
@@ -329,9 +327,9 @@
     }
 
         /**
-         * Get dates.
+         * Riempie un vettore con le date di riferimento dell'hackathon a cui facciamo riferimento
          *
-         * @param dates the dates
+         * @param dates l'array di date da riempire
          */
         public void getDates(LocalDate[] dates){
         OrgImplementation orgI = new OrgImplementation();
@@ -339,9 +337,9 @@
     }
 
         /**
-         * Verifying start reg date boolean.
+         * Gestisce le richieste che necessitano sapere se le registrazione di un hackathon sono già aperte
          *
-         * @return the boolean
+         * @return un valore vero/falso per sapere se le iscrizioni sono aperte
          */
         public boolean verifyingStartRegDate() {
         OrgImplementation orgI = new OrgImplementation();
@@ -349,13 +347,13 @@
     }
 
         /**
-         * Is started boolean.
+         * Gestisce le richieste che necessitano sapere se l'hackathon è cominciato
          *
-         * @return the boolean
+         * @return un valore vero/falso per sapere se l'hackathon è cominciato
          */
         public boolean isStarted(){
-        OrgImplementation orgI = new OrgImplementation();
-        return orgI.isStarted(this.user.getUsername());
+            OrgImplementation orgI = new OrgImplementation();
+            return orgI.isStarted(this.user.getUsername(), this.currIdHack);
     }
 
         /**

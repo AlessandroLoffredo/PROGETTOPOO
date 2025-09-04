@@ -290,26 +290,28 @@ public class AreaPersonaleOrganizzatore {
         controller.getDates(dates);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-        if (controller.isStarted()) {
+        if (controller.isStarted() || controller.isHackStarted()) {
             organizerPanel.setEnabled(false);
             datePanel.setEnabled(false);
             spinner1.setEnabled(false);
             startSignUpButton.setEnabled(false);
             organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
             datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-            ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
-            Date startRegDate = Date.from(zonedDateTime1.toInstant());
-            SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
-            spinner1.setModel(startModel);
-            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
-            spinner1.setEditor(startEditor);
-            spinner1.setValue(startRegDate);
-            if(startRegDate.before(new Date()) || startRegDate.equals(new Date())){
-                comboBox1.setEnabled(false);
-                inviaRichiestaButton.setEnabled(false);
+            if (dates[2] != null) {
+                ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
+                Date startRegDate = Date.from(zonedDateTime1.toInstant());
+                SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
+                spinner1.setModel(startModel);
+                JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
+                spinner1.setEditor(startEditor);
+                spinner1.setValue(startRegDate);
+                if (startRegDate.before(new Date()) || startRegDate.equals(new Date()) || controller.isHackStarted()) {
+                    comboBox1.setEnabled(false);
+                    inviaRichiestaButton.setEnabled(false);
+                }
             }
         } else {
-            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_YEAR);
+            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
             spinner1.setModel(startModel);
             JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
             spinner1.setEditor(startEditor);
@@ -360,5 +362,4 @@ public class AreaPersonaleOrganizzatore {
             JOptionPane.showMessageDialog(panel, "ERRORE DURANTE LA RICERCA DEI GIUDICI");
         }
     }
-
 }

@@ -30,7 +30,7 @@ public interface OrgInterface {
      * @param username the username
      * @return the boolean
      */
-    boolean isStarted(String username);
+    boolean isStarted(String username, int idHack);
 
     /**
      * Gets dates.

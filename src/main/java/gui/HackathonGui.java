@@ -188,7 +188,8 @@ public class HackathonGui {
         }
 
         ArrayList<String> judges = new ArrayList<>();
-        if(controller.getCurrIdHack() == -1){
+
+        if(controller.getCurrIdHack() != controller.getIdHack()){
             controller.getJudgesList(judges);
             organizerArea.setText(controller.getOrganizer());
         } else {
@@ -210,8 +211,9 @@ public class HackathonGui {
         accessButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.areaPersonale(frame);
                 controller.findHack();
+                controller.areaPersonale(controller.getHome().getFrame());
+                frame.dispose();
             }
         });
 
