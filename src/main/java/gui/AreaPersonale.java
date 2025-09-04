@@ -181,8 +181,37 @@ public class AreaPersonale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
-                frame.setVisible(false);
-                cambiaUsername.getFrame().setVisible(true);
+                JFrame usernameFrame = cambiaUsername.getFrame();
+
+                frame.setEnabled(false);
+                usernameFrame.setAlwaysOnTop(true);
+                usernameFrame.setVisible(true);
+
+                usernameFrame.addWindowStateListener(new WindowStateListener() {
+                    @Override
+                    public void windowStateChanged(WindowEvent e) {
+                        if ((e.getNewState() & Frame.ICONIFIED) == 0) {
+                            // Solo se NON è iconizzata, mantieni il focus
+                            usernameFrame.toFront();
+                            usernameFrame.requestFocus();
+                        }
+                    }
+                });
+
+                usernameFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        frame.setEnabled(true);
+                        frame.toFront();
+                    }
+
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {
+                        // Quando viene ripristinata dalla barra delle applicazioni
+                        usernameFrame.toFront();
+                        usernameFrame.requestFocus();
+                    }
+                });
             }
         });
 
@@ -190,8 +219,37 @@ public class AreaPersonale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CambiaPassword cambiaPassword = new CambiaPassword(frame, controller);
-                frame.setVisible(false);
-                cambiaPassword.getFrame().setVisible(true);
+                JFrame passwordFrame = cambiaPassword.getFrame();
+
+                frame.setEnabled(false);
+                passwordFrame.setAlwaysOnTop(true);
+                passwordFrame.setVisible(true);
+
+                passwordFrame.addWindowStateListener(new WindowStateListener() {
+                    @Override
+                    public void windowStateChanged(WindowEvent e) {
+                        if ((e.getNewState() & Frame.ICONIFIED) == 0) {
+                            // Solo se NON è iconizzata, mantieni il focus
+                            passwordFrame.toFront();
+                            passwordFrame.requestFocus();
+                        }
+                    }
+                });
+
+                passwordFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        frame.setEnabled(true);
+                        frame.toFront();
+                    }
+
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {
+                        // Quando viene ripristinata dalla barra delle applicazioni
+                        passwordFrame.toFront();
+                        passwordFrame.requestFocus();
+                    }
+                });
             }
         });
 
