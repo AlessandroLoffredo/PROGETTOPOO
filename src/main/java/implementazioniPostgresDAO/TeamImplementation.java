@@ -7,6 +7,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * The type Team implementation.
+ */
 public class TeamImplementation implements TeamInterface {
     public int getTeam(String username, int idHack){
         PreparedStatement stmt = null;

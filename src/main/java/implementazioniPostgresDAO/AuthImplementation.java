@@ -8,6 +8,9 @@ import dao.*;
 import database.*;
 
 
+/**
+ * The type Auth implementation.
+ */
 public class AuthImplementation implements AuthInterface {
     public int  logIn(String username, String password, String[] names){
         int results = 0;

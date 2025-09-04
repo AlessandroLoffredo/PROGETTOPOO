@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe che contiene gli elementi principali di un Team, elemento che partecipa all'HAckathon e che effettivamente entra in gara per vincere.
+ * The type Team.
  */
 public class Team {
     private short finalMark;
@@ -15,10 +15,10 @@ public class Team {
 
 
     /**
-     * Istanzia un nuvo Team.
+     * Instantiates a new Team.
      *
-     * @param nickname  Nickname del team
-     * @param hackathon Hackathon a cui partecipa il team
+     * @param nickname  the nickname
+     * @param hackathon the hackathon
      */
 //COSTRUTTORE
     public Team(String nickname, Hackathon hackathon){
@@ -30,9 +30,9 @@ public class Team {
     }
 
     /**
-     * Restituisci il voto finale che il team ha ricevuto dai giudici.
+     * Get final mark short.
      *
-     * @return short: voto finale che il team ha ricevuto dai giudici.
+     * @return the short
      */
 //METODI
     public short getFinalMark(){
@@ -40,27 +40,27 @@ public class Team {
     }
 
     /**
-     * Aggiunge un voto alla lista dei voti ricevuti dai giudici.
+     * Add mark.
      *
-     * @param mark voto ricevuto da un giudice.
+     * @param mark the mark
      */
     public void addMark(short mark) {
         this.judgesMark.add((int)mark);
     }
 
     /**
-     * Restituisce il nickname del team.
+     * Get nickname string.
      *
-     * @return String: nickname del team.
+     * @return the string
      */
     public String getNickname(){
         return nickname;
     }
 
     /**
-     * Aggiunge un partecipante alla lista partecipanti del team.
+     * Add participant.
      *
-     * @param participant partecipante del team
+     * @param participant the participant
      */
     public void addParticipant(Participant participant){
         this.parList.add(participant);
@@ -68,27 +68,27 @@ public class Team {
     }
 
     /**
-     * Restituisce la lista dei partecipanti che fanno parte del team.
+     * Get par list list.
      *
-     * @return ArrayList: lista dei partecipanti che fanno parte del team.
+     * @return the list
      */
     public List<Participant> getParList(){
         return parList;
     }
 
     /**
-     * Restituisce la lista dei documenti del team.
+     * Get doc list list.
      *
-     * @return ArrayList: lista dei documenti del team.
+     * @return the list
      */
     public List<Document> getDocList(){
         return docList;
     }
 
     /**
-     * Aggiunge un c alla lista di documenti del team.
+     * Add doc.
      *
-     * @param doc documento del team
+     * @param doc the doc
      */
     public void addDoc(Document doc){
         this.docList.add(doc);

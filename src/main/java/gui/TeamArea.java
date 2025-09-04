@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
- * Classe che contiene tutte le informazioni e le azioni relative ad un team.
+ * The type Team area.
  */
 public class TeamArea {
     private JPanel panel;
@@ -42,13 +42,10 @@ public class TeamArea {
     private JLabel commentLabel;
 
     /**
-     * Instanzia una nuova TeamArea.
-     * <p>
-     * La classe TeamArea presenta informazioni generali sul team e sull'Hackathon a cui partecipa, una lista dei partecipanti che fanno parte di quel team e la lista di documenti caricati.
-     * Permette inoltre di poter caricare un documento e inviarlo nella lista documenti del team.
-     * </p>
-     * @param frameChiamante Il frame che istanzia la nuova AreaPersonale.
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Team area.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public TeamArea(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -225,9 +222,9 @@ public class TeamArea {
     }
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

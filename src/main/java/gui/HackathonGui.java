@@ -15,9 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-
 /**
- * Classe che contiene tutte le informazioni realative ad un Hackahon e tutte le operazioni che possono essere svolte su esso.
+ * The type Hackathon gui.
  */
 public class HackathonGui {
     private JPanel panel;
@@ -66,16 +65,11 @@ public class HackathonGui {
     private JFrame frame;
 
 
-
     /**
-     * Instanzia una nuova HackathonGui.
-     * <p>
-     * La classe HackathonGui permette ai vari utenti visitatori di vedere le informazioni generali su un determinato Hackathon.
-     * <br> Se il visitatore è un utente potrà iscriversi all'Hackathon qualora non sia già iscritto ad un altro.
-     * <br> Se il visitatore non è ancora registrato come utente potrà registrarsi.
-     * </p>
-     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Hackathon gui.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public HackathonGui(JFrame frameChiamante, Controller controller){
         frame = new JFrame("HackManager");
@@ -267,9 +261,9 @@ public class HackathonGui {
     }
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Hackathon implementation.
+ */
 public class HackathonImplementation implements HackathonInterface {
     public void getHackList (List<List<Object>> data){
         PreparedStatement stmt = null;

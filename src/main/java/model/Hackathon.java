@@ -2,7 +2,7 @@ package model;
 import java.util.*;
 
 /**
- * Classe che contiene gli elementi principali di un Hackathon, evento su cui si basa tutto il programma.
+ * The type Hackathon.
  */
 public class Hackathon {
     private final String title;
@@ -21,15 +21,17 @@ public class Hackathon {
 
 
     /**
-     * Instanzia un nuovo Hackathon.
+     * Instantiates a new Hackathon.
      *
-     * @param title              Titolo dell'Hackathon.
-     * @param venue              Luogo dove si svolgerà l'Hackathon.
-     * @param startDate          Data di inzio.
-     * @param endDate            Data di fine.
-     * @param maxRegistration    Numero massimo di partecipanti all'Hackathon.
-     * @param maxTeamParticipant Numero massimo di partecipanti all'interno di un team.
-
+     * @param title              the title
+     * @param venue              the venue
+     * @param startDate          the start date
+     * @param endDate            the end date
+     * @param maxRegistration    the max registration
+     * @param maxTeamParticipant the max team participant
+     * @param problemDescription the problem description
+     * @param startRegDate       the start reg date
+     * @param regCounter         the reg counter
      */
 //BUILDER
     public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, String problemDescription, Date startRegDate, int regCounter/*, Organizer hackOrganizer*/) {
@@ -51,120 +53,128 @@ public class Hackathon {
     }
 
     /**
-     * Inserisce un nuovo team nella lista dei team di un Hackathon.
+     * Add team.
      *
-     * @param t Team che partecipa all'Hackathon.
+     * @param t the t
      */
 //METHODS
     public void addTeam(Team t){ ranking.add(t); }
 
     /**
-     * Restituisce la lista dei team che partecipano all'Hackathon.
+     * Get team list.
      *
-     * @return ArrayList: lista dei team che partecipano all'Hackathon.
+     * @return the list
      */
     public List<Team> getTeam(){ return ranking; }
 
 
-
     /**
-     * Aggiorna il counter che tiene traccia di quanti partecipanti ci sono in un Hackathon.
+     * Add registration.
      */
     public void addRegistration(){ this.regCounter+=1; }
 
     /**
-     * Restituisce il counter che tiene traccia di quanti partecipanti ci sono in un Hackathon.
+     * Gets reg counter.
      *
-     * @return int: counter che tiene traccia di quanti partecipanti ci sono in un Hackathon.
+     * @return the reg counter
      */
     public int getRegCounter() { return regCounter; }
 
     /**
-     * Restituisce la descrizione del problema.
+     * Get problem description string.
      *
-     * @return String: descrizione del problema.
+     * @return the string
      */
     public String getProblemDescription(){ return problemDescription; }
 
     /**
-     * Restituisce il numero massimo di partecipanti che possono partecipare ad un Hackathon.
+     * Get max registration int.
      *
-     * @return int: numero massimo di partecipanti che possono partecipare ad un Hackathon.
+     * @return the int
      */
     public int getMaxRegistration(){ return maxRegistration; }
 
     /**
-     * Restituisci il numero massimo di partecipanti che possono essere in un team.
+     * Get max team participant int.
      *
-     * @return int: numero massimo di partecipanti che possono essere in un team.
+     * @return the int
      */
     public int getMaxTeamParticipant(){ return maxTeamParticipant; }
 
     /**
-     * Restituisce il titolo dell'Hackathon.
+     * Get title string.
      *
-     * @return String: titolo dell'Hackathon.
+     * @return the string
      */
     public String getTitle(){ return title; }
 
     /**
-     * Imposta il giorno in cui inziano le iscrizioni all'Hackaton.
+     * Set start reg date.
      *
-     * @param date giorno in cui inziano le iscrizioni all'Hackaton.
+     * @param date the date
      */
     public void setStartRegDate(Date date){
         this.startRegDate = date;
     }
 
     /**
-     * Imposta la descrizione del problema.
+     * Set problem description.
      *
-     * @param problem descrizione del problema.
+     * @param problem the problem
      */
     public void setProblemDescription (String problem){
             this.problemDescription = problem;
     }
 
     /**
-     * Aggiunge un giudice alla lista giudici dell'Hackathon.
+     * Add judge.
      *
-     * @param j giudice che giudicherà l'Hackathon.
+     * @param j the j
      */
     public void addJudge(Judge j){ judesList.add(j); }
 
 
-
     /**
-     * Restituisce il giorno in cui terminano le iscrizioni all'Hackathon.
+     * Get end reg date date.
      *
-     * @return Date: giorno in cui terminano le iscrizioni all'Hackathon.
+     * @return the date
      */
     public Date getEndRegDate(){
         return this.endRegDate;
     }
 
     /**
-     * Restituisce il giorno in cui inziano le iscrizioni all'Hackathon.
+     * Gets start reg date.
      *
-     * @return Date: giorno in cui inziano le iscrizioni all'Hackathon.
+     * @return the start reg date
      */
     public Date getStartRegDate() {
         return startRegDate;
     }
 
     /**
-     * Restituisce il giorno in cui inizia l'Hackathon.
+     * Gets start date.
      *
-     * @return Date giorno in cui inizia l'Hackathon.
+     * @return the start date
      */
     public Date getStartDate() {
         return startDate;
     }
 
+    /**
+     * Gets venue.
+     *
+     * @return the venue
+     */
     public String getVenue() {
         return venue;
     }
 
+    /**
+     * Gets end date.
+     *
+     * @return the end date
+     */
     public Date getEndDate() {
         return endDate;
     }

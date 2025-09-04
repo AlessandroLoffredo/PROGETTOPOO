@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * Classe che contiente tutte le azioni e le informazioni generali di un giudice.
+ * The type Area personale giudice.
  */
 public class AreaPersonaleGiudice {
     private JPanel panel;
@@ -75,13 +75,10 @@ public class AreaPersonaleGiudice {
     private JFrame frame;
 
     /**
-     * Instanzia una nuova AreaPersonaleGiudice.
-     * <p>
-     * La classe AreaPersonaleGiudice permette al giudice di vedere e modificare i suoi dati, caricare o modificare la descrizione del problema dell'Hackathon
-     * che giudica, cercare e commentare i documenti caricati dai vari team e poter assegnare a questi ultimi un voto.
-     * </p>
-     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Area personale giudice.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -336,9 +333,9 @@ public class AreaPersonaleGiudice {
 
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

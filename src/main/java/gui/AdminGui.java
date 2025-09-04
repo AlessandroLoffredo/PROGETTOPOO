@@ -15,7 +15,7 @@ import java.util.Date;
 
 
 /**
- *  Classe che gestisce tutte le azioni che un Admin della piattaforma è in grado di eseguire.
+ * The type Admin gui.
  */
 public class AdminGui {
     private JPanel panel;
@@ -60,15 +60,12 @@ public class AdminGui {
     private File file = null;
     private JSpinner.DateEditor startEditor;
     private JSpinner.DateEditor endEditor;
+
     /**
-     * Instanzia una nuova AdminGui.
-     * <p>
-     * La classe AdminGui permette ad un Admin di creare un Hackathon e di tornare alla home.
-     * <br>La creazione di un Hackathon richiede ad un Admin di inserire i dati della gara, e l'organizzatore che la gestirà.
-     * </p>
+     * Instantiates a new Admin gui.
      *
-     * @param frameChiamante Il frame che istanzia la nuova AdminGui.
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public AdminGui(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -257,11 +254,10 @@ public class AdminGui {
     }
 
 
-
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

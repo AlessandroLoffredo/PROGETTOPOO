@@ -4,9 +4,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Classe che contiene gli attributi principali di un User, colui che naviga nella piattaforma e che può specializzarsi in figure diverse in diversi Hackathon (Participant, Judje, Organizer).
- * Superclasse di Participant, Judje e Organizer.
- * Estende la classe Person.
+ * The type User.
  */
 public class User {
     private final String fName;
@@ -17,12 +15,12 @@ public class User {
     private ArrayList<Request> requestsJudge;
 
     /**
-     * Istanzia un nuovo User.
+     * Instantiates a new User.
      *
-     * @param fName    Nome dell'utente
-     * @param lName    Cognome dell'utente
-     * @param username Username
-     * @param password Password
+     * @param fName    the f name
+     * @param lName    the l name
+     * @param username the username
+     * @param password the password
      */
 //BUILDER
     public User(String fName, String lName, String username, String password){
@@ -36,27 +34,37 @@ public class User {
     //METHODS
 
 
+    /**
+     * Sets username.
+     *
+     * @param username the username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Sets password.
+     *
+     * @param password the password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * Restituisce l'username dell'utente.
+     * Get username string.
      *
-     * @return String: username dell'utente.
+     * @return the string
      */
     public String getUsername(){
         return this.username;
     }
 
     /**
-     * Restituisci il tipo dell'utente.
+     * Gets user type.
      *
-     * @return int: codice per tipo dell'utente.
+     * @return the user type
      */
     public int getUserType() {
         return this.userType;
@@ -64,31 +72,46 @@ public class User {
 
 
     /**
-     * Aggiunge una Request alla lista di richieste come giudice.
+     * Add request.
      *
-     * @param request richiesta come giudice
+     * @param request the request
      */
     public void addRequest(Request request){
         this.requestsJudge.add(request);
     }
 
     /**
-     * Permette di impostare il tipo di utente.
+     * Sets user type.
      *
-     * @param userType tipo di utente
+     * @param userType the user type
      */
     public void setUserType(int userType) {
         this.userType = userType;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getfName() {
         return fName;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getlName() {
         return lName;
     }
 
+    /**
+     * Gets password.
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }

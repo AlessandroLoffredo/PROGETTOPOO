@@ -1,14 +1,14 @@
 package model;
 
 /**
- * Classe che contiene gli elementi principali di una Request, elemento essenziale per identificare una richiesta come giudice o per accettare un altro partecipante nel team.
+ * The type Request.
  */
 public class Request {
     private String message;
     private String sender;
 
     /**
-     * Istanzia una nuova Request.
+     * Instantiates a new Request.
      */
     public Request() {
         this.message = null;
@@ -16,10 +16,10 @@ public class Request {
     }
 
     /**
-     * Istanzia una nuova Request specificando messaggio e utente che l'ha inviata.
+     * Instantiates a new Request.
      *
-     * @param message messaggio motivazionale
-     * @param user    utente che invia la richiesta
+     * @param message the message
+     * @param user    the user
      */
     public Request(String message, String user) {
         this.message = message;
@@ -27,36 +27,36 @@ public class Request {
     }
 
     /**
-     * Restituisce l'utente che ha inviato la richiesta.
+     * Gets sender.
      *
-     * @return User: utente che ha inviato la richiesta
+     * @return the sender
      */
     public String getSender() {
         return this.sender;
     }
 
     /**
-     * Imposta l'utente che ha inviato la richiesta.
+     * Sets sender.
      *
-     * @param sender utente che ha inviato la richiesta.
+     * @param sender the sender
      */
     public void setSender(String sender) {
         this.sender = sender;
     }
 
     /**
-     * Restituisce il messaggio motivazionale della richiesta.
+     * Gets message.
      *
-     * @return String: messaggio motivazionale della richiesta.
+     * @return the message
      */
     public String getMessage() {
         return this.message;
     }
 
     /**
-     * Imposta il messaggio motivazionale della richiesta.
+     * Sets message.
      *
-     * @param message messaggio motivazionale della richiesta.
+     * @param message the message
      */
     public void setMessage(String message) {
         this.message = message;

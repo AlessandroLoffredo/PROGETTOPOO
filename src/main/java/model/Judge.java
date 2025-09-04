@@ -2,19 +2,18 @@ package model;
 
 
 /**
- * Classe che contiene gli attributi principali di un Judge, colui che imposta la descrizione del problema e valuta i documenti prodotti dai team assegnandogli dei voti.
- * Estende la classe User.
+ * The type Judge.
  */
 public class Judge extends User{
     private Hackathon judgedHack;
 
     /**
-     * Istanzia un nuovo Judge.
+     * Instantiates a new Judge.
      *
-     * @param fName    Nome del giudice
-     * @param lName    Cognome del giudice
-     * @param username Username
-     * @param password Password
+     * @param fName    the f name
+     * @param lName    the l name
+     * @param username the username
+     * @param password the password
      */
     public Judge(String fName, String lName, String username, String password) {
         super(fName, lName, username, password);

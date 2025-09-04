@@ -16,7 +16,7 @@
     import java.util.List;
 
     /**
-     * Gestisce tutte le interazioni che hanno le classi del package gui con quelle del package model.
+     * Classe che gestisce le interazioni che le classi di package diversi hanno tra loro.
      */
     public class Controller {
         //IN QUESTA CLASSE SARà DEFINITO UN RIFERIMENTO AD UN OGGETTO UTENTE
@@ -29,10 +29,11 @@
         private byte[] photo;
         private int currIdHack;
         private int idTeam;
+
         /**
-         * Istanzia un nuovo controller.
+         * Istanzia un nuovo oggetto controller.
          *
-         * @param home il frame principale della classe Home
+         * @param home homepage dell'applicazione
          */
         public Controller(Home home) {
             this.user = null;
@@ -46,34 +47,40 @@
 
 
         /**
-         * Restituisce l'attributo home.
+         * Restituisce la homepage
          *
-         * @return Home : Il frame della classe Home.
+         * @return homepage
          */
         public Home getHome() {
             return home;
         }
+
         /**
-         * Restituisce l'attributo utente.
+         * Restituisce l'utente collegato
          *
-         * @return User : utente che naviga nella pagina.
+         * @return utente collegato
          */
         public User getUser() {
             return user;
         }
 
+        /**
+         * Restituisce l'hackathon
+         *
+         * @return the hackathon
+         */
         public Hackathon getHackathon() {
             return hackathon;
         }
 
         /**
-         * Gestisce l'azione di login di un utente già registrato.
+         * Handle login int.
          *
-         * @param username L'username dell'utente che intende accedere
-         * @param password La password dell'utente che intende accedere
-         * @return int : Codice che indentifica le diverse situazioni di un accesso.
+         * @param username the username
+         * @param password the password
+         * @return the int
          */
-        //SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
+//SE SI LOGGA CON SUCCESSO ISTANZIARE L'OGGETTO USER
         public int handleLogin(String username, char[] password) {
             String[] names = new String[2];
             AuthImplementation authI = new AuthImplementation();
@@ -110,16 +117,16 @@
         }
 
 
-    /**
-     * Gestisce l'azione di registrazione di un nuovo utente.
-     *
-     * @param username L'username del nuovo utente
-     * @param password La password del nuovo utente
-     * @param fName    Il nome del nuovo utente
-     * @param lName    Il cognome del nuovo utente
-     * @return int : codice che identifica le diverse situazioni di una registrazione.
-     */
-    public int handleSignUp(String username, String password, String fName, String lName){
+        /**
+         * Handle sign up int.
+         *
+         * @param username the username
+         * @param password the password
+         * @param fName    the f name
+         * @param lName    the l name
+         * @return the int
+         */
+        public int handleSignUp(String username, String password, String fName, String lName){
         if(fName.length() > 20 || lName.length() > 20) {
             return -1;
         }else if(username.length() > 16 || username.length() < 3 || password.length() > 16 || password.length() < 8) {
@@ -133,15 +140,15 @@
         }
     }
 
-    /**
-     * Permette di modificare la password di un utente esistente.
-     *
-     * @param oldPassword   La vecchia password dell'utente, utilizzata per una questione di sicurezza
-     * @param newPassword   La nuova password dell'utente
-     * @param confirmedPass La conferma della nuova password dell'utente
-     * @return int : Codice che identifica le diverse situazioni di un cambio password.
-     */
-    public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
+        /**
+         * Change password int.
+         *
+         * @param oldPassword   the old password
+         * @param newPassword   the new password
+         * @param confirmedPass the confirmed pass
+         * @return the int
+         */
+        public int changePassword(char[] oldPassword, char[] newPassword, char[] confirmedPass){
         if (!this.user.getPassword().equals(new String(oldPassword))) {
             return -1;
         } else if(new String(newPassword).length() < 8 || new String(newPassword).length() > 16){
@@ -157,14 +164,14 @@
         }
     }
 
-    /**
-     * Permette di cambiare l'username di un utente esistente.
-     *
-     * @param newUsername Il nuovo username dell'utente.
-     * @param password    La password dell'utente, utilizzata per una questione di sicurezza.
-     * @return int : Codice che identifica le varie situazioni di un cambio username.
-     */
-    public int changeUsername(String newUsername, char[] password){
+        /**
+         * Change username int.
+         *
+         * @param newUsername the new username
+         * @param password    the password
+         * @return the int
+         */
+        public int changeUsername(String newUsername, char[] password){
         if(newUsername.length() < 3 || newUsername.length() > 16){
             return -1;
         } else if (!this.user.getPassword().equals(new String(password))) {
@@ -180,47 +187,46 @@
         }
     }
 
-    /**
-     * Metodo che disconnette l'utente dalla piattaforma.
-     */
-    public void logout(){
+        /**
+         * Logout.
+         */
+        public void logout(){
         this.user = null;
         this.plAdmin = null;
         this.hackathon = null;
         this.currIdHack = -1;
     }
 
-    /**
-     * Permette ad un partecipante di chiedere ad un altro partecipante dello stesso hackathon di unirsi al suo team.
-     *
-     * @param message  Messaggio motivazione che l'utente invia insieme alla richiesta.
-     * @param username L'username dell'utente che invia la richiesta.
-     * @return int : Codice che identifica le diverse situazioni che possono accadere.
-     */
-    public int sendRequest(String message, String username){
+        /**
+         * Send request int.
+         *
+         * @param message  the message
+         * @param username the username
+         * @return the int
+         */
+        public int sendRequest(String message, String username){
         ParticipantImplementation parI = new ParticipantImplementation();
         return parI.sendRequests(this.user.getUsername(), this.currIdHack, username, message);
     }
 
-    /**
-     * Permette ad un organizzatore di inviare ad utente la richiesta di diventare giudice di un hackathon.
-     *
-     * @param username Username dell'utente da invitare.
-     * @return int : Un codice che identifica le varie situazioni che possono accadere.
-     */
-    public int sendRequestOrganizer(String username){
+        /**
+         * Send request organizer int.
+         *
+         * @param username the username
+         * @return the int
+         */
+        public int sendRequestOrganizer(String username){
         OrgImplementation orgI = new OrgImplementation();
         return orgI.inviteUser(this.user.getUsername(), username, this.currIdHack);
     }
 
-    /**
-     * Gestisce ciò che avviene quando un partecipante permette ad un altro di unirsi al suo team tramite richiesta.
-     *
-     * @param sender       L'utente che invia la richiesta.
-     * @return int : Codice che identifica le varie situazioni che possono accadere.
-     */
-
-    public int handleAccInvite(String sender){
+        /**
+         * Handle acc invite int.
+         *
+         * @param sender the sender
+         * @return the int
+         */
+        public int handleAccInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
         int code = userI.acceptInvite(sender, this.user.getUsername());
         if(code == 1){
@@ -229,93 +235,147 @@
         return code;
     }
 
-    public int handleAccRequest(String sender){
+        /**
+         * Handle acc request int.
+         *
+         * @param sender the sender
+         * @return the int
+         */
+        public int handleAccRequest(String sender){
         ParticipantImplementation parI = new ParticipantImplementation();
         return parI.acceptRequest(sender, this.user.getUsername(), this.currIdHack);
     }
 
-    public int handleDecInvite(String sender){
+        /**
+         * Handle dec invite int.
+         *
+         * @param sender the sender
+         * @return the int
+         */
+        public int handleDecInvite(String sender){
         UsersImplementation userI = new UsersImplementation();
         return userI.declineInvite(sender, this.user.getUsername());
     }
 
-    public int handleDecRequest(String sender){
+        /**
+         * Handle dec request int.
+         *
+         * @param sender the sender
+         * @return the int
+         */
+        public int handleDecRequest(String sender){
         ParticipantImplementation parI = new ParticipantImplementation();
         return parI.declineRequest(sender, this.user.getUsername());
     }
-    /**
-     * Gestisce l'aggiunta della descrizione del problema di un Hackathon da parte di un giudice.
-     *
-     * @param description La descrizione del problema.
-     */
-    public int handleProblemDescription(String description){
+
+        /**
+         * Handle problem description int.
+         *
+         * @param description the description
+         * @return the int
+         */
+        public int handleProblemDescription(String description){
         JudgeImplementation judgeI = new JudgeImplementation();
         return judgeI.updateDescription(description, this.user.getUsername());
     }
 
-    /**
-     * Gestisce la lista dei documenti di un team, che unn giudice osserva e commenta.
-     *
-     * @param team Il team di cui il giudice vuole vedere la lista.
-     * @return ArrayList : La lista dei documenti di un team.
-     */
-    public void handleLoadFile(String team, List<byte[]> files, List<String> names, List<String> comments){
+        /**
+         * Handle load file.
+         *
+         * @param team     the team
+         * @param files    the files
+         * @param names    the names
+         * @param comments the comments
+         */
+        public void handleLoadFile(String team, List<byte[]> files, List<String> names, List<String> comments){
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getDocuments(team, this.currIdHack, files, names, comments);
     }
 
-    public int handleComment(String comment, String doc, String team){
+        /**
+         * Handle comment int.
+         *
+         * @param comment the comment
+         * @param doc     the doc
+         * @param team    the team
+         * @return the int
+         */
+        public int handleComment(String comment, String doc, String team){
         JudgeImplementation judgeI = new JudgeImplementation();
         return judgeI.setComment(comment, this.user.getUsername(), this.currIdHack, doc, team);
     }
 
-    /**
-     * Gestisce l'assegnazione di un voto da parte di un giudice ad un team per il lavoro svolto.
-     *
-     * @param team Il team da giudicare.
-     * @param mark Il voto assegnato.
-     */
-    public int handleAssignMark(String team, int mark){
+        /**
+         * Handle assign mark int.
+         *
+         * @param team the team
+         * @param mark the mark
+         * @return the int
+         */
+        public int handleAssignMark(String team, int mark){
         JudgeImplementation judgeI = new JudgeImplementation();
         return judgeI.assignMark(team, mark, this.user.getUsername(), this.currIdHack);
     }
 
-    /**
-     * Gestisce l'inserimento da parte dell'organizzatore della data di inizio delle registrazioni all'Hackathon.
-     *
-     * @param date La data di inizio registrazioni.
-     */
-    public int handleStartSignUp(LocalDate date){
+        /**
+         * Handle start sign up int.
+         *
+         * @param date the date
+         * @return the int
+         */
+        public int handleStartSignUp(LocalDate date){
         OrgImplementation orgI = new OrgImplementation();
         return orgI.setupDate(date, this.currIdHack);
     }
 
-    public void getDates(LocalDate[] dates){
+        /**
+         * Get dates.
+         *
+         * @param dates the dates
+         */
+        public void getDates(LocalDate[] dates){
         OrgImplementation orgI = new OrgImplementation();
         orgI.getDates(this.user.getUsername(), dates);
     }
-    /**
-     * Controlla se, per l'Hackathon gestito da un organizzatore, è già stata gestita la data di apertura delle registrazioni.
-     *
-     * @return boolean : per sapere se sono state aperte.
-     */
-    public boolean verifyingStartRegDate() {
+
+        /**
+         * Verifying start reg date boolean.
+         *
+         * @return the boolean
+         */
+        public boolean verifyingStartRegDate() {
         OrgImplementation orgI = new OrgImplementation();
         return orgI.verifyDate(this.user.getUsername());
     }
 
-    public boolean isStarted(){
+        /**
+         * Is started boolean.
+         *
+         * @return the boolean
+         */
+        public boolean isStarted(){
         OrgImplementation orgI = new OrgImplementation();
         return orgI.isStarted(this.user.getUsername());
     }
 
-    public boolean isHackStarted(){
+        /**
+         * Is hack started boolean.
+         *
+         * @return the boolean
+         */
+        public boolean isHackStarted(){
         return !this.hackathon.getStartDate().after(new Date());
     }
 
 
-
-    public int subscribe(LocalDate start, LocalDate end){
+        /**
+         * Subscribe int.
+         *
+         * @param start the start
+         * @param end   the end
+         * @return the int
+         */
+        public int subscribe(LocalDate start, LocalDate end){
         if (!(this.hackathon.getEndDate().after(new Date()))){
             return -4;
         } else if(this.hackathon.getRegCounter() == this.hackathon.getMaxRegistration()){
@@ -338,7 +398,12 @@
         }
     }
 
-    public void areaPersonale(JFrame frame){
+        /**
+         * Area personale.
+         *
+         * @param frame the frame
+         */
+        public void areaPersonale(JFrame frame){
         if(this.plAdmin != null){
             AdminGui areaPersonalePA = new AdminGui(frame, this);
             areaPersonalePA.getFrame().setVisible(true);
@@ -379,21 +444,51 @@
         }
     }
 
-    public PlatformAdmin getPlAdmin() {
+        /**
+         * Gets pl admin.
+         *
+         * @return the pl admin
+         */
+        public PlatformAdmin getPlAdmin() {
         return plAdmin;
     }
 
-    public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
+        /**
+         * Get free user.
+         *
+         * @param freeUsers the free users
+         * @param start     the start
+         * @param end       the end
+         */
+        public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
         UsersImplementation usersI = new UsersImplementation();
         usersI.getFreeUser(freeUsers, start, end);
     }
 
-    public void getInvites(List<String> requests){
+        /**
+         * Get invites.
+         *
+         * @param requests the requests
+         */
+        public void getInvites(List<String> requests){
         UsersImplementation usersI = new UsersImplementation();
         usersI.getInvites(requests, this.user.getUsername());
     }
 
-    public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, File file){
+        /**
+         * Handle create hackathon int.
+         *
+         * @param title      the title
+         * @param venue      the venue
+         * @param startDate  the start date
+         * @param endDate    the end date
+         * @param maxReg     the max reg
+         * @param maxPerTeam the max per team
+         * @param username   the username
+         * @param file       the file
+         * @return the int
+         */
+        public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, File file){
         if(title.length() > 50 || venue.length() > 25){
             return -2;
         } else if (startDate.isBefore((LocalDate.now().plusDays(7)))) {
@@ -419,11 +514,19 @@
         }
     }
 
-    public boolean getUserClass(){
+        /**
+         * Get user class boolean.
+         *
+         * @return the boolean
+         */
+        public boolean getUserClass(){
         return !(this.user instanceof Participant || this.user instanceof Judge || this.user instanceof Organizer);
     }
 
-    public void findHack() {
+        /**
+         * Find hack.
+         */
+        public void findHack() {
         ArrayList<Object> data = new ArrayList<>();
         if (this.user instanceof Organizer || this.user instanceof Judge) {
             OrgImplementation orgI = new OrgImplementation();
@@ -448,7 +551,20 @@
         this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
-    public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
+        /**
+         * Set hack value.
+         *
+         * @param currentTitleArea      the current title area
+         * @param currentVenueArea      the current venue area
+         * @param currentStartArea      the current start area
+         * @param currentEndArea        the current end area
+         * @param currentStartRegArea   the current start reg area
+         * @param currentMaxRegArea     the current max reg area
+         * @param currentCounterArea    the current counter area
+         * @param currentMaxTeamParArea the current max team par area
+         * @param currentProbDescArea   the current prob desc area
+         */
+        public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
         currentTitleArea.setText(this.getHackathon().getTitle());
         currentVenueArea.setText(this.getHackathon().getVenue());
         currentStartArea.setText(this.getHackathon().getStartDate().toString());
@@ -468,7 +584,12 @@
         currentCounterArea.setText(String.valueOf(this.getHackathon().getRegCounter()));
     }
 
-    public int findLastHack(){
+        /**
+         * Find last hack int.
+         *
+         * @return the int
+         */
+        public int findLastHack(){
         UsersImplementation userI = new UsersImplementation();
         ArrayList<Object> data = new ArrayList<>();
         userI.lastHack(data);
@@ -485,7 +606,12 @@
         return (int)data.get(9);
     }
 
-    public void getHackList(List<List<Object>> data){
+        /**
+         * Get hack list.
+         *
+         * @param data the data
+         */
+        public void getHackList(List<List<Object>> data){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getHackList(data);
         if(!data.isEmpty()){
@@ -502,101 +628,217 @@
         }
     }
 
-    public int getIdHack() {
+        /**
+         * Gets id hack.
+         *
+         * @return the id hack
+         */
+        public int getIdHack() {
         return idHack;
     }
 
-    public void setIdHack(int idHack) {
+        /**
+         * Sets id hack.
+         *
+         * @param idHack the id hack
+         */
+        public void setIdHack(int idHack) {
         this.idHack = idHack;
     }
 
-    public void setHackathon(String title, String venue, Date startDate, Date endDate, int maxReg, int maxTeamPar, String problemDesc, Date startRegDate, int regCounter) {
+        /**
+         * Sets hackathon.
+         *
+         * @param title        the title
+         * @param venue        the venue
+         * @param startDate    the start date
+         * @param endDate      the end date
+         * @param maxReg       the max reg
+         * @param maxTeamPar   the max team par
+         * @param problemDesc  the problem desc
+         * @param startRegDate the start reg date
+         * @param regCounter   the reg counter
+         */
+        public void setHackathon(String title, String venue, Date startDate, Date endDate, int maxReg, int maxTeamPar, String problemDesc, Date startRegDate, int regCounter) {
         this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
-    public void setHackathon(Hackathon hackathon) {
+        /**
+         * Sets hackathon.
+         *
+         * @param hackathon the hackathon
+         */
+        public void setHackathon(Hackathon hackathon) {
         this.hackathon = hackathon;
     }
 
-    public byte[] getPhoto() {
+        /**
+         * Get photo byte [ ].
+         *
+         * @return the byte [ ]
+         */
+        public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+        /**
+         * Sets photo.
+         *
+         * @param photo the photo
+         */
+        public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
-    public void getJudgesList(List<String> judges){
+        /**
+         * Get judges list.
+         *
+         * @param judges the judges
+         */
+        public void getJudgesList(List<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.idHack);
     }
 
-    public void getActJudgesList(List<String> judges){
+        /**
+         * Get act judges list.
+         *
+         * @param judges the judges
+         */
+        public void getActJudgesList(List<String> judges){
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getJudgesList(judges, this.currIdHack);
     }
 
-    public String getOrganizer(){
+        /**
+         * Get organizer string.
+         *
+         * @return the string
+         */
+        public String getOrganizer(){
         HackathonImplementation hackI = new HackathonImplementation();
         return hackI.getOrganizer(this.idHack);
     }
 
-    public String getActOrganizer(){
+        /**
+         * Get act organizer string.
+         *
+         * @return the string
+         */
+        public String getActOrganizer(){
         HackathonImplementation hackI = new HackathonImplementation();
         return hackI.getOrganizer(this.currIdHack);
     }
 
-    public void getRanking(List<String> ranking, int idLastHack) {
+        /**
+         * Gets ranking.
+         *
+         * @param ranking    the ranking
+         * @param idLastHack the id last hack
+         */
+        public void getRanking(List<String> ranking, int idLastHack) {
         HackathonImplementation hackI = new HackathonImplementation();
         hackI.getRanking(ranking, idLastHack);
     }
 
-    public void getHackParticipants(List<String> participants){
+        /**
+         * Get hack participants.
+         *
+         * @param participants the participants
+         */
+        public void getHackParticipants(List<String> participants){
         ParticipantImplementation parI = new ParticipantImplementation();
         parI.getParticipants(participants, this.currIdHack, this.user.getUsername(), this.hackathon.getMaxTeamParticipant());
     }
 
-    public void getTeams(List<String> teams){
+        /**
+         * Get teams.
+         *
+         * @param teams the teams
+         */
+        public void getTeams(List<String> teams){
         JudgeImplementation judgeI = new JudgeImplementation();
         judgeI.getTeams(teams, this.currIdHack);
     }
 
-    public void getLastsUserHack(List<ArrayList<Object>> hackathon){
+        /**
+         * Get lasts user hack.
+         *
+         * @param hackathon the hackathon
+         */
+        public void getLastsUserHack(List<ArrayList<Object>> hackathon){
         UsersImplementation userI = new UsersImplementation();
         userI.getLastsUserHack(hackathon, this.user.getUsername());
     }
 
-    public int getMark(String team){
+        /**
+         * Get mark int.
+         *
+         * @param team the team
+         * @return the int
+         */
+        public int getMark(String team){
         JudgeImplementation judgeI = new JudgeImplementation();
         return judgeI.getMark(team, this.user.getUsername(), this.currIdHack);
     }
 
-    public void getRequests(List<String> requests){
+        /**
+         * Get requests.
+         *
+         * @param requests the requests
+         */
+        public void getRequests(List<String> requests){
         ParticipantImplementation parI = new ParticipantImplementation();
         parI.getRequests(requests, this.user.getUsername());
     }
 
-    public void getTeam(){
+        /**
+         * Get team.
+         */
+        public void getTeam(){
         TeamImplementation teamI = new TeamImplementation();
         this.idTeam = teamI.getTeam(this.user.getUsername(), this.currIdHack);
     }
 
-    public String getNickname(){
+        /**
+         * Get nickname string.
+         *
+         * @return the string
+         */
+        public String getNickname(){
         TeamImplementation teamI = new TeamImplementation();
         return teamI.getNickname(this.idTeam);
     }
 
-    public int changeNickname(String nickname){
+        /**
+         * Change nickname int.
+         *
+         * @param nickname the nickname
+         * @return the int
+         */
+        public int changeNickname(String nickname){
         TeamImplementation teamI = new TeamImplementation();
         return teamI.changeNickname(nickname, this.idTeam);
     }
 
-    public void findTeammates(List<String> teammates){
+        /**
+         * Find teammates.
+         *
+         * @param teammates the teammates
+         */
+        public void findTeammates(List<String> teammates){
         TeamImplementation teamI = new TeamImplementation();
         teamI.findTeammates(teammates, this.idTeam);
     }
 
-    public int sendFile(File file, String name){
+        /**
+         * Send file int.
+         *
+         * @param file the file
+         * @param name the name
+         * @return the int
+         */
+        public int sendFile(File file, String name){
         TeamImplementation teamI = new TeamImplementation();
         int results = 0;
         try{
@@ -609,16 +851,33 @@
         return results;
     }
 
-    public void getDocuments(List<String> docs, List<byte[]> files, List<String> comments){
+        /**
+         * Get documents.
+         *
+         * @param docs     the docs
+         * @param files    the files
+         * @param comments the comments
+         */
+        public void getDocuments(List<String> docs, List<byte[]> files, List<String> comments){
         TeamImplementation teamI = new TeamImplementation();
         teamI.getDocuments(docs, files, comments, this.idTeam);
     }
 
-    public int getCurrIdHack() {
+        /**
+         * Gets curr id hack.
+         *
+         * @return the curr id hack
+         */
+        public int getCurrIdHack() {
         return currIdHack;
     }
 
-    public void fillRanking(List<String> teams){
+        /**
+         * Fill ranking.
+         *
+         * @param teams the teams
+         */
+        public void fillRanking(List<String> teams){
     if(this.hackathon.getEndDate().before(new Date())){
             HackathonImplementation hackI = new HackathonImplementation();
             hackI.getRanking(teams, this.idHack);

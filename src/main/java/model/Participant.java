@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe che contiene gli attributi principali di un Participant, colui che effettivamente partecipa all'Hackathon all'interno di un team.
- * Estende la classe User.
+ * The type Participant.
  */
-
 public class Participant extends User {
     private Team parTeam;
     private ArrayList<Request> invRecived;
@@ -17,12 +15,12 @@ public class Participant extends User {
     private Hackathon parHackathon;
 
     /**
-     * Istanzia un nuovo Participant.
+     * Instantiates a new Participant.
      *
-     * @param fName    Nome del partecipante
-     * @param lName    Cognome del partecipante
-     * @param username Username
-     * @param password Password
+     * @param fName    the f name
+     * @param lName    the l name
+     * @param username the username
+     * @param password the password
      */
 //Costruttore
     public Participant(String fName, String lName, String username, String password){
@@ -31,9 +29,9 @@ public class Participant extends User {
     }
 
     /**
-     * Restituisci l'Hackathon a cui il partecipante è iscritto.
+     * Gets par hackathon.
      *
-     * @return Hackathon: Hackathon a cui il partecipante è iscritto.
+     * @return the par hackathon
      */
 //Metodi
     public Hackathon getParHackathon() {
@@ -41,9 +39,9 @@ public class Participant extends User {
     }
 
     /**
-     * Imposta l'Hackathon a cui il partecipante è iscritto.
+     * Sets par hackathon.
      *
-     * @param parHackathon Hackathon a cui il partecipante è iscritto.
+     * @param parHackathon the par hackathon
      */
     public void setParHackathon(Hackathon parHackathon) {
         this.parHackathon = parHackathon;
@@ -51,9 +49,9 @@ public class Participant extends User {
     }
 
     /**
-     * Restituisce il team nel quale si trova il partecipante.
+     * Gets par team.
      *
-     * @return Team: team nel quale si trova il partecipante.
+     * @return the par team
      */
     public Team getParTeam() {
         if (parTeam == null) {
@@ -66,18 +64,18 @@ public class Participant extends User {
     }
 
     /**
-     * Imposta il team nel quale si trova il partecipante.
+     * Set par team.
      *
-     * @param t team nel quale si trova il partecipante.
+     * @param t the t
      */
     public void setParTeam(Team t){
        this.parTeam = t;
     }
 
     /**
-     * Aggiunge una richiesta nella lista delle richieste ricevute dal partecipante.
+     * Add inv recived.
      *
-     * @param request richiesta ricevuta dal partecipante.
+     * @param request the request
      */
     public void addInvRecived(Request request){
         this.invRecived.add(request);
@@ -85,7 +83,7 @@ public class Participant extends User {
     }
 
     /**
-     * Permette di creare un documento e aggiungerlo alla lista dpcumenti del team.
+     * Manage doc.
      */
     public void manageDoc(){
         Scanner input = new Scanner(System.in);
@@ -99,11 +97,11 @@ public class Participant extends User {
 
 
     /**
-     * Permette di inviare le richieste per partecipare ad un team esistente.
+     * Send request int.
      *
-     * @param message  messaggio motivazionale per entrare nel team
-     * @param receiver username dell'utente a cui inviare la richiesta
-     * @return int: codice per verificare stato invio.
+     * @param message  the message
+     * @param receiver the receiver
+     * @return the int
      */
     public int sendRequest (String message, String receiver) {
         //QUERY PER CONTROLLARE L'ESISTENZA DEL RICEVENTE
@@ -119,9 +117,9 @@ public class Participant extends User {
     }
 
     /**
-     * Restituisce la lista di richieste ricevute.
+     * Gets inv recived.
      *
-     * @return ArrayList: richieste ricevuta.
+     * @return the inv recived
      */
     public List<Request> getInvRecived() {
         return invRecived;

@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The type Participant implementation.
+ */
 public class ParticipantImplementation implements ParticipantInterface {
     public void getParticipants(List<String> participants, int idHack, String username, int max) {
         PreparedStatement stmt = null;

@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * Classe che contiene gli elementi principali di un documento, elemento principale per dove viene inserita la soluzione del problema dell'Hackathon.
+ * The type Document.
  */
 public class Document {
     private String name;
@@ -13,11 +13,11 @@ public class Document {
     private Team docTeam;
 
     /**
-     * Istanzia un nuovo Documento.
+     * Instantiates a new Document.
      *
-     * @param description Descrizione del documento.
-     * @param date        Data relativa al caricamento del documento nella lista documenti.
-     * @param docTeam     Team a cui appartiene il documento.
+     * @param description the description
+     * @param date        the date
+     * @param docTeam     the doc team
      */
 //COSTRUTTORE
     public Document(String description, LocalDateTime date, Team docTeam) {
@@ -28,9 +28,9 @@ public class Document {
     }
 
     /**
-     * Restituisce la descrizione del documento.
+     * Gets description.
      *
-     * @return String: descrizione del documento.
+     * @return the description
      */
 //METODI
     public String getDescription() {
@@ -38,18 +38,18 @@ public class Document {
     }
 
     /**
-     * Imposta il commento del documento.
+     * Sets comment.
      *
-     * @param comment Commento del documento.
+     * @param comment the comment
      */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
     /**
-     * Restituisci la data di caricamento del documento.
+     * Gets date.
      *
-     * @return LocalDateTime: data di caricamento del documento.
+     * @return the date
      */
     public LocalDateTime getDate() {
         return date;

@@ -7,6 +7,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * The type Org implementation.
+ */
 public class OrgImplementation implements OrgInterface {
 
     public int setupDate(LocalDate date, int idHack) {

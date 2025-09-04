@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * Classe principale che mostra la lista di tutti gli Hackathon e permette di svolgere varie azioni per accedere e registrarsi
+ * The type Home.
  */
 public class Home {
     private JPanel panel;
@@ -60,11 +60,11 @@ public class Home {
     private List<List<Object>> data = new ArrayList<>();
     private static int callDelete = 0;
     private static final String FONT = "Segoe UI Emoji";
+
     /**
-     * Punto in cui si entra effettivamente nel programma.
+     * The entry point of application.
      *
-     * @param args gli argomenti in input
-     * @throws MalformedURLException Eccezione per gestire URL scritti male
+     * @param args the input arguments
      */
     public static void main(String[] args) {
         frame = new JFrame("HackManager");
@@ -79,11 +79,7 @@ public class Home {
     }
 
     /**
-     * Instanzia una nuova Home.
-     * <p>
-     * La classe Home permette ai visitatori di vedere la lista di tutti gli Hackaton, poter entrare all'interno della pagina specifica di ogni Hackathon,
-     * effettuare il login o il signup.
-     * </p>
+     * Instantiates a new Home.
      */
     public Home(){
         controller = new Controller(this);
@@ -182,31 +178,50 @@ public class Home {
     }
 
     /**
-     * Restituisci il bottone per accedere all'area personale.
+     * Gets area personale button.
      *
-     * @return JButton: bottone per accedere all'area personale.
+     * @return the area personale button
      */
     public JButton getAreaPersonaleButton() {
         return areaPersonaleButton;
     }
 
     /**
-     * Restituisci il bottone per effettuare il login.
+     * Gets login button.
      *
-     * @return JButton: bottone per effettuare il login.
+     * @return the login button
      */
     public JButton getLoginButton() {
         return loginButton;
     }
 
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     * Gets data.
+     *
+     * @return the data
+     */
     public List<List<Object>> getData() {
         return data;
     }
 
+    /**
+     * Set style label j label.
+     *
+     * @param label the label
+     * @param o     the o
+     * @param s     the s
+     * @param font  the font
+     * @return the j label
+     */
     public JLabel setStyleLabel (JLabel label, Object o, String s, String font){
         if(o != null)
             label.setText(s + o);
@@ -278,6 +293,11 @@ public class Home {
         }
     }
 
+    /**
+     * Fill hacks.
+     *
+     * @param font the font
+     */
     public void fillHacks(String font){
         data.clear();
         scrollPanel.removeAll();
@@ -405,6 +425,11 @@ public class Home {
         }
     }
 
+    /**
+     * Gets font.
+     *
+     * @return the font
+     */
     public String getFont() {
         return FONT;
     }

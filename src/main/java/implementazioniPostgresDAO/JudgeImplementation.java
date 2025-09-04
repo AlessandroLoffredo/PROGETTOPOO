@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The type Judge implementation.
+ */
 public class JudgeImplementation implements JudgeInterface {
     public int updateDescription(String description, String username){
         int results = 0;

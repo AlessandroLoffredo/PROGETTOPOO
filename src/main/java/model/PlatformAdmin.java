@@ -4,7 +4,7 @@ package model;
 import java.util.Scanner;
 
 /**
- * Classe che contiene gli attributi principali di un PlatformAdmin, colui che crea gli Hackathon.
+ * The type Platform admin.
  */
 public class PlatformAdmin {
     private String username;
@@ -12,10 +12,10 @@ public class PlatformAdmin {
 
 
     /**
-     * Istanzia un nuovo PlatformAdmin.
+     * Instantiates a new Platform admin.
      *
-     * @param username Username
-     * @param password Password
+     * @param username the username
+     * @param password the password
      */
     public PlatformAdmin(String username, String password){
         this.username = username;
@@ -23,7 +23,7 @@ public class PlatformAdmin {
     }
 
     /**
-     * Permette di impostare un nuovo username.
+     * Reset username.
      */
     public void resetUsername(){
         //DA GESTIRE CON DB PER VERIFICARE ESISTENZA ALTRO USERNAME UGUALE//
@@ -38,7 +38,7 @@ public class PlatformAdmin {
     }
 
     /**
-     * Permette di impostare una nuova password.
+     * Reset password.
      */
     public void resetPassword(){
         Scanner in = new Scanner(System.in);
@@ -53,18 +53,18 @@ public class PlatformAdmin {
     }
 
     /**
-     * Restituisce l'username dell'admin.
+     * Get username string.
      *
-     * @return String: username dell'admin
+     * @return the string
      */
     public String getUsername(){
         return this.username;
     }
 
     /**
-     * Restituisce la password dell'admin.
+     * Get password string.
      *
-     * @return String: password dell'admin
+     * @return the string
      */
     public String getPassword(){
         return this.password;

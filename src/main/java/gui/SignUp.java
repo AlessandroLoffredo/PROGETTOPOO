@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.util.Arrays;
 
 /**
- * Classe che permette di registrarsi.
+ * The type Sign up.
  */
 public class SignUp {
     private JPanel panel;
@@ -34,12 +34,10 @@ public class SignUp {
 
 
     /**
-     * Instanzia una nuova SignUp.
-     * <p>
-     * La classe SignUp permette ai visitatori di registrarsi come utenti, inserendo tutte le informazioni necessarie.
-     * </p>
-     * @param frameChiamante Il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Sign up.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public SignUp(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -156,9 +154,9 @@ public class SignUp {
     }
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

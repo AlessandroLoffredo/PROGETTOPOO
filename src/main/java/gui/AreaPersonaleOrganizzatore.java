@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Classe che contiene tutte le azioni e le informazioni di un organizzatore.
+ * The type Area personale organizzatore.
  */
 public class AreaPersonaleOrganizzatore {
     private JPanel panel;
@@ -69,13 +69,10 @@ public class AreaPersonaleOrganizzatore {
     private JFrame frame;
 
     /**
-     * Instanzia una nuova AreaPersonaleOrganizzatore.
-     * <p>
-     * La classe AreaPersonaleOrganizzatore permette all'organizzatore di vedere e modificare i suoi dati, invitare i giudici e scegliere la data per l'inizio dell'Hackathon
-     * ce vedere le informazioni generali dell'Hackathon di cui è organizzatore.
-     * </p>
-     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Area personale organizzatore.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public AreaPersonaleOrganizzatore(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -279,10 +276,11 @@ public class AreaPersonaleOrganizzatore {
             }
         });
     }
+
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

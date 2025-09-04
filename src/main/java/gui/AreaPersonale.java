@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Classe che contiene tutte le azioni e le informazioni di un utente o di un partecipante.
+ * The type Area personale.
  */
 public class AreaPersonale {
     private JPanel panel;
@@ -53,17 +53,10 @@ public class AreaPersonale {
     private JFrame frame;
 
     /**
-     * Instanzia una nuova AreaPersonale.
-     * <p>
-     * La classe AreaPersonale varia in base all'utente che vi accede.
-     * <br>Se vi accede un semplice utente, allora potrà soltanto vedere i suoi dati e modificarli, e rispondere alle richieste ricevute da un organizzatore
-     * che lo invita a diventare giudice di un Hackthon.
-     * <br>Se vi accede un partecipante ad un Hackathon in corso, potrà, oltre a vedere e modificare i suoi dati, vedere le informazioni
-     * sul team di cui fa parte, creare un team se non fa parte di nessun team esiste, inviare richieste per unirsi ad un partecipante dello stesso hackathon
-     * e rispondere alle richieste ricevute dagli altri utenti.
-     * </p>
-     * @param frameChiamante Il frame che istanzia la nuova AreaPersonale.
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Area personale.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -305,27 +298,27 @@ public class AreaPersonale {
     }
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;
     }
 
     /**
-     * Restituisce il panel del team.
+     * Gets team panel.
      *
-     * @return JPanel: Il panel che contiene le informazioni sul team.
+     * @return the team panel
      */
     public JPanel getTeamPanel() {
         return teamPanel;
     }
 
     /**
-     * Restituisce il panel di inserimento del messaggio.
+     * Gets message panel.
      *
-     * @return JPanel: il panel che contiene gli elementi per inviare un messaggio.
+     * @return the message panel
      */
     public JPanel getMessagePanel() {
         return messagePanel;

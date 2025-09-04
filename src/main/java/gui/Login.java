@@ -9,7 +9,7 @@ import controller.*;
 
 
 /**
- * Classe che permette di effettuare il login.
+ * The type Login.
  */
 public class Login {
     private JPanel panel;
@@ -29,13 +29,10 @@ public class Login {
 
 
     /**
-     * Instanzia una nuova Login.
-     * <p>
-     * La classe Login permette ai visitatori di accedere come utenti, partecipanti, organizzatori, giudici o admin in base alle loro credenziali.
-     * </p>
-     * @param frameChiamante Il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
-
+     * Instantiates a new Login.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public Login(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -154,6 +151,11 @@ public class Login {
         });
     }
 
+    /**
+     * Gets frame.
+     *
+     * @return the frame
+     */
     public JFrame getFrame() {
         return frame;
     }

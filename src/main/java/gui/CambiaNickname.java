@@ -10,7 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Classe che permette di creare un Team.
+ * The type Cambia nickname.
  */
 public class CambiaNickname {
     private JPanel changePanel;
@@ -24,12 +24,10 @@ public class CambiaNickname {
 
 
     /**
-     * Instanzia una nuova CreaTeam.
-     * <p>
-     * La classe CreaTeam permette ai partecipanti ad un Hackathon di inserire le informazioni necessarie per la creazione di un Team.
-     * </p>
-     * @param frameChiamante il frame che istanzia la nuova AreaPersonaleOrganizzatore
-     * @param controller     Il controller istanziato dalla classe Home.java
+     * Instantiates a new Cambia nickname.
+     *
+     * @param frameChiamante the frame chiamante
+     * @param controller     the controller
      */
     public CambiaNickname(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -78,9 +76,9 @@ public class CambiaNickname {
 
 
     /**
-     * Restituisce il frame principale della gui.
+     * Gets frame.
      *
-     * @return JFrame: Il frame principale.
+     * @return the frame
      */
     public JFrame getFrame() {
         return frame;

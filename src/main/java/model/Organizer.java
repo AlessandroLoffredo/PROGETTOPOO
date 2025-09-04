@@ -2,20 +2,18 @@ package model;
 
 
 /**
- * Classe che contiene gli attributi principali di un Organizer, colui che gestisce quando possono partire le iscrizioni all'Hackathon.
- * Estende la classe User.
+ * The type Organizer.
  */
-
 public class Organizer extends User{
     private Hackathon organizedHackathon;
 
     /**
-     * Istanzia un nuovo Organizer.
+     * Instantiates a new Organizer.
      *
-     * @param fName    Nome dell'organizzatore
-     * @param lName    Cognome dell'organizzatore
-     * @param username Username
-     * @param password Password
+     * @param fName    the f name
+     * @param lName    the l name
+     * @param username the username
+     * @param password the password
      */
     public Organizer(String fName, String lName, String username, String password){
         super(fName, lName, username, password);

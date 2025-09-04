@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Users implementation.
+ */
 public class UsersImplementation implements UsersInterface {
     private static final String TITOLO = "title";
     public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
