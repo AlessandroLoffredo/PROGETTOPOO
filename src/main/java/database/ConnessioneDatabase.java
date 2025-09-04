@@ -10,7 +10,7 @@ public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
     public Connection connection = null;
     private String nome = "postgres";
-    private String password = "300600";
+    private String password = "domenico05";
     private String url = "jdbc:postgresql://localhost:5432/HckMng";
     private String driver = "org.postgresql.Driver";
 
@@ -21,7 +21,6 @@ public class ConnessioneDatabase {
             connection = DriverManager.getConnection(url, nome, password);
 
         } catch (ClassNotFoundException ex) {
-            System.out.println("Database Connection Creation Failed : " + ex.getMessage());
             ex.printStackTrace();
         }
 
@@ -29,9 +28,7 @@ public class ConnessioneDatabase {
 
 
     public static ConnessioneDatabase getInstance() throws SQLException {
-        if (instance == null) {
-            instance = new ConnessioneDatabase();
-        } else if (instance.connection.isClosed()) {
+        if (instance == null || instance.connection.isClosed()) {
             instance = new ConnessioneDatabase();
         }
         return instance;
