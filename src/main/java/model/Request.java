@@ -1,14 +1,14 @@
 package model;
 
 /**
- * The type Request.
+ * La classe che contiene i metodi e gli attributi utili a definire una richiesta
  */
 public class Request {
     private String message;
     private String sender;
 
     /**
-     * Instantiates a new Request.
+     * Istanzia una nuova richiesta senza parametri
      */
     public Request() {
         this.message = null;
@@ -16,10 +16,10 @@ public class Request {
     }
 
     /**
-     * Instantiates a new Request.
+     * Istanzia una nuova richiesta con messaggio e mittente
      *
-     * @param message the message
-     * @param user    the user
+     * @param message il messaggio scritto dal mittente
+     * @param user    il mittente
      */
     public Request(String message, String user) {
         this.message = message;

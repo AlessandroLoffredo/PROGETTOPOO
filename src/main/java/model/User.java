@@ -1,7 +1,7 @@
 package model;
 
 /**
- * The type User.
+ * La classe che contiene i metodi e gli attributi utili a definire un utente
  */
 public class User {
     private final String fName;
@@ -10,12 +10,12 @@ public class User {
     private String password;
 
     /**
-     * Instantiates a new User.
+     * Istanzia un nuovo utente
      *
-     * @param fName    the f name
-     * @param lName    the l name
-     * @param username the username
-     * @param password the password
+     * @param fName    il nome
+     * @param lName    il cognome
+     * @param username l'username
+     * @param password la password
      */
     public User(String fName, String lName, String username, String password){
         this.fName = fName;
@@ -26,27 +26,27 @@ public class User {
 
 
     /**
-     * Sets username.
+     * Imposta l'username di un utente
      *
-     * @param username the username
+     * @param username l'username che viene utilizzato
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * Sets password.
+     * Imposta la password di un utente
      *
-     * @param password the password
+     * @param password la password che viene utilizzata
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * Get username string.
+     * Restituisce l'username utilizzato da un utente
      *
-     * @return the string
+     * @return l'username utilizzato da un utente
      */
     public String getUsername(){
         return this.username;
@@ -54,27 +54,27 @@ public class User {
 
 
     /**
-     * Gets name.
+     * Restituisce il nome di un utente
      *
-     * @return the name
+     * @return il nome di un utente
      */
     public String getfName() {
         return fName;
     }
 
     /**
-     * Gets name.
+     * Restituisce il cognome di un utente
      *
-     * @return the name
+     * @return il cognome di un utente
      */
     public String getlName() {
         return lName;
     }
 
     /**
-     * Gets password.
+     * Restituisce la password utilizzata da un utente
      *
-     * @return the password
+     * @return la password utilizzata da un utente
      */
     public String getPassword() {
         return password;

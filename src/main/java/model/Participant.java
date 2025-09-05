@@ -1,18 +1,17 @@
 package model;
 
 /**
- * The type Participant.
+ * La classe che contiene i metodi e gli attributi utili a definire un partecipante
  */
 public class Participant extends User {
     /**
-     * Instantiates a new Participant.
+     * Istanzia un nuovo partecipante
      *
-     * @param fName    the f name
-     * @param lName    the l name
-     * @param username the username
-     * @param password the password
+     * @param fName    il nome
+     * @param lName    il cognome
+     * @param username l'username
+     * @param password la password
      */
-//Costruttore
     public Participant(String fName, String lName, String username, String password){
         super(fName, lName, username, password);
     }

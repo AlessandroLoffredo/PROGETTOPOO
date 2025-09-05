@@ -2,7 +2,7 @@ package model;
 
 
 /**
- * The type Platform admin.
+ * La classe che contiene i metodi e gli attributi utili a definire un platformAdmin
  */
 public class PlatformAdmin {
     private String username;
@@ -10,10 +10,10 @@ public class PlatformAdmin {
 
 
     /**
-     * Instantiates a new Platform admin.
+     * Istanzia un nuovo platformAdmin
      *
-     * @param username the username
-     * @param password the password
+     * @param username l'username
+     * @param password la password
      */
     public PlatformAdmin(String username, String password){
         this.username = username;
@@ -22,18 +22,18 @@ public class PlatformAdmin {
 
 
     /**
-     * Get username string.
+     * Restituisce l'username utilizzato dal platformAdmin
      *
-     * @return the string
+     * @return l'username utilizzato dal platformAdmin
      */
     public String getUsername(){
         return this.username;
     }
 
     /**
-     * Get password string.
+     * Restituisce la password utilizzata dal platformAdmin
      *
-     * @return the string
+     * @return la password utilizzata dal platformAdmin
      */
     public String getPassword(){
         return this.password;
