@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * The type Team implementation.
+ * Classe che implementa i metodi nell'interfaccia TeamInterface
  */
 public class TeamImplementation implements TeamInterface {
     public int getTeam(String username, int idHack){

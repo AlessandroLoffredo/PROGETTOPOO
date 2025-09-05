@@ -9,7 +9,7 @@ import database.*;
 
 
 /**
- * The type Auth implementation.
+ * Classe che implementa i metodi nell'interfaccia AuthInterface
  */
 public class AuthImplementation implements AuthInterface {
     public int  logIn(String username, String password, String[] names){

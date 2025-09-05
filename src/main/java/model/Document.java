@@ -3,59 +3,28 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- * The type Document.
+ * La classe che contiene i metodi e gli attributi utili a definire un documento
  */
 public class Document {
     private String name;
-    private String description;
+    private byte[] description;
     private LocalDateTime date;
     private String comment;
     private Team docTeam;
 
     /**
-     * Instantiates a new Document.
+     * Istanzia un nuovo Document
      *
-     * @param description the description
-     * @param date        the date
-     * @param docTeam     the doc team
+     * @param name        il nome
+     * @param description file vero e proprio
+     * @param date        la data in cui viene caricato
+     * @param docTeam     il team che carica il documento
      */
-//COSTRUTTORE
-    public Document(String description, LocalDateTime date, Team docTeam) {
+    public Document(String name, byte[] description, LocalDateTime date, Team docTeam) {
         this.description = description;
+        this.name = name;
         this.date = date;
         this.docTeam = docTeam;
         this.comment = null;
-    }
-
-    /**
-     * Gets description.
-     *
-     * @return the description
-     */
-//METODI
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets comment.
-     *
-     * @param comment the comment
-     */
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    /**
-     * Gets date.
-     *
-     * @return the date
-     */
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public String toString(){
-        return date.toString() + ": " + description;
     }
 }

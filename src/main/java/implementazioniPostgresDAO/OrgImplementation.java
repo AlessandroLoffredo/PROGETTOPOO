@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * The type Org implementation.
+ * Classe che implementa i metodi nell'interfaccia OrgInterface
  */
 public class OrgImplementation implements OrgInterface {
 
@@ -37,30 +37,6 @@ public class OrgImplementation implements OrgInterface {
             }
         }
         return resultsUp;
-    }
-
-    public boolean verifyDate(String username){
-        int results = 0;
-        PreparedStatement stmt = null;
-        try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
-                    "O.username = ?";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next())
-                results = rs.getInt("conto");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            try{
-                if(stmt != null)
-                    stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return results == 1;
     }
 
     public boolean isStarted(String username, int idHack){

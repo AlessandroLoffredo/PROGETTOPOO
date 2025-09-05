@@ -9,15 +9,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 /**
- * La classe che si apre all'avvio dell'applicazione, e che contiene
+ * La classe che si apre all'avvio dell'applicazione, e che contiene gli elementi di visualizzazione esterna degli ultimi hackathon in corso e termianti,
+ * e dell'ultimo hackathon terminato in particolare, si visualizza la classifica e la descrizione
  */
 public class Home {
     private JPanel panel;
@@ -79,7 +78,7 @@ public class Home {
     }
 
     /**
-     * Instantiates a new Home.
+     * Istaniza una nuova Home
      */
     public Home(){
         controller = new Controller(this);
@@ -178,49 +177,48 @@ public class Home {
     }
 
     /**
-     * Gets area personale button.
+     * Restituisce il bottone che se cliccato permette di accedere all'area personale dell'utente, che deve però essere loggatp
      *
-     * @return the area personale button
+     * @return il bottone areaPersonaleButton
      */
     public JButton getAreaPersonaleButton() {
         return areaPersonaleButton;
     }
 
     /**
-     * Gets login button.
-     *
-     * @return the login button
+     * Restituisce il bottone che se cliccato permette all'utente di eseguire il logIn
+     * @return il bottone loginButton
      */
     public JButton getLoginButton() {
         return loginButton;
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina Home
      *
-     * @return the frame
+     * @return il frame di Home
      */
     public JFrame getFrame() {
         return frame;
     }
 
     /**
-     * Gets data.
+     * Restituisce una lista con tutti gli hackathon caricati e tutte le loro informazioni
      *
-     * @return the data
+     * @return la lista degli hackathon e delle loro informazioni
      */
     public List<List<Object>> getData() {
         return data;
     }
 
     /**
-     * Set style label j label.
+     * Setta lo stile delle label presenti all'interno dei panel dinamici
      *
-     * @param label the label
-     * @param o     the o
-     * @param s     the s
-     * @param font  the font
-     * @return the j label
+     * @param label la label di cui si vuole impostare lo stile
+     * @param o     uno dei valori presenti tra le informazioni degli hackathon caricati
+     * @param s     ciò che questo valore rappresenta
+     * @param font  il font con cui si fanno visualizzare questi valori
+     * @return la label con i parametri di stile modificati
      */
     public JLabel setStyleLabel (JLabel label, Object o, String s, String font){
         if(o != null)
@@ -294,9 +292,10 @@ public class Home {
     }
 
     /**
-     * Fill hacks.
+     * Mostra in modo dinamico tutti gli hackathon che sono caricati nel controller, con le loro rispettive informazioni.
+     * Viene anche utilizzato per aggiornare la pagina quando si ritorna alla home, non soltanto quando la si crea.
      *
-     * @param font the font
+     * @param font il font con cui vengono mostrate le informazioni a schermo
      */
     public void fillHacks(String font){
         data.clear();
@@ -427,9 +426,9 @@ public class Home {
     }
 
     /**
-     * Gets font.
+     * Restituisce la costante FONT, che determina il font con cui vengono mostrate le informazioni a schermo
      *
-     * @return the font
+     * @return il font con cui vengono mostrate le informazioni a schermo
      */
     public String getFont() {
         return FONT;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Users implementation.
+ * Classe che implementa i metodi nell'interfaccia UsersInterface
  */
 public class UsersImplementation implements UsersInterface {
     private static final String TITOLO = "title";

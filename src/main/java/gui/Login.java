@@ -9,7 +9,7 @@ import controller.*;
 
 
 /**
- * The type Login.
+ * La classe che contiene tutti gli elementi che permettono ad un utente di inserire le sue credenziali e quindi di eseguire il LogIn
  */
 public class Login {
     private JPanel panel;
@@ -29,10 +29,10 @@ public class Login {
 
 
     /**
-     * Instantiates a new Login.
+     * Istanzia un nuovo Login
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si accede alla pagina Login
+     * @param controller     il controller istanziato nella home
      */
     public Login(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -134,12 +134,6 @@ public class Login {
             }
         });
 
-        /**
-         * Restituisce il frame principale della gui.
-         *
-         * @return JFrame: Il frame principale.
-         */
-
 
         passwordArea.addKeyListener(new KeyAdapter() {
             @Override
@@ -152,9 +146,9 @@ public class Login {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina Login
      *
-     * @return the frame
+     * @return il frame di Login
      */
     public JFrame getFrame() {
         return frame;

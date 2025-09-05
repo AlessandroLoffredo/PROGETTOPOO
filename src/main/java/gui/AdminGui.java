@@ -135,7 +135,7 @@ public class AdminGui {
         imageLabel2.setIcon(resizedIcon2);
 
         ImageIcon imageIcon3 = new ImageIcon(getClass().getResource("/friends.png"));
-        Image scaledImage3 = imageIcon3.getImage().getScaledInstance(1200,350, Image.SCALE_SMOOTH);
+        Image scaledImage3 = imageIcon3.getImage().getScaledInstance(1150,350, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon3 = new ImageIcon(scaledImage3);
         friends.setIcon(resizedIcon3);
 
@@ -255,7 +255,7 @@ public class AdminGui {
 
 
     /**
-     * Restituisce il frame che viene creato quando viene istanziata la pagina adminGui
+     * Restituisce il frame che viene creato quando viene istanziata la pagina AdminGui
      *
      * @return il frame di AdminGui
      */

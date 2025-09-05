@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.util.Arrays;
 
 /**
- * The type Sign up.
+* La classe che contiene gli elementi che permettono all'utente di inserire tutti i dati utili alla sua registrazione
  */
 public class SignUp {
     private JPanel panel;
@@ -34,10 +34,10 @@ public class SignUp {
 
 
     /**
-     * Instantiates a new Sign up.
+     * Istanzia una nuova SignUp
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si accede alla pagina SignUp
+     * @param controller     il controller istanziato nella home
      */
     public SignUp(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -154,9 +154,9 @@ public class SignUp {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina SignUp
      *
-     * @return the frame
+     * @return il frame di SignUp
      */
     public JFrame getFrame() {
         return frame;
@@ -199,9 +199,10 @@ public class SignUp {
                         fNameArea.setText("");
                         break;
                 }
-            } catch (Exception ex) {  //Creiamo classe Exception nuova?
+            } catch (Exception ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");                        usernameArea.setText("");
+                JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante la registrazione");
+                usernameArea.setText("");
                 passwordArea.setText("");
                 lNameArea.setText("");
                 fNameArea.setText("");

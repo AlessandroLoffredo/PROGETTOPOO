@@ -5,7 +5,6 @@ package model;
  * The type Organizer.
  */
 public class Organizer extends User{
-    private Hackathon organizedHackathon;
 
     /**
      * Instantiates a new Organizer.

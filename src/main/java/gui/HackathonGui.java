@@ -16,8 +16,9 @@ import java.util.ArrayList;
 
 
 /**
- * La classe che contiene tutti gli elementi che contengono le informazioni di un hackathon, e dal quale si visualizza la classifica.
- * Se l'evento non è ancora cominciato e le iscrizioni sono ancora aperte, tramite questa pagina, sarà possibile iscriversi a quest'ultimo
+ * La classe che contiene tutti gli elementi che contengono le informazioni di un hackathon, oltre alla lista dei giudici e all'organizzatore,
+ * e del quale, se terminato, si visualizza la classifica.
+ * Se l'evento non è ancora cominciato e le iscrizioni sono ancora aperte, tramite questa pagina, sarà possibile iscriversi a quest'ultimo.
  */
 public class HackathonGui {
     private JPanel panel;

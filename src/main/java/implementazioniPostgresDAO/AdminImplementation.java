@@ -7,7 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 /**
- * The type Admin implementation.
+ * Classe che implementa i metodi nell'interfaccia AdminInterface
  */
 public class AdminImplementation implements AdminInterface {
     public int newHack(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, byte[] photoData){

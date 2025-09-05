@@ -2,11 +2,9 @@ package model;
 
 
 /**
- * The type Judge.
+
  */
 public class Judge extends User{
-    private Hackathon judgedHack;
-
     /**
      * Instantiates a new Judge.
      *

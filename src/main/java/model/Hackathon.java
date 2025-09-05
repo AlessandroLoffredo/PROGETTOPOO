@@ -2,7 +2,7 @@ package model;
 import java.util.*;
 
 /**
- * The type Hackathon.
+ * La classe che contiene i metodi e gli attributi utili a definire un Hackathon
  */
 public class Hackathon {
     private final String title;
@@ -11,169 +11,102 @@ public class Hackathon {
     private Date endDate;
     private final int maxRegistration;
     private final int maxTeamParticipant;
-    private ArrayList<Team> ranking;
     private String problemDescription;
     private Date startRegDate;
-    private Date endRegDate;
     private int regCounter;
 
-    private ArrayList<Judge> judesList;
-
-
     /**
-     * Instantiates a new Hackathon.
+     * Istanzia un nuovo Hackathon
      *
-     * @param title              the title
-     * @param venue              the venue
-     * @param startDate          the start date
-     * @param endDate            the end date
-     * @param maxRegistration    the max registration
-     * @param maxTeamParticipant the max team participant
-     * @param problemDescription the problem description
-     * @param startRegDate       the start reg date
-     * @param regCounter         the reg counter
+     * @param title              il titolo
+     * @param venue              la location
+     * @param startDate          la data in cui comincia
+     * @param endDate            la data in cui termina
+     * @param maxRegistration    il numero massimo di utenti che possono iscriversi all'evento
+     * @param maxTeamParticipant il numero massimo di partecipanti che possono far parte dello stesso team
+     * @param problemDescription la descrizione che definisce il problema da risolvere durante l'evento
+     * @param startRegDate       la data di apertura delle iscrizioni
+     * @param regCounter         il contatore che memorizza il numero attuale di iscritti all'evento
      */
-//BUILDER
-    public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, String problemDescription, Date startRegDate, int regCounter/*, Organizer hackOrganizer*/) {
+
+    public Hackathon(String title, String venue, Date startDate, Date endDate, int maxRegistration, int maxTeamParticipant, String problemDescription, Date startRegDate, int regCounter) {
         this.title = title;
         this.venue = venue;
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxRegistration = maxRegistration;
         this.maxTeamParticipant = maxTeamParticipant;
-        this.ranking = new ArrayList<>();
         this.problemDescription = problemDescription;
         this.startRegDate = startRegDate;
-        Calendar giorno = Calendar.getInstance();
-        giorno.setTime(startDate);
-        giorno.add(Calendar.DAY_OF_MONTH, -2);
-        this.endRegDate = giorno.getTime();
         this.regCounter = regCounter;
-        this.judesList = new ArrayList<>();
     }
 
     /**
-     * Add team.
+     * Restituisce il numero attuale di iscritti all'evento
      *
-     * @param t the t
-     */
-//METHODS
-    public void addTeam(Team t){ ranking.add(t); }
-
-    /**
-     * Get team list.
-     *
-     * @return the list
-     */
-    public List<Team> getTeam(){ return ranking; }
-
-
-    /**
-     * Add registration.
-     */
-    public void addRegistration(){ this.regCounter+=1; }
-
-    /**
-     * Gets reg counter.
-     *
-     * @return the reg counter
+     * @return il numero attuale di iscritti
      */
     public int getRegCounter() { return regCounter; }
 
     /**
-     * Get problem description string.
+     * Restituisce la descrizione che i giudici hanno caricato per l'evento
      *
-     * @return the string
+     * @return la descrizione dell'evento
      */
     public String getProblemDescription(){ return problemDescription; }
 
     /**
-     * Get max registration int.
+     * Restituisce il numero massimo di utenti che possono iscriversi all'evento
      *
-     * @return the int
+     * @return il numero massimo di utenti che possono iscriversi
      */
     public int getMaxRegistration(){ return maxRegistration; }
 
     /**
-     * Get max team participant int.
+     * Restituisce il numero massimo di partecipanti che possono far parte dello stesso team per quell'evento
      *
-     * @return the int
+     * @return il numero massimo di partecipanti che possono far parte dello stesso team
      */
     public int getMaxTeamParticipant(){ return maxTeamParticipant; }
 
     /**
-     * Get title string.
+     * Restituisce il titolo dell'evento
      *
-     * @return the string
+     * @return il titolo
      */
     public String getTitle(){ return title; }
 
     /**
-     * Set start reg date.
+     * Restituisce la data in cui si apriranno, o si sono già aperte, le iscrizioni dell'evento
      *
-     * @param date the date
-     */
-    public void setStartRegDate(Date date){
-        this.startRegDate = date;
-    }
-
-    /**
-     * Set problem description.
-     *
-     * @param problem the problem
-     */
-    public void setProblemDescription (String problem){
-            this.problemDescription = problem;
-    }
-
-    /**
-     * Add judge.
-     *
-     * @param j the j
-     */
-    public void addJudge(Judge j){ judesList.add(j); }
-
-
-    /**
-     * Get end reg date date.
-     *
-     * @return the date
-     */
-    public Date getEndRegDate(){
-        return this.endRegDate;
-    }
-
-    /**
-     * Gets start reg date.
-     *
-     * @return the start reg date
+     * @return la data in cui si apriranno, o si sono già aperte, le iscrizioni
      */
     public Date getStartRegDate() {
         return startRegDate;
     }
 
     /**
-     * Gets start date.
+     * Restituisce la data in cui comincerà, o è già cominciato, l'evento
      *
-     * @return the start date
+     * @return la data in cui comincerà, o è già cominciato
      */
     public Date getStartDate() {
         return startDate;
     }
 
     /**
-     * Gets venue.
+     * Restituisce il luogo in cui si svolgerà, si sta svolgendo, o si è già svolto, l'evento
      *
-     * @return the venue
+     * @return il luogo in cui si svolgerà, si sta svolgendo, o si è già svolto,
      */
     public String getVenue() {
         return venue;
     }
 
     /**
-     * Gets end date.
+     * Restituisce la data in cui terminerà, o è già terminato, l'evento
      *
-     * @return the end date
+     * @return la data in cui terminerà, o è già terminato
      */
     public Date getEndDate() {
         return endDate;

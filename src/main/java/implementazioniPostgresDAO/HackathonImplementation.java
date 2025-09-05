@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Hackathon implementation.
+ * Classe che implementa i metodi nell'interfaccia HackathonInterface
  */
 public class HackathonImplementation implements HackathonInterface {
     public void getHackList (List<List<Object>> data){

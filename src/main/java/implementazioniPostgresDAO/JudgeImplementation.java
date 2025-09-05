@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * The type Judge implementation.
+ * Classe che implementa i metodi nell'interfaccia JudgeInterface
  */
 public class JudgeImplementation implements JudgeInterface {
     public int updateDescription(String description, String username){
