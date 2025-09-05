@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The type Cambia password.
+ * La classe che permette ad un utente di modificare la propria password, dopo aver inserito per motivi di sicurezza la sua password attuale
  */
 public class CambiaPassword {
     private JPanel oldPasswordPanel;
@@ -30,10 +30,10 @@ public class CambiaPassword {
 
 
     /**
-     * Instantiates a new Cambia password.
+     * Instanzia un nuovo CambiaPassword
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere a questa pagina
+     * @param controller     il controller istanziato nella home
      */
     public CambiaPassword(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -139,9 +139,9 @@ public class CambiaPassword {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina CambiaPassword
      *
-     * @return the frame
+     * @return il frame di CambiaPassword
      */
     public JFrame getFrame() {
         return frame;

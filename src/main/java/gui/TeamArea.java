@@ -117,6 +117,7 @@ public class TeamArea {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.findHack();
+                controller.getActJudgesList();
                 HackathonGui hackathonGui = new HackathonGui(frame, controller);
                 hackathonGui.getFrame().setVisible(true);
                 frame.dispose();

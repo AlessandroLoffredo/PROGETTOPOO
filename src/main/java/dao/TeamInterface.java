@@ -4,61 +4,61 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * The interface Team interface.
+ * Interfaccia che dichiara tutti i metodi che sono di competenza di un team, o che in qualche modo lo riguardano
  */
 public interface TeamInterface {
     /**
-     * Gets team.
+     * Restituisce l'id del team di cui l'utente loggato fa parte
      *
-     * @param username the username
-     * @param idHack   the id hack
-     * @return the team
+     * @param username l'username dell'utente loggato
+     * @param idHack   l'id dell'hackathon a cui l'utente loggato partecipa
+     * @return l'identificato del team
      */
     int getTeam(String username, int idHack);
 
     /**
-     * Gets nickname.
+     * Restituisce il nome del team di cui l'utente fa parte
      *
-     * @param idTeam the id team
-     * @return the nickname
+     * @param idTeam l'id del team di cui l'utente loggato fa parte
+     * @return il nome del team
      */
     String getNickname(int idTeam);
 
     /**
-     * Change nickname int.
+     * Gestisce la richiesta del team di cambiare nickname, a patto che il nuovo nickname non sia già utilizzato in quell'hackathon
      *
-     * @param nickname the nickname
-     * @param idTeam   the id team
-     * @return the int
+     * @param nickname il nuovo nickname del team
+     * @param idTeam   l'id del team che vuole cambiare nickname
+     * @return codice che permette di sapere se il nickname è stato cambiato, e quindi se è stato aggiornato correttamente il DB
      */
     int changeNickname(String nickname, int idTeam);
 
     /**
-     * Find teammates.
+     * Trova e riempie una lista con gli username dei partecipanti che fanno parte dello stesso team del partecipante loggato
      *
-     * @param teammates the teammates
-     * @param idTeam    the id team
+     * @param teammates la lista da riempire con gli username
+     * @param idTeam    l'id del team di cui il partecipante fa parte
      */
     void findTeammates(List<String> teammates, int idTeam);
 
     /**
-     * Send file int.
+     * Memorizza nel DB tutte le informazioni del documento che il team vorrebbe caricare
      *
-     * @param file       the file
-     * @param name       the name
-     * @param idTeam     the id team
-     * @param dataUpload the data upload
-     * @return the int
+     * @param file       il file vero e proprio
+     * @param name       il nome del documento
+     * @param idTeam     l'id del team di cui l'utente loggato fa parte
+     * @param dataUpload la data in cui viene caricato il file
+     * @return codice che permette di sapere se il documento è stato caricato correttamente, e quindi memorizzato nel DB
      */
     int sendFile(byte[] file, String name, int idTeam, LocalDate dataUpload);
 
     /**
-     * Gets documents.
+     * Recupera e riempie tre liste con i file, i nomi e i commenti dei documenti caricati dal team dell'utente loggato
      *
-     * @param docs     the docs
-     * @param files    the files
-     * @param comments the comments
-     * @param idTeam   the id team
+     * @param docs     la lista da riempire con i nomi
+     * @param files    la lista da riempire con i file
+     * @param comments la lista da riempire con i commenti dei file (se inseriti dai giudici)
+     * @param idTeam   l'id del team di cui l'utente loggato fa parte
      */
     void getDocuments(List<String> docs, List<byte[]> files, List<String> comments, int idTeam);
 }

@@ -15,7 +15,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * The type Area personale giudice.
+ * La classe che istanzia l'area personale del giudice, al cui interno si trovano tutti gli elementi che consentono
+ * a quest'ultimo di assolvere ai suoi compiti, quali commentare i documenti caricati dai team, mettere dei voti ai team,
+ * e definire qual è la descrizione del problema dell'hackathon di cui è un giudice. Oltre a mostrargli tutte le informazioni
+ * dell'evento a cui si è dedicato.
  */
 public class AreaPersonaleGiudice {
     private JPanel panel;
@@ -75,10 +78,10 @@ public class AreaPersonaleGiudice {
     private JFrame frame;
 
     /**
-     * Instantiates a new Area personale giudice.
+     * Istanzia una nuova AreaPersonaleGiudice
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere all'area personale
+     * @param controller     il controller istanziato nella home
      */
     public AreaPersonaleGiudice(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -221,7 +224,7 @@ public class AreaPersonaleGiudice {
 
         controller.findHack();
         controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea, problemArea);
-        this.loadDescription();
+        this.loadDescription(controller);
         this.fillTeams(controller, teamSelection);
 
         homeButton.addActionListener(new ActionListener() {
@@ -333,19 +336,26 @@ public class AreaPersonaleGiudice {
 
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina AreaPersonaleGiudice
      *
-     * @return the frame
+     * @return il frame di AreaPersonaleGiudice
      */
     public JFrame getFrame() {
         return frame;
     }
 
-    private void loadDescription(){
+    private void loadDescription(Controller controller){
         if(problemArea.getText().equals("Descrizione problema ancora non definita")){
             sendProbButton.setText("Carica descrizione problema");
         } else {
             sendProbButton.setText("Modifica la descrizione del problema");
+        }
+
+        if(controller.isHackStarted()){
+            sendProbButton.setEnabled(false);
+            sendProbButton.setToolTipText("L'evento  è già cominciato.\n" +
+                    "Non è più possibile caricare/modificare la descrizione");
+            problemArea.setEditable(false);
         }
     }
 
@@ -364,15 +374,21 @@ public class AreaPersonaleGiudice {
             JOptionPane.showMessageDialog(panel, "Inserisci la descrizione del problema", "Send Problem Description", JOptionPane.ERROR_MESSAGE);
         } else {
             int code = controller.handleProblemDescription(problemArea.getText());
-            if(code == 1){
-                if (sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")) {
-                    JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
-                    sendProbButton.setText("Modifica descrizione problema");
-                } else {
-                    JOptionPane.showMessageDialog(panel, "Descrizione modificata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }else{
-                JOptionPane.showMessageDialog(panel, "Errore nel caricamento della descrizione");
+            switch (code) {
+                case 1:
+                    if (sendProbButton.getText().equalsIgnoreCase("Carica descrizione problema")) {
+                        JOptionPane.showMessageDialog(panel, "Descrizione caricata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                        sendProbButton.setText("Modifica descrizione problema");
+                    } else {
+                        JOptionPane.showMessageDialog(panel, "Descrizione modificata", "Descrizione problema", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(panel, "L'evento è già cominciato, non è possibile inserire o modificare la descrione");
+                    break;
+                default :
+                    JOptionPane.showMessageDialog(panel, "Errore nel caricamento della descrizione");
+                    break;
             }
         }
     }

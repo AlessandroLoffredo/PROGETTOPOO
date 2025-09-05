@@ -10,7 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * The type Cambia nickname.
+ * La classe che istanzia un frame che permette ai partecipanti che accedono all'area del team di modificare il nickname di quest'ultimo
  */
 public class CambiaNickname {
     private JPanel changePanel;
@@ -24,10 +24,10 @@ public class CambiaNickname {
 
 
     /**
-     * Instantiates a new Cambia nickname.
+     * Istanzia un nuovo CambiaNickname
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere a questa pagina
+     * @param controller     il controller istanziato nella home
      */
     public CambiaNickname(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -76,9 +76,9 @@ public class CambiaNickname {
 
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina CambiaNickname
      *
-     * @return the frame
+     * @return il frame di CambiaNickname
      */
     public JFrame getFrame() {
         return frame;

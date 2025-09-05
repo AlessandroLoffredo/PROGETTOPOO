@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * The type Area personale.
+ * La classe che contiene le informazioni dell'utente loggato e che gli permette di visualizzare
+ * gli eventi a cui ha partecipato in passato e di aprirli per vederli nello specifico, modificare le credeniziali, e se è un partecipante di accedere
+ * all'area del team di cui fa parte e di inviare richieste ad altri partecipanti, oltre a vedere quelle ricevute, alle quali può rispondere.
+ * Mentre se è semplicemente un utente gli dà la possibilità di vedere gli inviti ricevuti e rispondere a questi ultimi.
  */
 public class AreaPersonale {
     private JPanel panel;
@@ -53,10 +56,10 @@ public class AreaPersonale {
     private JFrame frame;
 
     /**
-     * Instantiates a new Area personale.
+     * Istanzia una nuova AreaPersonale
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere all'ara personale
+     * @param controller     il controller istanziato nella home
      */
     public AreaPersonale(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -298,27 +301,29 @@ public class AreaPersonale {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina AreaPersonale
      *
-     * @return the frame
+     * @return il frame che viene istanziato
      */
     public JFrame getFrame() {
         return frame;
     }
 
     /**
-     * Gets team panel.
+     * Restituisce il panel che contiene tutte gli elementi legati al team presenti nell'area personale
+     * quando l'utente loggato è un partecipante ad un hackathon attualmente in corso
      *
-     * @return the team panel
+     * @return il panel che contiene gli elementi legati al team dell'utente loggato
      */
     public JPanel getTeamPanel() {
         return teamPanel;
     }
 
     /**
-     * Gets message panel.
+     * Restituisce il panel che contiene gli elementi che permettono al partecipante loggato
+     * di chiedere ad un altro partecipante di unirsi al suo team
      *
-     * @return the message panel
+     * @return il panel che contiene gli elementi che permettono al partecipanti loggato di inviare richieste ad altri partecipanti
      */
     public JPanel getMessagePanel() {
         return messagePanel;
@@ -406,6 +411,7 @@ public class AreaPersonale {
                             (String) lastsHack.get(lastsHackList.getSelectedIndex()).get(7), (Date) lastsHack.get(lastsHackList.getSelectedIndex()).get(8), (int) lastsHack.get(lastsHackList.getSelectedIndex()).get(6));
                     controller.setIdHack((int) lastsHack.get(lastsHackList.getSelectedIndex()).get(9));
                     controller.setPhoto((byte[]) lastsHack.get(lastsHackList.getSelectedIndex()).get(10));
+                    controller.getJudgesList();
                     HackathonGui hackathonGui = new HackathonGui(frame, controller);
                     hackathonGui.getFrame().setVisible(true);
                     frame.dispose();

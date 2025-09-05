@@ -3,44 +3,45 @@ package dao;
 import java.util.List;
 
 /**
- * The interface Hackathon interface.
+ * Interfaccia che dichiara i metodi utilizzati per le operazioni di lettura dal DB, che recuperano le informazioni degli hackathon
  */
 public interface HackathonInterface {
     /**
-     * Gets hack list.
+     * Riempie una lista con gli ultimi 15 hackathon e con tutte le loro informazione
      *
-     * @param data the data
+     * @param data la lista da riempire
      */
     void getHackList (List<List<Object>> data);
 
     /**
-     * Gets judges list.
+     * Riempie una lista con tutti i giudici di un determinato hackathon
      *
-     * @param judges the judges
-     * @param idHack the id hack
+     * @param judges la lista da riempire con i giudici della competizione
+     * @param idHack l'id dell'evento di cui si vogliono conoscere i giudici
      */
     void getJudgesList (List<String> judges, int idHack);
 
     /**
-     * Gets organizer.
+     * Restituisce l'username dell'organizzatore di un determinato hackathon
      *
-     * @param idHack the id hack
-     * @return the organizer
+     * @param idHack l'id dell'hackathon di cui si vuole sapere l'organizzatore
+     * @return l'username dell'organizzatore dell'hackathon di cui si è inviato l'id
      */
     String getOrganizer (int idHack);
 
     /**
-     * Gets ranking.
+     * Rispetto ad un identificativo di un hackathon,
+     * riempie una lista con i nickname dei team partecipanti a quell'hackathon in ordine di media voti crescente, in modo da avere una classifica
      *
-     * @param ranking the ranking
-     * @param idHack  the id hack
+     * @param ranking la lista da riempire con i nickname dei team
+     * @param idHack  l'id dell'hackathon di cui vogliamo conoscere la classifica
      */
     void getRanking (List<String> ranking, int idHack);
 
     /**
-     * Remove requests.
+     * Si occupa di chiamare una funzione del DBMS che elimina le richieste il cui admin di riferimento è terminato
      *
-     * @param idHacks the id hacks
+     * @param idHacks la lista degli hackathon terminati di cui si vogliono cancellare le richieste
      */
     void removeRequests(String idHacks);
 }

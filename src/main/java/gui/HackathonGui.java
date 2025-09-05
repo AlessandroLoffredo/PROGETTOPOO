@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 
 /**
- * The type Hackathon gui.
+ * La classe che contiene tutti gli elementi che contengono le informazioni di un hackathon, e dal quale si visualizza la classifica.
+ * Se l'evento non è ancora cominciato e le iscrizioni sono ancora aperte, tramite questa pagina, sarà possibile iscriversi a quest'ultimo
  */
 public class HackathonGui {
     private JPanel panel;
@@ -66,10 +67,10 @@ public class HackathonGui {
 
 
     /**
-     * Instantiates a new Hackathon gui.
+     * Istanzia una nuova HackathonGui
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere a questa pagina
+     * @param controller     il controller istanziato nella home
      */
     public HackathonGui(JFrame frameChiamante, Controller controller){
         frame = new JFrame("HackManager");
@@ -187,26 +188,15 @@ public class HackathonGui {
             imageLabel.setIcon(resizedIcon2);
         }
 
-        ArrayList<String> judges = new ArrayList<>();
-
-        if(controller.getCurrIdHack() != controller.getIdHack()){
-            controller.getJudgesList(judges);
-            organizerArea.setText(controller.getOrganizer());
-        } else {
-            controller.getActJudgesList(judges);
-            organizerArea.setText(controller.getActOrganizer());
-        }
-
         organizerArea.setText(controller.getOrganizer());
-        if (judges.isEmpty()) {
+        if (controller.getJudges().isEmpty()) {
             judjesArea.setText("Al momento non sono stati ancora determinati i giudici per questo Hackathon");
         } else {
             judjesArea.setText("");
-            for (String s : judges) {
+            for (String s : controller.getJudges()) {
                 judjesArea.append(s + "\n");
             }
         }
-
 
         accessButton.addActionListener(new ActionListener() {
             @Override
@@ -263,9 +253,9 @@ public class HackathonGui {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina HackathonGui
      *
-     * @return the frame
+     * @return il frame di HackathonGui
      */
     public JFrame getFrame() {
         return frame;

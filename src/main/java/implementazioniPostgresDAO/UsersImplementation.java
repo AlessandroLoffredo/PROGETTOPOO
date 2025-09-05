@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class UsersImplementation implements UsersInterface {
     private static final String TITOLO = "title";
-    public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
+    public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end) {
         PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection) {
             String sql = "SELECT P.username FROM PlUser P WHERE P.username NOT IN (" +
@@ -160,7 +160,7 @@ public class UsersImplementation implements UsersInterface {
 
     }
 
-    public int veryfingIsFree(String username, LocalDate start, LocalDate end){
+    public int verifyingIsFree(String username, LocalDate start, LocalDate end){
         PreparedStatement stmt = null;
         try (Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT COUNT(P.username) AS conto FROM PlUser P WHERE P.username NOT IN (" +

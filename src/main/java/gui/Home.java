@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * The type Home.
+ * La classe che si apre all'avvio dell'applicazione, e che contiene
  */
 public class Home {
     private JPanel panel;
@@ -403,6 +403,7 @@ public class Home {
                                 (String) arrayList.get(7), (Date) arrayList.get(8), (int) arrayList.get(6));
                         controller.setIdHack(idHack);
                         controller.setPhoto((byte[]) arrayList.get(10));
+                        controller.getJudgesList();
                         HackathonGui hackGui = new HackathonGui(frame, controller);
                         hackGui.getFrame().setVisible(true);
 

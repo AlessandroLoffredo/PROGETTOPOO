@@ -28,6 +28,7 @@
         private byte[] photo;
         private int currIdHack;
         private int idTeam;
+        private ArrayList<String> judges;
 
         /**
          * Istanzia un nuovo oggetto controller.
@@ -42,13 +43,14 @@
             this.photo = null;
             this.currIdHack = -1;
             //questa inizializzazioen serve a capire se chi si è loggato è legato a qualche hackathon che si sta svolgendo
+            judges = new ArrayList<>();
         }
 
 
         /**
          * Restituisce la homepage
          *
-         * @return homepage
+         * @return homepage home
          */
         public Home getHome() {
             return home;
@@ -337,41 +339,31 @@
     }
 
         /**
-         * Gestisce le richieste che necessitano sapere se le registrazione di un hackathon sono già aperte
+         * Gestisce le richieste che necessitano sapere se è stata inserita la data di apertura delle iscrizioni
          *
-         * @return un valore vero/falso per sapere se le iscrizioni sono aperte
+         * @return un valore vero/falso per sapere se è stata inserita la data di apertura delle iscrizioni
          */
-        public boolean verifyingStartRegDate() {
-        OrgImplementation orgI = new OrgImplementation();
-        return orgI.verifyDate(this.user.getUsername());
-    }
-
-        /**
-         * Gestisce le richieste che necessitano sapere se l'hackathon è cominciato
-         *
-         * @return un valore vero/falso per sapere se l'hackathon è cominciato
-         */
-        public boolean isStarted(){
+        public boolean isSignUpInserted(){
             OrgImplementation orgI = new OrgImplementation();
             return orgI.isStarted(this.user.getUsername(), this.currIdHack);
     }
 
         /**
-         * Is hack started boolean.
+         * Gestisce le richieste che necessitano sapere se un evento è cominciato
          *
-         * @return the boolean
+         * @return un valore vero/falso per sapere se un evento è cominciato
          */
         public boolean isHackStarted(){
-        return !this.hackathon.getStartDate().after(new Date());
+        return (new Date()).after(this.hackathon.getStartDate());
     }
 
 
         /**
-         * Subscribe int.
+         * Gestisce le richieste di iscrizione ad un hackahthon da parte di un utente
          *
-         * @param start the start
-         * @param end   the end
-         * @return the int
+         * @param start la data di inizio dell'evento a cui l'utente vuole iscriversi
+         * @param end   la data di fine dell'evento a cui l'utente vuole iscriversi
+         * @return codice che permette di sapere se l'utente è riuscito ad iscriversi all'evento correttamente
          */
         public int subscribe(LocalDate start, LocalDate end){
         if (!(this.hackathon.getEndDate().after(new Date()))){
@@ -383,8 +375,8 @@
         }
         else{
             UsersImplementation userI = new UsersImplementation();
-            if(userI.veryfingIsFree(this.user.getUsername(), start, end) == 1){
-                int code = userI.subscribe(this.user.getUsername(), this.idHack); //QUI DOVREBBE RESTITUIRE -4 SE GENERE ECCEZIONE, NON CONVIENE VERIFICARE A PRIORI CHE LA DATA DI FINE NON SIA STATA SUPERATA?
+            if(userI.verifyingIsFree(this.user.getUsername(), start, end) == 1){
+                int code = userI.subscribe(this.user.getUsername(), this.idHack);
                 if(code == 1){
                     this.user = new Participant(this.user.getfName(), this.user.getlName(), this.user.getUsername(), this.user.getPassword());
                     this.currIdHack = this.idHack;
@@ -397,9 +389,9 @@
     }
 
         /**
-         * Area personale.
+         * Gestisce la creazione dell'area personale di ogni utente loggato che intende vedere i propri dati, a seconda del tipo di utente
          *
-         * @param frame the frame
+         * @param frame necessario quando si vuole uscire dall'area personale per spostarsi verso un'altra pagina
          */
         public void areaPersonale(JFrame frame){
         if(this.plAdmin != null){
@@ -443,48 +435,48 @@
     }
 
         /**
-         * Gets pl admin.
+         * Gestisce le richieste che richiedono il riferimento all'admin per effettuare dei controlli
          *
-         * @return the pl admin
+         * @return il riferimento all'admin
          */
         public PlatformAdmin getPlAdmin() {
         return plAdmin;
     }
 
         /**
-         * Get free user.
+         * Gestisce le richieste che richiedono una lista piena di utenti liberi in un certo intervallo di tempo
          *
-         * @param freeUsers the free users
-         * @param start     the start
-         * @param end       the end
+         * @param freeUsers la lista di utenti da riempire
+         * @param start     la data di inizio dell'intervallo
+         * @param end       la data di fine dell'intervallo
          */
         public void getFreeUser(List<String> freeUsers, LocalDate start, LocalDate end){
-        UsersImplementation usersI = new UsersImplementation();
-        usersI.getFreeUser(freeUsers, start, end);
-    }
+            UsersImplementation usersI = new UsersImplementation();
+            usersI.getFreeUser(freeUsers, start, end);
+        }
 
         /**
-         * Get invites.
+         * Restituisce la lista inviti ricevuti da un utente da parte di organizzatori
          *
-         * @param requests the requests
+         * @param requests la lista da riempire con gli inviti
          */
         public void getInvites(List<String> requests){
-        UsersImplementation usersI = new UsersImplementation();
-        usersI.getInvites(requests, this.user.getUsername());
-    }
+            UsersImplementation usersI = new UsersImplementation();
+            usersI.getInvites(requests, this.user.getUsername());
+        }
 
         /**
-         * Handle create hackathon int.
+         * Gestisce l'evento di creazione di un hackathon da parte di un admin
          *
-         * @param title      the title
-         * @param venue      the venue
-         * @param startDate  the start date
-         * @param endDate    the end date
-         * @param maxReg     the max reg
-         * @param maxPerTeam the max per team
-         * @param username   the username
-         * @param file       the file
-         * @return the int
+         * @param title      il titolo del nuovo hackathon
+         * @param venue      la location del nuovo hackathon
+         * @param startDate  il giorno in cui comincerà il nuovo hackathon
+         * @param endDate    il giorno in cui terminerà il nuovo hackathon
+         * @param maxReg     il numero massimo di persone che potranno registrarsi al nuovo hackathon
+         * @param maxPerTeam il numero massimo di persone che potranno far parte dello stesso team durante il nuovo hackathon
+         * @param username   l'username dell'utente scelto dall'admin che ricoprirà il ruolo di organizzatore durante il nuovo hackathon
+         * @param file       la foto locandina del nuovo hackathon
+         * @return codice che permette di sapere se il nuovo hackathon è stato creato correttamente
          */
         public int handleCreateHackathon(String title, String venue, LocalDate startDate, LocalDate endDate, int maxReg, int maxPerTeam, String username, File file){
         if(title.length() > 50 || venue.length() > 25){
@@ -513,22 +505,22 @@
     }
 
         /**
-         * Get user class boolean.
+         * Gestisce le richieste che necessitano di sapere la classe di cui fa parte l'istanza dell'utente loggato
          *
-         * @return the boolean
+         * @return un valore vero/falso che determina se un utente è istanza della classe plUser o di una sua sottoclasse
          */
         public boolean getUserClass(){
         return !(this.user instanceof Participant || this.user instanceof Judge || this.user instanceof Organizer);
     }
 
         /**
-         * Find hack.
+         * Memorizza tutti i valori del'hackathon a cui l'utente partecipa, qualsiasi sia il suo ruolo
          */
         public void findHack() {
         ArrayList<Object> data = new ArrayList<>();
         if (this.user instanceof Organizer || this.user instanceof Judge) {
             OrgImplementation orgI = new OrgImplementation();
-            orgI.findHack(this.user.getUsername(), data, this.getUser().getClass().getSimpleName());
+            orgI.findHack(this.user.getUsername(), data, this.user.getClass().getSimpleName());
         } else if (this.user instanceof Participant){
             ParticipantImplementation parI = new ParticipantImplementation();
             parI.findHack(this.user.getUsername(), data);
@@ -550,17 +542,17 @@
     }
 
         /**
-         * Set hack value.
+         * Setta nuovi valori all'hackathon memorizzato
          *
-         * @param currentTitleArea      the current title area
-         * @param currentVenueArea      the current venue area
-         * @param currentStartArea      the current start area
-         * @param currentEndArea        the current end area
-         * @param currentStartRegArea   the current start reg area
-         * @param currentMaxRegArea     the current max reg area
-         * @param currentCounterArea    the current counter area
-         * @param currentMaxTeamParArea the current max team par area
-         * @param currentProbDescArea   the current prob desc area
+         * @param currentTitleArea      titolo dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentVenueArea      location dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentStartArea      data di inizio dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentEndArea        data di fine dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentStartRegArea   data di apertura delle registrazioni dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentMaxRegArea     il numero massimo di utenti che possono registrarso all'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentCounterArea    il numero attuale di iscritti all'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentMaxTeamParArea il numero massimo di iscritti ad un solo team dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
+         * @param currentProbDescArea   la descrizione del problema da risolvere dell'hackathon a cui si fa riferimento in quel momento dell'esecuzione
          */
         public void setHackValue(JLabel currentTitleArea, JLabel currentVenueArea, JLabel currentStartArea, JLabel currentEndArea, JLabel currentStartRegArea, JLabel currentMaxRegArea, JLabel currentCounterArea, JLabel currentMaxTeamParArea, JTextArea currentProbDescArea){
         currentTitleArea.setText(this.getHackathon().getTitle());
@@ -583,9 +575,9 @@
     }
 
         /**
-         * Find last hack int.
+         * Trova l'ultimo hackathon terminato e ne memorizza i valori
          *
-         * @return the int
+         * @return codice che permette di determinare se l'ultimo hackathon è stato trovato con successo
          */
         public int findLastHack(){
         UsersImplementation userI = new UsersImplementation();
@@ -605,9 +597,9 @@
     }
 
         /**
-         * Get hack list.
+         * Riempi una lista di hackathon e di tutti i loro dati, inoltre chiama un metodo per cancellare le richieste scadute
          *
-         * @param data the data
+         * @param data la lista degli ultimi 15 hackathon e di tutti i loro dati
          */
         public void getHackList(List<List<Object>> data){
         HackathonImplementation hackI = new HackathonImplementation();
@@ -627,122 +619,111 @@
     }
 
         /**
-         * Gets id hack.
+         * Restituisce l'id dell'hackathon aperto in un certo momento dell'esecuzione
          *
-         * @return the id hack
+         * @return il codice identificativo dell'hackathon
          */
         public int getIdHack() {
         return idHack;
     }
 
         /**
-         * Sets id hack.
+         * Imposta il codice identificativo che si sta per aprire in un certo momento dell'esecuzione
          *
-         * @param idHack the id hack
+         * @param idHack il codice che voglio settare
          */
         public void setIdHack(int idHack) {
         this.idHack = idHack;
     }
 
         /**
-         * Sets hackathon.
+         * Imposta i valori dell'hackathon che si sta per aprire durante l'esecuzione
          *
-         * @param title        the title
-         * @param venue        the venue
-         * @param startDate    the start date
-         * @param endDate      the end date
-         * @param maxReg       the max reg
-         * @param maxTeamPar   the max team par
-         * @param problemDesc  the problem desc
-         * @param startRegDate the start reg date
-         * @param regCounter   the reg counter
+         * @param title        il titolo
+         * @param venue        la location
+         * @param startDate    la data di inizio
+         * @param endDate      la data di fine
+         * @param maxReg       il numero massimo di utenti che possono iscriversi
+         * @param maxTeamPar   il numero massimo di utenti che possono far parte dello stesso team
+         * @param problemDesc  la descrizione del problema
+         * @param startRegDate la data in cui si aprono le iscrizioni
+         * @param regCounter   il numero attuale di iscritti
          */
         public void setHackathon(String title, String venue, Date startDate, Date endDate, int maxReg, int maxTeamPar, String problemDesc, Date startRegDate, int regCounter) {
-        this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
+            this.hackathon = new Hackathon(title, venue, startDate, endDate, maxReg, maxTeamPar, problemDesc, startRegDate, regCounter);
     }
 
         /**
-         * Sets hackathon.
+         * Setta i nuovi valori dell'hackathon memorizzato
          *
-         * @param hackathon the hackathon
+         * @param hackathon l'hackathon da memorizzare
          */
         public void setHackathon(Hackathon hackathon) {
         this.hackathon = hackathon;
     }
 
         /**
-         * Get photo byte [ ].
+         * Restituisce la foto locandina dell'ultimo hackathon aperto durante l'esecuzione
          *
-         * @return the byte [ ]
+         * @return la foto locandina
          */
         public byte[] getPhoto() {
         return photo;
     }
 
         /**
-         * Sets photo.
+         * Imposta la foto locandina memorizzata come quella dell'hackathon da aprire
          *
-         * @param photo the photo
+         * @param photo la foto locandina da memorizzare
          */
         public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
         /**
-         * Get judges list.
-         *
-         * @param judges the judges
+         * Memorizza la lista dei giudici dell'hackathon da aprire
          */
-        public void getJudgesList(List<String> judges){
-        HackathonImplementation hackI = new HackathonImplementation();
-        hackI.getJudgesList(judges, this.idHack);
-    }
+        public void getJudgesList(){
+            judges.clear();
+            HackathonImplementation hackI = new HackathonImplementation();
+            hackI.getJudgesList(judges, this.idHack);
+        }
 
         /**
-         * Get act judges list.
-         *
-         * @param judges the judges
+         * Memorizza la lista dei giudici dell'hackathon a cui l'utente partecipa, qualsiasi sia il suo ruolo
          */
-        public void getActJudgesList(List<String> judges){
-        HackathonImplementation hackI = new HackathonImplementation();
-        hackI.getJudgesList(judges, this.currIdHack);
-    }
+        public void getActJudgesList(){
+            judges.clear();
+            HackathonImplementation hackI = new HackathonImplementation();
+            hackI.getJudgesList(judges, this.currIdHack);
+        }
 
         /**
-         * Get organizer string.
+         * Restituisce il nickname dell'organizzatore dell'hackathon che vogliamo aprire
          *
-         * @return the string
+         * @return il nickname dell'organizzatore
          */
         public String getOrganizer(){
-        HackathonImplementation hackI = new HackathonImplementation();
-        return hackI.getOrganizer(this.idHack);
-    }
+            HackathonImplementation hackI = new HackathonImplementation();
+            return hackI.getOrganizer(this.idHack);
+        }
 
         /**
-         * Get act organizer string.
+         * Restituisce la classifica dell'hackathon aperto
          *
-         * @return the string
+         * @param ranking   lista dei nickname dei team messi in ordine di media voti
+         * @param idHack    id dell'hackathon di cui vogliamo conoscere la classifica
          */
-        public String getActOrganizer(){
+        public void getRanking(List<String> ranking, int idHack) {
         HackathonImplementation hackI = new HackathonImplementation();
-        return hackI.getOrganizer(this.currIdHack);
+        hackI.getRanking(ranking, idHack);
     }
 
         /**
-         * Gets ranking.
+         * Riempie una lista di tutti i partecipanti ad uno stesso hackathon,
+         * a patto che non siano nello stesso team dell'utente in esecuzione, e che il team di cui fanno partenon sia pieno
          *
-         * @param ranking    the ranking
-         * @param idLastHack the id last hack
-         */
-        public void getRanking(List<String> ranking, int idLastHack) {
-        HackathonImplementation hackI = new HackathonImplementation();
-        hackI.getRanking(ranking, idLastHack);
-    }
-
-        /**
-         * Get hack participants.
-         *
-         * @param participants the participants
+         * @param participants la lista da riempire di partecipanti
          */
         public void getHackParticipants(List<String> participants){
         ParticipantImplementation parI = new ParticipantImplementation();
@@ -750,9 +731,9 @@
     }
 
         /**
-         * Get teams.
+         * Riempie una lista con i team che partecipano all'hackathon il cui giudice accede all'area personale
          *
-         * @param teams the teams
+         * @param teams la lista da riempire con i nomi dei team
          */
         public void getTeams(List<String> teams){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -760,9 +741,9 @@
     }
 
         /**
-         * Get lasts user hack.
+         * Riempie una lista con tutti gli hackathon a cui un utente ha partecipato, qualsiasi sia stato il suo ruolo. Degli hackathon memorizza ogni informazione
          *
-         * @param hackathon the hackathon
+         * @param hackathon la lista da riempire con gli hackathon
          */
         public void getLastsUserHack(List<ArrayList<Object>> hackathon){
         UsersImplementation userI = new UsersImplementation();
@@ -770,10 +751,10 @@
     }
 
         /**
-         * Get mark int.
+         * Restituisce il voto di un team su richiesta del giudice
          *
-         * @param team the team
-         * @return the int
+         * @param team il nickname del team di cui il giudice vuole vedere il voto
+         * @return il voto del team selezionato, se inserito, altrimenti un codice che indica che il voto non è stato inserito
          */
         public int getMark(String team){
         JudgeImplementation judgeI = new JudgeImplementation();
@@ -781,48 +762,48 @@
     }
 
         /**
-         * Get requests.
+         * Riempie una lista con le richieste che un partecipante riceve
          *
-         * @param requests the requests
+         * @param requests la lista da riempire con le richieste
          */
         public void getRequests(List<String> requests){
-        ParticipantImplementation parI = new ParticipantImplementation();
-        parI.getRequests(requests, this.user.getUsername());
-    }
+            ParticipantImplementation parI = new ParticipantImplementation();
+            parI.getRequests(requests, this.user.getUsername());
+        }
 
         /**
-         * Get team.
+         * Memorizza l'id del team del partecipante loggato
          */
         public void getTeam(){
-        TeamImplementation teamI = new TeamImplementation();
-        this.idTeam = teamI.getTeam(this.user.getUsername(), this.currIdHack);
-    }
+            TeamImplementation teamI = new TeamImplementation();
+            this.idTeam = teamI.getTeam(this.user.getUsername(), this.currIdHack);
+        }
 
         /**
-         * Get nickname string.
+         * Memorizza il nickname del team del partecipante loggato
          *
-         * @return the string
+         * @return il nickname del team
          */
         public String getNickname(){
-        TeamImplementation teamI = new TeamImplementation();
-        return teamI.getNickname(this.idTeam);
-    }
+            TeamImplementation teamI = new TeamImplementation();
+            return teamI.getNickname(this.idTeam);
+        }
 
         /**
-         * Change nickname int.
+         * Gestisce la richiesta del team di cambiare nickname
          *
-         * @param nickname the nickname
-         * @return the int
+         * @param nickname il nuovo nickname del team
+         * @return codice che permette di sapere se il nickname è stato cambiato correttamente
          */
         public int changeNickname(String nickname){
-        TeamImplementation teamI = new TeamImplementation();
-        return teamI.changeNickname(nickname, this.idTeam);
-    }
+            TeamImplementation teamI = new TeamImplementation();
+            return teamI.changeNickname(nickname, this.idTeam);
+        }
 
         /**
-         * Find teammates.
+         * Riempie una lista con tutti i partecipanti allo stesso team dell'utente loggato
          *
-         * @param teammates the teammates
+         * @param teammates la lista da riempire con i partecipanti al team
          */
         public void findTeammates(List<String> teammates){
         TeamImplementation teamI = new TeamImplementation();
@@ -830,11 +811,11 @@
     }
 
         /**
-         * Send file int.
+         * Gestisce l'invio di un file di aggiornamento da parte di un team
          *
-         * @param file the file
-         * @param name the name
-         * @return the int
+         * @param file il file da inviare
+         * @param name il nome del file da inviare
+         * @return the codice che permette di sapere se il file è stato memorizzato correttamente
          */
         public int sendFile(File file, String name){
         TeamImplementation teamI = new TeamImplementation();
@@ -850,30 +831,30 @@
     }
 
         /**
-         * Get documents.
+         * Riempie tre liste con i file, i nomi e i commenti dei documenti caricati dal team dell'utente loggato
          *
-         * @param docs     the docs
-         * @param files    the files
-         * @param comments the comments
+         * @param docs     la lista da riempire con i nomi dei documenti
+         * @param files    la lista da riempire con i file veri e propri
+         * @param comments la lista dei commenti di ogni file (se inseriti)
          */
         public void getDocuments(List<String> docs, List<byte[]> files, List<String> comments){
-        TeamImplementation teamI = new TeamImplementation();
-        teamI.getDocuments(docs, files, comments, this.idTeam);
-    }
+            TeamImplementation teamI = new TeamImplementation();
+            teamI.getDocuments(docs, files, comments, this.idTeam);
+        }
 
         /**
-         * Gets curr id hack.
+         * Restituisce l'id dell'hackathon a cui l'utente loggato partecipa
          *
-         * @return the curr id hack
+         * @return l'id dell'hackhaton
          */
         public int getCurrIdHack() {
-        return currIdHack;
-    }
+            return currIdHack;
+        }
 
         /**
-         * Fill ranking.
+         * Riempie una lista con i nomi dei team ordinati per ordine di media voti crescente, generando quindi la classifica
          *
-         * @param teams the teams
+         * @param teams la lista da riempire con i nickname dei team
          */
         public void fillRanking(List<String> teams){
     if(this.hackathon.getEndDate().before(new Date())){
@@ -881,4 +862,13 @@
             hackI.getRanking(teams, this.idHack);
         }
     }
-}
+
+        /**
+         * Restituisce la liste dei giudici dell'hackathon aperto
+         *
+         * @return la lista dei giudici
+         */
+        public List<String> getJudges() {
+            return judges;
+        }
+    }

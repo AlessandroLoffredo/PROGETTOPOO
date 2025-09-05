@@ -19,19 +19,20 @@ public class JudgeImplementation implements JudgeInterface {
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "UPDATE Hackathon SET problemDesc = ? " +
                     "WHERE idHack = (SELECT J.idHack FROM Judge J, Hackathon H WHERE J.username = ? AND H.idHack = J.idHack AND " +
-                    "H.endDate >= CURRENT_DATE ORDER BY H.endDate ASC LIMIT 1) AND " +
-                    "startDate >= CURRENT_DATE";
+                    "H.endDate >= CURRENT_DATE AND H.startDate >= CURRENT_DATE " +
+                    "ORDER BY H.endDate ASC LIMIT 1)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, description);
             stmt.setString(2, username);
             results = stmt.executeUpdate();
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
+            results = -1;
         }finally {
             try{
                 if(stmt != null)
                     stmt.close();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

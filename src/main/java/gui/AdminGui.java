@@ -15,7 +15,7 @@ import java.util.Date;
 
 
 /**
- * The type Admin gui.
+ * La classe che contiene tutti gli elementi che permettono ad un admin di svolgere le operazioni di creazione di hackathon
  */
 public class AdminGui {
     private JPanel panel;
@@ -255,14 +255,13 @@ public class AdminGui {
 
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina adminGui
      *
-     * @return the frame
+     * @return il frame di AdminGui
      */
     public JFrame getFrame() {
         return frame;
     }
-
 
     private void configuraDatePickers() {
         SpinnerDateModel model = new SpinnerDateModel(Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()), Date.from(LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant()), null, Calendar.DAY_OF_MONTH);

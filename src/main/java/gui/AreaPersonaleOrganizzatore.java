@@ -16,7 +16,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * The type Area personale organizzatore.
+ * La classe che istanzia l'area personale dell'organizzatore, che gli permette di assolvere ai suoi,
+ * quali la determinazione della data di apertura delle iscrzioni dell'hackathon di cui è giudice, e
+ * la scelta e l'invito degli utenti che vorrebbe come giudici a quell'evento. Oltre a mostrargli
+ * tutte le informazioni dell'evento a cui si è dedicato
  */
 public class AreaPersonaleOrganizzatore {
     private JPanel panel;
@@ -69,10 +72,10 @@ public class AreaPersonaleOrganizzatore {
     private JFrame frame;
 
     /**
-     * Instantiates a new Area personale organizzatore.
+     * Istanzia una nuova AreaPersonaleOrganizzatore
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si decide di accedere all'area personale
+     * @param controller     il controller istanziato nella home
      */
     public AreaPersonaleOrganizzatore(JFrame frameChiamante, Controller controller) {
         frame = new JFrame("HackManager");
@@ -278,26 +281,28 @@ public class AreaPersonaleOrganizzatore {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina AreaPersonaleOrganizzatore
      *
-     * @return the frame
+     * @return il frame di AreaPersonaleOrganizzatore
      */
     public JFrame getFrame() {
         return frame;
     }
 
-    private void blockJudge(Controller controller, String dateFormat, LocalDate[] dates){
+    private void blockJudge(Controller controller, String dateFormat, LocalDate[] dates) {
         controller.getDates(dates);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-        if (controller.isStarted() || controller.isHackStarted()) {
+        if (controller.isHackStarted()) {
             organizerPanel.setEnabled(false);
             datePanel.setEnabled(false);
             spinner1.setEnabled(false);
             startSignUpButton.setEnabled(false);
-            organizerPanel.setToolTipText("Non puoi più inviare richieste agli utenti per partecipare come giudici");
-            datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-            if (dates[2] != null) {
+            organizerPanel.setToolTipText("L'evento è già cominciato");
+            datePanel.setToolTipText("L'evento è già cominciato");
+            comboBox1.setEnabled(false);
+            inviaRichiestaButton.setEnabled(false);
+            if(controller.isSignUpInserted()){
                 ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
                 Date startRegDate = Date.from(zonedDateTime1.toInstant());
                 SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
@@ -305,21 +310,36 @@ public class AreaPersonaleOrganizzatore {
                 JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
                 spinner1.setEditor(startEditor);
                 spinner1.setValue(startRegDate);
-                if (startRegDate.before(new Date()) || startRegDate.equals(new Date()) || controller.isHackStarted()) {
+            }
+        } else {
+            if (controller.isSignUpInserted()) {
+                organizerPanel.setEnabled(false);
+                datePanel.setEnabled(false);
+                spinner1.setEnabled(false);
+                startSignUpButton.setEnabled(false);
+                datePanel.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
+                ZonedDateTime zonedDateTime1 = dates[2].atStartOfDay(ZoneId.systemDefault());
+                Date startRegDate = Date.from(zonedDateTime1.toInstant());
+                SpinnerDateModel startModel = new SpinnerDateModel(startRegDate, null, null, Calendar.DAY_OF_MONTH);
+                spinner1.setModel(startModel);
+                JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
+                spinner1.setEditor(startEditor);
+                spinner1.setValue(startRegDate);
+                if((new Date()).after(Date.from(dates[2].atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
                     comboBox1.setEnabled(false);
                     inviaRichiestaButton.setEnabled(false);
                 }
+            } else {
+                SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
+                spinner1.setModel(startModel);
+                JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
+                spinner1.setEditor(startEditor);
             }
-        } else {
-            SpinnerDateModel startModel = new SpinnerDateModel(new Date(), null, startDate, Calendar.DAY_OF_MONTH);
-            spinner1.setModel(startModel);
-            JSpinner.DateEditor startEditor = new JSpinner.DateEditor(spinner1, dateFormat);
-            spinner1.setEditor(startEditor);
         }
     }
 
     private void startSignUp(Controller controller, JButton startSignUpButton, String dateFormat){
-        if (controller.verifyingStartRegDate()) {
+        if (controller.isSignUpInserted()) {
             JOptionPane.showMessageDialog(panel, "Hai già inserito la data di inizio iscrizioni per l'Hackathon", "ERRORE", JOptionPane.ERROR_MESSAGE);
         } else {
             SimpleDateFormat dateFormatted = new SimpleDateFormat(dateFormat);
@@ -337,7 +357,7 @@ public class AreaPersonaleOrganizzatore {
                         startSignUpButton.setEnabled(false);
                         spinner1.setEnabled(false);
                         startSignUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-                        if (controller.isStarted())
+                        if (controller.isSignUpInserted())
                             organizerPanel.setVisible(false);
                         break;
                     default:

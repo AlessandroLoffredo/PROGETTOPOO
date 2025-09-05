@@ -7,7 +7,7 @@ import java.awt.event.*;
 import controller.*;
 
 /**
- * The type Cambia username.
+ * La classe che contiene gli elementi che permettono ad un utente di modificare il proprio username
  */
 public class CambiaUsername {
     private JPanel panel;
@@ -25,10 +25,10 @@ public class CambiaUsername {
 
 
     /**
-     * Instantiates a new Cambia username.
+     * Istanzia un nuovo CambiaUsername
      *
-     * @param frameChiamante the frame chiamante
-     * @param controller     the controller
+     * @param frameChiamante il frame da cui si richiede di accedere a questa pagina
+     * @param controller     il controller istanziato nella home
      */
     public CambiaUsername(JFrame frameChiamante, Controller controller){
         frame = new JFrame("HackManager");
@@ -130,9 +130,9 @@ public class CambiaUsername {
     }
 
     /**
-     * Gets frame.
+     * Restituisce il frame che viene creato quando viene istanziata la pagina CambiaUsername
      *
-     * @return the frame
+     * @return il frame di CambiaUsername
      */
     public JFrame getFrame() {
         return frame;
