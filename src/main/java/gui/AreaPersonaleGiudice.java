@@ -240,7 +240,7 @@ public class AreaPersonaleGiudice {
         cambiaUsernameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
+                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller, userArea);
                 frame.setVisible(false);
                 cambiaUsername.getFrame().setVisible(true);
             }

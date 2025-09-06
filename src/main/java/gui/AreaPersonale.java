@@ -176,7 +176,7 @@ public class AreaPersonale {
         cambiaUsernameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
+                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller, userArea);
                 JFrame usernameFrame = cambiaUsername.getFrame();
 
                 frame.setEnabled(false);

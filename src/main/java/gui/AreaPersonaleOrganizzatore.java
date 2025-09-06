@@ -203,7 +203,7 @@ public class AreaPersonaleOrganizzatore {
         cambiaUsernameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller);
+                CambiaUsername cambiaUsername = new CambiaUsername(frame, controller, userArea);
                 frame.setVisible(false);
                 cambiaUsername.getFrame().setVisible(true);
             }
@@ -357,8 +357,12 @@ public class AreaPersonaleOrganizzatore {
                         startSignUpButton.setEnabled(false);
                         spinner1.setEnabled(false);
                         startSignUpButton.setToolTipText("La data di apertura delle iscrizioni per questo evento è stata già inserita");
-                        if (controller.isSignUpInserted())
-                            organizerPanel.setVisible(false);
+                        if(!(new Date().before(date))){
+                            comboBox1.setEnabled(false);
+                            inviaRichiestaButton.setEnabled(false);
+                            comboBox1.setToolTipText("Non è più possibile invitare giudici per l'evento");
+                            inviaRichiestaButton.setToolTipText("Non è più possibile invitare giudici per l'evento");
+                        }
                         break;
                     default:
                         JOptionPane.showMessageDialog(panel, "Errore durante l'aggiornamento della data");

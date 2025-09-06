@@ -30,7 +30,7 @@ public class CambiaUsername {
      * @param frameChiamante il frame da cui si richiede di accedere a questa pagina
      * @param controller     il controller istanziato nella home
      */
-    public CambiaUsername(JFrame frameChiamante, Controller controller){
+    public CambiaUsername(JFrame frameChiamante, Controller controller, JLabel userFrameLabel){
         frame = new JFrame("HackManager");
         frame.setContentPane(panel);
         frame.addWindowListener(new WindowAdapter() {
@@ -87,8 +87,10 @@ public class CambiaUsername {
                                 break;
                             case 1:
                                 JOptionPane.showMessageDialog(panel, "Username cambiato con successo");
-                                frameChiamante.setVisible(true);
                                 frame.dispose();
+                                userFrameLabel.setText(usernameArea.getText());
+                                frameChiamante.setEnabled(true);
+                                frameChiamante.setVisible(true);
                                 break;
                             default:
                                 JOptionPane.showMessageDialog(panel, "Qualcosa è andato storto durante l'aggiornamento delle credenziali");

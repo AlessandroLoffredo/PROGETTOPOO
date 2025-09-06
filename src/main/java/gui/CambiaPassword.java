@@ -176,6 +176,7 @@ public class CambiaPassword {
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Password cambiata con successo!");
+                        frameChiamante.setEnabled(true);
                         frameChiamante.setVisible(true);
                         frame.dispose();
                         break;

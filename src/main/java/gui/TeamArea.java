@@ -178,7 +178,7 @@ public class TeamArea {
         cambiaNicknameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CambiaNickname cambiaNickname = new CambiaNickname(frame, controller);
+                CambiaNickname cambiaNickname = new CambiaNickname(frame, controller, nickArea);
                 JFrame cambiaNicknameFrame = cambiaNickname.getFrame();
 
                 // Configurazione iniziale
