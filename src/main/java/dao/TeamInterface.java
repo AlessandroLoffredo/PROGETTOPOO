@@ -47,10 +47,10 @@ public interface TeamInterface {
      * @param file       il file vero e proprio
      * @param name       il nome del documento
      * @param idTeam     l'id del team di cui l'utente loggato fa parte
-     * @param dataUpload la data in cui viene caricato il file
+     * @param dateUpload la data in cui viene caricato il file
      * @return codice che permette di sapere se il documento è stato caricato correttamente, e quindi memorizzato nel DB
      */
-    int sendFile(byte[] file, String name, int idTeam, LocalDate dataUpload);
+    int sendFile(byte[] file, String name, int idTeam, LocalDate dateUpload);
 
     /**
      * Recupera e riempie tre liste con i file, i nomi e i commenti dei documenti caricati dal team dell'utente loggato

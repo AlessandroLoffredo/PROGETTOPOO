@@ -113,7 +113,7 @@ public class TeamImplementation implements TeamInterface {
         }
     }
 
-    public int sendFile(byte[] file, String name, int idTeam, LocalDate dataUpload){
+    public int sendFile(byte[] file, String name, int idTeam, LocalDate dateUpload){
         int results = 0;
         PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
@@ -121,7 +121,7 @@ public class TeamImplementation implements TeamInterface {
                     "VALUES (?, ?, ?, ?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
-            stmt.setDate(2, Date.valueOf(dataUpload));
+            stmt.setDate(2, Date.valueOf(dateUpload));
             stmt.setBytes(3, file);
             stmt.setInt(4, idTeam);
             results = stmt.executeUpdate();

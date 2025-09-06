@@ -81,5 +81,5 @@ public interface UsersInterface {
      * @param hackathon la lista da riempire con gli hackathon
      * @param username  l'username dell'utente registrato
      */
-    void getLastsUserHack(List<ArrayList<Object>> hackathon, String username);
+    void getLastUserHacks(List<ArrayList<Object>> hackathon, String username);
 }

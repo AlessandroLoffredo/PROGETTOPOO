@@ -211,16 +211,7 @@ public class Home {
         return data;
     }
 
-    /**
-     * Setta lo stile delle label presenti all'interno dei panel dinamici
-     *
-     * @param label la label di cui si vuole impostare lo stile
-     * @param o     uno dei valori presenti tra le informazioni degli hackathon caricati
-     * @param s     ciò che questo valore rappresenta
-     * @param font  il font con cui si fanno visualizzare questi valori
-     * @return la label con i parametri di stile modificati
-     */
-    public JLabel setStyleLabel (JLabel label, Object o, String s, String font){
+    private JLabel setStyleLabel (JLabel label, Object o, String s, String font){
         if(o != null)
             label.setText(s + o);
         else

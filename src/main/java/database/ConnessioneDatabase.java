@@ -14,7 +14,7 @@ public class ConnessioneDatabase {
      * La connessione che verrà istanziata con il DB e richiesta quando necessaria
      */
     public Connection connection = null;
-    private String nome = "postgres";
+    private String name = "postgres";
     private String password = "300600";
     private String url = "jdbc:postgresql://localhost:5432/HckMng";
     private String driver = "org.postgresql.Driver";
@@ -22,7 +22,7 @@ public class ConnessioneDatabase {
     private ConnessioneDatabase() throws SQLException {
         try {
             Class.forName(driver);
-            connection = DriverManager.getConnection(url, nome, password);
+            connection = DriverManager.getConnection(url, name, password);
 
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();

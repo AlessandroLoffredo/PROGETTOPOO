@@ -747,7 +747,7 @@
          */
         public void getLastsUserHack(List<ArrayList<Object>> hackathon){
         UsersImplementation userI = new UsersImplementation();
-        userI.getLastsUserHack(hackathon, this.user.getUsername());
+        userI.getLastUserHacks(hackathon, this.user.getUsername());
     }
 
         /**

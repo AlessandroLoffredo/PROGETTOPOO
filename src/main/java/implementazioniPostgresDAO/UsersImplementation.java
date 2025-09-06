@@ -229,7 +229,7 @@ public class UsersImplementation implements UsersInterface {
         return results;
     }
 
-    public void getLastsUserHack(List<ArrayList<Object>> hackathon, String username){
+    public void getLastUserHacks(List<ArrayList<Object>> hackathon, String username){
         PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
             String sql = "SELECT * FROM Hackathon H " +
