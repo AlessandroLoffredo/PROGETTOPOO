@@ -12,6 +12,8 @@ import java.awt.event.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 /**
@@ -332,6 +334,8 @@ public class AreaPersonaleGiudice {
                 lockMark(controller);
             }
         });
+
+        checkDate(controller);
     }
 
 
@@ -485,6 +489,21 @@ public class AreaPersonaleGiudice {
             assigneButton.setEnabled(false);
         } else {
             markSlider.setToolTipText(null);
+        }
+    }
+
+    private void checkDate(Controller controller){
+        LocalDate localDate = LocalDate.parse(currentStartArea.getText()).minusDays(3);
+        java.util.Date date = java.util.Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        if(!controller.isSignUpInserted() && !(date.after(new java.util.Date()))){
+            problemArea.setText("L'evento è stato annullato a causa di mancata organizzazione");
+            problemArea.setEditable(false);
+            problemPanel.setEnabled(false);
+            commentArea.setEditable(false);
+            markPanel.setEnabled(false);
+            teamComboBox.setEnabled(false);
+            selectButton.setEnabled(false);
+            docList.setEnabled(false);
         }
     }
 }

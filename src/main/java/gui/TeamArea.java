@@ -9,7 +9,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * La classe che contiene tutti gli elementi che permettono ad un team di assolvere ai suoi compiti, tra cui
@@ -114,12 +118,13 @@ public class TeamArea {
         this.fillTeammates(controller);
         this.blockHack(controller);
         this.fillDocs(controller, documents, files, comments);
+        controller.findHack();
+        controller.getActJudgesList();
 
         hackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.findHack();
-                controller.getActJudgesList();
+                controller.setIdHack(controller.getCurrIdHack());
                 HackathonGui hackathonGui = new HackathonGui(frame, controller);
                 hackathonGui.getFrame().setVisible(true);
                 frame.dispose();
@@ -161,6 +166,9 @@ public class TeamArea {
                 int code = controller.sendFile(file, file.getName());
                 UIManager.put(panelBkg, new Color(30, 30, 47));
                 switch (code){
+                    case -4:
+                        JOptionPane.showMessageDialog(panel, "nome del file troppo lungo");
+                        break;
                     case -1:
                         JOptionPane.showMessageDialog(panel, "Hai già caricato questo documento");
                         break;
@@ -222,6 +230,8 @@ public class TeamArea {
                 handleDoc(e, comments, files);
             }
         });
+
+        checkDate(controller);
     }
 
     /**
@@ -290,6 +300,22 @@ public class TeamArea {
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+
+    private void checkDate(Controller controller){
+        LocalDate localDate = Instant.ofEpochMilli((controller.getHackathon().getStartDate().getTime()))
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate().minusDays(3);
+        java.util.Date date = java.util.Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        if((!(date.after(new Date())) && controller.getJudges().isEmpty()) || (!controller.isSignUpInserted() && !(date.after(new Date())))) {
+            docPanel.setEnabled(false);
+            loadDocButton.setToolTipText(null);
+            loadDocButton.setEnabled(false);
+            sendButton.setEnabled(false);
+            commentArea.setEditable(false);
+            docList.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "Evento annullato per mancata organizzazione");
         }
     }
 

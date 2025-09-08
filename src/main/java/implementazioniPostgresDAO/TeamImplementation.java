@@ -129,6 +129,8 @@ public class TeamImplementation implements TeamInterface {
             e.printStackTrace();
             if(e.getMessage().contains("pkdoc")){
                 results = -1;
+            } else if (e.getMessage().contains("too long")) {
+                results = -4;
             }
         } catch (Exception e){
             e.printStackTrace();

@@ -176,6 +176,7 @@
                               <component id="3447f" class="javax.swing.JTextArea" binding="problemArea">
                                 <constraints/>
                                 <properties>
+                                  <editable value="false"/>
                                   <font name="JetBrains Mono"/>
                                 </properties>
                               </component>

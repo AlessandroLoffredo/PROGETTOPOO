@@ -81,6 +81,7 @@
                 </constraints>
                 <properties>
                   <echoChar value="*"/>
+                  <font name="JetBrains Mono"/>
                 </properties>
               </component>
               <component id="436a6" class="javax.swing.JLabel" binding="fNameLabel">

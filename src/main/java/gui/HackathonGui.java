@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -228,10 +230,6 @@ public class HackathonGui {
                 LocalDate end = LocalDate.parse(currentEndArea.getText(), formatter);
                 int code = controller.subscribe(start, end);
                 switch (code){
-                    case -4:
-                        subscribeHackButton.setToolTipText("Non è più possibile iscriversi a quest'evento");
-                        subscribeHackButton.setEnabled(false);
-                        break;
                     case -3:
                         JOptionPane.showMessageDialog(panel, "Sei già impegnato durante il periodo di questo Hackathon", "INFO", JOptionPane.INFORMATION_MESSAGE);
                         break;
@@ -243,6 +241,7 @@ public class HackathonGui {
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Iscrizione effettuata con successo", "INFO", JOptionPane.INFORMATION_MESSAGE);
+                        currentCounterArea.setText(String.valueOf(Integer.parseInt(currentCounterArea.getText()) + 1));
                         break;
                     case 0:
                     default:
@@ -251,6 +250,19 @@ public class HackathonGui {
                 }
             }
         });
+        checkDate(controller);
+    }
+
+    private void checkDate(Controller controller){
+        LocalDate localDate = LocalDate.parse(currentStartArea.getText()).minusDays(3);
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        if((!(date.after(new Date())) && controller.getJudges().isEmpty()) || (!controller.checkSignUpInserted() && !(date.after(new Date())))){
+            problemArea.setText("L'evento è stato annullato a causa di mancata organizzazione");
+            subscribeHackButton.setEnabled(false);
+        } else if(!(controller.getHackathon().getEndDate().after(new Date()))) {
+            subscribeHackButton.setToolTipText("Non è più possibile iscriversi a quest'evento");
+            subscribeHackButton.setEnabled(false);
+        }
     }
 
     /**

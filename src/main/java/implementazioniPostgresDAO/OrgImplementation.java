@@ -39,15 +39,14 @@ public class OrgImplementation implements OrgInterface {
         return resultsUp;
     }
 
-    public boolean isStarted(String username, int idHack){
+    public boolean isStarted( int idHack){
         int results = 0;
         PreparedStatement stmt = null;
         try(Connection conn = ConnessioneDatabase.getInstance().connection){
-            String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H, Organizer O WHERE O.idHack = H.idHack AND " +
-                         "O.username = ? AND H.startRegDate IS NOT NULL AND H.idHack = ?";
+            String sql = "SELECT COUNT(H.startRegDate) as conto FROM Hackathon H WHERE " +
+                         "H.startRegDate IS NOT NULL AND H.idHack = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setInt(2, idHack);
+            stmt.setInt(1, idHack);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
                 results = rs.getInt("conto");

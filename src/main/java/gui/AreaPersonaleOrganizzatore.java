@@ -178,6 +178,7 @@ public class AreaPersonaleOrganizzatore {
         hackathonPanel.setBorder(new LineBorder(new Color(30, 30, 47)));
 
         controller.setHackValue(currentTitleArea, currentVenueArea, currentStartArea, currentEndArea, currentStartRegArea, currentMaxRegArea, currentCounterArea, currentMaxTeamParArea,currentProbDescArea);
+        controller.getActJudgesList();
 
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/iconaUser.png"));
         Image scaledImage = imageIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
@@ -293,7 +294,15 @@ public class AreaPersonaleOrganizzatore {
         controller.getDates(dates);
         ZonedDateTime zonedDateTime = dates[0].minusDays(3).atStartOfDay(ZoneId.systemDefault());
         Date startDate = Date.from(zonedDateTime.toInstant());
-        if (controller.isHackStarted()) {
+        if((!(startDate.after(new Date())) && controller.getJudges().isEmpty()) || (!controller.isSignUpInserted() && !(startDate.after(new Date())))) {
+            currentProbDescArea.setText("L'evento è stato annullato a causa di mancata organizzazione");
+            organizerPanel.setEnabled(false);
+            datePanel.setEnabled(false);
+            spinner1.setEnabled(false);
+            startSignUpButton.setEnabled(false);
+            comboBox1.setEnabled(false);
+            inviaRichiestaButton.setEnabled(false);
+        } else if (controller.isHackStarted()) {
             organizerPanel.setEnabled(false);
             datePanel.setEnabled(false);
             spinner1.setEnabled(false);

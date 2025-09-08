@@ -17,13 +17,12 @@ public interface OrgInterface {
     int setupDate(LocalDate date, int idHack);
 
     /**
-     * Verifica se l'organizzatore loggato ha gia inserito la data di apertura delle iscrizioni
+     * Verifica se è stata già inserita la data di apertura delle iscrizioni di un hackathon
      *
-     * @param username l'username dell'organizzatore
      * @param idHack   l'id dell'hackathon di cui è organizzatore l'utente loggato
      * @return valore vero/falso che determina se la data è presente nel DB
      */
-    boolean isStarted(String username, int idHack);
+    boolean isStarted(int idHack);
 
     /**
      * Riempie un array con le tre date che interessano l'hackathon il cui organizzatore è loggato
